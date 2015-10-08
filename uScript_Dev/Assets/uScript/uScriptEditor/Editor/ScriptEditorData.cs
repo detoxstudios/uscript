@@ -830,7 +830,7 @@ namespace Detox.Data.ScriptEditor
          Height = data.Height;
       }
 
-      public new int Version { get { return 4; } }
+      public new int Version { get { return 5; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -900,6 +900,46 @@ namespace Detox.Data.ScriptEditor
             Height.Output       = false;
             Height.Default      = "0";
             Height.State        = Parameter.VisibleState.Visible;
+         }
+
+        if ( serializer.CurrentVersion < 5 )
+        {
+            try 
+            { 
+                BodyTextColor.FriendlyName = "Body Text Color";
+
+                string[] color;
+              
+                color = BodyTextColor.Default.Split(',');
+                UnityEngine.Color btc = new UnityEngine.Color( Single.Parse(color[0]), color.Length > 1 ? Single.Parse(color[1]) : 0, color.Length > 2 ? Single.Parse(color[2]) : 0, color.Length > 3 ? Single.Parse(color[3]) : 1 );
+
+                color = TitleTextColor.Default.Split(',');
+                UnityEngine.Color ttc = new UnityEngine.Color( Single.Parse(color[0]), color.Length > 1 ? Single.Parse(color[1]) : 0, color.Length > 2 ? Single.Parse(color[2]) : 0, color.Length > 3 ? Single.Parse(color[3]) : 1 );
+
+                color = NodeColor.Default.Split(',');
+                UnityEngine.Color nc = new UnityEngine.Color( Single.Parse(color[0]), color.Length > 1 ? Single.Parse(color[1]) : 0, color.Length > 2 ? Single.Parse(color[2]) : 0, color.Length > 3 ? Single.Parse(color[3]) : 1 );
+
+                if (btc.r > 1) btc.r = 1.0f;
+                if (ttc.r > 1) ttc.r = 1.0f;
+                if (nc.r > 1) nc.r = 1.0f;
+
+                if (btc.g > 1) btc.g = 1.0f;
+                if (ttc.g > 1) ttc.g = 1.0f;
+                if (nc.g > 1) nc.g = 1.0f;
+
+                if (btc.b > 1) btc.b = 1.0f;
+                if (ttc.b > 1) ttc.b = 1.0f;
+                if (nc.b > 1) nc.b = 1.0f;
+
+                if (btc.a > 1) btc.a = 1.0f;
+                if (ttc.a > 1) ttc.a = 1.0f;
+                if (nc.a > 1) nc.a = 1.0f;
+           
+                BodyTextColor.Default = btc.r + "," + btc.g + "," + btc.b + "," + btc.a;
+                TitleTextColor.Default = ttc.r + "," + ttc.g + "," + ttc.b + "," + ttc.a;
+                NodeColor.Default = nc.r + "," + nc.g + "," + nc.b + "," + nc.a;
+            }
+            catch { }
          }
       }
 

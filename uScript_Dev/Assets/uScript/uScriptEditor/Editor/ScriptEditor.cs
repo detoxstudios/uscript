@@ -2037,7 +2037,7 @@ namespace Detox.ScriptEditor
          m_TitleTextColor.State = Parameter.VisibleState.Visible;
          m_TitleTextColor.Name = "TitleColor";
          m_TitleTextColor.FriendlyName = "Title Color";
-         m_TitleTextColor.Default = "50, 50, 127";
+         m_TitleTextColor.Default = ".2, .2, .5";
          m_TitleTextColor.Type = typeof(UnityEngine.Color).ToString( );
          m_TitleTextColor.Input = true;
          m_TitleTextColor.Output = false;
@@ -2057,7 +2057,7 @@ namespace Detox.ScriptEditor
          m_BodyTextColor.State = Parameter.VisibleState.Visible;
          m_BodyTextColor.Name = "BodyColor";
          m_BodyTextColor.FriendlyName = "Body Text Color";
-         m_BodyTextColor.Default = "50, 127, 50";
+         m_BodyTextColor.Default = "1.0, 1.0, 1.0";
          m_BodyTextColor.Type = typeof(UnityEngine.Color).ToString( );
          m_BodyTextColor.Input = true;
          m_BodyTextColor.Output = false;
@@ -2067,7 +2067,7 @@ namespace Detox.ScriptEditor
          m_NodeColor.State = Parameter.VisibleState.Visible;
          m_NodeColor.Name = "NodeColor";
          m_NodeColor.FriendlyName = "Node Color";
-         m_NodeColor.Default = "127, 127, 127";
+         m_NodeColor.Default = "1.0, 1.0, 1.0";
          m_NodeColor.Type = typeof(UnityEngine.Color).ToString( );
          m_NodeColor.Input = true;
          m_NodeColor.Output = false;
