@@ -709,8 +709,8 @@ namespace Detox.FlowChart
 
       private bool UserProbablyDidntMeanToMoveMouse( )
       {
-         int dx = m_FCMouseDownPoint.X - Detox.Windows.Forms.Cursor.ScaledPosition.X;
-         int dy = m_FCMouseDownPoint.Y - Detox.Windows.Forms.Cursor.ScaledPosition.Y;
+         int dx = m_FCMouseDownPoint.X - Detox.Windows.Forms.Cursor.AbsolutePosition.X;
+         int dy = m_FCMouseDownPoint.Y - Detox.Windows.Forms.Cursor.AbsolutePosition.Y;
 
          dx = Math.Abs(dx);
          dy = Math.Abs(dy);
