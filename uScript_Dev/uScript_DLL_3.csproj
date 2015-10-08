@@ -181,9 +181,10 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUI.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIContent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanel.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelPalette.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelContent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelProperty.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelReference.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelToolbox.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIStyle.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Ellipsis.cs" />

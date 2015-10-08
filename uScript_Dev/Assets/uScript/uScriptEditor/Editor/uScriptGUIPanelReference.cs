@@ -31,7 +31,7 @@ namespace Detox.Editor
       private Node deprecatedNode;
 
       private string nodeSignature;
-      private uScriptGUIPanelPalette.PaletteMenuItem toolboxMenuItem;
+      private uScriptGUIPanelToolbox.PaletteMenuItem toolboxMenuItem;
       private string toolboxPath;
 
       private string selectedNodeClassName;
@@ -267,7 +267,7 @@ namespace Detox.Editor
          {
             this.nodeSignature = signature;
 
-            this.toolboxMenuItem = uScriptGUIPanelPalette.Instance.GetToolboxMenuItem(signature);
+            this.toolboxMenuItem = uScriptGUIPanelToolbox.Instance.GetToolboxMenuItem(signature);
 
             this.toolboxPath = this.toolboxMenuItem != null ? this.toolboxMenuItem.Path : string.Empty;
             var lastSeparatorIndex = this.toolboxPath.LastIndexOf('/');
@@ -312,7 +312,7 @@ namespace Detox.Editor
                if (UnityEngine.GUI.Button(rectNameRow, breadcrumbs, Style.ReferenceInfo))
                {
                   UnityEngine.GUI.FocusControl("PaletteFilterSearch");
-                  uScriptGUIPanelPalette.Instance.FilterToolboxMenuItems(nodeNameContent.text, true);
+                  uScriptGUIPanelToolbox.Instance.FilterToolboxMenuItems(nodeNameContent.text, true);
                }
 
                EditorGUIUtility.AddCursorRect(rectNameRow, MouseCursor.Link);

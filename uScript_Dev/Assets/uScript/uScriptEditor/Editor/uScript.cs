@@ -892,7 +892,7 @@ public sealed partial class uScript : EditorWindow
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
       m_ScriptEditorCtrl.BuildContextMenu();
-      uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+      uScriptGUIPanelToolbox.Instance.BuildPaletteMenu();
 
       m_ScriptEditorCtrl.IsDirty = this.currentScriptDirty || this.patches.Length > 0;
 
@@ -1122,7 +1122,7 @@ public sealed partial class uScript : EditorWindow
       }
 
       // Update the reference panel with the node palette's hot selection.
-      uScriptGUIPanelReference.Instance.HotSelection = uScriptGUIPanelPalette.Instance.HotSelection;
+      uScriptGUIPanelReference.Instance.HotSelection = uScriptGUIPanelToolbox.Instance.HotSelection;
 
       // Because Unity has an awesome GUI system, the mouse dragging is detected
       // after EventType.Layout has occurred. If any GUILayout calls are made in
@@ -1245,7 +1245,7 @@ public sealed partial class uScript : EditorWindow
             ? Detox.Windows.Forms.Cursor.ScaledPosition
             : new Point((int)(NodeWindowRect.width * 0.5f), (int)(NodeWindowRect.height * 0.5f))); // viewport center
 
-         EntityNode entityNode = uScriptGUIPanelPalette.Instance.GetToolboxNode(this.pendingNodeSignature);
+         EntityNode entityNode = uScriptGUIPanelToolbox.Instance.GetToolboxNode(this.pendingNodeSignature);
          if (entityNode == null)
          {
             uScriptDebug.Log("Attempt to create node type failed. Signature not recognized: \"" + this.pendingNodeSignature + "\"", uScriptDebug.Type.Error);
@@ -1454,7 +1454,7 @@ public sealed partial class uScript : EditorWindow
    internal void OnHierarchyChange()
    {
       _wasHierarchyChanged = true;
-      uScriptGUIPanelPalette.Instance.ClearSearchFilter();
+      uScriptGUIPanelToolbox.Instance.ClearSearchFilter();
    }
 
    internal void OnProjectChange()
@@ -2678,7 +2678,7 @@ public sealed partial class uScript : EditorWindow
    {
       if (_paletteMode == 0)
       {
-         uScriptGUIPanelPalette.Instance.Draw();
+         uScriptGUIPanelToolbox.Instance.Draw();
       }
       else
       {
@@ -3593,7 +3593,7 @@ public sealed partial class uScript : EditorWindow
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
       m_ScriptEditorCtrl.BuildContextMenu();
-      uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+      uScriptGUIPanelToolbox.Instance.BuildPaletteMenu();
 
       //reset zoom we're not in some weird zoom state
       this.mapScale = 1.0f;
@@ -4077,7 +4077,7 @@ public sealed partial class uScript : EditorWindow
             this.m_ScriptEditorCtrl = new ScriptEditorCtrl(script);
 
             m_ScriptEditorCtrl.BuildContextMenu();
-            uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+            uScriptGUIPanelToolbox.Instance.BuildPaletteMenu();
          }
 
          string scriptName = Path.GetFileNameWithoutExtension(this.fullPath);

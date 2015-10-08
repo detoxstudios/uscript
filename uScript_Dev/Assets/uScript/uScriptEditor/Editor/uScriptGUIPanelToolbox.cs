@@ -25,7 +25,7 @@ using UnityEditor;
 
 using UnityEngine;
 
-public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
+public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
 {
    private const int ButtonIndent = 12;
    private const int ButtonPadding = 4;
@@ -49,19 +49,19 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
    private EntityNode tempHotSelection;
 
-   static uScriptGUIPanelPalette()
+   static uScriptGUIPanelToolbox()
    {
-      Instance = new uScriptGUIPanelPalette();
+      Instance = new uScriptGUIPanelToolbox();
    }
 
-   private uScriptGUIPanelPalette()
+   private uScriptGUIPanelToolbox()
    {
       this.Init();
    }
 
    public static int PaletteMenuItemCount { get; private set; }
 
-   public static uScriptGUIPanelPalette Instance { get; private set; }
+   public static uScriptGUIPanelToolbox Instance { get; private set; }
 
    public string[] FavoritePopupOptions { get; private set; }
 

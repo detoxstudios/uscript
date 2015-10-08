@@ -96,11 +96,11 @@ namespace Detox.Editor.GUI.Windows
 
          if (string.IsNullOrEmpty(promotion.Title) == false)
          {
-#if UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9
-            // This isn't in the Unity API until 5.1
-            this.titleContent = new GUIContent(promotion.Title);
+#if UNITY_3_5 || UNITY_4_6 || UNITY_5_0
+            // This is deprecated in the Unity 5.2 API
+            this.title = promotion.Title;
 #else
-         this.title = promotion.Title;
+            this.titleContent = new GUIContent(promotion.Title);
 #endif
          }
 

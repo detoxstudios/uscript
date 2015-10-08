@@ -349,7 +349,7 @@ namespace Detox.Editor.GUI
                var favoriteNodes = uScript.Preferences.FavoriteNodes;
                var favoriteIndex = Array.IndexOf(favoriteNodes, favoriteNodeType) + 1;
 
-               var newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIPanelPalette.Instance.FavoritePopupOptions, Style.ButtonMiddleFavorite, GUILayout.Width(30));
+               var newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIPanelToolbox.Instance.FavoritePopupOptions, Style.ButtonMiddleFavorite, GUILayout.Width(30));
                if (newIndex != favoriteIndex)
                {
                   if (favoriteIndex == 0)
@@ -365,7 +365,7 @@ namespace Detox.Editor.GUI
                      uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
                   }
 
-                  uScriptGUIPanelPalette.Instance.BuildFavoritesMenu();
+                  uScriptGUIPanelToolbox.Instance.BuildFavoritesMenu();
                }
 
                // Favorite star
