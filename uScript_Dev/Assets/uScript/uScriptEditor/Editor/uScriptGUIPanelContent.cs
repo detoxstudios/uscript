@@ -1,10 +1,7 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="uScriptGUIPanelContent.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="uScriptGUIPanelContent.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
-// <summary>
-//   Defines the uScriptGUIPanelContent type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 #if !RELEASE
@@ -15,11 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Detox.Drawing;
 using Detox.Editor;
 using Detox.Editor.GUI;
 using Detox.ScriptEditor;
-using Detox.Windows.Forms;
 
 using UnityEditor;
 
@@ -27,27 +22,21 @@ using UnityEngine;
 
 public sealed class uScriptGUIPanelContent : uScriptGUIPanel
 {
-   private const int ButtonIndent = 12;
    private const int ButtonPadding = 4;
-   private const int RowHeight = 17;
+   private const int RowHeight = 19;
 
-   private static readonly Dictionary<string, bool> PaletteMenuItemFoldout = new Dictionary<string, bool>();
+   private static readonly Dictionary<string, bool> CategoryFoldout = new Dictionary<string, bool>();
 
-   private static bool isMouseOverScrollview;
    private static Rect scrollviewRect;
 
    private int filterMatches;
-   private bool paletteFoldoutToggle;
+   private bool foldoutExpanded;
    private string panelFilterText = string.Empty;
 
    private GUIStyle stylePadding;
    private Rect buttonRect;
    private int listItemRowCount;
    private int listItemRowWidth;
-   private List<PaletteMenuItem> paletteMenuItems;
-   private List<PaletteMenuItem> favoriteMenuItems;
-
-   private EntityNode tempHotSelection;
 
    static uScriptGUIPanelContent()
    {
@@ -59,24 +48,11 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
       this.Init();
    }
 
-   public static int PaletteMenuItemCount { get; private set; }
-
    public static uScriptGUIPanelContent Instance { get; private set; }
 
-   public string[] FavoritePopupOptions { get; private set; }
-
-   public EntityNode HotSelection { get; private set; }
-
-   // Methods common to the panel classes
    public void Init()
    {
-      this.Name = "Toolbox";
-   }
-
-   public void Update()
-   {
-      // Called whenever member data should be updated
-      this.BuildPaletteMenu();
+      this.Name = "Contents";
    }
 
    public void ClearSearchFilter()
@@ -101,50 +77,7 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
       {
          uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
          {
-            // Toolbar
-            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
-            {
-               // Unlike standard panels, this panel shares the same area as the
-               // Graph Contents panel.  For now, use a DropDown control instead
-               // of the typical Label for the panel title.
-               var options = new[] { "Toolbox", "Contents" };
-               var size = uScriptGUIStyle.PanelTitleDropDown.CalcSize(new GUIContent(options[1]));
-               uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.PanelTitleDropDown, GUILayout.Width(size.x));
-
-               ////if (uScript.IsDevelopmentBuild)
-               ////{
-               ////   GUILayout.Label("(" + paletteMenuItemCount.ToString() + " items)", uScriptGUIStyle.toolbarLabel);
-               ////}
-
-               GUILayout.FlexibleSpace();
-
-               // Toggle hierarchy foldouts
-               var toggleContent = this.paletteFoldoutToggle ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand;
-               var toggle = GUILayout.Toggle(this.paletteFoldoutToggle, toggleContent, uScriptGUIStyle.PaletteToolbarFoldoutButton, GUILayout.ExpandWidth(false));
-               if (this.paletteFoldoutToggle != toggle)
-               {
-                  this.paletteFoldoutToggle = toggle;
-                  ExpandPaletteMenuItemFoldouts(this.paletteFoldoutToggle);
-               }
-
-               GUI.SetNextControlName("PaletteFilterSearch");
-               var filterText = uScriptGUI.ToolbarSearchField(this.panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
-
-               if (filterText != this.panelFilterText)
-               {
-                  // Drop focus if the user inserted a newline (hit enter)
-                  if (filterText.Contains("\n"))
-                  {
-                     FocusedControl.Clear();
-                  }
-   
-                  // Trim leading whitespace
-                  filterText = filterText.TrimStart();
-   
-                  this.FilterToolboxMenuItems(filterText, false);
-               }
-            }
-            EditorGUILayout.EndHorizontal();
+            this.DrawToolbar();
 
             if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
             {
@@ -152,121 +85,187 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
             }
             else
             {
-               // Draw the contents
-   
-               // Node list
-               this.ScrollviewOffset = EditorGUILayout.BeginScrollView(this.ScrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview", GUILayout.ExpandWidth(true));
+               // Graph Contents list
+               //
+               // Every node in the graph should be listed here, categorized by type.
+
+               // Process all nodes and place them in the appropriate list
+               var categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>
                {
-                  this.listItemRowCount = 0;
-                  this.listItemRowWidth = 0;
-   
-                  // Apply the filter and determine how many items will be drawn.
-                  if (this.paletteMenuItems == null)
+                  { "Comments", new Dictionary<string, List<DisplayNode>>() },
+                  { "Actions", new Dictionary<string, List<DisplayNode>>() },
+                  { "Conditions", new Dictionary<string, List<DisplayNode>>() },
+                  { "Events", new Dictionary<string, List<DisplayNode>>() },
+                  { "Properties", new Dictionary<string, List<DisplayNode>>() },
+                  { "Variables", new Dictionary<string, List<DisplayNode>>() },
+                  { "Miscellaneous", new Dictionary<string, List<DisplayNode>>() }
+               };
+
+               if (CategoryFoldout.Count == 0)
+               {
+                  foreach (var kvpCategory in categories)
                   {
-                     GUILayout.Label("\n\tERROR:\n\n\t\tFailed to initialize the node palette!", EditorStyles.boldLabel);
+                     // Default each foldout to "expanded"
+                     CategoryFoldout.Add(kvpCategory.Key, true);
+                  }
+               }
+
+               // TODO: clean up this code
+               foreach (var node in uScript.Instance.ScriptEditorCtrl.FlowChart.Nodes)
+               {
+                  var displayNode = node as DisplayNode;
+                  var category = "Miscellaneous";
+                  var key = string.Empty;
+                  var comment = string.Empty;
+
+                  var eventDisplayNode = displayNode as EntityEventDisplayNode;
+                  if (eventDisplayNode != null)
+                  {
+                     category = "Events";
+                     key = eventDisplayNode.EntityEvent.FriendlyType;
+                     comment = eventDisplayNode.EntityEvent.Comment.Default;
                   }
                   else
                   {
-                     foreach (var item in this.paletteMenuItems)
+                     var nodeDisplayNode = displayNode as LogicNodeDisplayNode;
+                     if (nodeDisplayNode != null)
                      {
-                        this.DetermineListStats(item);
+                        category = "Actions";
+                        key = nodeDisplayNode.LogicNode.FriendlyName;
+                        comment = nodeDisplayNode.LogicNode.Comment.Default;
                      }
-      
-                     // Draw the padding box to establish the row width (excluding scrollbar)
-                     // and force the scrollview content height
-                     GUILayout.Box(string.Empty, this.stylePadding, GUILayout.Height(Math.Max(0, (RowHeight * this.listItemRowCount) - 10)), GUILayout.Width(this.listItemRowWidth));
-                     GUILayout.Box(string.Empty, this.stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
-      
-                     // Prepare to draw each row of the filtered list
-                     // From this point on, the contents of the scrollview should
-                     // never use GUILayout, so we can safely skip EventType.Layout.
-                     if (Event.current.type != EventType.Layout)
+                     else
                      {
-                        // Make sure the we get the width of the last GUILayout.Box
-                        // just in case it is wider than the widest button below
-                        this.listItemRowWidth = Math.Max(this.listItemRowWidth, (int)GUILayoutUtility.GetLastRect().width);
-      
-                        // Reset some variables we'll use later
-                        this.buttonRect = new Rect(0, 0, 0, RowHeight);
-                        this.filterMatches = 0;
-      
-                        // Reset the temporary hot selection at the beginning of each pass
-                        if (Event.current.modifiers != EventModifiers.Alt)
+                        var localNodeDisplayNode = displayNode as LocalNodeDisplayNode;
+                        if (localNodeDisplayNode != null)
                         {
-                           this.tempHotSelection = null;
-                        }
-      
-                        // Draw all the palette items
-                        foreach (var item in this.paletteMenuItems)
-                        {
-                           if (this.DrawPaletteMenu(item))
+                           category = "Variables";
+                           key = localNodeDisplayNode.LocalNode.Value.Type; // get FriendlyName
+                           key = uScriptConfig.Variable.FriendlyName(key).Replace("UnityEngine.", string.Empty);
+
+                           var value = localNodeDisplayNode.LocalNode.Value.Default;
+                           if (key == "String")
                            {
-                              this.filterMatches++;
+                              value = string.Format("\"{0}\"", localNodeDisplayNode.LocalNode.Value.Default);
+                           }
+
+                           key = string.Format("{0} ({1})", key, value);
+                           comment = localNodeDisplayNode.LocalNode.Name.Default;
+                        }
+                        else
+                        {
+                           var commentDisplayNode = displayNode as CommentDisplayNode;
+                           if (commentDisplayNode != null)
+                           {
+                              category = "Comments";
+                              key = commentDisplayNode.Comment.TitleText.FriendlyName;
+                              comment = commentDisplayNode.Comment.TitleText.Default;
+                           }
+                           else
+                           {
+                              var propertyDisplayNode = displayNode as EntityPropertyDisplayNode;
+                              if (propertyDisplayNode != null)
+                              {
+                                 category = "Properties";
+                                 key = propertyDisplayNode.DisplayName.Replace("\n", ": ");
+                                 comment = propertyDisplayNode.DisplayValue;
+                              }
+                              else
+                              {
+                                 var methodDisplayNode = displayNode as EntityMethodDisplayNode;
+                                 if (methodDisplayNode != null)
+                                 {
+                                    category = "Actions";
+                                    key = methodDisplayNode.EntityMethod.Input.FriendlyName;
+                                    comment = methodDisplayNode.EntityMethod.Comment.Default;
+                                 }
+                                 else if (displayNode is OwnerConnectionDisplayNode)
+                                 {
+                                    category = "Variables";
+                                    key = "Owner GameObject";
+                                    ////comment = ((OwnerConnectionDisplayNode)displayNode).OwnerConnection.Instance.FriendlyName;
+                                 }
+                              }
                            }
                         }
-      
-                        // Check here for possible repaint needed for hot tips
-                        if (this.HotSelection != this.tempHotSelection)
-                        {
-                           this.HotSelection = this.tempHotSelection;
-                           uScript.RequestRepaint();
-                        }
+                     }
+                  }
+
+                  // Validate strings
+                  key = string.IsNullOrEmpty(key) ? "UNKNOWN" : key;
+                  key += string.IsNullOrEmpty(comment) ? string.Empty : string.Format(" ({0})", comment);
+
+                  // Apply the filter now, to ignore items that are not matched
+                  if (string.IsNullOrEmpty(this.panelFilterText) || this.IncludeAsMenuItem(key, false))
+                  {
+                     //this.filterMatches++;
+
+                     if (categories[category].ContainsKey(key) == false)
+                     {
+                        categories[category].Add(key, new List<DisplayNode>());
                      }
 
-                     // Display a message if no filter matches were found.
-                     // The filterMatches variable is reset to zero right before the menu items are
-                     // drawn when Event.current.type != EventType.Layout
-                     if (this.filterMatches == 0)
+                     // Add the node to the list
+                     categories[category][key].Add(displayNode);
+                  }
+               }
+
+               // Examine the final filtered categories to determine how many items will be drawn
+               this.DetermineListStats(categories);
+
+               // Draw the list
+               this.ScrollviewOffset = EditorGUILayout.BeginScrollView(
+                  this.ScrollviewOffset,
+                  false,
+                  false,
+                  uScriptGUIStyle.HorizontalScrollbar,
+                  uScriptGUIStyle.VerticalScrollbar,
+                  "scrollview",
+                  GUILayout.ExpandWidth(true));
+               {
+                  // Draw the padding box to establish the row width (excluding scrollbar)
+                  // and force the scrollview content height
+                  GUILayout.Box(
+                     string.Empty,
+                     this.stylePadding,
+                     GUILayout.Height(Math.Max(0, (RowHeight * this.listItemRowCount) - 10)),
+                     GUILayout.Width(this.listItemRowWidth));
+                  GUILayout.Box(string.Empty, this.stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
+
+                  // Prepare to draw each row of the filtered list
+                  // From this point on, the contents of the scrollview should
+                  // never use GUILayout, so we can safely skip EventType.Layout.
+                  if (Event.current.type != EventType.Layout)
+                  {
+                     // Make sure the we get the width of the last GUILayout.Box
+                     // just in case it is wider than the widest button below
+                     this.listItemRowWidth = Math.Max(this.listItemRowWidth, (int)GUILayoutUtility.GetLastRect().width);
+
+                     this.buttonRect = new Rect(0, 0, 0, RowHeight);
+                     this.filterMatches = 0;
+
+                     // Draw all the palette items
+                     foreach (var category in categories)
                      {
-                        GUILayout.Label("The search found no matches!", uScriptGUIStyle.PanelMessageBold);
+                        this.filterMatches += this.DrawCategoryItems(category);
                      }
+                  }
+
+                  // Display a message if no filter matches were found.
+                  if (this.filterMatches == 0)
+                  {
+                     GUILayout.Label("The search found no matches!", uScriptGUIStyle.PanelMessageBold);
                   }
                }
                EditorGUILayout.EndScrollView();
-   
+
                if (Event.current.type == EventType.Repaint)
                {
                   scrollviewRect = GUILayoutUtility.GetLastRect();
                }
-   
-               isMouseOverScrollview = scrollviewRect.Contains(Event.current.mousePosition);
             }
          }
          EditorGUILayout.EndVertical();
-
-#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
-       
-#else
-         EditorGUILayout.BeginHorizontal();
-         {
-            var toggleState = GUILayout.Toggle(uScript.Preferences.AutoUpdateReflection, "Auto", EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false));
-            if (uScript.Preferences.AutoUpdateReflection != toggleState)
-            {
-               uScript.Preferences.AutoUpdateReflection = toggleState;
-               uScript.Preferences.Save();
-
-               if (uScript.Preferences.AutoUpdateReflection)
-               {
-                  uScript.Instance.UpdateReflectedTypes();
-               }
-            }
-
-            uScript.GuiState.StoreState();
-            uScript.GuiState.Enabled = uScript.GuiState.Enabled && !uScript.Preferences.AutoUpdateReflection;
-
-            if (GUILayout.Button("Refresh", EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
-            {
-               uScript.Instance.UpdateReflectedTypes();
-            }
-
-            uScript.GuiState.RestoreState();
-
-            GUILayout.Label(uScriptInstance.ScriptEditorCtrl.ScriptEditor.EntityDescs.Length + " reflected types");
-         }
-         EditorGUILayout.EndHorizontal();
-#endif
-
-         this.DrawFavoritesPanel();
       }
       EditorGUILayout.EndVertical();
       
@@ -280,504 +279,331 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
       uScriptInstance.SetMouseRegion(uScript.MouseRegion.Palette);
    }
 
-   public void FilterToolboxMenuItems(string filterText, bool forceExpandToolbox)
-   {
-      this.panelFilterText = filterText;
-
-      foreach (var item in this.paletteMenuItems)
-      {
-         item.Hidden = this.FilterToolboxMenuItem(item, false);
-      }
-
-      if (uScript.Preferences.AutoExpandToolbox || forceExpandToolbox)
-      {
-         this.paletteFoldoutToggle = this.panelFilterText != string.Empty;
-         ExpandPaletteMenuItemFoldouts(this.paletteFoldoutToggle);
-      }
-   }
-
-   public PaletteMenuItem GetToolboxMenuItem(string nodeSignature)
-   {
-      if (this.paletteMenuItems == null)
-      {
-         return null;
-      }
-
-      foreach (var item in this.paletteMenuItems)
-      {
-         var menuItem = GetToolboxMenuItem(nodeSignature, item);
-         if (menuItem != null)
-         {
-            return menuItem;
-         }
-      }
-
-      return null;
-   }
-
-   public EntityNode GetToolboxNode(string nodeSignature)
-   {
-      var menuItem = GetToolboxMenuItem(nodeSignature);
-      return menuItem != null ? ((EntityNode)menuItem.Tag).Copy(false) : null;
-   }
-
-   public void BuildPaletteMenu()
-   {
-      this.BuildPaletteMenu(null, null, string.Empty);
-      this.BuildFavoritesMenu();
-   }
-
-   public void BuildFavoritesMenu()
-   {
-      const int MaxNumFavorites = 9;
-
-      if (this.favoriteMenuItems == null)
-      {
-         this.favoriteMenuItems = new List<PaletteMenuItem>(MaxNumFavorites);
-         for (var i = 0; i < MaxNumFavorites; i++)
-         {
-            this.favoriteMenuItems.Add(null);
-         }
-
-         this.FavoritePopupOptions = new string[MaxNumFavorites + 1];
-         this.FavoritePopupOptions[0] = "-";
-      }
-
-      for (var i = 0; i < MaxNumFavorites; i++)
-      {
-         var nodeSignature = uScript.Preferences.GetFavoriteNode(i + 1);
-
-         if (string.IsNullOrEmpty(nodeSignature))
-         {
-            this.favoriteMenuItems[i] = null;
-         }
-         else
-         {
-            if (this.favoriteMenuItems[i] == null
-               || uScript.GetNodeSignature((EntityNode)this.favoriteMenuItems[i].Tag) != nodeSignature)
-            {
-               this.favoriteMenuItems[i] = GetToolboxMenuItem(nodeSignature);
-
-               //// TODO: Don't use the actual palette menu item, duplicate it instead.
-               ////       Then update the name for EntityMethod, EntityProperty, and perhaps other nodes
-
-               if (this.favoriteMenuItems[i] == null)
-               {
-                  // If the menu item is still null, the nodeSignature was not found.
-                  // Create a dummy favorite menu item to inform the user.
-                  this.favoriteMenuItems[i] = new PaletteMenuItem { Name = "(\u2718) " + nodeSignature };
-               }
-            }
-         }
-      }
-
-      for (var i = 0; i < MaxNumFavorites; i++)
-      {
-         this.FavoritePopupOptions[i + 1] = string.Format("{0}    {1}", i + 1, this.favoriteMenuItems[i] == null ? "-" : this.favoriteMenuItems[i].Name);
-      }
-   }
-
-   private static void CreateNode(EntityNode node)
-   {
-      if (node == null)
-      {
-         uScriptDebug.Log(
-            "The node associated with this Favorite shortcut was not found in the Toolbox.\n\t"
-            + "It may have pointed to a reflected object that no longer exists in the scene.",
-            uScriptDebug.Type.Warning);
-      }
-      else
-      {
-         var nodeSignature = uScript.GetNodeSignature(node);
-         uScript.Instance.PlaceNodeOnCanvas(nodeSignature, false);
-      }
-   }
-
    // Use recursion to set all menu item foldouts in the node palette
-   private static void ExpandPaletteMenuItemFoldouts(bool state)
+   private static void ExpandMenuFoldouts(bool state)
    {
-      var keys = PaletteMenuItemFoldout.Keys.ToArray();
+      var keys = CategoryFoldout.Keys.ToArray();
       foreach (var key in keys)
       {
-         PaletteMenuItemFoldout[key] = state;
+         CategoryFoldout[key] = state;
       }
    }
 
-   private static PaletteMenuItem GetToolboxMenuItem(string nodeSignature, PaletteMenuItem currentMenuItem)
+   private void DetermineListStats(Dictionary<string, Dictionary<string, List<DisplayNode>>> categories)
    {
-      if (currentMenuItem == null)
-      {
-         return null;
-      }
+      this.listItemRowCount = 0;
+      this.listItemRowWidth = 100;
 
-      if (currentMenuItem.Items != null && currentMenuItem.Items.Count > 0)
-      {
-         foreach (var item in currentMenuItem.Items)
-         {
-            var menuItem = GetToolboxMenuItem(nodeSignature, item);
-            if (menuItem != null)
-            {
-               return menuItem;
-            }
-         }
-      }
-      else if (currentMenuItem.Tag != null
-         && uScript.GetNodeSignature((EntityNode)currentMenuItem.Tag) == nodeSignature)
-      {
-         return currentMenuItem;
-      }
-
-      return null;
-   }
-
-   private void BuildPaletteMenu(ToolStripItem contextMenuItem, PaletteMenuItem paletteMenuItem, string paletteMenuItemParent)
-   {
-      if (contextMenuItem == null || paletteMenuItem == null)
-      {
-         // Create a new palette menu, destroying the old one
-         this.paletteMenuItems = new List<PaletteMenuItem>();
-
-         var items = uScript.Instance.ScriptEditorCtrl.ContextMenuWithReflection.Items;
-         foreach (var item in items)
-         {
-            if ((item is ToolStripMenuItem) && (item.Text == "Add..."))
-            {
-               foreach (var subitem in ((ToolStripMenuItem)item).DropDownItems)
-               {
-                  var paletteItem = new PaletteMenuItem { Indent = 0 };
-
-                  this.BuildPaletteMenu(subitem, paletteItem, string.Empty);
-
-                  this.paletteMenuItems.Add(paletteItem);
-               }
-            }
-         } 
-      }
-      else if (!(contextMenuItem is ToolStripSeparator))
-      {
-         if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Count > 0)
-         {
-            // This is a foldout
-            paletteMenuItem.Name = contextMenuItem.Text.Replace("...", string.Empty);
-            paletteMenuItem.Path = (string.IsNullOrEmpty(paletteMenuItemParent) ? string.Empty : paletteMenuItemParent + "/") + paletteMenuItem.Name;
-            paletteMenuItem.Items = new List<PaletteMenuItem>();
-
-            if (PaletteMenuItemFoldout.ContainsKey(paletteMenuItem.Path) == false)
-            {
-               PaletteMenuItemFoldout.Add(paletteMenuItem.Path, false);
-            }
-
-            foreach (var item in ((ToolStripMenuItem)contextMenuItem).DropDownItems)
-            {
-               var newItem = new PaletteMenuItem { Indent = paletteMenuItem.Indent + 1 };
-               if (item == null)
-               {
-                  uScriptDebug.Log("Trying to pass a null parameter to BuildPaletteMenu()!", uScriptDebug.Type.Error);
-                  return;
-               }
-
-               this.BuildPaletteMenu(item, newItem, paletteMenuItem.Path);
-               paletteMenuItem.Items.Add(newItem);
-            }
-         }
-         else
-         {
-            // This is a menu item
-            paletteMenuItem.Name = contextMenuItem.Text.Replace("&", string.Empty);
-            paletteMenuItem.Path = (string.IsNullOrEmpty(paletteMenuItemParent) ? string.Empty : string.Format("{0}/", paletteMenuItemParent)) + paletteMenuItem.Name;
-            paletteMenuItem.Tooltip = uScript.FindNodeToolTip(ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode));
-            paletteMenuItem.Click = contextMenuItem.Click;
-            paletteMenuItem.Tag = contextMenuItem.Tag;
-
-            PaletteMenuItemCount++;
-         }
-      }
-      else
-      {
-         uScriptDebug.Log(string.Format("The contextMenuItem ({0}) is a {1} and is unhandled!", contextMenuItem.Text, contextMenuItem.GetType()), uScriptDebug.Type.Warning);
-      }
-   }
-
-   private void DetermineListStats(PaletteMenuItem item)
-   {
-      if (item.Hidden)
+      if (categories == null)
       {
          return;
       }
 
-      if (item.Items == null)
+      foreach (var category in categories)
       {
-         // This is a simple menu item
-         if (item.Width == 0)
-         {
-            item.Width = (int)uScriptGUIStyle.PaletteButton.CalcSize(new GUIContent(item.Name)).x;
-         }
-      }
-      else
-      {
-         // This is should be a folding menu item that contains more buttons
-         if (item.Width == 0)
-         {
-            item.Width = (int)uScriptGUIStyle.PaletteFoldout.CalcSize(new GUIContent(item.Name)).x;
-         }
+         var categoryName = category.Key;
+         var categoryContent = category.Value;
 
-         if (PaletteMenuItemFoldout[item.Path])
+         if (categoryContent.Count > 0)
          {
-            foreach (var subitem in item.Items)
+            // Include the foldout
+            this.listItemRowCount++;
+
+            // If the foldout is expanded ...
+            if (CategoryFoldout[categoryName])
             {
-               this.DetermineListStats(subitem);
-            }
-         }
-      }
-
-      item.X = ButtonPadding + (item.Indent * ButtonIndent);
-
-      this.listItemRowWidth = Math.Max(this.listItemRowWidth, item.X + item.Width + ButtonPadding);
-      this.listItemRowCount++;
-   }
-
-   private void DrawFavoritesPanel()
-   {
-      var favoriteNodeCount = this.favoriteMenuItems.Count(item => item != null);
-      if (favoriteNodeCount <= 0)
-      {
-         return;
-      }
-
-      GUILayout.Space(uScriptGUI.PanelDividerThickness);
-
-      var isPanelExpanded = uScript.Preferences.ExpandFavoritePanel;
-
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
-      {
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
-         {
-            GUILayout.Label("Favorites", uScriptGUIStyle.PanelTitle);
-
-            var toggleContent = isPanelExpanded ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand;
-            var toggle = GUILayout.Toggle(isPanelExpanded, toggleContent, uScriptGUIStyle.FavoriteButtonFoldout, GUILayout.ExpandWidth(false));
-            if (isPanelExpanded != toggle)
-            {
-               isPanelExpanded = toggle;
-               uScript.Preferences.ExpandFavoritePanel = isPanelExpanded;
-               uScript.Preferences.Save();
-            }
-         }
-         EditorGUILayout.EndHorizontal();
-
-         if (isPanelExpanded)
-         {
-            // We're using 9 for (buttonMargin * 2 + buttonVerticalOverflow)
-            var areaRect = EditorGUILayout.BeginVertical(GUILayout.Height((favoriteNodeCount * RowHeight) + 9));
-            {
-               GUILayout.FlexibleSpace();
-
-               if (Event.current.type != EventType.Layout)
+               // Include every item in the category content
+               foreach (var kvp in categoryContent)
                {
-                  // We're using 5 for (buttonMargin + buttonVerticalOverflow)
-                  var rowRect = new Rect(areaRect.x, areaRect.y + 5, 0, RowHeight);
+                  this.listItemRowCount += kvp.Value.Count;
 
-                  var popupWidth = (int)uScriptGUIStyle.FavoriteButtonNumber.CalcSize(new GUIContent("0")).x;
-
-                  for (var i = 0; i < this.favoriteMenuItems.Count; i++)
-                  {
-                     var menuItem = this.favoriteMenuItems[i];
-
-                     // && menuItem.Tag != null)
-                     if (menuItem != null)
-                     {
-                        // Favorite number
-                        rowRect.x = uScriptGUIStyle.FavoriteButtonNumber.margin.left;
-                        rowRect.width = popupWidth;
-
-                        var favoriteIndex = i + 1;
-
-                        var newIndex = EditorGUI.Popup(rowRect, favoriteIndex, this.FavoritePopupOptions, uScriptGUIStyle.FavoriteButtonNumber);
-                        if (newIndex != favoriteIndex)
-                        {
-                           if (newIndex == 0)
-                           {
-                              uScript.Preferences.UpdateFavoriteNode(favoriteIndex, string.Empty);
-                           }
-                           else
-                           {
-                              uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
-                           }
-
-                           Instance.BuildFavoritesMenu();
-                        }
-
-                        // Favorite name
-                        var nodeName = menuItem.Name;
-
-                        rowRect.x += rowRect.width;
-                        rowRect.width = areaRect.width - rowRect.x - uScriptGUIStyle.FavoriteButtonName.margin.right;
-
-                        if (menuItem.Tag == null)
-                        {
-                           GUI.color = new UnityEngine.Color(1, 0.5f, 0.5f, 1);
-                        }
-
-                        if (GUI.Button(rowRect, nodeName, uScriptGUIStyle.FavoriteButtonName))
-                        {
-                           CreateNode((EntityNode)menuItem.Tag);
-                        }
-
-                        GUI.color = UnityEngine.Color.white;
-
-                        rowRect.y += RowHeight;
-                     }
-                  }
+                  // TODO: If we want to use ellipses, this is the place to do it
                }
             }
-            EditorGUILayout.EndVertical();
          }
       }
-      EditorGUILayout.EndVertical();
+
+      //if (categories.Items == null)
+      //{
+      //   // This is a simple menu item
+      //   if (categories.Width == 0)
+      //   {
+      //      categories.Width = (int)uScriptGUIStyle.PaletteButton.CalcSize(new GUIContent(categories.Name)).x;
+      //   }
+      //}
+      //else
+      //{
+      //   // This is should be a folding menu item that contains more buttons
+      //   if (categories.Width == 0)
+      //   {
+      //      categories.Width = (int)uScriptGUIStyle.PaletteFoldout.CalcSize(new GUIContent(categories.Name)).x;
+      //   }
+
+      //   if (CategoryFoldout[categories.Path])
+      //   {
+      //      foreach (var subitem in categories.Items)
+      //      {
+      //         this.DetermineListStats(subitem);
+      //      }
+      //   }
+      //}
    }
 
-   private bool DrawPaletteMenu(PaletteMenuItem item)
+   private int DrawCategoryItems(KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory)
    {
-      // This method should never be called when Event.current.type == EventType.Layout
-      if (item.Hidden)
+      var nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
+
+      var categoryName = kvpCategory.Key;
+      var categoryContent = kvpCategory.Value;
+
+      if (categoryContent.Count <= 0)
       {
-         return false;
+         return 0;
       }
 
-      // Update button rect before drawing the control
-      this.buttonRect.x = item.X;
-      this.buttonRect.width = this.listItemRowWidth - item.X - ButtonPadding;
+      // The category contains at least one item to show
+      var rows = 1;
+
+      // This is should be a folding menu item that contains more buttons
+      var tmpStyle = new GUIStyle(uScriptGUIStyle.PaletteFoldout);
+      tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
+
+      this.buttonRect.x = ButtonPadding;
+      this.buttonRect.width = this.listItemRowWidth - ButtonPadding - ButtonPadding;
 
       // Determine if the item should be drawn
-      if (this.ScrollviewOffset.y <= this.buttonRect.yMax)
+      if (this.ShouldDraw())
       {
-         // draw
-         if (this.ScrollviewOffset.y + scrollviewRect.height > this.buttonRect.yMin)
+         CategoryFoldout[categoryName] = GUI.Toggle(
+            this.buttonRect,
+            CategoryFoldout[categoryName],
+            categoryName,
+            tmpStyle);
+      }
+
+      this.buttonRect.y += this.buttonRect.height;
+
+      if (CategoryFoldout[categoryName])
+      {
+         var nodeList = categoryContent.Keys.ToList();
+         nodeList.Sort();
+
+         foreach (var s in nodeList)
          {
-            // Draw the foldout or menu item button
-            if (item.Items == null)
+            var nodes = categoryContent[s];
+
+            // Show each node
+            foreach (var dn in nodes)
             {
-               // This is a simple menu item
-               if (GUI.Button(this.buttonRect, new GUIContent(item.Name, item.Tooltip), uScriptGUIStyle.PaletteButton))
+               if (this.ShouldDraw())
                {
-                  if (item.Click != null)
+                  // We must draw from right to left, so that the buttons overlap each other correctly,
+                  // but we need to know if the optional deprecated button will be drawn first.
+                  var isTypeDeprecated = uScript.IsNodeTypeDeprecated(dn.EntityNode);
+                  var isInstanceDeprecated =
+                     uScript.Instance.ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(dn.EntityNode);
+
+                  var rightButton = this.buttonRect;
+                  rightButton.xMin = rightButton.xMax - 20;
+
+                  var leftButton = this.buttonRect;
+                  leftButton.xMax -= rightButton.width;
+
+                  if (isTypeDeprecated == false && isInstanceDeprecated)
                   {
-                     // Create the node on the canvas
-                     var halfWidth = (int)(uScript.Instance.NodeWindowRect.width * 0.5f);
-                     var halfHeight = (int)(uScript.Instance.NodeWindowRect.height * 0.5f);
-                     var center = new Point(halfWidth, halfHeight);
-                     uScript.Instance.ScriptEditorCtrl.ContextCursor = center;
-                     item.OnClick();
-                     uScriptDebug.Log(string.Format("Clicked '{0}'", item.Name), uScriptDebug.Type.Debug);
+                     leftButton.xMax -= rightButton.width;
                   }
-                  else
+
+                  // Update button color when the node is deprecated
+                  var tmpColor = GUI.color;
+                  var textColor = uScriptGUIStyle.NodeButtonLeft.normal.textColor;
+
+                  if (isTypeDeprecated || isInstanceDeprecated)
                   {
-                     uScriptDebug.Log(string.Format("Cannot execute menu item: {0}", item.Name), uScriptDebug.Type.Debug);
+                     GUI.color = new Color(1, 0.5f, 1, 1);
+                     uScriptGUIStyle.NodeButtonLeft.normal.textColor = Color.white;
                   }
+
+                  // Draw the button label
+                  if (Event.current.type == EventType.Repaint)
+                  {
+                     nodeButtonContent.text = s;
+                  }
+
+                  // Draw the button as a toggle
+                  var selected = GUI.Toggle(leftButton, dn.Selected, nodeButtonContent, uScriptGUIStyle.NodeButtonLeft);
+
+                  if (selected != dn.Selected)
+                  {
+                     FocusedControl.Clear();
+
+                     // is the shift key modifier being used?
+                     if (Event.current.modifiers != EventModifiers.Shift)
+                     {
+                        // clear all selected nodes first
+                        uScript.Instance.ScriptEditorCtrl.DeselectAll();
+                     }
+
+                     // toggle the clicked node
+                     uScript.Instance.ScriptEditorCtrl.ToggleNode(dn.Guid);
+                  }
+
+                  // Draw the right-most Search button
+                  if (GUI.Button(rightButton, uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.NodeButtonRight))
+                  {
+                     uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
+                  }
+
+                  // Draw the optional Fix Deprecation button
+                  if (isTypeDeprecated == false && isInstanceDeprecated)
+                  {
+                     rightButton.x -= rightButton.width;
+
+                     if (uScript.Instance.ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(dn.EntityNode))
+                     {
+                        if (GUI.Button(
+                           rightButton,
+                           uScriptGUIContent.buttonNodeUpgrade,
+                           uScriptGUIStyle.NodeButtonMiddle))
+                        {
+                           FocusedControl.Clear();
+
+                           var click = new EventHandler(uScript.Instance.ScriptEditorCtrl.m_MenuUpgradeNode_Click);
+
+                           // clear all selected nodes first
+                           uScript.Instance.ScriptEditorCtrl.DeselectAll();
+
+                           // toggle the clicked node
+                           uScript.Instance.ScriptEditorCtrl.ToggleNode(dn.Guid);
+                           click(this, new EventArgs());
+                        }
+                     }
+                     else
+                     {
+                        if (GUI.Button(
+                           rightButton,
+                           uScriptGUIContent.buttonNodeDeleteMissing,
+                           uScriptGUIStyle.NodeButtonMiddle))
+                        {
+                           FocusedControl.Clear();
+
+                           var click = new EventHandler(uScript.Instance.ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
+
+                           // clear all selected nodes first
+                           uScript.Instance.ScriptEditorCtrl.DeselectAll();
+
+                           // toggle the clicked node
+                           uScript.Instance.ScriptEditorCtrl.ToggleNode(dn.Guid);
+                           click(this, new EventArgs());
+                        }
+                     }
+                  }
+
+                  // Reset the colors for the next menu item
+                  GUI.color = tmpColor;
+                  uScriptGUIStyle.NodeButtonLeft.normal.textColor = textColor;
                }
-            }
-            else
-            {
-               // This is a folding menu item that contains more buttons
-               PaletteMenuItemFoldout[item.Path] = GUI.Toggle(this.buttonRect, PaletteMenuItemFoldout[item.Path], item.Name, uScriptGUIStyle.PaletteFoldout);
+
+               this.buttonRect.y += this.buttonRect.height;
+               rows++;
             }
          }
       }
 
-      // Always perform the non-drawing functions
+      return rows;
+   }
 
-      // Handle mouse hovering
-      if (isMouseOverScrollview && this.buttonRect.Contains(Event.current.mousePosition))
+   private void DrawToolbar()
+   {
+      // Toolbar
+      EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
       {
-         this.tempHotSelection = item.Tag as EntityNode;
-      }
-
-      // Prepare for the next control
-      this.buttonRect.y += RowHeight;
-
-      // If the item is an expanded foldout, draw its contents
-      if (item.Items != null && PaletteMenuItemFoldout[item.Path])
-      {
-         foreach (var subitem in item.Items)
+         // Unlike standard panels, this panel shares the same area as the
+         // Graph Contents panel.  For now, use a DropDown control instead
+         // of the typical Label for the panel title.
+         var options = new[] { "Toolbox", "Contents" };
+         var size = uScriptGUIStyle.PanelTitleDropDown.CalcSize(new GUIContent(options[1]));
+         var index = EditorGUILayout.Popup(
+            uScript._paletteMode,
+            options,
+            uScriptGUIStyle.PanelTitleDropDown,
+            GUILayout.Width(size.x));
+         if (uScript._paletteMode != index)
          {
-            this.DrawPaletteMenu(subitem);
+            uScript._paletteMode = index;
+            uScript.RequestRepaint(2);
+         }
+
+         //if (uScript.IsDevelopmentBuild)
+         //{
+         //   GUILayout.Label(string.Format("({0})", this.listItemRowCount), uScriptGUIStyle.ToolbarLabel);
+         //}
+
+         GUILayout.FlexibleSpace();
+
+         // Toggle hierarchy foldouts
+         var toggleContent = this.foldoutExpanded
+                                ? uScriptGUIContent.buttonListCollapse
+                                : uScriptGUIContent.buttonListExpand;
+         var expanded = GUILayout.Toggle(
+            this.foldoutExpanded,
+            toggleContent,
+            uScriptGUIStyle.PaletteToolbarFoldoutButton,
+            GUILayout.ExpandWidth(false));
+         if (this.foldoutExpanded != expanded)
+         {
+            this.foldoutExpanded = expanded;
+            ExpandMenuFoldouts(this.foldoutExpanded);
+         }
+
+         GUI.SetNextControlName("ContentFilterSearch");
+         var filterText = uScriptGUI.ToolbarSearchField(
+            this.panelFilterText,
+            GUILayout.MinWidth(50),
+            GUILayout.MaxWidth(100));
+
+         if (this.panelFilterText != filterText)
+         {
+            // Drop focus if the user inserted a newline (hit enter)
+            if (filterText.Contains("\n"))
+            {
+               FocusedControl.Clear();
+            }
+
+            // Trim leading whitespace
+            filterText = filterText.TrimStart();
+
+            this.panelFilterText = filterText;
+
+            //this.FilterMenuItems(filterText, false);
          }
       }
-
-      return true;
+      EditorGUILayout.EndHorizontal();
    }
 
    /// <summary>Filters the toolbox menu item, hiding it if any words in the search query were not found in the item's Name.</summary>
    /// <returns>True if the parent or item should be hidden, otherwise False</returns>
-   /// <param name='paletteMenuItem'>The Toolbox menu item to examine.</param>
+   /// <param name='label'>The Toolbox menu item to examine.</param>
    /// <param name='shouldForceVisible'>When True, the menu item will always be visible.</param>
-   private bool FilterToolboxMenuItem(PaletteMenuItem paletteMenuItem, bool shouldForceVisible)
+   private bool IncludeAsMenuItem(string label, bool shouldForceVisible)
    {
       var words = this.panelFilterText.ToLower().Split();
 
       // The user can now enter keywords in any order to find matches
-      var matchFound = words.All(word => paletteMenuItem.Name.ToLower().Contains(word));
+      var matchFound = words.All(word => label.ToLower().Contains(word));
 
-      if (shouldForceVisible || matchFound)
-      {
-         // This and all children should be visible
-         if (paletteMenuItem.Items != null)
-         {
-            foreach (var item in paletteMenuItem.Items)
-            {
-               item.Hidden = this.FilterToolboxMenuItem(item, true);
-            }
-         }
-
-         return false;
-      }
-
-      if (paletteMenuItem.Items != null)
-      {
-         // Check each child to see if this should be visible
-         var shouldHideParent = true;
-         foreach (var item in paletteMenuItem.Items)
-         {
-            item.Hidden = this.FilterToolboxMenuItem(item, false);
-            if (item.Hidden == false)
-            {
-               shouldHideParent = false;
-            }
-         }
-
-         return shouldHideParent;
-      }
-
-      // has no children and wasn't a match
-      return true;
+      return shouldForceVisible || matchFound;
    }
 
-   public class PaletteMenuItem : Detox.Windows.Forms.MenuItem
+   private bool ShouldDraw()
    {
-      public string Name { get; set; }
-
-      public string Tooltip { get; set; }
-
-      public string Path { get; set; }
-      
-      public List<PaletteMenuItem> Items { get; set; }
-      
-      public EventHandler Click { get; set; }
-      
-      public bool Hidden { get; set; }
-      
-      public int Indent { get; set; }
-      
-      public int X { get; set; }
-      
-      public int Width { get; set; }
-
-      public void OnClick()
+      if (this.ScrollviewOffset.y <= this.buttonRect.yMax)
       {
-         if (this.Click != null)
+         if (this.ScrollviewOffset.y + scrollviewRect.height > this.buttonRect.yMin)
          {
-            this.Click(this, new EventArgs());
+            return true;
          }
       }
+      return false;
    }
 }

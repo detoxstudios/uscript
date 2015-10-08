@@ -1,10 +1,7 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="uScriptGUIPanelPalette.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="uScriptGUIPanelToolbox.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
-// <summary>
-//   Defines the uScriptGUIPanelPalette type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 #if !RELEASE
@@ -109,7 +106,12 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
                // of the typical Label for the panel title.
                var options = new[] { "Toolbox", "Contents" };
                var size = uScriptGUIStyle.PanelTitleDropDown.CalcSize(new GUIContent(options[1]));
-               uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.PanelTitleDropDown, GUILayout.Width(size.x));
+               var index = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.PanelTitleDropDown, GUILayout.Width(size.x));
+               if (uScript._paletteMode != index)
+               {
+                  uScript._paletteMode = index;
+                  uScript.RequestRepaint(2);
+               }
 
                ////if (uScript.IsDevelopmentBuild)
                ////{
