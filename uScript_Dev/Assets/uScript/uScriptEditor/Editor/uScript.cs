@@ -105,7 +105,9 @@ public sealed partial class uScript : EditorWindow
    private ComplexData complexData;
 
    private MouseRegion mouseRegion = MouseRegion.Outside;
+
    private MouseRegion mouseRegionUpdate = MouseRegion.Outside;
+   
    private MouseRegion mouseDownRegion = MouseRegion.Outside;
 
    private bool firstRun = true;
