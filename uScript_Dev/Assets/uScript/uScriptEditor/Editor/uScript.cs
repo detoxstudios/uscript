@@ -85,8 +85,6 @@ public sealed partial class uScript : EditorWindow
 
    private Dictionary<MouseRegion, Rect> mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
-   private Dictionary<string, bool> _foldoutsGraphContent = new Dictionary<string, bool>();
-
    private Dictionary<string, bool> _debugScriptCache = new Dictionary<string, bool>();
 
    private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
@@ -180,8 +178,6 @@ public sealed partial class uScript : EditorWindow
    private Vector2 _guiPanelPalette_ScrollPos;
 
    private Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
-
-   private string _graphListFilterText = string.Empty;
 
    private bool shouldCloseEditorWindowOnNextUpdate;
 

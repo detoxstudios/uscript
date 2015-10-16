@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EditorSkinIconViewer.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="EditorSkinIconViewer.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Based on a free editor script by Zack Aikman called "EditorIconViewer".
@@ -11,7 +11,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -49,13 +48,9 @@ public sealed class EditorSkinIconViewer : EditorWindow
 
    private static readonly string[] IconGroupNames = { "Mini", "Small", "Medium", "Large", "X-Large" };
 
-   private List<IconGroup> iconGroups;
-
-   #region Blacklisted Items
    // Names of known style states that have a texture present in the 'background' field but
    // whose icons show up as empty images when renderered.
-   private bool hideBlacklistedIcons = true;
-
+   private static readonly bool HideBlacklistedIcons = false;
    private static readonly HashSet<string> IconBlacklist = new HashSet<string>
                                                               {
                                                                  "PlayerSettingsPlatform",
@@ -76,12 +71,13 @@ public sealed class EditorSkinIconViewer : EditorWindow
                                                                  "flow var 6",
                                                                  "flow var 6 on",
                                                               };
-   #endregion
+
+   private List<IconGroup> iconGroups;
 
    private GUISkin editorSkin;
-   private GUIStyle selectedIcon;
+   private string selectedRow;
+   private GUIStyle selectedStyle;
    private Vector2 scrollPos;
-   private float drawScale;
 
    private Texture2D blackTexture;
    private Texture2D whiteTexture;
@@ -99,11 +95,13 @@ public sealed class EditorSkinIconViewer : EditorWindow
 
    internal void OnEnable()
    {
+      //this.editorSkin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Game);
       this.editorSkin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector);
+      //this.editorSkin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Scene);
       this.scrollPos = Vector2.zero;
-      SetSelectedIcon(null);
+      this.SetSelectedStyle(null);
 
-      iconGroups = new List<IconGroup>();
+      this.iconGroups = new List<IconGroup>();
 
       for (var i = 0; i < IconGroupNames.Length; ++i)
       {
@@ -126,7 +124,7 @@ public sealed class EditorSkinIconViewer : EditorWindow
                      return false;
                   }
 
-                  if (this.hideBlacklistedIcons && IconBlacklist.Contains(style.name))
+                  if (HideBlacklistedIcons && IconBlacklist.Contains(style.name))
                   {
                      return false;
                   }
@@ -137,39 +135,43 @@ public sealed class EditorSkinIconViewer : EditorWindow
          var maxWidth = @group.IconData.Aggregate<GUIStyle, float>(0, (current, style) => (style.normal.background.width > current) ? style.normal.background.width : current);
          group.MaxWidth = maxWidth;
 
-         iconGroups.Add(group);
+         this.iconGroups.Add(group);
       }
 
-      blackTexture = new Texture2D(1, 1);
-      blackTexture.SetPixel(0, 0, Color.black);
-      blackTexture.Apply();
+      this.blackTexture = new Texture2D(1, 1);
+      this.blackTexture.SetPixel(0, 0, Color.black);
+      this.blackTexture.Apply();
 
-      whiteTexture = new Texture2D(1, 1);
-      whiteTexture.SetPixel(0, 0, Color.white);
-      whiteTexture.Apply();
+      this.whiteTexture = new Texture2D(1, 1);
+      this.whiteTexture.SetPixel(0, 0, Color.white);
+      this.whiteTexture.Apply();
    }
 
    internal void OnDisable()
    {
-      DestroyImmediate(blackTexture);
-      DestroyImmediate(whiteTexture);
+      // ReSharper disable RedundantNameQualifier
+      // ReSharper disable ArrangeStaticMemberQualifier
+      UnityEngine.Object.DestroyImmediate(this.blackTexture);
+      UnityEngine.Object.DestroyImmediate(this.whiteTexture);
+      // ReSharper restore ArrangeStaticMemberQualifier
+      // ReSharper restore RedundantNameQualifier
    }
 
    internal void OnGUI()
    {
-      var sidePanelWidth = CalculateSidePanelWidth();
-      GUILayout.BeginArea(new Rect(0, 0, sidePanelWidth, position.height), GUI.skin.box);
-      DrawIconDisplay(this.selectedIcon);
+      var sidePanelWidth = this.CalculateSidePanelWidth();
+      GUILayout.BeginArea(new Rect(0, 0, sidePanelWidth, this.position.height), GUI.skin.box);
+      this.DrawIconDisplay(this.selectedStyle);
       GUILayout.EndArea();
 
-      GUI.BeginGroup(new Rect(sidePanelWidth, 0, position.width - sidePanelWidth, position.height));
-      this.scrollPos = GUILayout.BeginScrollView(this.scrollPos, true, true, GUILayout.MaxWidth(position.width - sidePanelWidth));
+      GUI.BeginGroup(new Rect(sidePanelWidth, 0, this.position.width - sidePanelWidth, this.position.height));
+      this.scrollPos = GUILayout.BeginScrollView(this.scrollPos, true, true, GUILayout.MaxWidth(this.position.width - sidePanelWidth));
 
-      for (var i = 0; i < iconGroups.Count; ++i)
+      for (var i = 0; i < this.iconGroups.Count; ++i)
       {
-         var group = iconGroups[i];
+         var group = this.iconGroups[i];
          EditorGUILayout.LabelField(group.Name);
-         DrawIconSelectionGrid(group.IconData, group.MaxWidth);
+         this.DrawIconSelectionGrid(group.IconData, group.MaxWidth);
 
          GUILayout.Space(15);
       }
@@ -197,87 +199,103 @@ public sealed class EditorSkinIconViewer : EditorWindow
 
    private float CalculateSidePanelWidth()
    {
-      return Mathf.Clamp(position.width * 0.21f, SidePanelMinWidth, SidePanelMaxWidth);
+      return Mathf.Clamp(this.position.width * 0.21f, SidePanelMinWidth, SidePanelMaxWidth);
+   }
+
+   private void DrawIconDisplayRow(string key, Texture2D texture)
+   {
+      if (string.IsNullOrEmpty(key) || texture == null)
+      {
+         return;
+      }
+
+      if (string.IsNullOrEmpty(this.selectedRow))
+      {
+         this.selectedRow = key;
+      }
+
+      var backgroundColor = GUI.backgroundColor;
+
+      if (this.selectedRow == key)
+      {
+         GUI.backgroundColor = new Color(0.8f, 0.8f, 1, 1);
+      }
+
+      var rowRect = EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+      {
+         GUILayout.Label(key);
+
+         if (Event.current.type == EventType.Repaint)
+         {
+            var lastRect = GUILayoutUtility.GetLastRect();
+            var rightAligned = new GUIStyle(EditorStyles.label) { alignment = TextAnchor.UpperRight };
+            GUI.Label(lastRect, string.Format("{0} x {1}", texture.width, texture.height), rightAligned);
+         }
+
+         GUILayout.Box(texture, GUIStyle.none);
+      }
+      EditorGUILayout.EndVertical();
+
+      if (GUI.Button(rowRect, string.Empty, GUIStyle.none))
+      {
+         this.selectedRow = key;
+      }
+
+      GUI.backgroundColor = backgroundColor;
    }
 
    private void DrawIconDisplay(GUIStyle style)
    {
       if (style == null)
       {
-         DrawCenteredMessage("No icon selected");
+         this.DrawCenteredMessage("No icon selected");
          GUILayout.FlexibleSpace();
-         DrawHelpIcon();
+         this.DrawHelpIcon();
          return;
       }
 
-      var iconTexture = style.normal.background;
-
-      viewportRect = EditorGUILayout.BeginVertical();
+      this.viewportRect = EditorGUILayout.BeginVertical();
 
       EditorGUILayout.BeginHorizontal();
-      GUILayout.FlexibleSpace();
-      GUILayout.Label(style.name, EditorStyles.boldLabel);
-      GUILayout.FlexibleSpace();
-      EditorGUILayout.EndHorizontal();
-
-      EditorGUILayout.BeginHorizontal();
-      GUILayout.FlexibleSpace();
-      GUILayout.Label("Normal");
-      GUILayout.FlexibleSpace();
-      EditorGUILayout.EndHorizontal();
-
-      const int IconOffset = 45;
-      var iconWidth = iconTexture.width * this.drawScale;
-      var iconHeight = iconTexture.height * this.drawScale;
-      var sidePanelWidth = CalculateSidePanelWidth();
-      GUI.DrawTexture(new Rect((sidePanelWidth - iconWidth) * 0.5f, IconOffset, iconWidth, iconHeight), iconTexture, ScaleMode.StretchToFill);
-      GUILayout.Space(iconHeight + 10);
-
-      EditorGUILayout.BeginHorizontal();
-      if (GUILayout.Toggle(Math.Abs(this.drawScale - 1.0f) < 0.0001f, "1x", EditorStyles.miniButtonLeft))
       {
-         this.drawScale = 1.0f;
-      }
-      if (GUILayout.Toggle(Math.Abs(this.drawScale - 1.5f) < 0.0001f, "1.5x", EditorStyles.miniButtonMid))
-      {
-         this.drawScale = 1.5f;
-      }
-      if (GUILayout.Toggle(Math.Abs(this.drawScale - 2.0f) < 0.0001f, "2x", EditorStyles.miniButtonRight))
-      {
-         this.drawScale = 2.0f;
+         GUILayout.FlexibleSpace();
+         GUILayout.Label(string.Format("\"{0}\"", style.name), EditorStyles.boldLabel);
+         GUILayout.FlexibleSpace();
       }
       EditorGUILayout.EndHorizontal();
 
-      GUILayout.Space(10);
+      var backgrounds = new Dictionary<string, Texture2D>
+      {
+         { "normal", style.normal.background },
+         { "onNormal", style.onNormal.background },
+         { "hover", style.hover.background },
+         { "onHover", style.onHover.background },
+         { "active", style.active.background },
+         { "onActive", style.onActive.background },
+         { "focused", style.focused.background },
+         { "onFocused", style.onFocused.background }
+      };
 
-      DrawIconStyleState(style.active, "Active");
-      DrawIconStyleState(style.hover, "Hover");
-      DrawIconStyleState(style.focused, "Focused");
+      foreach (var kvp in backgrounds.Where(kvp => kvp.Value != null))
+      {
+         this.DrawIconDisplayRow(kvp.Key, kvp.Value);
+      }
 
-      GUILayout.Space(10);
-
-      var rightAligned = new GUIStyle(EditorStyles.label) { alignment = TextAnchor.UpperRight };
-
-#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
-      EditorGUIUtility.LookLikeControls(50);
-#else
-      EditorGUIUtility.labelWidth = 50;
-#endif
-      EditorGUILayout.LabelField("Width:", string.Format("{0}px", iconTexture.width), rightAligned, GUILayout.Width(100));
-      EditorGUILayout.LabelField("Height:", string.Format("{0}px", iconTexture.height), rightAligned, GUILayout.Width(100));
-
-      this.ExportIconSection(style.name, iconTexture);
+      if (string.IsNullOrEmpty(this.selectedRow) == false)
+      {
+         this.ExportIconSection(string.Format("{0}_{1}", style.name, this.selectedRow), backgrounds[this.selectedRow]);
+      }
 
       GUILayout.FlexibleSpace();
 
-      DrawHelpIcon();
+      this.DrawHelpIcon();
 
       EditorGUILayout.EndVertical();
    }
 
    private void ExportIconSection(string textureName, Texture texture)
    {
-      GUILayout.Space(20);
+      GUILayout.Space(30);
 
       // Export the image with 8-bit alpha
       var pad1 = 0;
@@ -285,7 +303,7 @@ public sealed class EditorSkinIconViewer : EditorWindow
 
       if (Event.current.type == EventType.Repaint)
       {
-         var panelWidth = viewportRect.width - 7;
+         var panelWidth = this.viewportRect.width - 7;
 
          var rect = GUILayoutUtility.GetLastRect();
          rect = new Rect((int)((panelWidth - texture.width) * 0.5f), rect.yMax + pad2, texture.width, texture.height);
@@ -372,54 +390,41 @@ public sealed class EditorSkinIconViewer : EditorWindow
       }
    }
 
-   private void DrawIconStyleState(GUIStyleState state, string label)
+   private void SetSelectedStyle(GUIStyle style)
    {
-      if (state == null || state.background == null)
-      {
-         return;
-      }
-
-      EditorGUILayout.BeginHorizontal();
-      GUILayout.FlexibleSpace();
-      GUILayout.Label(label);
-      GUILayout.FlexibleSpace();
-      EditorGUILayout.EndHorizontal();
-
-      EditorGUILayout.BeginHorizontal();
-      GUILayout.FlexibleSpace();
-      GUILayout.Box(state.background);
-      GUILayout.FlexibleSpace();
-      EditorGUILayout.EndHorizontal();
+      this.selectedStyle = style;
+      this.selectedRow = string.Empty;
    }
 
-   private void SetSelectedIcon(GUIStyle icon)
+   private void DrawIconSelectionGrid(GUIStyle[] styles, float maxIconWidth)
    {
-      this.selectedIcon = icon;
-      this.drawScale = 1.0f;
-   }
+      var sidePanelWidth = this.CalculateSidePanelWidth();
+      var count = Mathf.FloorToInt((this.position.width - sidePanelWidth - ScrollbarWidth) / (maxIconWidth + SelectionGridPadding));
 
-   private void DrawIconSelectionGrid(GUIStyle[] icons, float maxIconWidth)
-   {
-      var sidePanelWidth = CalculateSidePanelWidth();
-      var count = Mathf.FloorToInt((position.width - sidePanelWidth - ScrollbarWidth) / (maxIconWidth + SelectionGridPadding));
-      var selected = GUILayout.SelectionGrid(-1, icons.Select(style => style.normal.background).ToArray(), count, GUI.skin.box);
+      var textures = styles.Select(style => style.normal.background as Texture).ToArray();
+
+      var selected = GUILayout.SelectionGrid(-1, textures, count, GUI.skin.box);
 
       if (selected > -1)
       {
-         SetSelectedIcon(icons[selected]);
+         this.SetSelectedStyle(styles[selected]);
       }
    }
 
    private void DrawCenteredMessage(string msg)
    {
       EditorGUILayout.BeginHorizontal();
-      GUILayout.FlexibleSpace();
-      EditorGUILayout.BeginVertical();
-      GUILayout.FlexibleSpace();
-      GUILayout.Label(msg);
-      GUILayout.FlexibleSpace();
-      EditorGUILayout.EndVertical();
-      GUILayout.FlexibleSpace();
+      {
+         GUILayout.FlexibleSpace();
+         EditorGUILayout.BeginVertical();
+         {
+            GUILayout.FlexibleSpace();
+            GUILayout.Label(msg);
+            GUILayout.FlexibleSpace();
+         }
+         EditorGUILayout.EndVertical();
+         GUILayout.FlexibleSpace();
+      }
       EditorGUILayout.EndHorizontal();
    }
 
