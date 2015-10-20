@@ -796,6 +796,9 @@ public sealed partial class uScript : EditorWindow
 
       Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
+      // make sure the master game object exists
+      GetMasterGameObject();
+
       uScriptBackgroundProcess.ForceFileRefresh();
    }
 
