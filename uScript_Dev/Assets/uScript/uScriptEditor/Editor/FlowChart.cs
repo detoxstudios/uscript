@@ -409,9 +409,7 @@ namespace Detox.FlowChart
 
       private bool InLink(Link link, Point position)
       {
-         //this hit test assumes the arrow is a straight line
-         //(in actuality it's slightly curved w/ bezier rendering)
-         //but in my tests so far, this is still accurate enough
+         const int tolerance = 3;
 
          Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width),
                                   (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height) );
@@ -424,49 +422,112 @@ namespace Detox.FlowChart
 
          end  = link.Destination.Node.PointToScreen( end );
          end  = this.PointToClient( end );
-
-         //put position in link space
-         Point local = new Point( position.X - start.X, position.Y - start.Y );
-
-         //projection position on link ray
-         Point delta = new Point( end.X - start.X, end.Y - start.Y );
-
-         float magnitude = (float) Math.Sqrt( delta.X * delta.X + delta.Y * delta.Y );
-         if ( 0 == magnitude ) return false;
-
-         float rayX = delta.X / magnitude;
-         float rayY = delta.Y / magnitude;
-
-         float distance = rayX * local.X + rayY * local.Y;
-
-         //if the point is infront of the start (along the ray)
-         //then clamp the line test point to the max distance of our line
-         if ( distance > 0 )
+         
+         if (true)
          {
-            distance = Math.Min( distance, magnitude );
+            // Perform bezier accurate test
+            int toleranceSq = tolerance * tolerance;
+
+            //control point 1
+            //is 25% of the X length and only 10% of the Y length
+            PointF control1 = new PointF(
+               (start.X + (end.X - start.X) * .25f),
+               (start.Y + (end.Y - start.Y) * .10f) );
+
+            //control point 2
+            //is 75% of the X length and 90% of the Y length
+            PointF control2 = new PointF(
+               (start.X + (end.X - start.X) * .75f),
+               (start.Y + (end.Y - start.Y) * .90f) );
+
+            
+            Point delta = new Point(end.X - start.X, end.Y - start.Y);
+
+            float magSq;
+
+            float length = (float) Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
+
+            for (int i = 0; i < length; i++)
+            {
+               float t = i / (float) length;
+
+               float pX = (float)
+                            (Math.Pow(1.0f - t, 3.0f) * start.X + 
+                              3.0f * Math.Pow(1.0f - t, 2.0f) * t * control1.X +
+                              3.0f * (1.0f - t) * (t * t) * control2.X +
+                              Math.Pow(t, 3.0f) * end.X);
+                        
+               float pY = (float)
+                            (Math.Pow(1.0f - t, 3.0f) * start.Y + 
+                              3.0f * Math.Pow(1.0f - t, 2.0f) * t * control1.Y +
+                              3.0f * (1.0f - t) * (t * t) * control2.Y +
+                              Math.Pow(t, 3.0f) * end.Y);
+
+            
+               magSq =  (position.X - pX) * (position.X - pX) +
+                        (position.Y - pY) * (position.Y - pY);
+
+               if (magSq <= toleranceSq)
+                  return true;
+            }
+
+            magSq = (position.X - end.X) * (position.X - end.X) +
+                    (position.Y - end.Y) * (position.Y - end.Y);
+
+            if (magSq <= toleranceSq)
+               return true;
+
+            return false;
          }
          else
-         {
-            //the point is behind our start ray, so let our max
-            //be the testing amount
-            distance = Math.Max( distance, -10 );
+         {         
+            //this hit test assumes the arrow is a straight line
+            //(in actuality it's slightly curved w/ bezier rendering)
+            //but in my tests so far, this is still accurate enough
+
+            //put position in link space
+            Point local = new Point( position.X - start.X, position.Y - start.Y );
+
+            //projection position on link ray
+            Point delta = new Point( end.X - start.X, end.Y - start.Y );
+
+            float magnitude = (float) Math.Sqrt( delta.X * delta.X + delta.Y * delta.Y );
+            if ( 0 == magnitude ) return false;
+
+            float rayX = delta.X / magnitude;
+            float rayY = delta.Y / magnitude;
+
+            float distance = rayX * local.X + rayY * local.Y;
+
+            //if the point is infront of the start (along the ray)
+            //then clamp the line test point to the max distance of our line
+            if ( distance > 0 )
+            {
+               distance = Math.Min( distance, magnitude );
+            }
+            else
+            {
+               //the point is behind our start ray, so let our max
+               //be the testing amount
+               distance = Math.Max( distance, -tolerance );
+            }
+
+            Point projected = new Point( (int) (start.X + distance * rayX), (int) (start.Y + distance * rayY) );
+
+            //delta from position from projected position
+            delta = new Point( position.X - projected.X, position.Y - projected.Y );
+
+            //check distance
+            distance = delta.X * delta.X + delta.Y * delta.Y;
+            distance = (float) Math.Sqrt( distance );
+
+            if ( distance <= tolerance )
+            {
+               return true;
+            }
+
+            return false;
          }
-
-         Point projected = new Point( (int) (start.X + distance * rayX), (int) (start.Y + distance * rayY) );
-
-         //delta from position from projected position
-         delta = new Point( position.X - projected.X, position.Y - projected.Y );
-
-         //check distance
-         distance = delta.X * delta.X + delta.Y * delta.Y;
-         distance = (float) Math.Sqrt( distance );
-
-         if ( distance <= 10 )
-         {
-            return true;
-         }
-
-         return false;
       }
 
       private void FlowChartCtrl_MouseDown(object sender, MouseEventArgs e)
@@ -941,11 +1002,13 @@ namespace Detox.FlowChart
          Point position = PointToClient( Detox.Windows.Forms.Cursor.ScaledPosition );
          retLink = null;
 
-         foreach ( Link link in m_Links )
+         // iterate backwards, this way it checks the links
+         // drawn on top of the other links first
+         for (int i = m_Links.Count - 1; i >= 0; i--)
          {
-            if ( true == InLink(link, position) )
+            if ( true == InLink(m_Links[i], position) )
             {
-               retLink = link;
+               retLink = m_Links[i];
                return true;
             }
          }
