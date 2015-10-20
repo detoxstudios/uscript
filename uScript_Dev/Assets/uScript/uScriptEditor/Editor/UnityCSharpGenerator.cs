@@ -5163,7 +5163,7 @@ namespace Detox.ScriptEditor
                      }
 
                      SyncReferencedGameObject(argNode, value);
-
+                     
                      //if the local variable is an array then we need to copy the array
                      //to the next available index of the input parameter
 
@@ -5171,7 +5171,15 @@ namespace Detox.ScriptEditor
                      {
                         if (value.Type == parameter.Type)
                         {
-                           AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
+                           // if this is the only connection and the type matches
+                           // then we can do a direct copy
+                           if (links.Length == 1)
+                              AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
+                           else
+                           {
+                              AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
+                              needsProperties = true;
+                           }
                         }
                         else
                         {
@@ -5181,6 +5189,8 @@ namespace Detox.ScriptEditor
                               AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
                            --m_TabStack;
                            AddCSharpLine("}");
+
+                           needsProperties = true;
                         }
 
                         //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
@@ -5199,7 +5209,7 @@ namespace Detox.ScriptEditor
                         //AddCSharpLine("index += properties.Length;");
                         //AddCSharpLine("");
 
-                        needsProperties = true;
+                        //needsProperties = true;
                         //needsIndex = true;
 
                         //needsPropertiesCleared = true;
@@ -5272,7 +5282,15 @@ namespace Detox.ScriptEditor
                         {
                            if (entityProperty.Parameter.Type == parameter.Type)
                            {
-                              AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                              // if this is the only connection and the type matches
+                              // then we can do a direct copy
+                              if (links.Length == 1)
+                                 AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
+                              else
+                              {
+                                 AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                                 needsProperties = true;
+                              }
                            }
                            else
                            {
@@ -5282,6 +5300,8 @@ namespace Detox.ScriptEditor
                                  AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
                               --m_TabStack;
                               AddCSharpLine("}");
+
+                              needsProperties = true;
                            }
                            
                            
@@ -5300,7 +5320,7 @@ namespace Detox.ScriptEditor
                            //AddCSharpLine("index += properties.Length;");
                            //AddCSharpLine("");
 
-                           needsProperties = true;
+                           //needsProperties = true;
                            //needsIndex = true;
                            //needsPropertiesCleared = true;
                            //needsIndexCleared = true;
