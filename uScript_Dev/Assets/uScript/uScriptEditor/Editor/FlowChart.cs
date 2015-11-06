@@ -409,7 +409,7 @@ namespace Detox.FlowChart
 
       private bool InLink(Link link, Point position)
       {
-         const int tolerance = 3;
+         const int tolerance = 5;
 
          Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width),
                                   (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height) );
