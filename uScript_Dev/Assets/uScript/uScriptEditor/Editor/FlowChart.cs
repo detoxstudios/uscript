@@ -479,55 +479,55 @@ namespace Detox.FlowChart
 
             return false;
          }
-         else
-         {         
-            //this hit test assumes the arrow is a straight line
-            //(in actuality it's slightly curved w/ bezier rendering)
-            //but in my tests so far, this is still accurate enough
+         //else
+         //{         
+         //   //this hit test assumes the arrow is a straight line
+         //   //(in actuality it's slightly curved w/ bezier rendering)
+         //   //but in my tests so far, this is still accurate enough
 
-            //put position in link space
-            Point local = new Point( position.X - start.X, position.Y - start.Y );
+         //   //put position in link space
+         //   Point local = new Point( position.X - start.X, position.Y - start.Y );
 
-            //projection position on link ray
-            Point delta = new Point( end.X - start.X, end.Y - start.Y );
+         //   //projection position on link ray
+         //   Point delta = new Point( end.X - start.X, end.Y - start.Y );
 
-            float magnitude = (float) Math.Sqrt( delta.X * delta.X + delta.Y * delta.Y );
-            if ( 0 == magnitude ) return false;
+         //   float magnitude = (float) Math.Sqrt( delta.X * delta.X + delta.Y * delta.Y );
+         //   if ( 0 == magnitude ) return false;
 
-            float rayX = delta.X / magnitude;
-            float rayY = delta.Y / magnitude;
+         //   float rayX = delta.X / magnitude;
+         //   float rayY = delta.Y / magnitude;
 
-            float distance = rayX * local.X + rayY * local.Y;
+         //   float distance = rayX * local.X + rayY * local.Y;
 
-            //if the point is infront of the start (along the ray)
-            //then clamp the line test point to the max distance of our line
-            if ( distance > 0 )
-            {
-               distance = Math.Min( distance, magnitude );
-            }
-            else
-            {
-               //the point is behind our start ray, so let our max
-               //be the testing amount
-               distance = Math.Max( distance, -tolerance );
-            }
+         //   //if the point is infront of the start (along the ray)
+         //   //then clamp the line test point to the max distance of our line
+         //   if ( distance > 0 )
+         //   {
+         //      distance = Math.Min( distance, magnitude );
+         //   }
+         //   else
+         //   {
+         //      //the point is behind our start ray, so let our max
+         //      //be the testing amount
+         //      distance = Math.Max( distance, -tolerance );
+         //   }
 
-            Point projected = new Point( (int) (start.X + distance * rayX), (int) (start.Y + distance * rayY) );
+         //   Point projected = new Point( (int) (start.X + distance * rayX), (int) (start.Y + distance * rayY) );
 
-            //delta from position from projected position
-            delta = new Point( position.X - projected.X, position.Y - projected.Y );
+         //   //delta from position from projected position
+         //   delta = new Point( position.X - projected.X, position.Y - projected.Y );
 
-            //check distance
-            distance = delta.X * delta.X + delta.Y * delta.Y;
-            distance = (float) Math.Sqrt( distance );
+         //   //check distance
+         //   distance = delta.X * delta.X + delta.Y * delta.Y;
+         //   distance = (float) Math.Sqrt( distance );
 
-            if ( distance <= tolerance )
-            {
-               return true;
-            }
+         //   if ( distance <= tolerance )
+         //   {
+         //      return true;
+         //   }
 
-            return false;
-         }
+         //   return false;
+         //}
       }
 
       private void FlowChartCtrl_MouseDown(object sender, MouseEventArgs e)
