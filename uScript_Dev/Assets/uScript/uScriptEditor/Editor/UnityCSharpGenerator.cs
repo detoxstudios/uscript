@@ -1618,9 +1618,9 @@ namespace Detox.ScriptEditor
          {
             return FormatArrayValue(stringValue, type);
          }
-         else if (null != uScriptUtils.GetAssemblyQualifiedType(type))
+         else if (null != uScript.GetAssemblyQualifiedType(type))
          {
-            System.Type netType = uScriptUtils.GetAssemblyQualifiedType(type);
+            System.Type netType = uScript.GetAssemblyQualifiedType(type);
 
             if (typeof(System.Enum).IsAssignableFrom(netType))
             {
@@ -1926,9 +1926,9 @@ namespace Detox.ScriptEditor
                }
                else
                {
-                  if (null != uScriptUtils.GetAssemblyQualifiedType(type.Replace("[]", "")))
+                  if (null != uScript.GetAssemblyQualifiedType(type.Replace("[]", "")))
                   {
-                     System.Type netType = uScriptUtils.GetAssemblyQualifiedType(type.Replace("[]", ""));
+                     System.Type netType = uScript.GetAssemblyQualifiedType(type.Replace("[]", ""));
 
                      if (typeof(System.Enum).IsAssignableFrom(netType))
                      {

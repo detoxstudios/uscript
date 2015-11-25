@@ -52,7 +52,7 @@ public class uScriptBackgroundProcess
          var typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".", System.StringComparison.Ordinal)) + uScriptConfig.Files.GeneratedComponentExtension;
          //Debug.Log("Type name: " + typeName);
 
-         System.Type type = uScriptUtils.GetAssemblyQualifiedType(typeName);
+         System.Type type = uScript.GetAssemblyQualifiedType(typeName);
          uScript.MasterObject.AddComponent(type);
       }
 

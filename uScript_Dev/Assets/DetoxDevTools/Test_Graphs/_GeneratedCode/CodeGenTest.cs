@@ -831,28 +831,6 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_StopAnimation_Out_198 = true;
    //pointer to script instanced logic node
    uScriptAct_ApplicationInfo logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199 = new uScriptAct_ApplicationInfo( );
-   System.Int32 logic_uScriptAct_ApplicationInfo_levelCount_199;
-   System.Int32 logic_uScriptAct_ApplicationInfo_loadedLevel_199;
-   System.String logic_uScriptAct_ApplicationInfo_loadedLevelName_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isEditor_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isLoadingLevel_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isPlaying_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isWebPlayer_199;
-   System.Int32 logic_uScriptAct_ApplicationInfo_streamedBytes_199;
-   UnityEngine.RuntimePlatform logic_uScriptAct_ApplicationInfo_platform_199;
-   System.String logic_uScriptAct_ApplicationInfo_dataPath_199;
-   System.String logic_uScriptAct_ApplicationInfo_persistentDataPath_199;
-   System.String logic_uScriptAct_ApplicationInfo_temporaryCachePath_199;
-   System.String logic_uScriptAct_ApplicationInfo_srcValue_199;
-   System.String logic_uScriptAct_ApplicationInfo_absoluteURL_199;
-   UnityEngine.SystemLanguage logic_uScriptAct_ApplicationInfo_systemLanguage_199;
-   UnityEngine.NetworkReachability logic_uScriptAct_ApplicationInfo_internetReachability_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_webSecurityEnabled_199;
-   System.String logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_runInBackground_199;
-   System.Int32 logic_uScriptAct_ApplicationInfo_targetFrameRate_199;
-   UnityEngine.ThreadPriority logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_199;
-   System.String logic_uScriptAct_ApplicationInfo_unityVersion_199;
    bool logic_uScriptAct_ApplicationInfo_Out_199 = true;
    //pointer to script instanced logic node
    uScriptAct_DeletePreferenceKey logic_uScriptAct_DeletePreferenceKey_uScriptAct_DeletePreferenceKey_200 = new uScriptAct_DeletePreferenceKey( );
@@ -12549,7 +12527,7 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.In(out logic_uScriptAct_ApplicationInfo_levelCount_199, out logic_uScriptAct_ApplicationInfo_loadedLevel_199, out logic_uScriptAct_ApplicationInfo_loadedLevelName_199, out logic_uScriptAct_ApplicationInfo_isEditor_199, out logic_uScriptAct_ApplicationInfo_isLoadingLevel_199, out logic_uScriptAct_ApplicationInfo_isPlaying_199, out logic_uScriptAct_ApplicationInfo_isWebPlayer_199, out logic_uScriptAct_ApplicationInfo_streamedBytes_199, out logic_uScriptAct_ApplicationInfo_platform_199, out logic_uScriptAct_ApplicationInfo_dataPath_199, out logic_uScriptAct_ApplicationInfo_persistentDataPath_199, out logic_uScriptAct_ApplicationInfo_temporaryCachePath_199, out logic_uScriptAct_ApplicationInfo_srcValue_199, out logic_uScriptAct_ApplicationInfo_absoluteURL_199, out logic_uScriptAct_ApplicationInfo_systemLanguage_199, out logic_uScriptAct_ApplicationInfo_internetReachability_199, out logic_uScriptAct_ApplicationInfo_webSecurityEnabled_199, out logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_199, out logic_uScriptAct_ApplicationInfo_runInBackground_199, out logic_uScriptAct_ApplicationInfo_targetFrameRate_199, out logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_199, out logic_uScriptAct_ApplicationInfo_unityVersion_199);
+         //logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.In(out logic_uScriptAct_ApplicationInfo_levelCount_199, out logic_uScriptAct_ApplicationInfo_loadedLevel_199, out logic_uScriptAct_ApplicationInfo_loadedLevelName_199, out logic_uScriptAct_ApplicationInfo_isEditor_199, out logic_uScriptAct_ApplicationInfo_isLoadingLevel_199, out logic_uScriptAct_ApplicationInfo_isPlaying_199, out logic_uScriptAct_ApplicationInfo_isWebPlayer_199, out logic_uScriptAct_ApplicationInfo_streamedBytes_199, out logic_uScriptAct_ApplicationInfo_platform_199, out logic_uScriptAct_ApplicationInfo_dataPath_199, out logic_uScriptAct_ApplicationInfo_persistentDataPath_199, out logic_uScriptAct_ApplicationInfo_temporaryCachePath_199, out logic_uScriptAct_ApplicationInfo_srcValue_199, out logic_uScriptAct_ApplicationInfo_absoluteURL_199, out logic_uScriptAct_ApplicationInfo_systemLanguage_199, out logic_uScriptAct_ApplicationInfo_internetReachability_199, out logic_uScriptAct_ApplicationInfo_webSecurityEnabled_199, out logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_199, out logic_uScriptAct_ApplicationInfo_runInBackground_199, out logic_uScriptAct_ApplicationInfo_targetFrameRate_199, out logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_199, out logic_uScriptAct_ApplicationInfo_unityVersion_199);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.Out;

@@ -358,7 +358,7 @@ public sealed partial class uScript : EditorWindow
 
    public Type GetType(string typeName)
    {
-      var type = this.m_Types[typeName] as Type ?? uScriptUtils.GetAssemblyQualifiedType(typeName);
+      var type = this.m_Types[typeName] as Type ?? uScript.GetAssemblyQualifiedType(typeName);
       return type;
    }
 
@@ -3891,7 +3891,7 @@ public sealed partial class uScript : EditorWindow
       {
          if (file.Name.StartsWith(".") || file.Name.StartsWith("_") || !file.Name.EndsWith(".cs")) continue;
 
-         Type type = uScriptUtils.GetAssemblyQualifiedType(Path.GetFileNameWithoutExtension(file.Name));
+         Type type = uScript.GetAssemblyQualifiedType(Path.GetFileNameWithoutExtension(file.Name));
 
          if (null != type)
          {
@@ -5155,6 +5155,22 @@ public sealed partial class uScript : EditorWindow
    {
       var obj = AssetDatabase.LoadAssetAtPath(assetPathRelativeToProject, type);
       return obj == null ? -1 : obj.GetInstanceID();
+   }
+   
+   public static Type GetAssemblyQualifiedType(String typeName)
+   {
+      if (null == typeName) return null;
+
+      // try the basic version first
+      if (Type.GetType(typeName) != null) return Type.GetType(typeName);
+
+      // not found, look through all the assemblies
+      foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+      {
+         if (Type.GetType(typeName + ", " + assembly.ToString()) != null) return Type.GetType(typeName + ", " + assembly.ToString());
+      }
+
+      return null;
    }
 
    // This method can be expensive, so call it sparingly

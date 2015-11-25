@@ -45,7 +45,10 @@ public class uScriptAct_AttachScript : uScriptLogic
 
             try
             {
-               System.Type type = uScriptUtils.GetAssemblyQualifiedType(tempScript);
+               // If this is null they must pass in the full assembly qualified name:
+               // http://blogs.unity3d.com/2015/01/21/addcomponentstring-api-removal-in-unity-5-0/
+               // We used to create this automatically but that caused compatibility issues with Windows 8 Store Compatibility
+               System.Type type = System.Type.GetType(tempScript);
                foreach ( GameObject currentGameObject in Target )
                {
                   if (currentGameObject != null)
