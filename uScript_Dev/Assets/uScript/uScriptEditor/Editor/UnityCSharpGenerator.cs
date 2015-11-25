@@ -3713,38 +3713,6 @@ namespace Detox.ScriptEditor
                AddCSharpLine(CSharpRelay(node, connection.Anchor) + "( );");
             }
 
-            //We no longer transfer our member variable to the output args
-            //because an external always sends the output through event arguments
-
-            ////transfer our member variables to the output args
-            //foreach (ExternalConnection external in m_Script.Externals)
-            //{
-            //   LinkNode[] outputs = FindLinksByDestination(external.Guid, external.Connection);
-
-            //   foreach (LinkNode link in outputs)
-            //   {
-            //      EntityNode parameterNode = m_Script.GetNode(link.Source.Guid);
-
-            //      foreach (Parameter p in parameterNode.Parameters)
-            //      {
-            //         if (p.Name == link.Source.Anchor)
-            //         {
-            //            //external connections don't have a parameter
-            //            //because they take on whatever parameter they link to
-            //            Parameter parameter = new Parameter();
-            //            parameter.Name = external.Connection;
-            //            parameter.Type = p.Type;
-            //            SyncSlaveConnections(external, new Parameter[] { parameter });
-
-            //            AddCSharpLine(CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";");
-            //         }
-            //      }
-
-            //      //only one link allowed for each external parameter out
-            //      break;
-            //   }
-            //}
-
             --m_TabStack;
          }
 
@@ -5107,17 +5075,14 @@ namespace Detox.ScriptEditor
       {
          AddCSharpLine("{");
          ++m_TabStack;
-
-         //bool needsIndex = false;
-
-
+         
          foreach (Parameter parameter in parameters)
          {
             AddCSharpLine("{");
             ++m_TabStack;
 
-            bool needsProperties = false;
-            string currentCode = SetCode("");
+            AddCSharpLine("int index = 0;");
+            AddCSharpLine("System.Array properties;");
 
             //get all the links hooked to the input on this node
             LinkNode[] links = FindLinksByDestination(node.Guid, parameter.Name);
@@ -5158,42 +5123,81 @@ namespace Detox.ScriptEditor
 
                      if (value.Type.Contains("[]"))
                      {
-                        if (value.Type == parameter.Type)
-                        {
-                           // if this is the only connection and the type matches
-                           // then we can do a direct copy
-                           if (links.Length == 1)
-                              AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
-                           else
-                           {
-                              AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
-                              needsProperties = true;
-                           }
-                        }
-                        else
-                        {
-                           AddCSharpLine("foreach (" + FormatType(value.Type.Replace("[]", "")) + " _fet in " + CSharpName(argNode) + ")");
-                           AddCSharpLine("{");
-                           ++m_TabStack;
-                              AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
-                           --m_TabStack;
-                           AddCSharpLine("}");
+                        //if (value.Type == parameter.Type)
+                        //{
+                        //   // if this is the only connection and the type matches
+                        //   // then we can do a direct copy
+                        //   if (links.Length == 1)
+                        //      AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
+                        //   else
+                        //   {
+                        //      AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
+                        //      needsProperties = true;
+                        //   }
+                        //}
+                        //else
+                        //{
+                        //   AddCSharpLine("foreach (" + FormatType(value.Type.Replace("[]", "")) + " _fet in " + CSharpName(argNode) + ")");
+                        //   AddCSharpLine("{");
+                        //   ++m_TabStack;
+                        //      AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
+                        //   --m_TabStack;
+                        //   AddCSharpLine("}");
+                        //}
 
-                           needsProperties = true;
-                        }
+                        //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                        AddCSharpLine("properties = " + CSharpName(argNode) + ";");
+
+                        //make sure our input array is large enough to hold the array we're copying into it
+                        AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
+                        AddCSharpLine("{");
+                        ++m_TabStack;
+                        AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
+                        --m_TabStack;
+                        AddCSharpLine("}");
+
+                        //copy the source node array into the input parameter array
+                        AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
+                        AddCSharpLine("index += properties.Length;");
+                        AddCSharpLine("");
                      }
                      else
                      {
-                        AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
-                        needsProperties = true;
+                        //AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
+                        //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+
+                        //make sure our input array is large enough to hold another value
+                        AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
+                        AddCSharpLine("{");
+                        ++m_TabStack;
+                        AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
+                        --m_TabStack;
+                        AddCSharpLine("}");
+
+                        //copy the source node value into the input parameter array
+                        AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
+                        AddCSharpLine("");
                      }
                   }
 
                   //check to see if any source nodes are local variables
                   if (argNode is OwnerConnection)
                   {
-                     AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
-                     needsProperties = true;
+                     //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+                     //AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
+                     //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+
+                     //make sure our input array is large enough to hold another value
+                     AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
+                     AddCSharpLine("{");
+                     ++m_TabStack;
+                     AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
+                     --m_TabStack;
+                     AddCSharpLine("}");
+
+                     //copy the source node value into the input parameter array
+                     AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
+                     AddCSharpLine("");
                   }
 
                   //check to see if any source nodes are property nodes
@@ -5205,38 +5209,65 @@ namespace Detox.ScriptEditor
                      {
                         SyncReferencedGameObject(argNode, entityProperty.Parameter);
 
+                        //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+
                         //if the property variable is an array then we need to copy the array
                         //to the next available index of the input parameter
                         if (entityProperty.Parameter.Type.Contains("[]"))
                         {
-                           if (entityProperty.Parameter.Type == parameter.Type)
-                           {
-                              // if this is the only connection and the type matches
-                              // then we can do a direct copy
-                              if (links.Length == 1)
-                                 AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "();");
-                              else
-                              {
-                                 AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
-                                 needsProperties = true;
-                              }
-                           }
-                           else
-                           {
-                              AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type.Replace("[]", "")) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
-                              AddCSharpLine("{");
-                              ++m_TabStack;
-                                 AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
-                              --m_TabStack;
-                              AddCSharpLine("}");
+                           //if (entityProperty.Parameter.Type == parameter.Type)
+                           //{
+                           //   // if this is the only connection and the type matches
+                           //   // then we can do a direct copy
+                           //   if (links.Length == 1)
+                           //      AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "();");
+                           //   else
+                           //   {
+                           //      AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                           //      needsProperties = true;
+                           //   }
+                           //}
+                           //else
+                           //{
+                           //   AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type.Replace("[]", "")) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
+                           //   AddCSharpLine("{");
+                           //   ++m_TabStack;
+                           //      AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
+                           //   --m_TabStack;
+                           //   AddCSharpLine("}");
+                           //}
 
-                              needsProperties = true;
-                           }
+                           //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                           AddCSharpLine("properties = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+
+                           //make sure our input array is large enough to hold the array we're copying into it
+                           AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
+                           AddCSharpLine("{");
+                           ++m_TabStack;
+                           AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
+                           --m_TabStack;
+                           AddCSharpLine("}");
+
+                           AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
+                           AddCSharpLine("index += properties.Length;");
+                           AddCSharpLine("");
                         }
                         else
                         {
-                           AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
-                           needsProperties = true;
+                           //AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                           //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+
+                           //make sure our input array is large enough to hold another value
+                           AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
+                           AddCSharpLine("{");
+                           ++m_TabStack;
+                           AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
+                           --m_TabStack;
+                           AddCSharpLine("}");
+
+                           //copy the source node value into the input parameter array
+                           AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+                           AddCSharpLine("");
                         }
                      }
                   }
@@ -5284,22 +5315,19 @@ namespace Detox.ScriptEditor
                }
             }
 
-
-            string newCode = SetCode(currentCode);
-
-            if (true == needsProperties)
-               AddCSharpLine("List<" + FormatType(parameter.Type.Replace("[]", "")) + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
-
-            m_CSharpString.Append(newCode);
-
-            if (true == needsProperties)
-               AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-
             --m_TabStack;
             AddCSharpLine("}");
-
-            needsProperties = false;
          }
+
+         //string newCode = SetCode(currentCode);
+
+         //if (newCode != "")
+         //{
+         //   if (true == needsIndex) AddCSharpLine("int index;");
+         //   if (true == needsProperties) AddCSharpLine("System.Array properties;");
+
+         //   m_CSharpString += newCode;
+         //}
 
          --m_TabStack;
          AddCSharpLine("}");
