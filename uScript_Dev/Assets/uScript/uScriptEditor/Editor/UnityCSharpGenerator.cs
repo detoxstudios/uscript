@@ -5272,6 +5272,8 @@ namespace Detox.ScriptEditor
                      }
                   }
                }
+
+               AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index);");
             }
             else
             {
