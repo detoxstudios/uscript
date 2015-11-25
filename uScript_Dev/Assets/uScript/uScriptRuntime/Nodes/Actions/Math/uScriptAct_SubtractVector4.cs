@@ -11,7 +11,8 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
-[FriendlyName("Subtract Vector4", "Subtracts two Vector4 variables and returns the result.")]
+[NodeDeprecated(typeof(uScriptAct_SubtractVector4_v2))]
+[FriendlyName("Subtract Vector4 (OLD)", "Subtracts two Vector4 variables and returns the result.")]
 public class uScriptAct_SubtractVector4 : uScriptLogic
 {
    public bool Out { get { return true; } }

@@ -37,34 +37,36 @@ public class uScriptAct_IsComponentActive : uScriptLogic
       Component comp = Target.GetComponent( component );
 
       m_IsActive = false;
-      
-      if (null != comp )
+
+      Behaviour b = comp as Behaviour;
+      if (b != null)
       {
-         if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-         {
-            m_IsActive = ((Behaviour)comp).enabled;
-         }
-         else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-         {
-            m_IsActive = ((ParticleEmitter)comp).enabled;
-         }
-         else if (typeof(Collider).IsAssignableFrom(comp.GetType()))
-         {
-            m_IsActive = ((Collider)comp).enabled;
-         }
-         else if (typeof(Collider).IsAssignableFrom(comp.GetType()))
-         {
-            m_IsActive = ((Collider)comp).enabled;
-         }
-         else if (typeof(MeshRenderer).IsAssignableFrom(comp.GetType()))
-         {
-            m_IsActive = ((MeshRenderer)comp).enabled;
-         }
-         else
-         {
-             uScriptDebug.Log("Unrecognized component type: " + component, uScriptDebug.Type.Error);
-         }
+         m_IsActive = b.enabled;
+         return;
       }
+
+      ParticleEmitter pe = comp as ParticleEmitter;
+      if (pe != null)
+      {
+         m_IsActive = pe.enabled;
+         return;
+      }
+
+      Collider c = comp as Collider;
+      if (c != null)
+      {
+         m_IsActive = c.enabled;
+         return;
+      }
+
+      MeshRenderer me = comp as MeshRenderer;
+      if (me != null)
+      {
+         m_IsActive = me.enabled;
+         return;
+      }
+
+      uScriptDebug.Log("Unrecognized component type: " + component, uScriptDebug.Type.Error);
    }
 }
 

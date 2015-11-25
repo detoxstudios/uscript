@@ -11,7 +11,8 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
-[FriendlyName("Multiply Vector2", "Multiplies Vector2 variables together and returns the result." +
+[NodeDeprecated(typeof(uScriptAct_MultiplyVector2_v2))]
+[FriendlyName("Multiply Vector2 (OLD)", "Multiplies Vector2 variables together and returns the result." +
  "\n\n[ A + B ]" +
  "\n\nIf more than one variable is connected to A, they will be multiplied together before being multiplied to B." +
  "\n\nIf more than one variable is connected to B, they will be multiplied together before being multiplied to A.")]

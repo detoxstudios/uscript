@@ -42,13 +42,14 @@ public class uScriptAct_Particles : uScriptLogic
             Component comp = currentTarget.GetComponent(typeof(ParticleEmitter));
             if (comp != null)
             {
-               if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+               ParticleEmitter pe = comp as ParticleEmitter;
+               if (pe != null)
                {
                   if (ClearParticles)
                   {
-                     ((ParticleEmitter)comp).ClearParticles();
+                     pe.ClearParticles();
                   }
-                  ((ParticleEmitter)comp).emit = true;
+                 pe.emit = true;
                }
             }
          }
@@ -72,12 +73,13 @@ public class uScriptAct_Particles : uScriptLogic
             Component comp = currentTarget.GetComponent(typeof(ParticleEmitter));
             if (comp != null)
             {
-               if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+               ParticleEmitter pe = comp as ParticleEmitter;
+               if (pe != null)
                {
-                  ((ParticleEmitter)comp).emit = false;
+                  pe.emit = false;
                   if (ClearParticles)
                   {
-                     ((ParticleEmitter)comp).ClearParticles();
+                     pe.ClearParticles();
                   }
                }
             }

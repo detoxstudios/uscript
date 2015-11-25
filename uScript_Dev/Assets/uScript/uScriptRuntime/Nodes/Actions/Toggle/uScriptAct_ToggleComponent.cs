@@ -78,24 +78,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else
                {
-#if !UNITY_FLASH
-                  Component comp = currentTarget.GetComponent(currentComponentName);
-                  if (comp != null)
-                  {
-                     if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-                     {
-                        ((Behaviour)comp).enabled = true;
-                     }
-                     else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-                     {
-                        ((ParticleEmitter)comp).enabled = true;
-                     }
-							else if (typeof(LineRenderer).IsAssignableFrom(comp.GetType()))
-                     {
-                        ((LineRenderer)comp).enabled = true;
-                     }
-                  }
-#endif
+                  EnableThis(currentTarget.GetComponent(currentComponentName), true);
                }
             }
          }
@@ -146,24 +129,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else
                {
-#if !UNITY_FLASH
-                  Component comp = currentTarget.GetComponent(currentComponentName);
-                  if (comp != null)
-                  {
-                     if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-                     {
-                        ((Behaviour)comp).enabled = false;
-                     }
-                     else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-                     {
-                        ((ParticleEmitter)comp).enabled = false;
-                     }
-					 else if (typeof(LineRenderer).IsAssignableFrom(comp.GetType()))
-                     {
-                        ((LineRenderer)comp).enabled = false;
-                     }
-                  }
-#endif
+                  EnableThis(currentTarget.GetComponent(currentComponentName), false);
                }
             }
          }
@@ -258,51 +224,8 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else
                {
-#if !UNITY_FLASH
-                  Component comp = currentTarget.GetComponent(currentComponentName);
-                  if (comp != null)
-                  {
-                     if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-                     {
-                        if ( ((Behaviour)comp).enabled )
-                        {
-                           ((Behaviour)comp).enabled = false;
-                           turnedOff = true;
-                        }
-                        else
-                        {
-                           ((Behaviour)comp).enabled = true;
-                           turnedOn = true;
-                        }
-                     }
-                     else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-                     {
-                        if ( ((ParticleEmitter)comp).enabled )
-                        {
-                           ((ParticleEmitter)comp).enabled = false;
-                           turnedOff = true;
-                        }
-                        else
-                        {
-                           ((ParticleEmitter)comp).enabled = true;
-                           turnedOn = true;
-                        }
-                     }
-					 else if (typeof(LineRenderer).IsAssignableFrom(comp.GetType()))
-                     {
-                        if ( ((LineRenderer)comp).enabled )
-                        {
-                           ((LineRenderer)comp).enabled = false;
-                           turnedOff = true;
-                        }
-                        else
-                        {
-                           ((LineRenderer)comp).enabled = true;
-                           turnedOn = true;
-                        }
-                     }
-                  }
-#endif
+                  turnedOn = ToggleThis(currentTarget.GetComponent(currentComponentName)); 
+                  turnedOff = ! turnedOn;
                }
             }
          }
@@ -319,4 +242,53 @@ public class uScriptAct_ToggleComponent : uScriptLogic
    //    Miscellaneous Node Functionality
    // ================================================================================
    //
+   private void EnableThis(Component comp, bool enable)
+   {
+      Behaviour b = comp as Behaviour;
+      if (b != null)
+      {
+         b.enabled = false;
+         return;
+      }
+
+      ParticleEmitter pe = comp as ParticleEmitter;
+      if (pe != null)
+      {
+         pe.enabled = false;
+         return;
+      }
+
+      LineRenderer le = comp as LineRenderer;
+      if (le != null)
+      {
+         le.enabled = false;
+         return;
+      }
+   }
+
+   private bool ToggleThis(Component comp)
+   {
+      Behaviour b = comp as Behaviour;
+      if (b != null)
+      {
+         b.enabled = ! b.enabled;
+         return b.enabled;
+      }
+
+      ParticleEmitter pe = comp as ParticleEmitter;
+      if (pe != null)
+      {
+         pe.enabled = ! pe.enabled;
+         return pe.enabled;
+      }
+
+      LineRenderer le = comp as LineRenderer;
+      if (le != null)
+      {
+         le.enabled = ! le.enabled;
+         return le.enabled;
+      }
+
+      return false;
+   }                   
 }
