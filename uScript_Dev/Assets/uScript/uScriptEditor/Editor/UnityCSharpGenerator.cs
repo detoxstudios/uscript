@@ -5181,7 +5181,7 @@ namespace Detox.ScriptEditor
                   }
 
                   //check to see if any source nodes are local variables
-                  if (argNode is OwnerConnection)
+                  else if (argNode is OwnerConnection)
                   {
                      //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
                      //AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
@@ -5318,16 +5318,6 @@ namespace Detox.ScriptEditor
             --m_TabStack;
             AddCSharpLine("}");
          }
-
-         //string newCode = SetCode(currentCode);
-
-         //if (newCode != "")
-         //{
-         //   if (true == needsIndex) AddCSharpLine("int index;");
-         //   if (true == needsProperties) AddCSharpLine("System.Array properties;");
-
-         //   m_CSharpString += newCode;
-         //}
 
          --m_TabStack;
          AddCSharpLine("}");
