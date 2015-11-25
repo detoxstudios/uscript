@@ -5081,9 +5081,6 @@ namespace Detox.ScriptEditor
             AddCSharpLine("{");
             ++m_TabStack;
 
-            AddCSharpLine("int index = 0;");
-            AddCSharpLine("System.Array properties;");
-
             //get all the links hooked to the input on this node
             LinkNode[] links = FindLinksByDestination(node.Guid, parameter.Name);
             if (links.Length == 0)
@@ -5095,6 +5092,9 @@ namespace Detox.ScriptEditor
 
             if (parameter.Type.Contains("[]"))
             {
+               AddCSharpLine("int index = 0;");
+               AddCSharpLine("System.Array properties;");
+
                foreach (LinkNode link in links)
                {
                   EntityNode argNode = m_Script.GetNode(link.Source.Guid);
