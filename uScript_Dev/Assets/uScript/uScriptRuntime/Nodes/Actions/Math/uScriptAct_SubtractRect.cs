@@ -11,7 +11,8 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
-[FriendlyName("Subtract Rect", "Subtracts Rect variables and returns the result.")]
+[NodeDeprecated(typeof(uScriptAct_SubtractRect_v2))]
+[FriendlyName("Subtract Rect (OLD)", "Subtracts Rect variables and returns the result.")]
 public class uScriptAct_SubtractRect : uScriptLogic
 {
    public bool Out { get { return true; } }

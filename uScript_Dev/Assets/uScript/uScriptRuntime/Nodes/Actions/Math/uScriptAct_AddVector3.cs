@@ -11,7 +11,8 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
-[FriendlyName("Add Vector3", "Adds Vector3 variables together and returns the result." +
+[NodeDeprecated(typeof(uScriptAct_AddVector3_v2))]
+[FriendlyName("Add Vector3 (OLD)", "Adds Vector3 variables together and returns the result." +
  "\n\n[ A + B ]" +
  "\n\nIf more than one variable is connected to A, they will be added together before being added to B." +
  "\n\nIf more than one variable is connected to B, they will be added together before being added to A.")]
