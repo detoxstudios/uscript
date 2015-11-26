@@ -5078,12 +5078,12 @@ namespace Detox.ScriptEditor
          
          foreach (Parameter parameter in parameters)
          {
+            AddCSharpLine("{");
+            ++m_TabStack;
+
             string currentCode = SetCode("");
 
             bool needsProperties = false;
-
-            AddCSharpLine("{");
-            ++m_TabStack;
 
             //get all the links hooked to the input on this node
             LinkNode[] links = FindLinksByDestination(node.Guid, parameter.Name);
@@ -5272,15 +5272,15 @@ namespace Detox.ScriptEditor
                }
             }
 
-            --m_TabStack;
-            AddCSharpLine("}");
-
             string newCode = SetCode(currentCode);
 
             if (true == needsProperties)
                AddCSharpLine("System.Array properties;");
 
             m_CSharpString.Append(newCode);
+
+            --m_TabStack;
+            AddCSharpLine("}");
          }
 
          --m_TabStack;
