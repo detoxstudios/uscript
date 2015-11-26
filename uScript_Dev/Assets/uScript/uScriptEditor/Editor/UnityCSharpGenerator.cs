@@ -5145,8 +5145,6 @@ namespace Detox.ScriptEditor
                      }
                      else
                      {
-                        needsProperties = true;
-
                         //make sure our input array is large enough to hold another value
                         AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
                         AddCSharpLine("{");
@@ -5164,8 +5162,6 @@ namespace Detox.ScriptEditor
                   //check to see if any source nodes are local variables
                   else if (argNode is OwnerConnection)
                   {
-                     needsProperties = true;
-
                      //make sure our input array is large enough to hold another value
                      AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
                      AddCSharpLine("{");
@@ -5225,8 +5221,6 @@ namespace Detox.ScriptEditor
                      }
                   }
                }
-
-               needsProperties = true;
 
                AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index);");
             }
