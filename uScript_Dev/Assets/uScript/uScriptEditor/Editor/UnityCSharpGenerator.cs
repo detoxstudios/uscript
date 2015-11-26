@@ -5078,6 +5078,10 @@ namespace Detox.ScriptEditor
          
          foreach (Parameter parameter in parameters)
          {
+            string currentCode = SetCode("");
+
+            bool needsProperties = false;
+
             AddCSharpLine("{");
             ++m_TabStack;
 
@@ -5093,7 +5097,6 @@ namespace Detox.ScriptEditor
             if (parameter.Type.Contains("[]"))
             {
                AddCSharpLine("int index = 0;");
-               AddCSharpLine("System.Array properties;");
 
                foreach (LinkNode link in links)
                {
@@ -5123,29 +5126,8 @@ namespace Detox.ScriptEditor
 
                      if (value.Type.Contains("[]"))
                      {
-                        //if (value.Type == parameter.Type)
-                        //{
-                        //   // if this is the only connection and the type matches
-                        //   // then we can do a direct copy
-                        //   if (links.Length == 1)
-                        //      AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
-                        //   else
-                        //   {
-                        //      AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
-                        //      needsProperties = true;
-                        //   }
-                        //}
-                        //else
-                        //{
-                        //   AddCSharpLine("foreach (" + FormatType(value.Type.Replace("[]", "")) + " _fet in " + CSharpName(argNode) + ")");
-                        //   AddCSharpLine("{");
-                        //   ++m_TabStack;
-                        //      AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
-                        //   --m_TabStack;
-                        //   AddCSharpLine("}");
-                        //}
+                        needsProperties = true;
 
-                        //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
                         AddCSharpLine("properties = " + CSharpName(argNode) + ";");
 
                         //make sure our input array is large enough to hold the array we're copying into it
@@ -5163,8 +5145,7 @@ namespace Detox.ScriptEditor
                      }
                      else
                      {
-                        //AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
-                        //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                        needsProperties = true;
 
                         //make sure our input array is large enough to hold another value
                         AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
@@ -5183,9 +5164,7 @@ namespace Detox.ScriptEditor
                   //check to see if any source nodes are local variables
                   else if (argNode is OwnerConnection)
                   {
-                     //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
-                     //AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
-                     //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                     needsProperties = true;
 
                      //make sure our input array is large enough to hold another value
                      AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
@@ -5209,35 +5188,12 @@ namespace Detox.ScriptEditor
                      {
                         SyncReferencedGameObject(argNode, entityProperty.Parameter);
 
-                        //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
-
                         //if the property variable is an array then we need to copy the array
                         //to the next available index of the input parameter
                         if (entityProperty.Parameter.Type.Contains("[]"))
                         {
-                           //if (entityProperty.Parameter.Type == parameter.Type)
-                           //{
-                           //   // if this is the only connection and the type matches
-                           //   // then we can do a direct copy
-                           //   if (links.Length == 1)
-                           //      AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "();");
-                           //   else
-                           //   {
-                           //      AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
-                           //      needsProperties = true;
-                           //   }
-                           //}
-                           //else
-                           //{
-                           //   AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type.Replace("[]", "")) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
-                           //   AddCSharpLine("{");
-                           //   ++m_TabStack;
-                           //      AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
-                           //   --m_TabStack;
-                           //   AddCSharpLine("}");
-                           //}
+                           needsProperties = true;
 
-                           //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
                            AddCSharpLine("properties = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
 
                            //make sure our input array is large enough to hold the array we're copying into it
@@ -5254,9 +5210,6 @@ namespace Detox.ScriptEditor
                         }
                         else
                         {
-                           //AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
-                           //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-
                            //make sure our input array is large enough to hold another value
                            AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
                            AddCSharpLine("{");
@@ -5272,6 +5225,8 @@ namespace Detox.ScriptEditor
                      }
                   }
                }
+
+               needsProperties = true;
 
                AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index);");
             }
@@ -5319,6 +5274,13 @@ namespace Detox.ScriptEditor
 
             --m_TabStack;
             AddCSharpLine("}");
+
+            string newCode = SetCode(currentCode);
+
+            if (true == needsProperties)
+               AddCSharpLine("System.Array properties;");
+
+            m_CSharpString.Append(newCode);
          }
 
          --m_TabStack;
