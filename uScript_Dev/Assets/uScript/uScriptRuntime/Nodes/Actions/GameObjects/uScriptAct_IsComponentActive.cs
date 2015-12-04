@@ -35,38 +35,40 @@ public class uScriptAct_IsComponentActive : uScriptLogic
       )
    {
       Component comp = Target.GetComponent( component );
-
       m_IsActive = false;
 
-      Behaviour b = comp as Behaviour;
-      if (b != null)
+      if (null != comp)
       {
-         m_IsActive = b.enabled;
-         return;
-      }
+         Behaviour b = comp as Behaviour;
+         if (b != null)
+         {
+            m_IsActive = b.enabled;
+            return;
+         }
 
-      ParticleEmitter pe = comp as ParticleEmitter;
-      if (pe != null)
-      {
-         m_IsActive = pe.enabled;
-         return;
-      }
+         ParticleEmitter pe = comp as ParticleEmitter;
+         if (pe != null)
+         {
+            m_IsActive = pe.enabled;
+            return;
+         }
 
-      Collider c = comp as Collider;
-      if (c != null)
-      {
-         m_IsActive = c.enabled;
-         return;
-      }
+         Collider c = comp as Collider;
+         if (c != null)
+         {
+            m_IsActive = c.enabled;
+            return;
+         }
 
-      MeshRenderer me = comp as MeshRenderer;
-      if (me != null)
-      {
-         m_IsActive = me.enabled;
-         return;
-      }
+         MeshRenderer me = comp as MeshRenderer;
+         if (me != null)
+         {
+            m_IsActive = me.enabled;
+            return;
+         }
 
-      uScriptDebug.Log("Unrecognized component type: " + component, uScriptDebug.Type.Error);
+         uScriptDebug.Log("Unrecognized component type: " + component, uScriptDebug.Type.Error);
+      }
    }
 }
 
