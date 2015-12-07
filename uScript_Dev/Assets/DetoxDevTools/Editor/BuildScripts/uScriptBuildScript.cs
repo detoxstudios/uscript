@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class uScriptBuildScript : MonoBehaviour
 {
+   [MenuItem("uScript/Internal/Rebuild All Graphs")]
+   public static void RebuildAllGraphs()
+   {
+      uScript.Instance.RebuildAllScripts(true);
+   }
+
    [MenuItem("uScript/Internal/Fixup Example Scenes", false, 200)]
    public static void FixupExampleScenes()
    {

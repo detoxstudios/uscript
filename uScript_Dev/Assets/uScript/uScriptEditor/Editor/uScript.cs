@@ -120,6 +120,7 @@ public sealed partial class uScript : EditorWindow
    private bool wantsPaste;
 
    private bool rebuildWhenReady;
+   private bool rebuildSilently;
 
    private float mapScale = 1.0f;
    private Vector2 zoomPoint;
@@ -1151,7 +1152,7 @@ public sealed partial class uScript : EditorWindow
       // Additional variable changes that should occur after OnGUI has completed
       this.mouseRegion = this.mouseRegionUpdate;
 
-      if (CodeValidator.RequireRebuild(this.forceCodeValidation))
+      if (CodeValidator.RequireRebuild(this.forceCodeValidation, this.rebuildSilently))
       {
          RebuildAllScripts();
       }
@@ -3428,13 +3429,14 @@ public sealed partial class uScript : EditorWindow
       RebuildScripts(path, true);
    }
 
-   public void RebuildAllScripts()
+   public void RebuildAllScripts(bool silent = false)
    {
       // First remove everything so we get rid of any compiler errors,
       // which allows the reflection to properly refresh
       this.FileMenuItem_Clean();
 
       this.rebuildWhenReady = true;
+      this.rebuildSilently = silent;
    }
 
    public void RebuildScript(string scriptFullName, bool stubCode)

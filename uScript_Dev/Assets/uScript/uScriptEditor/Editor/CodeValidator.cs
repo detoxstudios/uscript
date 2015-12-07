@@ -8,7 +8,7 @@ public class CodeValidator
    static private bool m_IsCompiling = false;
    static private bool m_UserOverrideErrors = false;
    
-   static public bool RequireRebuild( bool forceCheck )
+   static public bool RequireRebuild( bool forceCheck, bool silent = false )
    {
       bool compiling = EditorApplication.isCompiling;
 
@@ -31,18 +31,25 @@ public class CodeValidator
       {
          if ( false == CanGeneratedScriptsCompile( ) )
          {
-            bool yes = EditorUtility.DisplayDialog( "Rebuild Scripts?", "uScript has detected compile errors with your generated scripts.  " +
-                                                    "Rebuilding all scripts usually fixes this, would you like to rebuild all?", "Yes", "No" );
-
-            if ( true == yes )
+            if (!silent)
             {
-               requireRebuild = true;
+               bool yes = EditorUtility.DisplayDialog("Rebuild Scripts?", "uScript has detected compile errors with your generated scripts.  " +
+                                                       "Rebuilding all scripts usually fixes this, would you like to rebuild all?", "Yes", "No");
+
+               if (true == yes)
+               {
+                  requireRebuild = true;
+               }
+               else
+               {
+                  //if they chose 'no' don't rebuild scripts
+                  //then we won't ask them again until the scripts can successfully compile
+                  //at which time we reset the override
+                  m_UserOverrideErrors = true;
+               }
             }
             else
             {
-               //if they chose 'no' don't rebuild scripts
-               //then we won't ask them again until the scripts can successfully compile
-               //at which time we reset the override
                m_UserOverrideErrors = true;
             }
          }
