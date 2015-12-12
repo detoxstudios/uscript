@@ -767,9 +767,8 @@ public sealed partial class uScript : EditorWindow
       }
 
       String lastOpened = (String)GetSetting("uScript\\LastOpened", string.Empty);
-      String lastScene = (String)GetSetting("uScript\\LastScene", string.Empty);
-      //Debug.Log("last = " + lastOpened + ", lastScene = " + lastScene );
-      if (!String.IsNullOrEmpty(lastOpened) && lastScene == UnityEditor.EditorApplication.currentScene)
+      //Debug.Log("last = " + lastOpened + ");
+      if (!String.IsNullOrEmpty(lastOpened))
       {
          this.fullPath = UnityEngine.Application.dataPath + lastOpened;
          //Debug.Log("fp loaded from settings" );
@@ -3321,7 +3320,6 @@ public sealed partial class uScript : EditorWindow
 
       //Debug.Log("clearing" );
       uScript.SetSetting("uScript\\LastOpened", string.Empty);
-      uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
    }
 
    private void ClearEntityTypes()
@@ -3397,7 +3395,6 @@ public sealed partial class uScript : EditorWindow
          this.fullPath = fullPath;
 
          SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
-         SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
 
          this.currentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(this.fullPath) + "\\CanvasPosition", string.Empty);
 
@@ -3723,7 +3720,6 @@ public sealed partial class uScript : EditorWindow
 
          this.fullPath = chosenPath;
          SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(this.fullPath).Substring("Assets".Length));
-         SetSetting("uScript\\LastScene", EditorApplication.currentScene);
       }
 
       if (this.fullPath == string.Empty)
