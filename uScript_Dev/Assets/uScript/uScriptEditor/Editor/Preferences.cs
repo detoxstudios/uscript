@@ -329,6 +329,12 @@ namespace Detox.Editor
          set { this.LoadIfRequired(); this.preferences["GraphListFolderStates"] = value; }
       }
 
+      public bool RefreshOnHierarchyChange
+      {
+         get { this.LoadIfRequired(); return (bool)this.preferences["RefreshOnHierarchyChange"]; }
+         set { this.LoadIfRequired(); this.preferences["RefreshOnHierarchyChange"] = value; }
+      }
+
       public bool ShowHierarchyIcon
       {
          get { this.LoadIfRequired(); return (bool)this.preferences["ShowHierarchyIcon"]; }
@@ -462,6 +468,8 @@ namespace Detox.Editor
          this.SetDefault("FavoriteNode9", string.Empty);
 
          this.SetDefault("GraphListFolderStates", string.Empty);
+
+         this.SetDefault("RefreshOnHierarchyChange", true);
 
          this.SetDefault("ShowHierarchyIcon", true);
          this.SetDefault("LineWidthMultiplier", 1.0f);

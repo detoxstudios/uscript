@@ -161,8 +161,6 @@ public sealed partial class uScript : EditorWindow
    private MouseEventArgs m_MouseUpArgs;
    private MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
 
-   private bool _wasHierarchyChanged;
-
    private bool m_CanvasDragging;
 
    private bool _isContextMenuOpen;
@@ -1196,26 +1194,6 @@ public sealed partial class uScript : EditorWindow
          this.undoObject.UndoNumber = m_UndoNumber;
       }
 
-      if (_wasHierarchyChanged)
-      {
-         //Unity calls HierarchyChanged all the time
-         //while the app is playing, we need to ignore this
-         //so uscript isn't constantly being reopened.
-         if (false == Application.isPlaying)
-         {
-            _wasHierarchyChanged = false;
-
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
-            if (Preferences.AutoUpdateReflection)
-            {
-               this.UpdateReflectedTypes();
-            }
-#endif
-
-            OpenFromCache();
-         }
-      }
-
       if (this.wantsCopy)
       {
          m_ScriptEditorCtrl.CopyToClipboard(true);
@@ -1448,10 +1426,34 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   private void RefreshOnHierarchyChange()
+   {
+      // Unity calls OnHierarchyChanged all the time while the app is playing.
+      // We need to delay those calls so uScript isn't constantly being reopened.
+      if (Application.isPlaying)
+      {
+         EditorApplication.delayCall += this.RefreshOnHierarchyChange;
+      }
+      else
+      {
+         uScriptGUIPanelToolbox.Instance.ClearSearchFilter();
+
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
+         if (Preferences.AutoUpdateReflection)
+         {
+            this.UpdateReflectedTypes();
+         }
+#endif
+         this.OpenFromCache();
+      }
+   }
+
    internal void OnHierarchyChange()
    {
-      _wasHierarchyChanged = true;
-      uScriptGUIPanelToolbox.Instance.ClearSearchFilter();
+      if (Preferences.RefreshOnHierarchyChange)
+      {
+         EditorApplication.delayCall += this.RefreshOnHierarchyChange;
+      }
    }
 
    internal void OnProjectChange()

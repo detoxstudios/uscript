@@ -19,7 +19,7 @@ namespace Detox.Editor.GUI.Windows
    [SuppressMessage("ReSharper", "RedundantNameQualifier")]
    public class PreferenceWindow : EditorWindow
    {
-      private const int LabelWidth = 230;
+      private const int LabelWidth = 250;
       private const int ValueWidth = 120;
 
       private const int MinGridSize = 8;
@@ -283,7 +283,7 @@ namespace Detox.Editor.GUI.Windows
          EditorGUILayout.BeginHorizontal();
          {
             boolValue = this.preferences.Profiling;
-            boolValue = EditorGUILayout.Toggle("Profiling [time threshold]", boolValue, GUILayout.Width(250));
+            boolValue = EditorGUILayout.Toggle("Profiling [time threshold]", boolValue, GUILayout.Width(LabelWidth + 20));
             this.preferences.Profiling = boolValue;
 
             EditorGUI.indentLevel--;
@@ -305,6 +305,9 @@ namespace Detox.Editor.GUI.Windows
          this.preferences.PropertyPanelNodeLimit = Mathf.Min(
             MaxPropertyPanelNodes,
             Mathf.Max(MinPropertyPanelNodes, intValue));
+
+         boolValue = EditorGUILayout.Toggle("Refresh on Hierarchy or Scene Change", this.preferences.RefreshOnHierarchyChange);
+         this.preferences.RefreshOnHierarchyChange = boolValue;
 
          EditorGUILayout.Separator();
       }
