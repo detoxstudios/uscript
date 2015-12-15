@@ -247,21 +247,21 @@ public class uScriptAct_ToggleComponent : uScriptLogic
       Behaviour b = comp as Behaviour;
       if (b != null)
       {
-         b.enabled = false;
+         b.enabled = enable;
          return;
       }
 
       ParticleEmitter pe = comp as ParticleEmitter;
       if (pe != null)
       {
-         pe.enabled = false;
+         pe.enabled = enable;
          return;
       }
 
       LineRenderer le = comp as LineRenderer;
       if (le != null)
       {
-         le.enabled = false;
+         le.enabled = enable;
          return;
       }
    }
