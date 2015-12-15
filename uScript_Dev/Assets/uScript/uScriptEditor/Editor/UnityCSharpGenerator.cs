@@ -2166,6 +2166,9 @@ namespace Detox.ScriptEditor
 
             string prefix = "true" == local.Externaled.Default ? "public " : "";
 
+            if (prefix != "" && (local.Value.Type == typeof(String).ToString() || local.Value.Type == typeof(String[]).ToString()))
+               AddCSharpLine("[Multiline]");
+
             AddCSharpLine(prefix + FormatType(local.Value.Type) + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";");
 
             if (local.Value.Type == "UnityEngine.GameObject")
