@@ -5087,6 +5087,7 @@ namespace Detox.ScriptEditor
             string currentCode = SetCode("");
 
             bool needsProperties = false;
+            bool needsIndex = false;
 
             //get all the links hooked to the input on this node
             LinkNode[] links = FindLinksByDestination(node.Guid, parameter.Name);
@@ -5099,8 +5100,6 @@ namespace Detox.ScriptEditor
 
             if (parameter.Type.Contains("[]"))
             {
-               AddCSharpLine("int index = 0;");
-
                foreach (LinkNode link in links)
                {
                   EntityNode argNode = m_Script.GetNode(link.Source.Guid);
@@ -5145,6 +5144,8 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
                         AddCSharpLine("index += properties.Length;");
                         AddCSharpLine("");
+
+                        needsIndex = true;
                      }
                      else
                      {
@@ -5159,6 +5160,8 @@ namespace Detox.ScriptEditor
                         //copy the source node value into the input parameter array
                         AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
                         AddCSharpLine("");
+
+                        needsIndex = true;
                      }
                   }
 
@@ -5176,6 +5179,8 @@ namespace Detox.ScriptEditor
                      //copy the source node value into the input parameter array
                      AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
                      AddCSharpLine("");
+
+                     needsIndex = true;
                   }
 
                   //check to see if any source nodes are property nodes
@@ -5206,6 +5211,8 @@ namespace Detox.ScriptEditor
                            AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
                            AddCSharpLine("index += properties.Length;");
                            AddCSharpLine("");
+
+                           needsIndex = true;
                         }
                         else
                         {
@@ -5220,6 +5227,8 @@ namespace Detox.ScriptEditor
                            //copy the source node value into the input parameter array
                            AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
                            AddCSharpLine("");
+
+                           needsIndex = true;
                         }
                      }
                   }
@@ -5271,6 +5280,9 @@ namespace Detox.ScriptEditor
 
             if (true == needsProperties)
                AddCSharpLine("System.Array properties;");
+
+            if (true == needsIndex)
+               AddCSharpLine("int index = 0;");
 
             m_CSharpString.Append(newCode);
 
