@@ -47,7 +47,7 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 				m_ReadyCount = 0;
 				foreach (GameObject target in Targets)
 				{
-#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
 					MovieTexture mov = (MovieTexture)target.renderer.material.mainTexture;
 #else
                MovieTexture mov = (MovieTexture)target.GetComponent<Renderer>().material.mainTexture;
@@ -67,7 +67,7 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 			
          for (int i = 0; i < Targets.Length; i++)
          {
-#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
             MovieTexture mov = (MovieTexture)Targets[i].renderer.material.mainTexture;
 #else
             MovieTexture mov = (MovieTexture)Targets[i].GetComponent<Renderer>().material.mainTexture;

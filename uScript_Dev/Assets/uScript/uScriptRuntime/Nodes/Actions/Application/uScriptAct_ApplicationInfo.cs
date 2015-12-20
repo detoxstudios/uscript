@@ -36,7 +36,7 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       // This functionality was depricated in 5.2. You now need to specify a level index, so for
       // general application reporting you can no longer find out if ANY level might be currently loading, which
       // is what this node's intention to report out from this socket was for.
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1)
       [FriendlyName("isLoadingLevel", "Is some level being loaded?")]
       [SocketState(false, false)]
       out bool isLoadingLevel,
@@ -118,7 +118,7 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       // This functionality was depricated in 5.2. You now need to specify a level index, so for
       // general application reporting you can no longer find out if ANY level might be currently loading, which
       // is what this node's intention to report out from this socket was for.
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1)
       isLoadingLevel = Application.isLoadingLevel;
 #endif
 

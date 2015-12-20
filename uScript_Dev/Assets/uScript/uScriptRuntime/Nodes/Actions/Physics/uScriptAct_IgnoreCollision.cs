@@ -28,7 +28,7 @@ public class uScriptAct_IgnoreCollision : uScriptLogic
       bool Ignore
       )
    {
-#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
       if (A.collider != null && B.collider != null)
       {
          Physics.IgnoreCollision(A.collider, B.collider, Ignore);

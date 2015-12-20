@@ -487,7 +487,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
    private static string GetFilePathWithLabel(string label, string fileName)
    {
       var guids = AssetDatabase.FindAssets("l:" + label, null);
@@ -514,7 +514,7 @@ public sealed partial class uScript : EditorWindow
 
    public static List<string> GetGraphPaths(string label = "uScriptSource")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       return GetFilePathsWithLabel(label);
 #else
       return Directory.GetFiles(Preferences.UserScripts, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
@@ -523,7 +523,7 @@ public sealed partial class uScript : EditorWindow
 
    public static string GetGraphPath(string fileName, string label = "uScriptSource")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       return GetFilePathWithLabel(label, fileName);
 #else
       return FindFile(Preferences.UserScripts, string.Format("{0}.uscript", fileName));
@@ -1041,7 +1041,7 @@ public sealed partial class uScript : EditorWindow
       // Test for Unity Pro - Unity 3.1 Indie does not support RenderTextures
       get
       {
-#if (UNITY_3_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7)
          return SystemInfo.supportsRenderTextures;
 #else
          return Application.HasProLicense();
@@ -3460,7 +3460,7 @@ public sealed partial class uScript : EditorWindow
 
    public void RebuildScripts(string path, bool stubCode)
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
@@ -3489,7 +3489,7 @@ public sealed partial class uScript : EditorWindow
    {
       bool inVC = false;
 
-#if (UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       // blocking checkout of versioned file, if necessary
       if (UnityEditor.VersionControl.Provider.isActive)
       {
@@ -3548,7 +3548,7 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.GeneratedScripts);
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
@@ -3571,7 +3571,7 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.NestedScripts);
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
@@ -3865,7 +3865,7 @@ public sealed partial class uScript : EditorWindow
 
    private void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType, string label = "")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       DirectoryInfo directory = new DirectoryInfo(path);
       List<FileInfo> filesList = new List<FileInfo>();
       FileInfo[] files;
@@ -4226,7 +4226,7 @@ public sealed partial class uScript : EditorWindow
    {
       List<RawScript> rawScripts = new List<RawScript>();
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       string[] files = GetGraphPaths().ToArray();
 #else
       string[] files = FindAllFiles(Preferences.UserScripts, ".uscript");

@@ -22,7 +22,7 @@ public class uScriptAct_ShowMouseCursor : uScriptLogic
       bool show
       )
    {
-#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
       Screen.showCursor = show;
 #else
       Cursor.visible = show;
