@@ -3440,6 +3440,7 @@ public sealed partial class uScript : EditorWindow
 
    public void RebuildScript(string scriptFullName, bool stubCode)
    {
+      uScriptDebug.Log(string.Format("Rebuilding {0} - {1}...", scriptFullName, stubCode));
       var scriptEditor = new ScriptEditor(string.Empty, null, null);
       scriptEditor.Open(scriptFullName);
 
