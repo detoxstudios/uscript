@@ -175,8 +175,6 @@ public sealed partial class uScript : EditorWindow
    private Rect m_NodeWindowRect;
    private Rect m_NodeToolbarRect;
 
-   private Vector2 _guiPanelPalette_ScrollPos;
-
    private Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
 
    private bool shouldCloseEditorWindowOnNextUpdate;
@@ -3384,8 +3382,14 @@ public sealed partial class uScript : EditorWindow
 
       if (scriptEditor.Open(fullPath))
       {
-         if (uScript.Preferences.EnableSceneWarning && scriptEditor.SceneName != string.Empty
-             && scriptEditor.SceneName != Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene))
+         #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
+         #else
+            UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
+            string sceneName = scene != null ? scene.name : "";
+         #endif
+         
+         if (uScript.Preferences.EnableSceneWarning && scriptEditor.SceneName != string.Empty && scriptEditor.SceneName != sceneName)
          {
             var message =
                string.Format(
@@ -3787,7 +3791,14 @@ public sealed partial class uScript : EditorWindow
       //the scene name before we save
       if (pleaseAttachMe || currentlyAttached)
       {
-         script.SceneName = Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
+         #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
+         #else
+            UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
+            string sceneName = scene != null ? scene.name : "";
+         #endif
+
+         script.SceneName = sceneName;
       }
       else
       {

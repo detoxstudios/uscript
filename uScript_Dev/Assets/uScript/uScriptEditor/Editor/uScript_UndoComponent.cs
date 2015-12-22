@@ -21,8 +21,10 @@ public class uScript_UndoComponent : MonoBehaviour
             "The deprecated uScript Undo component was removed from the \"{0}\" GameObject. Please re-save your scene.\n",
             this.gameObject.name));
       DestroyImmediate(this);
-#if UNITY_5
-      EditorApplication.MarkSceneDirty();
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+      EditorApplication.MarkAMarkSceneDirty();
+#else
+      UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
 #endif
    }
 }
