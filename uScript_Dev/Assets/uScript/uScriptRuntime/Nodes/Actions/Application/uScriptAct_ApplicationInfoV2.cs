@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-#if (!UNITY_3_5 || !UNITY_4_6 || !UNITY_4_7 || !UNITY_5_0 || !UNITY_5_1 || !UNITY_5_2)
+#if (!UNITY_3_5 && !UNITY_4_6 && !UNITY_4_7 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2)
 [NodePath("Actions/Application")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
@@ -140,4 +140,4 @@ public class uScriptAct_ApplicationInfoV2 : uScriptLogic
       targetFrameRate = Application.targetFrameRate;
    }
 }
-#endif //#if (!UNITY_3_5 || !UNITY_4_6 || !UNITY_4_7 || !UNITY_5_0 || !UNITY_5_1 || !UNITY_5_2)
+#endif //#if (!UNITY_3_5 && !UNITY_4_6 && !UNITY_4_7 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2)
