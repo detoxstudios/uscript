@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2439
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -30,20 +30,20 @@ public class CodeGenTest : uScriptLogic
    System.Boolean local_154_System_Boolean = (bool) false;
    System.String local_156_System_String = "";
    System.String local_158_System_String = "";
-   UnityEngine.GameObject local_160_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_160_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_160_UnityEngine_GameObject_previous = null;
    System.Single local_161_System_Single = (float) 1E+08;
-   UnityEngine.Flare local_181_UnityEngine_Flare = null;
-   UnityEngine.Mesh local_182_UnityEngine_Mesh = null;
-   UnityEngine.Font local_183_UnityEngine_Font = null;
-   UnityEngine.Cubemap local_184_UnityEngine_Cubemap = null;
-   UnityEngine.GUISkin local_185_UnityEngine_GUISkin = null;
-   UnityEngine.PhysicMaterial local_188_UnityEngine_PhysicMaterial = null;
-   UnityEngine.GameObject local_189_UnityEngine_GameObject = null;
+   UnityEngine.Flare local_181_UnityEngine_Flare = default(UnityEngine.Flare);
+   UnityEngine.Mesh local_182_UnityEngine_Mesh = default(UnityEngine.Mesh);
+   UnityEngine.Font local_183_UnityEngine_Font = default(UnityEngine.Font);
+   UnityEngine.Cubemap local_184_UnityEngine_Cubemap = default(UnityEngine.Cubemap);
+   UnityEngine.GUISkin local_185_UnityEngine_GUISkin = default(UnityEngine.GUISkin);
+   UnityEngine.PhysicMaterial local_188_UnityEngine_PhysicMaterial = default(UnityEngine.PhysicMaterial);
+   UnityEngine.GameObject local_189_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_189_UnityEngine_GameObject_previous = null;
    System.String local_19_System_String = "";
-   UnityEngine.TextAsset local_190_UnityEngine_TextAsset = null;
-   UnityEngine.Shader local_191_UnityEngine_Shader = null;
+   UnityEngine.TextAsset local_190_UnityEngine_TextAsset = default(UnityEngine.TextAsset);
+   UnityEngine.Shader local_191_UnityEngine_Shader = default(UnityEngine.Shader);
    System.String local_222_System_String = "";
    System.String local_223_System_String = "";
    UnityEngine.KeyCode local_263_UnityEngine_KeyCode = UnityEngine.KeyCode.Plus;
@@ -56,35 +56,35 @@ public class CodeGenTest : uScriptLogic
    System.String local_3_System_String = "Prefix";
    System.Object local_301_System_Object = "";
    System.Single local_302_System_Single = (float) 0;
-   UnityEngine.GameObject local_303_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_303_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_303_UnityEngine_GameObject_previous = null;
    System.Int32 local_307_System_Int32 = (int) 0;
    UnityEngine.Quaternion local_309_UnityEngine_Quaternion = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
    UnityEngine.Rect local_315_UnityEngine_Rect = new Rect( );
    System.Int32 local_325_System_Int32 = (int) 3;
-   UnityEngine.Texture2D local_331_UnityEngine_Texture2D = null;
+   UnityEngine.Texture2D local_331_UnityEngine_Texture2D = default(UnityEngine.Texture2D);
    UnityEngine.Vector3 local_336_UnityEngine_Vector3 = new Vector3( );
    UnityEngine.Vector4 local_344_UnityEngine_Vector4 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
    UnityEngine.KeyCode local_345_UnityEngine_KeyCode = UnityEngine.KeyCode.G;
-   UnityEngine.Material local_349_UnityEngine_Material = null;
+   UnityEngine.Material local_349_UnityEngine_Material = default(UnityEngine.Material);
    UnityEngine.Quaternion local_369_UnityEngine_Quaternion = new Quaternion( );
-   UnityEngine.GameObject local_392_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_392_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_392_UnityEngine_GameObject_previous = null;
    UnityEngine.KeyCode local_394_UnityEngine_KeyCode = UnityEngine.KeyCode.I;
    System.String local_4_System_String = "Postfix";
    UnityEngine.KeyCode local_408_UnityEngine_KeyCode = UnityEngine.KeyCode.M;
    UnityEngine.AudioClip[] local_467_UnityEngine_AudioClipArray = new UnityEngine.AudioClip[ 0 ];
-   UnityEngine.AudioClip local_470_UnityEngine_AudioClip = null;
+   UnityEngine.AudioClip local_470_UnityEngine_AudioClip = default(UnityEngine.AudioClip);
    UnityEngine.AudioClip[] local_474_UnityEngine_AudioClipArray = new UnityEngine.AudioClip[ 0 ];
-   UnityEngine.AudioClip local_475_UnityEngine_AudioClip = null;
-   UnityEngine.AudioClip local_476_UnityEngine_AudioClip = null;
+   UnityEngine.AudioClip local_475_UnityEngine_AudioClip = default(UnityEngine.AudioClip);
+   UnityEngine.AudioClip local_476_UnityEngine_AudioClip = default(UnityEngine.AudioClip);
    UnityEngine.AudioClip[] local_477_UnityEngine_AudioClipArray = new UnityEngine.AudioClip[ 0 ];
    System.String local_482_System_String = "ABCD";
    System.String local_483_System_String = "";
-   UnityEngine.GameObject local_485_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_485_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_485_UnityEngine_GameObject_previous = null;
    UnityEngine.Camera[] local_Camera_List_UnityEngine_CameraArray = new UnityEngine.Camera[] {};
-   UnityEngine.GameObject local_MasterGO_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_MasterGO_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_MasterGO_UnityEngine_GameObject_previous = null;
    System.String local_MyEvent_System_String = "Event";
    System.String local_Named_Variable_System_String = "";
@@ -233,8 +233,8 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_Log_Out_72 = true;
    //pointer to script instanced logic node
    uScriptCon_CheckDistance logic_uScriptCon_CheckDistance_uScriptCon_CheckDistance_74 = new uScriptCon_CheckDistance( );
-   UnityEngine.GameObject logic_uScriptCon_CheckDistance_A_74 = null;
-   UnityEngine.GameObject logic_uScriptCon_CheckDistance_B_74 = null;
+   UnityEngine.GameObject logic_uScriptCon_CheckDistance_A_74 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptCon_CheckDistance_B_74 = default(UnityEngine.GameObject);
    System.Single logic_uScriptCon_CheckDistance_Distance_74 = (float) 0;
    bool logic_uScriptCon_CheckDistance_Closer_74 = true;
    bool logic_uScriptCon_CheckDistance_Further_74 = true;
@@ -268,8 +268,8 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptCon_CompareFloat_LessThan_79 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareGameObjects logic_uScriptCon_CompareGameObjects_uScriptCon_CompareGameObjects_80 = new uScriptCon_CompareGameObjects( );
-   UnityEngine.GameObject logic_uScriptCon_CompareGameObjects_A_80 = null;
-   UnityEngine.GameObject logic_uScriptCon_CompareGameObjects_B_80 = null;
+   UnityEngine.GameObject logic_uScriptCon_CompareGameObjects_A_80 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptCon_CompareGameObjects_B_80 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptCon_CompareGameObjects_CompareByTag_80 = (bool) false;
    System.Boolean logic_uScriptCon_CompareGameObjects_CompareByName_80 = (bool) false;
    System.Boolean logic_uScriptCon_CompareGameObjects_ReportNull_80 = (bool) true;
@@ -317,7 +317,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_Log_Out_86 = true;
    //pointer to script instanced logic node
    uScriptCon_GameObjectHasTag logic_uScriptCon_GameObjectHasTag_uScriptCon_GameObjectHasTag_87 = new uScriptCon_GameObjectHasTag( );
-   UnityEngine.GameObject logic_uScriptCon_GameObjectHasTag_GameObject_87 = null;
+   UnityEngine.GameObject logic_uScriptCon_GameObjectHasTag_GameObject_87 = default(UnityEngine.GameObject);
    System.String[] logic_uScriptCon_GameObjectHasTag_Tag_87 = new System.String[] {};
    bool logic_uScriptCon_GameObjectHasTag_HasAllTags_87 = true;
    bool logic_uScriptCon_GameObjectHasTag_HasTag_87 = true;
@@ -478,13 +478,13 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_GUISetFocusedControl_Out_117 = true;
    //pointer to script instanced logic node
    uScriptAct_GUISetSkin logic_uScriptAct_GUISetSkin_uScriptAct_GUISetSkin_118 = new uScriptAct_GUISetSkin( );
-   UnityEngine.GUISkin logic_uScriptAct_GUISetSkin_skin_118 = null;
+   UnityEngine.GUISkin logic_uScriptAct_GUISetSkin_skin_118 = default(UnityEngine.GUISkin);
    bool logic_uScriptAct_GUISetSkin_Out_118 = true;
    //pointer to script instanced logic node
    uScriptAct_GUIBeginGroup logic_uScriptAct_GUIBeginGroup_uScriptAct_GUIBeginGroup_119 = new uScriptAct_GUIBeginGroup( );
    UnityEngine.Rect logic_uScriptAct_GUIBeginGroup_Position_119 = new Rect( (float)0, (float)0, (float)0, (float)0 );
    System.String logic_uScriptAct_GUIBeginGroup_Text_119 = "";
-   UnityEngine.Texture2D logic_uScriptAct_GUIBeginGroup_Texture_119 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIBeginGroup_Texture_119 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIBeginGroup_ToolTip_119 = "";
    System.String logic_uScriptAct_GUIBeginGroup_guiStyle_119 = "";
    bool logic_uScriptAct_GUIBeginGroup_Out_119 = true;
@@ -492,7 +492,7 @@ public class CodeGenTest : uScriptLogic
    uScriptAct_GUIBox logic_uScriptAct_GUIBox_uScriptAct_GUIBox_120 = new uScriptAct_GUIBox( );
    System.String logic_uScriptAct_GUIBox_Text_120 = "";
    UnityEngine.Rect logic_uScriptAct_GUIBox_Position_120 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIBox_Texture_120 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIBox_Texture_120 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIBox_ToolTip_120 = "";
    System.String logic_uScriptAct_GUIBox_guiStyle_120 = "";
    bool logic_uScriptAct_GUIBox_Out_120 = true;
@@ -501,7 +501,7 @@ public class CodeGenTest : uScriptLogic
    System.String logic_uScriptAct_GUIButton_Text_121 = "";
    System.Int32 logic_uScriptAct_GUIButton_identifier_121 = (int) 0;
    UnityEngine.Rect logic_uScriptAct_GUIButton_Position_121 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIButton_Texture_121 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIButton_Texture_121 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIButton_ToolTip_121 = "";
    System.String logic_uScriptAct_GUIButton_guiStyle_121 = "";
    bool logic_uScriptAct_GUIButton_Out_121 = true;
@@ -521,7 +521,7 @@ public class CodeGenTest : uScriptLogic
    uScriptAct_GUILabel logic_uScriptAct_GUILabel_uScriptAct_GUILabel_124 = new uScriptAct_GUILabel( );
    System.String logic_uScriptAct_GUILabel_Text_124 = "";
    UnityEngine.Rect logic_uScriptAct_GUILabel_Position_124 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_124 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_124 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILabel_ToolTip_124 = "";
    System.String logic_uScriptAct_GUILabel_guiStyle_124 = "";
    bool logic_uScriptAct_GUILabel_Out_124 = true;
@@ -555,7 +555,7 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_GUITexture logic_uScriptAct_GUITexture_uScriptAct_GUITexture_128 = new uScriptAct_GUITexture( );
    UnityEngine.Rect logic_uScriptAct_GUITexture_Position_128 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUITexture_Texture_128 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUITexture_Texture_128 = default(UnityEngine.Texture2D);
    UnityEngine.ScaleMode logic_uScriptAct_GUITexture_scaleMode_128 = UnityEngine.ScaleMode.StretchToFill;
    System.Boolean logic_uScriptAct_GUITexture_alphaBlend_128 = (bool) true;
    System.Single logic_uScriptAct_GUITexture_aspect_128 = (float) 1;
@@ -565,7 +565,7 @@ public class CodeGenTest : uScriptLogic
    System.Boolean logic_uScriptAct_GUIToggle_Value_129 = (bool) false;
    System.String logic_uScriptAct_GUIToggle_Text_129 = "";
    UnityEngine.Rect logic_uScriptAct_GUIToggle_Position_129 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIToggle_Texture_129 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIToggle_Texture_129 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIToggle_ToolTip_129 = "";
    System.String logic_uScriptAct_GUIToggle_guiStyle_129 = "";
    bool logic_uScriptAct_GUIToggle_Out_129 = true;
@@ -643,77 +643,77 @@ public class CodeGenTest : uScriptLogic
    uScriptAct_SendCustomEvent logic_uScriptAct_SendCustomEvent_uScriptAct_SendCustomEvent_142 = new uScriptAct_SendCustomEvent( );
    System.String logic_uScriptAct_SendCustomEvent_EventName_142 = "";
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEvent_sendGroup_142 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEvent_EventSender_142 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEvent_EventSender_142 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEvent_Out_142 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventBool logic_uScriptAct_SendCustomEventBool_uScriptAct_SendCustomEventBool_143 = new uScriptAct_SendCustomEventBool( );
    System.String logic_uScriptAct_SendCustomEventBool_EventName_143 = "";
    System.Boolean logic_uScriptAct_SendCustomEventBool_EventValue_143 = (bool) false;
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventBool_sendGroup_143 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventBool_EventSender_143 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventBool_EventSender_143 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventBool_Out_143 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventColor logic_uScriptAct_SendCustomEventColor_uScriptAct_SendCustomEventColor_144 = new uScriptAct_SendCustomEventColor( );
    System.String logic_uScriptAct_SendCustomEventColor_EventName_144 = "";
    UnityEngine.Color logic_uScriptAct_SendCustomEventColor_EventValue_144 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventColor_sendGroup_144 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventColor_EventSender_144 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventColor_EventSender_144 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventColor_Out_144 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventFloat logic_uScriptAct_SendCustomEventFloat_uScriptAct_SendCustomEventFloat_145 = new uScriptAct_SendCustomEventFloat( );
    System.String logic_uScriptAct_SendCustomEventFloat_EventName_145 = "";
    System.Single logic_uScriptAct_SendCustomEventFloat_EventValue_145 = (float) 0;
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventFloat_sendGroup_145 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventFloat_EventSender_145 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventFloat_EventSender_145 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventFloat_Out_145 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventGameObject logic_uScriptAct_SendCustomEventGameObject_uScriptAct_SendCustomEventGameObject_146 = new uScriptAct_SendCustomEventGameObject( );
    System.String logic_uScriptAct_SendCustomEventGameObject_EventName_146 = "";
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventGameObject_EventValue_146 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventGameObject_EventValue_146 = default(UnityEngine.GameObject);
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventGameObject_sendGroup_146 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventGameObject_EventSender_146 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventGameObject_EventSender_146 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventGameObject_Out_146 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventInt logic_uScriptAct_SendCustomEventInt_uScriptAct_SendCustomEventInt_147 = new uScriptAct_SendCustomEventInt( );
    System.String logic_uScriptAct_SendCustomEventInt_EventName_147 = "";
    System.Int32 logic_uScriptAct_SendCustomEventInt_EventValue_147 = (int) 0;
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventInt_sendGroup_147 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventInt_EventSender_147 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventInt_EventSender_147 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventInt_Out_147 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventObject logic_uScriptAct_SendCustomEventObject_uScriptAct_SendCustomEventObject_148 = new uScriptAct_SendCustomEventObject( );
    System.String logic_uScriptAct_SendCustomEventObject_EventName_148 = "";
-   UnityEngine.Object logic_uScriptAct_SendCustomEventObject_EventValue_148 = null;
+   UnityEngine.Object logic_uScriptAct_SendCustomEventObject_EventValue_148 = default(UnityEngine.Object);
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventObject_sendGroup_148 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventObject_EventSender_148 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventObject_EventSender_148 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventObject_Out_148 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventString logic_uScriptAct_SendCustomEventString_uScriptAct_SendCustomEventString_149 = new uScriptAct_SendCustomEventString( );
    System.String logic_uScriptAct_SendCustomEventString_EventName_149 = "";
    System.String logic_uScriptAct_SendCustomEventString_EventValue_149 = "";
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventString_sendGroup_149 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventString_EventSender_149 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventString_EventSender_149 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventString_Out_149 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventVector2 logic_uScriptAct_SendCustomEventVector2_uScriptAct_SendCustomEventVector2_150 = new uScriptAct_SendCustomEventVector2( );
    System.String logic_uScriptAct_SendCustomEventVector2_EventName_150 = "";
    UnityEngine.Vector2 logic_uScriptAct_SendCustomEventVector2_EventValue_150 = new Vector2( (float)0, (float)0 );
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventVector2_sendGroup_150 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector2_EventSender_150 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector2_EventSender_150 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventVector2_Out_150 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventVector3 logic_uScriptAct_SendCustomEventVector3_uScriptAct_SendCustomEventVector3_151 = new uScriptAct_SendCustomEventVector3( );
    System.String logic_uScriptAct_SendCustomEventVector3_EventName_151 = "";
    UnityEngine.Vector3 logic_uScriptAct_SendCustomEventVector3_EventValue_151 = new Vector3( (float)0, (float)0, (float)0 );
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventVector3_sendGroup_151 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector3_EventSender_151 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector3_EventSender_151 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventVector3_Out_151 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventVector4 logic_uScriptAct_SendCustomEventVector4_uScriptAct_SendCustomEventVector4_152 = new uScriptAct_SendCustomEventVector4( );
    System.String logic_uScriptAct_SendCustomEventVector4_EventName_152 = "";
    UnityEngine.Vector4 logic_uScriptAct_SendCustomEventVector4_EventValue_152 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventVector4_sendGroup_152 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector4_EventSender_152 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector4_EventSender_152 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventVector4_Out_152 = true;
    //pointer to script instanced logic node
    uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_153 = new uScriptAct_Log( );
@@ -831,6 +831,27 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_StopAnimation_Out_198 = true;
    //pointer to script instanced logic node
    uScriptAct_ApplicationInfo logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199 = new uScriptAct_ApplicationInfo( );
+   System.Int32 logic_uScriptAct_ApplicationInfo_levelCount_199;
+   System.Int32 logic_uScriptAct_ApplicationInfo_loadedLevel_199;
+   System.String logic_uScriptAct_ApplicationInfo_loadedLevelName_199;
+   System.Boolean logic_uScriptAct_ApplicationInfo_isEditor_199;
+   System.Boolean logic_uScriptAct_ApplicationInfo_isPlaying_199;
+   System.Boolean logic_uScriptAct_ApplicationInfo_isWebPlayer_199;
+   System.Int32 logic_uScriptAct_ApplicationInfo_streamedBytes_199;
+   UnityEngine.RuntimePlatform logic_uScriptAct_ApplicationInfo_platform_199;
+   System.String logic_uScriptAct_ApplicationInfo_dataPath_199;
+   System.String logic_uScriptAct_ApplicationInfo_persistentDataPath_199;
+   System.String logic_uScriptAct_ApplicationInfo_temporaryCachePath_199;
+   System.String logic_uScriptAct_ApplicationInfo_srcValue_199;
+   System.String logic_uScriptAct_ApplicationInfo_absoluteURL_199;
+   UnityEngine.SystemLanguage logic_uScriptAct_ApplicationInfo_systemLanguage_199;
+   UnityEngine.NetworkReachability logic_uScriptAct_ApplicationInfo_internetReachability_199;
+   System.Boolean logic_uScriptAct_ApplicationInfo_webSecurityEnabled_199;
+   System.String logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_199;
+   System.Boolean logic_uScriptAct_ApplicationInfo_runInBackground_199;
+   System.Int32 logic_uScriptAct_ApplicationInfo_targetFrameRate_199;
+   UnityEngine.ThreadPriority logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_199;
+   System.String logic_uScriptAct_ApplicationInfo_unityVersion_199;
    bool logic_uScriptAct_ApplicationInfo_Out_199 = true;
    //pointer to script instanced logic node
    uScriptAct_DeletePreferenceKey logic_uScriptAct_DeletePreferenceKey_uScriptAct_DeletePreferenceKey_200 = new uScriptAct_DeletePreferenceKey( );
@@ -962,29 +983,29 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_226 = true;
    //pointer to script instanced logic node
    uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_227 = new uScriptAct_PlaySound( );
-   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_227 = null;
+   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_227 = default(UnityEngine.AudioClip);
    UnityEngine.GameObject[] logic_uScriptAct_PlaySound_target_227 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlaySound_volume_227 = (float) 1;
    System.Boolean logic_uScriptAct_PlaySound_loop_227 = (bool) false;
    bool logic_uScriptAct_PlaySound_Out_227 = true;
    //pointer to script instanced logic node
    uScriptAct_SetActiveAudioListener logic_uScriptAct_SetActiveAudioListener_uScriptAct_SetActiveAudioListener_228 = new uScriptAct_SetActiveAudioListener( );
-   UnityEngine.GameObject logic_uScriptAct_SetActiveAudioListener_Target_228 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetActiveAudioListener_Target_228 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SetActiveAudioListener_Out_228 = true;
    //pointer to script instanced logic node
    uScriptAct_SetCameraDepth logic_uScriptAct_SetCameraDepth_uScriptAct_SetCameraDepth_229 = new uScriptAct_SetCameraDepth( );
-   UnityEngine.GameObject logic_uScriptAct_SetCameraDepth_Target_229 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetCameraDepth_Target_229 = default(UnityEngine.GameObject);
    System.Single logic_uScriptAct_SetCameraDepth_Depth_229 = (float) 0;
    bool logic_uScriptAct_SetCameraDepth_Out_229 = true;
    //pointer to script instanced logic node
    uScriptAct_SwitchCameras logic_uScriptAct_SwitchCameras_uScriptAct_SwitchCameras_230 = new uScriptAct_SwitchCameras( );
-   UnityEngine.GameObject logic_uScriptAct_SwitchCameras_FromCamera_230 = null;
-   UnityEngine.GameObject logic_uScriptAct_SwitchCameras_Target_230 = null;
+   UnityEngine.GameObject logic_uScriptAct_SwitchCameras_FromCamera_230 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_SwitchCameras_Target_230 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_SwitchCameras_EnableAudioListener_230 = (bool) true;
    bool logic_uScriptAct_SwitchCameras_Out_230 = true;
    //pointer to script instanced logic node
    uScriptAct_UpdateCameraOrbit logic_uScriptAct_UpdateCameraOrbit_uScriptAct_UpdateCameraOrbit_231 = new uScriptAct_UpdateCameraOrbit( );
-   UnityEngine.Camera logic_uScriptAct_UpdateCameraOrbit_Camera_231 = null;
+   UnityEngine.Camera logic_uScriptAct_UpdateCameraOrbit_Camera_231 = default(UnityEngine.Camera);
    UnityEngine.Vector3 logic_uScriptAct_UpdateCameraOrbit_Target_231 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_UpdateCameraOrbit_Distance_231 = (float) 5;
    UnityEngine.Vector2 logic_uScriptAct_UpdateCameraOrbit_Movement_231 = new Vector2( (float)0, (float)0 );
@@ -1030,7 +1051,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_Particles_Out_237 = true;
    //pointer to script instanced logic node
    uScriptAct_AddForce logic_uScriptAct_AddForce_uScriptAct_AddForce_238 = new uScriptAct_AddForce( );
-   UnityEngine.GameObject logic_uScriptAct_AddForce_Target_238 = null;
+   UnityEngine.GameObject logic_uScriptAct_AddForce_Target_238 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_AddForce_Force_238 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_AddForce_Scale_238 = (float) 0;
    System.Boolean logic_uScriptAct_AddForce_UseForceMode_238 = (bool) false;
@@ -1038,7 +1059,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_AddForce_Out_238 = true;
    //pointer to script instanced logic node
    uScriptAct_AddRelativeForce logic_uScriptAct_AddRelativeForce_uScriptAct_AddRelativeForce_239 = new uScriptAct_AddRelativeForce( );
-   UnityEngine.GameObject logic_uScriptAct_AddRelativeForce_Target_239 = null;
+   UnityEngine.GameObject logic_uScriptAct_AddRelativeForce_Target_239 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_AddRelativeForce_Force_239 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_AddRelativeForce_Scale_239 = (float) 0;
    System.Boolean logic_uScriptAct_AddRelativeForce_UseForceMode_239 = (bool) false;
@@ -1046,7 +1067,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_AddRelativeForce_Out_239 = true;
    //pointer to script instanced logic node
    uScriptAct_AddRelativeTorque logic_uScriptAct_AddRelativeTorque_uScriptAct_AddRelativeTorque_240 = new uScriptAct_AddRelativeTorque( );
-   UnityEngine.GameObject logic_uScriptAct_AddRelativeTorque_Target_240 = null;
+   UnityEngine.GameObject logic_uScriptAct_AddRelativeTorque_Target_240 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_AddRelativeTorque_Force_240 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_AddRelativeTorque_Scale_240 = (float) 0;
    System.Boolean logic_uScriptAct_AddRelativeTorque_UseForceMode_240 = (bool) false;
@@ -1054,7 +1075,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_AddRelativeTorque_Out_240 = true;
    //pointer to script instanced logic node
    uScriptAct_AddTorque logic_uScriptAct_AddTorque_uScriptAct_AddTorque_241 = new uScriptAct_AddTorque( );
-   UnityEngine.GameObject logic_uScriptAct_AddTorque_Target_241 = null;
+   UnityEngine.GameObject logic_uScriptAct_AddTorque_Target_241 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_AddTorque_Force_241 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_AddTorque_Scale_241 = (float) 0;
    System.Boolean logic_uScriptAct_AddTorque_UseForceMode_241 = (bool) false;
@@ -1072,14 +1093,14 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_GetGravity_Out_243 = true;
    //pointer to script instanced logic node
    uScriptAct_GetRigidbodyVelocity logic_uScriptAct_GetRigidbodyVelocity_uScriptAct_GetRigidbodyVelocity_244 = new uScriptAct_GetRigidbodyVelocity( );
-   UnityEngine.GameObject logic_uScriptAct_GetRigidbodyVelocity_Target_244 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetRigidbodyVelocity_Target_244 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_GetRigidbodyVelocity_Velocity_244;
    System.Single logic_uScriptAct_GetRigidbodyVelocity_Magnitude_244;
    bool logic_uScriptAct_GetRigidbodyVelocity_Out_244 = true;
    //pointer to script instanced logic node
    uScriptAct_IgnoreCollision logic_uScriptAct_IgnoreCollision_uScriptAct_IgnoreCollision_245 = new uScriptAct_IgnoreCollision( );
-   UnityEngine.GameObject logic_uScriptAct_IgnoreCollision_A_245 = null;
-   UnityEngine.GameObject logic_uScriptAct_IgnoreCollision_B_245 = null;
+   UnityEngine.GameObject logic_uScriptAct_IgnoreCollision_A_245 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_IgnoreCollision_B_245 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_IgnoreCollision_Ignore_245 = (bool) true;
    bool logic_uScriptAct_IgnoreCollision_Out_245 = true;
    //pointer to script instanced logic node
@@ -1103,7 +1124,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_Raycast_Obstructed_247 = true;
    //pointer to script instanced logic node
    uScriptAct_RaycastFromCamera logic_uScriptAct_RaycastFromCamera_uScriptAct_RaycastFromCamera_248 = new uScriptAct_RaycastFromCamera( );
-   UnityEngine.Camera logic_uScriptAct_RaycastFromCamera_Camera_248 = null;
+   UnityEngine.Camera logic_uScriptAct_RaycastFromCamera_Camera_248 = default(UnityEngine.Camera);
    System.Int32 logic_uScriptAct_RaycastFromCamera_Offset_X_248 = (int) 0;
    System.Int32 logic_uScriptAct_RaycastFromCamera_Offset_Y_248 = (int) 0;
    System.Single logic_uScriptAct_RaycastFromCamera_Distance_248 = (float) 100;
@@ -1118,7 +1139,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_RaycastFromCamera_Obstructed_248 = true;
    //pointer to script instanced logic node
    uScriptAct_RaycastFromCursor logic_uScriptAct_RaycastFromCursor_uScriptAct_RaycastFromCursor_249 = new uScriptAct_RaycastFromCursor( );
-   UnityEngine.Camera logic_uScriptAct_RaycastFromCursor_Camera_249 = null;
+   UnityEngine.Camera logic_uScriptAct_RaycastFromCursor_Camera_249 = default(UnityEngine.Camera);
    System.Single logic_uScriptAct_RaycastFromCursor_Distance_249 = (float) 100;
    UnityEngine.LayerMask logic_uScriptAct_RaycastFromCursor_layerMask_249 = 1;
    System.Boolean logic_uScriptAct_RaycastFromCursor_include_249 = (bool) true;
@@ -1131,7 +1152,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_RaycastFromCursor_Obstructed_249 = true;
    //pointer to script instanced logic node
    uScriptAct_RaycastFromScreenPoint logic_uScriptAct_RaycastFromScreenPoint_uScriptAct_RaycastFromScreenPoint_250 = new uScriptAct_RaycastFromScreenPoint( );
-   UnityEngine.Camera logic_uScriptAct_RaycastFromScreenPoint_Camera_250 = null;
+   UnityEngine.Camera logic_uScriptAct_RaycastFromScreenPoint_Camera_250 = default(UnityEngine.Camera);
    UnityEngine.Vector2 logic_uScriptAct_RaycastFromScreenPoint_ScreenPosition_250 = new Vector2( (float)0, (float)0 );
    System.Single logic_uScriptAct_RaycastFromScreenPoint_Distance_250 = (float) 100;
    UnityEngine.LayerMask logic_uScriptAct_RaycastFromScreenPoint_layerMask_250 = 1;
@@ -1149,7 +1170,6 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_SetGravity_Out_251 = true;
    //pointer to script instanced logic node
    uScriptAct_SetJointDrive logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_252 = new uScriptAct_SetJointDrive( );
-   UnityEngine.JointDriveMode logic_uScriptAct_SetJointDrive_mode_252 = UnityEngine.JointDriveMode.None;
    System.Single logic_uScriptAct_SetJointDrive_positionSpring_252 = (float) 0;
    System.Single logic_uScriptAct_SetJointDrive_positionDamper_252 = (float) 0;
    System.Single logic_uScriptAct_SetJointDrive_maximumForce_252 = (float) 0;
@@ -1401,7 +1421,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_SetRandomFloat_Out_298 = true;
    //pointer to script instanced logic node
    uScriptAct_SetGameObject logic_uScriptAct_SetGameObject_uScriptAct_SetGameObject_299 = new uScriptAct_SetGameObject( );
-   UnityEngine.GameObject logic_uScriptAct_SetGameObject_Value_299 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetGameObject_Value_299 = default(UnityEngine.GameObject);
    UnityEngine.GameObject logic_uScriptAct_SetGameObject_TargetGameObject_299;
    bool logic_uScriptAct_SetGameObject_Out_299 = true;
    //pointer to script instanced logic node
@@ -1535,7 +1555,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_TrimString_Out_324 = true;
    //pointer to script instanced logic node
    uScriptAct_SetTexture2D logic_uScriptAct_SetTexture2D_uScriptAct_SetTexture2D_326 = new uScriptAct_SetTexture2D( );
-   UnityEngine.Texture2D logic_uScriptAct_SetTexture2D_Value_326 = null;
+   UnityEngine.Texture2D logic_uScriptAct_SetTexture2D_Value_326 = default(UnityEngine.Texture2D);
    UnityEngine.Texture2D logic_uScriptAct_SetTexture2D_Target_326;
    bool logic_uScriptAct_SetTexture2D_Out_326 = true;
    //pointer to script instanced logic node
@@ -1653,7 +1673,7 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_AssignMaterial logic_uScriptAct_AssignMaterial_uScriptAct_AssignMaterial_348 = new uScriptAct_AssignMaterial( );
    UnityEngine.GameObject[] logic_uScriptAct_AssignMaterial_Target_348 = new UnityEngine.GameObject[] {};
-   UnityEngine.Material logic_uScriptAct_AssignMaterial_materialName_348 = null;
+   UnityEngine.Material logic_uScriptAct_AssignMaterial_materialName_348 = default(UnityEngine.Material);
    System.Int32 logic_uScriptAct_AssignMaterial_MatChannel_348 = (int) 0;
    bool logic_uScriptAct_AssignMaterial_Out_348 = true;
    //pointer to script instanced logic node
@@ -1669,8 +1689,8 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_AttachScript_Out_351 = true;
    //pointer to script instanced logic node
    uScriptAct_AttachToGameObject logic_uScriptAct_AttachToGameObject_uScriptAct_AttachToGameObject_353 = new uScriptAct_AttachToGameObject( );
-   UnityEngine.GameObject logic_uScriptAct_AttachToGameObject_Target_353 = null;
-   UnityEngine.GameObject logic_uScriptAct_AttachToGameObject_Attachment_353 = null;
+   UnityEngine.GameObject logic_uScriptAct_AttachToGameObject_Target_353 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_AttachToGameObject_Attachment_353 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_AttachToGameObject_UseRelativeOffset_353 = (bool) false;
    UnityEngine.Vector3 logic_uScriptAct_AttachToGameObject_RelativeOffset_353 = new Vector3( (float)0, (float)0, (float)0 );
    System.Boolean logic_uScriptAct_AttachToGameObject_UseRelativeRotation_353 = (bool) false;
@@ -1704,7 +1724,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_Log_Out_358 = true;
    //pointer to script instanced logic node
    uScriptAct_GetAllChildren logic_uScriptAct_GetAllChildren_uScriptAct_GetAllChildren_359 = new uScriptAct_GetAllChildren( );
-   UnityEngine.GameObject logic_uScriptAct_GetAllChildren_Target_359 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetAllChildren_Target_359 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_GetAllChildren_recursive_359 = (bool) false;
    UnityEngine.GameObject logic_uScriptAct_GetAllChildren_FirstChild_359;
    UnityEngine.GameObject[] logic_uScriptAct_GetAllChildren_Children_359;
@@ -1714,7 +1734,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_GetAllChildren_ChildrenNotFound_359 = true;
    //pointer to script instanced logic node
    uScriptAct_GetChildrenByName logic_uScriptAct_GetChildrenByName_uScriptAct_GetChildrenByName_360 = new uScriptAct_GetChildrenByName( );
-   UnityEngine.GameObject logic_uScriptAct_GetChildrenByName_Target_360 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetChildrenByName_Target_360 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_GetChildrenByName_Name_360 = "";
    uScriptAct_GetChildrenByName.SearchType logic_uScriptAct_GetChildrenByName_SearchMethod_360 = uScriptAct_GetChildrenByName.SearchType.Matches;
    System.Boolean logic_uScriptAct_GetChildrenByName_recursive_360 = (bool) false;
@@ -1726,7 +1746,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_GetChildrenByName_ChildrenNotFound_360 = true;
    //pointer to script instanced logic node
    uScriptAct_GetChildrenByTag logic_uScriptAct_GetChildrenByTag_uScriptAct_GetChildrenByTag_361 = new uScriptAct_GetChildrenByTag( );
-   UnityEngine.GameObject logic_uScriptAct_GetChildrenByTag_Target_361 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetChildrenByTag_Target_361 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_GetChildrenByTag_Tag_361 = "";
    uScriptAct_GetChildrenByTag.SearchType logic_uScriptAct_GetChildrenByTag_SearchMethod_361 = uScriptAct_GetChildrenByTag.SearchType.Matches;
    System.Boolean logic_uScriptAct_GetChildrenByTag_recursive_361 = (bool) false;
@@ -1744,8 +1764,8 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_Log_Out_362 = true;
    //pointer to script instanced logic node
    uScriptAct_GetDistance logic_uScriptAct_GetDistance_uScriptAct_GetDistance_363 = new uScriptAct_GetDistance( );
-   UnityEngine.GameObject logic_uScriptAct_GetDistance_A_363 = null;
-   UnityEngine.GameObject logic_uScriptAct_GetDistance_B_363 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetDistance_A_363 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_GetDistance_B_363 = default(UnityEngine.GameObject);
    System.Single logic_uScriptAct_GetDistance_Distance_363;
    bool logic_uScriptAct_GetDistance_Out_363 = true;
    //pointer to script instanced logic node
@@ -1766,7 +1786,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_GetGameObjectsByTag_GameObjectsNotFound_365 = true;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectMaterial logic_uScriptAct_GetGameObjectMaterial_uScriptAct_GetGameObjectMaterial_366 = new uScriptAct_GetGameObjectMaterial( );
-   UnityEngine.GameObject logic_uScriptAct_GetGameObjectMaterial_Target_366 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetGameObjectMaterial_Target_366 = default(UnityEngine.GameObject);
    System.Int32 logic_uScriptAct_GetGameObjectMaterial_MaterialIndex_366 = (int) 0;
    UnityEngine.Material logic_uScriptAct_GetGameObjectMaterial_targetMaterial_366;
    UnityEngine.Color logic_uScriptAct_GetGameObjectMaterial_materialColor_366;
@@ -1774,7 +1794,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_GetGameObjectMaterial_Out_366 = true;
    //pointer to script instanced logic node
    uScriptAct_GetPositionAndRotation logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_367 = new uScriptAct_GetPositionAndRotation( );
-   UnityEngine.GameObject logic_uScriptAct_GetPositionAndRotation_Target_367 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetPositionAndRotation_Target_367 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_GetPositionAndRotation_GetLocal_367 = (bool) false;
    UnityEngine.Vector3 logic_uScriptAct_GetPositionAndRotation_Position_367;
    UnityEngine.Quaternion logic_uScriptAct_GetPositionAndRotation_Rotation_367;
@@ -1785,7 +1805,7 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_GetPositionAndRotation_Out_367 = true;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectScale logic_uScriptAct_GetGameObjectScale_uScriptAct_GetGameObjectScale_368 = new uScriptAct_GetGameObjectScale( );
-   UnityEngine.GameObject logic_uScriptAct_GetGameObjectScale_Target_368 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetGameObjectScale_Target_368 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_GetGameObjectScale_Scale_368;
    System.Single logic_uScriptAct_GetGameObjectScale_X_368;
    System.Single logic_uScriptAct_GetGameObjectScale_Y_368;
@@ -1811,13 +1831,13 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_GetVector4Distance_Out_372 = true;
    //pointer to script instanced logic node
    uScriptAct_IsActive logic_uScriptAct_IsActive_uScriptAct_IsActive_373 = new uScriptAct_IsActive( );
-   UnityEngine.GameObject logic_uScriptAct_IsActive_Target_373 = null;
+   UnityEngine.GameObject logic_uScriptAct_IsActive_Target_373 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_IsActive_Out_373 = true;
    bool logic_uScriptAct_IsActive_Active_373 = true;
    bool logic_uScriptAct_IsActive_Inactive_373 = true;
    //pointer to script instanced logic node
    uScriptAct_IsometricCharacterController logic_uScriptAct_IsometricCharacterController_uScriptAct_IsometricCharacterController_374 = new uScriptAct_IsometricCharacterController( );
-   UnityEngine.GameObject logic_uScriptAct_IsometricCharacterController_target_374 = null;
+   UnityEngine.GameObject logic_uScriptAct_IsometricCharacterController_target_374 = default(UnityEngine.GameObject);
    System.Single logic_uScriptAct_IsometricCharacterController_translation_374 = (float) 0;
    System.Single logic_uScriptAct_IsometricCharacterController_rotation_374 = (float) 1.5;
    System.Boolean logic_uScriptAct_IsometricCharacterController_filterTranslation_374 = (bool) false;
@@ -1950,7 +1970,7 @@ public class CodeGenTest : uScriptLogic
    uScriptAct_SpawnPrefab logic_uScriptAct_SpawnPrefab_uScriptAct_SpawnPrefab_389 = new uScriptAct_SpawnPrefab( );
    System.String logic_uScriptAct_SpawnPrefab_PrefabName_389 = "";
    System.String logic_uScriptAct_SpawnPrefab_ResourcePath_389 = "";
-   UnityEngine.GameObject logic_uScriptAct_SpawnPrefab_SpawnPoint_389 = null;
+   UnityEngine.GameObject logic_uScriptAct_SpawnPrefab_SpawnPoint_389 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_SpawnPrefab_SpawnedName_389 = "";
    UnityEngine.Vector3 logic_uScriptAct_SpawnPrefab_LocationOffset_389 = new Vector3( (float)0, (float)0, (float)0 );
    UnityEngine.GameObject logic_uScriptAct_SpawnPrefab_SpawnedGameObject_389;
@@ -1969,7 +1989,7 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Teleport logic_uScriptAct_Teleport_uScriptAct_Teleport_391 = new uScriptAct_Teleport( );
    UnityEngine.GameObject[] logic_uScriptAct_Teleport_Target_391 = new UnityEngine.GameObject[] {};
-   UnityEngine.GameObject logic_uScriptAct_Teleport_Destination_391 = null;
+   UnityEngine.GameObject logic_uScriptAct_Teleport_Destination_391 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_Teleport_UpdateRotation_391 = (bool) false;
    bool logic_uScriptAct_Teleport_Out_391 = true;
    //pointer to script instanced logic node
@@ -1985,131 +2005,140 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_OnInputEventFilter_KeyHeld_395 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_395 = true;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateColorLinear logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397 = new uScriptAct_InterpolateColorLinear( );
-   UnityEngine.Color logic_uScriptAct_InterpolateColorLinear_startValue_397 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
-   UnityEngine.Color logic_uScriptAct_InterpolateColorLinear_endValue_397 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
-   System.Single logic_uScriptAct_InterpolateColorLinear_time_397 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateColorLinear_loopType_397 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateColorLinear_loopDelay_397 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateColorLinear_loopCount_397 = (int) 0;
-   UnityEngine.Color logic_uScriptAct_InterpolateColorLinear_currentValue_397;
-   bool logic_uScriptAct_InterpolateColorLinear_Started_397 = true;
-   bool logic_uScriptAct_InterpolateColorLinear_Stopped_397 = true;
-   bool logic_uScriptAct_InterpolateColorLinear_Interpolating_397 = true;
-   bool logic_uScriptAct_InterpolateColorLinear_Finished_397 = true;
-   bool logic_uScriptAct_InterpolateColorLinear_Driven_397 = false;
+   uScriptAct_InterpolateColorLinearSmooth logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397 = new uScriptAct_InterpolateColorLinearSmooth( );
+   UnityEngine.Color logic_uScriptAct_InterpolateColorLinearSmooth_startValue_397 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
+   UnityEngine.Color logic_uScriptAct_InterpolateColorLinearSmooth_endValue_397 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
+   System.Single logic_uScriptAct_InterpolateColorLinearSmooth_time_397 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateColorLinearSmooth_loopType_397 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateColorLinearSmooth_loopDelay_397 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateColorLinearSmooth_smooth_397 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateColorLinearSmooth_loopCount_397 = (int) 0;
+   UnityEngine.Color logic_uScriptAct_InterpolateColorLinearSmooth_currentValue_397;
+   bool logic_uScriptAct_InterpolateColorLinearSmooth_Started_397 = true;
+   bool logic_uScriptAct_InterpolateColorLinearSmooth_Stopped_397 = true;
+   bool logic_uScriptAct_InterpolateColorLinearSmooth_Interpolating_397 = true;
+   bool logic_uScriptAct_InterpolateColorLinearSmooth_Finished_397 = true;
+   bool logic_uScriptAct_InterpolateColorLinearSmooth_Driven_397 = false;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateFloatLinear logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398 = new uScriptAct_InterpolateFloatLinear( );
-   System.Single logic_uScriptAct_InterpolateFloatLinear_startValue_398 = (float) 0;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_endValue_398 = (float) 0;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_time_398 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateFloatLinear_loopType_398 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_loopDelay_398 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateFloatLinear_loopCount_398 = (int) 0;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_currentValue_398;
-   bool logic_uScriptAct_InterpolateFloatLinear_Started_398 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Stopped_398 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Interpolating_398 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Finished_398 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Driven_398 = false;
+   uScriptAct_InterpolateFloatLinearSmooth logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398 = new uScriptAct_InterpolateFloatLinearSmooth( );
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_398 = (float) 0;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_398 = (float) 0;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_time_398 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_398 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_398 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_398 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_398 = (int) 0;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_398;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Started_398 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Stopped_398 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Interpolating_398 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Finished_398 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_398 = false;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateIntLinear logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399 = new uScriptAct_InterpolateIntLinear( );
-   System.Int32 logic_uScriptAct_InterpolateIntLinear_startValue_399 = (int) 0;
-   System.Int32 logic_uScriptAct_InterpolateIntLinear_endValue_399 = (int) 0;
-   System.Single logic_uScriptAct_InterpolateIntLinear_time_399 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateIntLinear_loopType_399 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateIntLinear_loopDelay_399 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateIntLinear_loopCount_399 = (int) 0;
-   System.Int32 logic_uScriptAct_InterpolateIntLinear_currentValue_399;
-   bool logic_uScriptAct_InterpolateIntLinear_Started_399 = true;
-   bool logic_uScriptAct_InterpolateIntLinear_Stopped_399 = true;
-   bool logic_uScriptAct_InterpolateIntLinear_Interpolating_399 = true;
-   bool logic_uScriptAct_InterpolateIntLinear_Finished_399 = true;
-   bool logic_uScriptAct_InterpolateIntLinear_Driven_399 = false;
+   uScriptAct_InterpolateIntLinearSmooth logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399 = new uScriptAct_InterpolateIntLinearSmooth( );
+   System.Int32 logic_uScriptAct_InterpolateIntLinearSmooth_startValue_399 = (int) 0;
+   System.Int32 logic_uScriptAct_InterpolateIntLinearSmooth_endValue_399 = (int) 0;
+   System.Single logic_uScriptAct_InterpolateIntLinearSmooth_time_399 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateIntLinearSmooth_loopType_399 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateIntLinearSmooth_loopDelay_399 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateIntLinearSmooth_smooth_399 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateIntLinearSmooth_loopCount_399 = (int) 0;
+   System.Int32 logic_uScriptAct_InterpolateIntLinearSmooth_currentValue_399;
+   bool logic_uScriptAct_InterpolateIntLinearSmooth_Started_399 = true;
+   bool logic_uScriptAct_InterpolateIntLinearSmooth_Stopped_399 = true;
+   bool logic_uScriptAct_InterpolateIntLinearSmooth_Interpolating_399 = true;
+   bool logic_uScriptAct_InterpolateIntLinearSmooth_Finished_399 = true;
+   bool logic_uScriptAct_InterpolateIntLinearSmooth_Driven_399 = false;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateQuaternionLinear logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400 = new uScriptAct_InterpolateQuaternionLinear( );
-   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionLinear_startValue_400 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionLinear_endValue_400 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
-   System.Single logic_uScriptAct_InterpolateQuaternionLinear_time_400 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateQuaternionLinear_loopType_400 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateQuaternionLinear_loopDelay_400 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateQuaternionLinear_loopCount_400 = (int) 0;
-   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionLinear_currentValue_400;
-   bool logic_uScriptAct_InterpolateQuaternionLinear_Started_400 = true;
-   bool logic_uScriptAct_InterpolateQuaternionLinear_Stopped_400 = true;
-   bool logic_uScriptAct_InterpolateQuaternionLinear_Interpolating_400 = true;
-   bool logic_uScriptAct_InterpolateQuaternionLinear_Finished_400 = true;
-   bool logic_uScriptAct_InterpolateQuaternionLinear_Driven_400 = false;
+   uScriptAct_InterpolateQuaternionLinearSmooth logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400 = new uScriptAct_InterpolateQuaternionLinearSmooth( );
+   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionLinearSmooth_startValue_400 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionLinearSmooth_endValue_400 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
+   System.Single logic_uScriptAct_InterpolateQuaternionLinearSmooth_time_400 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopType_400 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopDelay_400 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateQuaternionLinearSmooth_smooth_400 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopCount_400 = (int) 0;
+   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionLinearSmooth_currentValue_400;
+   bool logic_uScriptAct_InterpolateQuaternionLinearSmooth_Started_400 = true;
+   bool logic_uScriptAct_InterpolateQuaternionLinearSmooth_Stopped_400 = true;
+   bool logic_uScriptAct_InterpolateQuaternionLinearSmooth_Interpolating_400 = true;
+   bool logic_uScriptAct_InterpolateQuaternionLinearSmooth_Finished_400 = true;
+   bool logic_uScriptAct_InterpolateQuaternionLinearSmooth_Driven_400 = false;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateQuaternionSlerp logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401 = new uScriptAct_InterpolateQuaternionSlerp( );
-   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionSlerp_startValue_401 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionSlerp_endValue_401 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
-   System.Single logic_uScriptAct_InterpolateQuaternionSlerp_time_401 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateQuaternionSlerp_loopType_401 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateQuaternionSlerp_loopDelay_401 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateQuaternionSlerp_loopCount_401 = (int) 0;
-   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionSlerp_currentValue_401;
-   bool logic_uScriptAct_InterpolateQuaternionSlerp_Started_401 = true;
-   bool logic_uScriptAct_InterpolateQuaternionSlerp_Stopped_401 = true;
-   bool logic_uScriptAct_InterpolateQuaternionSlerp_Interpolating_401 = true;
-   bool logic_uScriptAct_InterpolateQuaternionSlerp_Finished_401 = true;
-   bool logic_uScriptAct_InterpolateQuaternionSlerp_Driven_401 = false;
+   uScriptAct_InterpolateQuaternionSlerpSmooth logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401 = new uScriptAct_InterpolateQuaternionSlerpSmooth( );
+   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionSlerpSmooth_startValue_401 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionSlerpSmooth_endValue_401 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
+   System.Single logic_uScriptAct_InterpolateQuaternionSlerpSmooth_time_401 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopType_401 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopDelay_401 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateQuaternionSlerpSmooth_smooth_401 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopCount_401 = (int) 0;
+   UnityEngine.Quaternion logic_uScriptAct_InterpolateQuaternionSlerpSmooth_currentValue_401;
+   bool logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Started_401 = true;
+   bool logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Stopped_401 = true;
+   bool logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Interpolating_401 = true;
+   bool logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Finished_401 = true;
+   bool logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Driven_401 = false;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateRectLinear logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402 = new uScriptAct_InterpolateRectLinear( );
-   UnityEngine.Rect logic_uScriptAct_InterpolateRectLinear_startValue_402 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Rect logic_uScriptAct_InterpolateRectLinear_endValue_402 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   System.Single logic_uScriptAct_InterpolateRectLinear_time_402 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateRectLinear_loopType_402 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateRectLinear_loopDelay_402 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateRectLinear_loopCount_402 = (int) 0;
-   UnityEngine.Rect logic_uScriptAct_InterpolateRectLinear_currentValue_402;
-   bool logic_uScriptAct_InterpolateRectLinear_Started_402 = true;
-   bool logic_uScriptAct_InterpolateRectLinear_Stopped_402 = true;
-   bool logic_uScriptAct_InterpolateRectLinear_Interpolating_402 = true;
-   bool logic_uScriptAct_InterpolateRectLinear_Finished_402 = true;
-   bool logic_uScriptAct_InterpolateRectLinear_Driven_402 = false;
+   uScriptAct_InterpolateRectLinearSmooth logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402 = new uScriptAct_InterpolateRectLinearSmooth( );
+   UnityEngine.Rect logic_uScriptAct_InterpolateRectLinearSmooth_startValue_402 = new Rect( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Rect logic_uScriptAct_InterpolateRectLinearSmooth_endValue_402 = new Rect( (float)0, (float)0, (float)0, (float)0 );
+   System.Single logic_uScriptAct_InterpolateRectLinearSmooth_time_402 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateRectLinearSmooth_loopType_402 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateRectLinearSmooth_loopDelay_402 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateRectLinearSmooth_smooth_402 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateRectLinearSmooth_loopCount_402 = (int) 0;
+   UnityEngine.Rect logic_uScriptAct_InterpolateRectLinearSmooth_currentValue_402;
+   bool logic_uScriptAct_InterpolateRectLinearSmooth_Started_402 = true;
+   bool logic_uScriptAct_InterpolateRectLinearSmooth_Stopped_402 = true;
+   bool logic_uScriptAct_InterpolateRectLinearSmooth_Interpolating_402 = true;
+   bool logic_uScriptAct_InterpolateRectLinearSmooth_Finished_402 = true;
+   bool logic_uScriptAct_InterpolateRectLinearSmooth_Driven_402 = false;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateVector2Linear logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403 = new uScriptAct_InterpolateVector2Linear( );
-   UnityEngine.Vector2 logic_uScriptAct_InterpolateVector2Linear_startValue_403 = new Vector2( (float)0, (float)0 );
-   UnityEngine.Vector2 logic_uScriptAct_InterpolateVector2Linear_endValue_403 = new Vector2( (float)0, (float)0 );
-   System.Single logic_uScriptAct_InterpolateVector2Linear_time_403 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateVector2Linear_loopType_403 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateVector2Linear_loopDelay_403 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateVector2Linear_loopCount_403 = (int) 0;
-   UnityEngine.Vector2 logic_uScriptAct_InterpolateVector2Linear_currentValue_403;
-   bool logic_uScriptAct_InterpolateVector2Linear_Started_403 = true;
-   bool logic_uScriptAct_InterpolateVector2Linear_Stopped_403 = true;
-   bool logic_uScriptAct_InterpolateVector2Linear_Interpolating_403 = true;
-   bool logic_uScriptAct_InterpolateVector2Linear_Finished_403 = true;
-   bool logic_uScriptAct_InterpolateVector2Linear_Driven_403 = false;
+   uScriptAct_InterpolateVector2LinearSmooth logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403 = new uScriptAct_InterpolateVector2LinearSmooth( );
+   UnityEngine.Vector2 logic_uScriptAct_InterpolateVector2LinearSmooth_startValue_403 = new Vector2( (float)0, (float)0 );
+   UnityEngine.Vector2 logic_uScriptAct_InterpolateVector2LinearSmooth_endValue_403 = new Vector2( (float)0, (float)0 );
+   System.Single logic_uScriptAct_InterpolateVector2LinearSmooth_time_403 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateVector2LinearSmooth_loopType_403 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateVector2LinearSmooth_loopDelay_403 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateVector2LinearSmooth_smooth_403 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateVector2LinearSmooth_loopCount_403 = (int) 0;
+   UnityEngine.Vector2 logic_uScriptAct_InterpolateVector2LinearSmooth_currentValue_403;
+   bool logic_uScriptAct_InterpolateVector2LinearSmooth_Started_403 = true;
+   bool logic_uScriptAct_InterpolateVector2LinearSmooth_Stopped_403 = true;
+   bool logic_uScriptAct_InterpolateVector2LinearSmooth_Interpolating_403 = true;
+   bool logic_uScriptAct_InterpolateVector2LinearSmooth_Finished_403 = true;
+   bool logic_uScriptAct_InterpolateVector2LinearSmooth_Driven_403 = false;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateVector3Linear logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404 = new uScriptAct_InterpolateVector3Linear( );
-   UnityEngine.Vector3 logic_uScriptAct_InterpolateVector3Linear_startValue_404 = new Vector3( (float)0, (float)0, (float)0 );
-   UnityEngine.Vector3 logic_uScriptAct_InterpolateVector3Linear_endValue_404 = new Vector3( (float)0, (float)0, (float)0 );
-   System.Single logic_uScriptAct_InterpolateVector3Linear_time_404 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateVector3Linear_loopType_404 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateVector3Linear_loopDelay_404 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateVector3Linear_loopCount_404 = (int) 0;
-   UnityEngine.Vector3 logic_uScriptAct_InterpolateVector3Linear_currentValue_404;
-   bool logic_uScriptAct_InterpolateVector3Linear_Started_404 = true;
-   bool logic_uScriptAct_InterpolateVector3Linear_Stopped_404 = true;
-   bool logic_uScriptAct_InterpolateVector3Linear_Interpolating_404 = true;
-   bool logic_uScriptAct_InterpolateVector3Linear_Finished_404 = true;
-   bool logic_uScriptAct_InterpolateVector3Linear_Driven_404 = false;
+   uScriptAct_InterpolateVector3LinearSmooth logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404 = new uScriptAct_InterpolateVector3LinearSmooth( );
+   UnityEngine.Vector3 logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_404 = new Vector3( (float)0, (float)0, (float)0 );
+   UnityEngine.Vector3 logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_404 = new Vector3( (float)0, (float)0, (float)0 );
+   System.Single logic_uScriptAct_InterpolateVector3LinearSmooth_time_404 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateVector3LinearSmooth_loopType_404 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateVector3LinearSmooth_loopDelay_404 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateVector3LinearSmooth_smooth_404 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateVector3LinearSmooth_loopCount_404 = (int) 0;
+   UnityEngine.Vector3 logic_uScriptAct_InterpolateVector3LinearSmooth_currentValue_404;
+   bool logic_uScriptAct_InterpolateVector3LinearSmooth_Started_404 = true;
+   bool logic_uScriptAct_InterpolateVector3LinearSmooth_Stopped_404 = true;
+   bool logic_uScriptAct_InterpolateVector3LinearSmooth_Interpolating_404 = true;
+   bool logic_uScriptAct_InterpolateVector3LinearSmooth_Finished_404 = true;
+   bool logic_uScriptAct_InterpolateVector3LinearSmooth_Driven_404 = false;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateVector4Linear logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405 = new uScriptAct_InterpolateVector4Linear( );
-   UnityEngine.Vector4 logic_uScriptAct_InterpolateVector4Linear_startValue_405 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Vector4 logic_uScriptAct_InterpolateVector4Linear_endValue_405 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
-   System.Single logic_uScriptAct_InterpolateVector4Linear_time_405 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateVector4Linear_loopType_405 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateVector4Linear_loopDelay_405 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateVector4Linear_loopCount_405 = (int) 0;
-   UnityEngine.Vector4 logic_uScriptAct_InterpolateVector4Linear_currentValue_405;
-   bool logic_uScriptAct_InterpolateVector4Linear_Started_405 = true;
-   bool logic_uScriptAct_InterpolateVector4Linear_Stopped_405 = true;
-   bool logic_uScriptAct_InterpolateVector4Linear_Interpolating_405 = true;
-   bool logic_uScriptAct_InterpolateVector4Linear_Finished_405 = true;
-   bool logic_uScriptAct_InterpolateVector4Linear_Driven_405 = false;
+   uScriptAct_InterpolateVector4LinearSmooth logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405 = new uScriptAct_InterpolateVector4LinearSmooth( );
+   UnityEngine.Vector4 logic_uScriptAct_InterpolateVector4LinearSmooth_startValue_405 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Vector4 logic_uScriptAct_InterpolateVector4LinearSmooth_endValue_405 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
+   System.Single logic_uScriptAct_InterpolateVector4LinearSmooth_time_405 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateVector4LinearSmooth_loopType_405 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateVector4LinearSmooth_loopDelay_405 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateVector4LinearSmooth_smooth_405 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateVector4LinearSmooth_loopCount_405 = (int) 0;
+   UnityEngine.Vector4 logic_uScriptAct_InterpolateVector4LinearSmooth_currentValue_405;
+   bool logic_uScriptAct_InterpolateVector4LinearSmooth_Started_405 = true;
+   bool logic_uScriptAct_InterpolateVector4LinearSmooth_Stopped_405 = true;
+   bool logic_uScriptAct_InterpolateVector4LinearSmooth_Interpolating_405 = true;
+   bool logic_uScriptAct_InterpolateVector4LinearSmooth_Finished_405 = true;
+   bool logic_uScriptAct_InterpolateVector4LinearSmooth_Driven_405 = false;
    //pointer to script instanced logic node
    uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_406 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_406 = "";
@@ -2129,37 +2158,37 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_OnInputEventFilter_KeyHeld_409 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_409 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddFloat logic_uScriptAct_AddFloat_uScriptAct_AddFloat_411 = new uScriptAct_AddFloat( );
-   System.Single[] logic_uScriptAct_AddFloat_A_411 = new System.Single[] {};
-   System.Single[] logic_uScriptAct_AddFloat_B_411 = new System.Single[] {};
-   System.Single logic_uScriptAct_AddFloat_FloatResult_411;
-   System.Int32 logic_uScriptAct_AddFloat_IntResult_411;
-   bool logic_uScriptAct_AddFloat_Out_411 = true;
+   uScriptAct_AddFloat_v2 logic_uScriptAct_AddFloat_v2_uScriptAct_AddFloat_v2_411 = new uScriptAct_AddFloat_v2( );
+   System.Single logic_uScriptAct_AddFloat_v2_A_411 = (float) 0;
+   System.Single logic_uScriptAct_AddFloat_v2_B_411 = (float) 0;
+   System.Single logic_uScriptAct_AddFloat_v2_FloatResult_411;
+   System.Int32 logic_uScriptAct_AddFloat_v2_IntResult_411;
+   bool logic_uScriptAct_AddFloat_v2_Out_411 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_412 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_412 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_412 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_412;
-   System.Single logic_uScriptAct_AddInt_FloatResult_412;
-   bool logic_uScriptAct_AddInt_Out_412 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_412 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_412 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_412 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_412;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_412;
+   bool logic_uScriptAct_AddInt_v2_Out_412 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddRect logic_uScriptAct_AddRect_uScriptAct_AddRect_413 = new uScriptAct_AddRect( );
-   UnityEngine.Rect[] logic_uScriptAct_AddRect_A_413 = new Rect[] {};
-   UnityEngine.Rect[] logic_uScriptAct_AddRect_B_413 = new Rect[] {};
-   UnityEngine.Rect logic_uScriptAct_AddRect_Result_413;
-   bool logic_uScriptAct_AddRect_Out_413 = true;
+   uScriptAct_AddRect_v2 logic_uScriptAct_AddRect_v2_uScriptAct_AddRect_v2_413 = new uScriptAct_AddRect_v2( );
+   UnityEngine.Rect logic_uScriptAct_AddRect_v2_A_413 = new Rect( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Rect logic_uScriptAct_AddRect_v2_B_413 = new Rect( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Rect logic_uScriptAct_AddRect_v2_Result_413;
+   bool logic_uScriptAct_AddRect_v2_Out_413 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_414 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_414 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_414 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_414;
-   bool logic_uScriptAct_AddVector3_Out_414 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_414 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_414 = new Vector3( (float)0, (float)0, (float)0 );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_414 = new Vector3( (float)0, (float)0, (float)0 );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_414;
+   bool logic_uScriptAct_AddVector3_v2_Out_414 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector4 logic_uScriptAct_AddVector4_uScriptAct_AddVector4_415 = new uScriptAct_AddVector4( );
-   UnityEngine.Vector4[] logic_uScriptAct_AddVector4_A_415 = new Vector4[] {};
-   UnityEngine.Vector4[] logic_uScriptAct_AddVector4_B_415 = new Vector4[] {};
-   UnityEngine.Vector4 logic_uScriptAct_AddVector4_Result_415;
-   bool logic_uScriptAct_AddVector4_Out_415 = true;
+   uScriptAct_AddVector4_v2 logic_uScriptAct_AddVector4_v2_uScriptAct_AddVector4_v2_415 = new uScriptAct_AddVector4_v2( );
+   UnityEngine.Vector4 logic_uScriptAct_AddVector4_v2_A_415 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Vector4 logic_uScriptAct_AddVector4_v2_B_415 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Vector4 logic_uScriptAct_AddVector4_v2_Result_415;
+   bool logic_uScriptAct_AddVector4_v2_Out_415 = true;
    //pointer to script instanced logic node
    uScriptAct_ClampFloat logic_uScriptAct_ClampFloat_uScriptAct_ClampFloat_416 = new uScriptAct_ClampFloat( );
    System.Single logic_uScriptAct_ClampFloat_Target_416 = (float) 0;
@@ -2314,19 +2343,19 @@ public class CodeGenTest : uScriptLogic
    System.Int32 logic_uScriptAct_MinInt_Result_439;
    bool logic_uScriptAct_MinInt_Out_439 = true;
    //pointer to script instanced logic node
-   uScriptAct_MultiplyFloat logic_uScriptAct_MultiplyFloat_uScriptAct_MultiplyFloat_440 = new uScriptAct_MultiplyFloat( );
-   System.Single[] logic_uScriptAct_MultiplyFloat_A_440 = new System.Single[] {};
-   System.Single[] logic_uScriptAct_MultiplyFloat_B_440 = new System.Single[] {};
-   System.Single logic_uScriptAct_MultiplyFloat_FloatResult_440;
-   System.Int32 logic_uScriptAct_MultiplyFloat_IntResult_440;
-   bool logic_uScriptAct_MultiplyFloat_Out_440 = true;
+   uScriptAct_MultiplyFloat_v2 logic_uScriptAct_MultiplyFloat_v2_uScriptAct_MultiplyFloat_v2_440 = new uScriptAct_MultiplyFloat_v2( );
+   System.Single logic_uScriptAct_MultiplyFloat_v2_A_440 = (float) 0;
+   System.Single logic_uScriptAct_MultiplyFloat_v2_B_440 = (float) 0;
+   System.Single logic_uScriptAct_MultiplyFloat_v2_FloatResult_440;
+   System.Int32 logic_uScriptAct_MultiplyFloat_v2_IntResult_440;
+   bool logic_uScriptAct_MultiplyFloat_v2_Out_440 = true;
    //pointer to script instanced logic node
-   uScriptAct_MultiplyInt logic_uScriptAct_MultiplyInt_uScriptAct_MultiplyInt_441 = new uScriptAct_MultiplyInt( );
-   System.Int32[] logic_uScriptAct_MultiplyInt_A_441 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_MultiplyInt_B_441 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_MultiplyInt_IntResult_441;
-   System.Single logic_uScriptAct_MultiplyInt_FloatResult_441;
-   bool logic_uScriptAct_MultiplyInt_Out_441 = true;
+   uScriptAct_MultiplyInt_v2 logic_uScriptAct_MultiplyInt_v2_uScriptAct_MultiplyInt_v2_441 = new uScriptAct_MultiplyInt_v2( );
+   System.Int32 logic_uScriptAct_MultiplyInt_v2_A_441 = (int) 0;
+   System.Int32 logic_uScriptAct_MultiplyInt_v2_B_441 = (int) 0;
+   System.Int32 logic_uScriptAct_MultiplyInt_v2_IntResult_441;
+   System.Single logic_uScriptAct_MultiplyInt_v2_FloatResult_441;
+   bool logic_uScriptAct_MultiplyInt_v2_Out_441 = true;
    //pointer to script instanced logic node
    uScriptAct_QuaternionEuler logic_uScriptAct_QuaternionEuler_uScriptAct_QuaternionEuler_442 = new uScriptAct_QuaternionEuler( );
    System.Single logic_uScriptAct_QuaternionEuler_x_442 = (float) 0;
@@ -2379,11 +2408,11 @@ public class CodeGenTest : uScriptLogic
    System.Single logic_uScriptAct_SubtractInt_FloatResult_449;
    bool logic_uScriptAct_SubtractInt_Out_449 = true;
    //pointer to script instanced logic node
-   uScriptAct_SubtractRect logic_uScriptAct_SubtractRect_uScriptAct_SubtractRect_450 = new uScriptAct_SubtractRect( );
-   UnityEngine.Rect[] logic_uScriptAct_SubtractRect_A_450 = new Rect[] {};
-   UnityEngine.Rect[] logic_uScriptAct_SubtractRect_B_450 = new Rect[] {};
-   UnityEngine.Rect logic_uScriptAct_SubtractRect_Result_450;
-   bool logic_uScriptAct_SubtractRect_Out_450 = true;
+   uScriptAct_SubtractRect_v2 logic_uScriptAct_SubtractRect_v2_uScriptAct_SubtractRect_v2_450 = new uScriptAct_SubtractRect_v2( );
+   UnityEngine.Rect logic_uScriptAct_SubtractRect_v2_A_450 = new Rect( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Rect logic_uScriptAct_SubtractRect_v2_B_450 = new Rect( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Rect logic_uScriptAct_SubtractRect_v2_Result_450;
+   bool logic_uScriptAct_SubtractRect_v2_Out_450 = true;
    //pointer to script instanced logic node
    uScriptAct_SubtractVector2 logic_uScriptAct_SubtractVector2_uScriptAct_SubtractVector2_451 = new uScriptAct_SubtractVector2( );
    UnityEngine.Vector2 logic_uScriptAct_SubtractVector2_A_451 = new Vector2( (float)0, (float)0 );
@@ -2397,11 +2426,11 @@ public class CodeGenTest : uScriptLogic
    UnityEngine.Vector3 logic_uScriptAct_SubtractVector3_Result_452;
    bool logic_uScriptAct_SubtractVector3_Out_452 = true;
    //pointer to script instanced logic node
-   uScriptAct_SubtractVector4 logic_uScriptAct_SubtractVector4_uScriptAct_SubtractVector4_453 = new uScriptAct_SubtractVector4( );
-   UnityEngine.Vector4[] logic_uScriptAct_SubtractVector4_A_453 = new Vector4[] {};
-   UnityEngine.Vector4[] logic_uScriptAct_SubtractVector4_B_453 = new Vector4[] {};
-   UnityEngine.Vector4 logic_uScriptAct_SubtractVector4_Result_453;
-   bool logic_uScriptAct_SubtractVector4_Out_453 = true;
+   uScriptAct_SubtractVector4_v2 logic_uScriptAct_SubtractVector4_v2_uScriptAct_SubtractVector4_v2_453 = new uScriptAct_SubtractVector4_v2( );
+   UnityEngine.Vector4 logic_uScriptAct_SubtractVector4_v2_A_453 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Vector4 logic_uScriptAct_SubtractVector4_v2_B_453 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
+   UnityEngine.Vector4 logic_uScriptAct_SubtractVector4_v2_Result_453;
+   bool logic_uScriptAct_SubtractVector4_v2_Out_453 = true;
    //pointer to script instanced logic node
    uScriptAct_VectorsFromQuaternion logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_454 = new uScriptAct_VectorsFromQuaternion( );
    UnityEngine.Quaternion logic_uScriptAct_VectorsFromQuaternion_quaternion_454 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
@@ -2470,8 +2499,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_ReplaceValueInListAudioClip logic_uScriptAct_ReplaceValueInListAudioClip_uScriptAct_ReplaceValueInListAudioClip_473 = new uScriptAct_ReplaceValueInListAudioClip( );
    UnityEngine.AudioClip[] logic_uScriptAct_ReplaceValueInListAudioClip_TargetList_473 = new UnityEngine.AudioClip[ 0 ];
-   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueInListAudioClip_OldValue_473 = null;
-   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueInListAudioClip_NewValue_473 = null;
+   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueInListAudioClip_OldValue_473 = default(UnityEngine.AudioClip);
+   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueInListAudioClip_NewValue_473 = default(UnityEngine.AudioClip);
    UnityEngine.AudioClip[] logic_uScriptAct_ReplaceValueInListAudioClip_ModifiedList_473;
    System.Int32 logic_uScriptAct_ReplaceValueInListAudioClip_ValuesFound_473;
    bool logic_uScriptAct_ReplaceValueInListAudioClip_Out_473 = true;
@@ -2507,56 +2536,56 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_SetParent logic_uScriptAct_SetParent_uScriptAct_SetParent_486 = new uScriptAct_SetParent( );
    UnityEngine.GameObject[] logic_uScriptAct_SetParent_Target_486 = new UnityEngine.GameObject[] {};
-   UnityEngine.GameObject logic_uScriptAct_SetParent_Parent_486 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetParent_Parent_486 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SetParent_Out_486 = true;
    
    //event nodes
    System.Boolean event_UnityEngine_GameObject_HasFocus_0 = (bool) false;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_1 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_7 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_1 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_7 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_7 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_8 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_8 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_8 = "";
    System.Boolean event_UnityEngine_GameObject_EventData_8 = (bool) false;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_9 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_9 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_9 = "";
    UnityEngine.Color event_UnityEngine_GameObject_EventData_9 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_10 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_10 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_10 = "";
    System.Single event_UnityEngine_GameObject_EventData_10 = (float) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_11 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_11 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_11 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_EventData_11 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_12 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_EventData_11 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_12 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_12 = "";
    System.Int32 event_UnityEngine_GameObject_EventData_12 = (int) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_13 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_13 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_13 = "";
-   UnityEngine.Object event_UnityEngine_GameObject_EventData_13 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_14 = null;
+   UnityEngine.Object event_UnityEngine_GameObject_EventData_13 = default(UnityEngine.Object);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_14 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_14 = "";
    System.String event_UnityEngine_GameObject_EventData_14 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_15 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_15 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_15 = "";
    UnityEngine.Vector2 event_UnityEngine_GameObject_EventData_15 = new Vector2( (float)0, (float)0 );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_16 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_16 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_16 = "";
    UnityEngine.Vector3 event_UnityEngine_GameObject_EventData_16 = new Vector3( (float)0, (float)0, (float)0 );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_17 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_17 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_17 = "";
    UnityEngine.Vector4 event_UnityEngine_GameObject_EventData_17 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_21 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_21 = default(UnityEngine.GameObject);
    System.Boolean event_UnityEngine_GameObject_GUIChanged_22 = (bool) false;
    System.String event_UnityEngine_GameObject_FocusedControl_22 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_22 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_22 = default(UnityEngine.GameObject);
    System.Int32 event_UnityEngine_GameObject_Level_23 = (int) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_23 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_23 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 event_UnityEngine_GameObject_Acceleration_33 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single event_UnityEngine_GameObject_DeltaTime_33 = (float) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_33 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_34 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_35 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_33 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_34 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_35 = default(UnityEngine.GameObject);
    System.Single event_UnityEngine_GameObject_Horizontal_36 = (float) 0;
    System.Single event_UnityEngine_GameObject_Vertical_36 = (float) 0;
    System.Boolean event_UnityEngine_GameObject_Fire1_36 = (bool) false;
@@ -2568,52 +2597,51 @@ public class CodeGenTest : uScriptLogic
    System.Single event_UnityEngine_GameObject_MouseScrollWheel_36 = (float) 0;
    System.Single event_UnityEngine_GameObject_WindowShakeX_36 = (float) 0;
    System.Single event_UnityEngine_GameObject_WindowShakeY_36 = (float) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_36 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_38 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_36 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_38 = default(UnityEngine.GameObject);
    System.Int32 event_UnityEngine_GameObject_FingerId_39 = (int) 0;
    UnityEngine.Vector2 event_UnityEngine_GameObject_Position_39 = new Vector2( (float)0, (float)0 );
    UnityEngine.Vector2 event_UnityEngine_GameObject_DeltaPosition_39 = new Vector2( (float)0, (float)0 );
    System.Single event_UnityEngine_GameObject_DeltaTime_39 = (float) 0;
    System.Int32 event_UnityEngine_GameObject_TapCount_39 = (int) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_39 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_39 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_Failure_48 = "";
    UnityEngine.NetworkConnectionError event_UnityEngine_GameObject_Error_49 = UnityEngine.NetworkConnectionError.NoError;
-   UnityEngine.NetworkMessageInfo event_UnityEngine_GameObject_MessageInfo_50 = new UnityEngine.NetworkMessageInfo( );
+   UnityEngine.NetworkMessageInfo event_UnityEngine_GameObject_MessageInfo_50 = default(UnityEngine.NetworkMessageInfo);
    UnityEngine.MasterServerEvent event_UnityEngine_GameObject_MasterServerEvent_51 = UnityEngine.MasterServerEvent.RegistrationFailedGameName;
-   UnityEngine.BitStream event_UnityEngine_GameObject_BitStream_52 = null;
-   UnityEngine.NetworkMessageInfo event_UnityEngine_GameObject_MessageInfo_52 = new UnityEngine.NetworkMessageInfo( );
-   UnityEngine.NetworkPlayer event_UnityEngine_GameObject_NetworkPlayer_54 = new UnityEngine.NetworkPlayer( );
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_56 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_58 = null;
-   UnityEngine.CharacterController event_UnityEngine_GameObject_Controller_58 = null;
-   UnityEngine.Collider event_UnityEngine_GameObject_Collider_58 = null;
-   UnityEngine.Rigidbody event_UnityEngine_GameObject_RigidBody_58 = null;
-   UnityEngine.Transform event_UnityEngine_GameObject_Transform_58 = null;
+   UnityEngine.BitStream event_UnityEngine_GameObject_BitStream_52 = default(UnityEngine.BitStream);
+   UnityEngine.NetworkMessageInfo event_UnityEngine_GameObject_MessageInfo_52 = default(UnityEngine.NetworkMessageInfo);
+   UnityEngine.NetworkPlayer event_UnityEngine_GameObject_NetworkPlayer_54 = default(UnityEngine.NetworkPlayer);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_56 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_58 = default(UnityEngine.GameObject);
+   UnityEngine.CharacterController event_UnityEngine_GameObject_Controller_58 = default(UnityEngine.CharacterController);
+   UnityEngine.Collider event_UnityEngine_GameObject_Collider_58 = default(UnityEngine.Collider);
+   UnityEngine.Rigidbody event_UnityEngine_GameObject_RigidBody_58 = default(UnityEngine.Rigidbody);
+   UnityEngine.Transform event_UnityEngine_GameObject_Transform_58 = default(UnityEngine.Transform);
    UnityEngine.Vector3 event_UnityEngine_GameObject_Point_58 = new Vector3( (float)0, (float)0, (float)0 );
    UnityEngine.Vector3 event_UnityEngine_GameObject_Normal_58 = new Vector3( (float)0, (float)0, (float)0 );
    UnityEngine.Vector3 event_UnityEngine_GameObject_MoveDirection_58 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single event_UnityEngine_GameObject_MoveLength_58 = (float) 0;
    System.Single event_UnityEngine_GameObject_BreakForce_59 = (float) 0;
    UnityEngine.Vector3 event_UnityEngine_GameObject_RelativeVelocity_60 = new Vector3( (float)0, (float)0, (float)0 );
-   UnityEngine.Rigidbody event_UnityEngine_GameObject_RigidBody_60 = null;
-   UnityEngine.Collider event_UnityEngine_GameObject_Collider_60 = null;
-   UnityEngine.Transform event_UnityEngine_GameObject_Transform_60 = null;
+   UnityEngine.Rigidbody event_UnityEngine_GameObject_RigidBody_60 = default(UnityEngine.Rigidbody);
+   UnityEngine.Collider event_UnityEngine_GameObject_Collider_60 = default(UnityEngine.Collider);
+   UnityEngine.Transform event_UnityEngine_GameObject_Transform_60 = default(UnityEngine.Transform);
    UnityEngine.ContactPoint[] event_UnityEngine_GameObject_Contacts_60 = new UnityEngine.ContactPoint[ 0 ];
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_60 = null;
-   UnityEngine.RenderTexture event_UnityEngine_GameObject_SourceTexture_66 = null;
-   UnityEngine.RenderTexture event_UnityEngine_GameObject_DestinationTexture_66 = null;
-   System.Int32 event_UnityEngine_GameObject_TimesToTrigger_68 = (int) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_68 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_73 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_140 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_164 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_194 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_225 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_274 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_347 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_396 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_410 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_459 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_60 = default(UnityEngine.GameObject);
+   UnityEngine.RenderTexture event_UnityEngine_GameObject_SourceTexture_66 = default(UnityEngine.RenderTexture);
+   UnityEngine.RenderTexture event_UnityEngine_GameObject_DestinationTexture_66 = default(UnityEngine.RenderTexture);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_68 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_73 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_140 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_164 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_194 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_225 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_274 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_347 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_396 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_410 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_459 = default(UnityEngine.GameObject);
    
    //property nodes
    
@@ -3198,17 +3226,6 @@ public class CodeGenTest : uScriptLogic
                   component.PostRender += Instance_PostRender_67;
                   component.RenderObject += Instance_RenderObject_67;
                   component.WillRenderObject += Instance_WillRenderObject_67;
-               }
-            }
-            {
-               uScript_Triggers component = local_MasterGO_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
-               if ( null == component )
-               {
-                  component = local_MasterGO_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
-               }
-               if ( null != component )
-               {
-                  component.TimesToTrigger = event_UnityEngine_GameObject_TimesToTrigger_68;
                }
             }
             {
@@ -3830,17 +3847,6 @@ public class CodeGenTest : uScriptLogic
                }
                if ( null != component )
                {
-                  component.TimesToTrigger = event_UnityEngine_GameObject_TimesToTrigger_68;
-               }
-            }
-            {
-               uScript_Triggers component = local_MasterGO_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
-               if ( null == component )
-               {
-                  component = local_MasterGO_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
-               }
-               if ( null != component )
-               {
                   component.OnEnterTrigger += Instance_OnEnterTrigger_68;
                   component.OnExitTrigger += Instance_OnExitTrigger_68;
                   component.WhileInsideTrigger += Instance_WhileInsideTrigger_68;
@@ -4094,6 +4100,7 @@ public class CodeGenTest : uScriptLogic
                if ( null != component )
                {
                   component.uScriptStart += Instance_uScriptStart_73;
+                  component.uScriptLateStart += Instance_uScriptLateStart_73;
                }
             }
          }
@@ -4256,6 +4263,7 @@ public class CodeGenTest : uScriptLogic
                if ( null != component )
                {
                   component.uScriptStart += Instance_uScriptStart_459;
+                  component.uScriptLateStart += Instance_uScriptLateStart_459;
                }
             }
          }
@@ -4617,6 +4625,7 @@ public class CodeGenTest : uScriptLogic
             if ( null != component )
             {
                component.uScriptStart -= Instance_uScriptStart_73;
+               component.uScriptLateStart -= Instance_uScriptLateStart_73;
             }
          }
       }
@@ -4707,6 +4716,7 @@ public class CodeGenTest : uScriptLogic
             if ( null != component )
             {
                component.uScriptStart -= Instance_uScriptStart_459;
+               component.uScriptLateStart -= Instance_uScriptLateStart_459;
             }
          }
       }
@@ -5003,23 +5013,23 @@ public class CodeGenTest : uScriptLogic
       logic_uScriptAct_Teleport_uScriptAct_Teleport_391.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_393.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_395.SetParent(g);
-      logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.SetParent(g);
-      logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.SetParent(g);
-      logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.SetParent(g);
-      logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.SetParent(g);
-      logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.SetParent(g);
-      logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.SetParent(g);
-      logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.SetParent(g);
-      logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.SetParent(g);
-      logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.SetParent(g);
+      logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.SetParent(g);
+      logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.SetParent(g);
+      logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.SetParent(g);
+      logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.SetParent(g);
+      logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.SetParent(g);
+      logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.SetParent(g);
+      logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.SetParent(g);
+      logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.SetParent(g);
+      logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_406.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_407.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_409.SetParent(g);
-      logic_uScriptAct_AddFloat_uScriptAct_AddFloat_411.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_412.SetParent(g);
-      logic_uScriptAct_AddRect_uScriptAct_AddRect_413.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_414.SetParent(g);
-      logic_uScriptAct_AddVector4_uScriptAct_AddVector4_415.SetParent(g);
+      logic_uScriptAct_AddFloat_v2_uScriptAct_AddFloat_v2_411.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_412.SetParent(g);
+      logic_uScriptAct_AddRect_v2_uScriptAct_AddRect_v2_413.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_414.SetParent(g);
+      logic_uScriptAct_AddVector4_v2_uScriptAct_AddVector4_v2_415.SetParent(g);
       logic_uScriptAct_ClampFloat_uScriptAct_ClampFloat_416.SetParent(g);
       logic_uScriptAct_ClampInt_uScriptAct_ClampInt_417.SetParent(g);
       logic_uScriptAct_ConvertRectToVector4_uScriptAct_ConvertRectToVector4_418.SetParent(g);
@@ -5044,8 +5054,8 @@ public class CodeGenTest : uScriptLogic
       logic_uScriptAct_MaxInt_uScriptAct_MaxInt_437.SetParent(g);
       logic_uScriptAct_MinFloat_uScriptAct_MinFloat_438.SetParent(g);
       logic_uScriptAct_MinInt_uScriptAct_MinInt_439.SetParent(g);
-      logic_uScriptAct_MultiplyFloat_uScriptAct_MultiplyFloat_440.SetParent(g);
-      logic_uScriptAct_MultiplyInt_uScriptAct_MultiplyInt_441.SetParent(g);
+      logic_uScriptAct_MultiplyFloat_v2_uScriptAct_MultiplyFloat_v2_440.SetParent(g);
+      logic_uScriptAct_MultiplyInt_v2_uScriptAct_MultiplyInt_v2_441.SetParent(g);
       logic_uScriptAct_QuaternionEuler_uScriptAct_QuaternionEuler_442.SetParent(g);
       logic_uScriptAct_QuaternionFromVectors_uScriptAct_QuaternionFromVectors_443.SetParent(g);
       logic_uScriptAct_RoundFloat_uScriptAct_RoundFloat_444.SetParent(g);
@@ -5054,10 +5064,10 @@ public class CodeGenTest : uScriptLogic
       logic_uScriptAct_ScaleVector4_uScriptAct_ScaleVector4_447.SetParent(g);
       logic_uScriptAct_SubtractFloat_uScriptAct_SubtractFloat_448.SetParent(g);
       logic_uScriptAct_SubtractInt_uScriptAct_SubtractInt_449.SetParent(g);
-      logic_uScriptAct_SubtractRect_uScriptAct_SubtractRect_450.SetParent(g);
+      logic_uScriptAct_SubtractRect_v2_uScriptAct_SubtractRect_v2_450.SetParent(g);
       logic_uScriptAct_SubtractVector2_uScriptAct_SubtractVector2_451.SetParent(g);
       logic_uScriptAct_SubtractVector3_uScriptAct_SubtractVector3_452.SetParent(g);
-      logic_uScriptAct_SubtractVector4_uScriptAct_SubtractVector4_453.SetParent(g);
+      logic_uScriptAct_SubtractVector4_v2_uScriptAct_SubtractVector4_v2_453.SetParent(g);
       logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_454.SetParent(g);
       logic_uScriptAct_Trigonometry_uScriptAct_Trigonometry_455.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_456.SetParent(g);
@@ -5075,6 +5085,7 @@ public class CodeGenTest : uScriptLogic
       logic_uScriptAct_Log_uScriptAct_Log_481.SetParent(g);
       logic_uScriptAct_CreateGameObject_uScriptAct_CreateGameObject_484.SetParent(g);
       logic_uScriptAct_SetParent_uScriptAct_SetParent_486.SetParent(g);
+      owner_Connection_460 = parentGameObject;
    }
    public void Awake()
    {
@@ -5173,39 +5184,39 @@ public class CodeGenTest : uScriptLogic
       {
          Relay_WaitOneTick_355();
       }
-      if (true == logic_uScriptAct_InterpolateColorLinear_Driven_397)
+      if (true == logic_uScriptAct_InterpolateColorLinearSmooth_Driven_397)
       {
          Relay_Driven_397();
       }
-      if (true == logic_uScriptAct_InterpolateFloatLinear_Driven_398)
+      if (true == logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_398)
       {
          Relay_Driven_398();
       }
-      if (true == logic_uScriptAct_InterpolateIntLinear_Driven_399)
+      if (true == logic_uScriptAct_InterpolateIntLinearSmooth_Driven_399)
       {
          Relay_Driven_399();
       }
-      if (true == logic_uScriptAct_InterpolateQuaternionLinear_Driven_400)
+      if (true == logic_uScriptAct_InterpolateQuaternionLinearSmooth_Driven_400)
       {
          Relay_Driven_400();
       }
-      if (true == logic_uScriptAct_InterpolateQuaternionSlerp_Driven_401)
+      if (true == logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Driven_401)
       {
          Relay_Driven_401();
       }
-      if (true == logic_uScriptAct_InterpolateRectLinear_Driven_402)
+      if (true == logic_uScriptAct_InterpolateRectLinearSmooth_Driven_402)
       {
          Relay_Driven_402();
       }
-      if (true == logic_uScriptAct_InterpolateVector2Linear_Driven_403)
+      if (true == logic_uScriptAct_InterpolateVector2LinearSmooth_Driven_403)
       {
          Relay_Driven_403();
       }
-      if (true == logic_uScriptAct_InterpolateVector3Linear_Driven_404)
+      if (true == logic_uScriptAct_InterpolateVector3LinearSmooth_Driven_404)
       {
          Relay_Driven_404();
       }
-      if (true == logic_uScriptAct_InterpolateVector4Linear_Driven_405)
+      if (true == logic_uScriptAct_InterpolateVector4LinearSmooth_Driven_405)
       {
          Relay_Driven_405();
       }
@@ -6210,6 +6221,18 @@ public class CodeGenTest : uScriptLogic
       Relay_uScriptStart_73( );
    }
    
+   void Instance_uScriptLateStart_73(object o, System.EventArgs e)
+   {
+      //reset event call
+      //if it ever goes above MaxRelayCallCount before being reset
+      //then we assume it is stuck in an infinite loop
+      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
+      
+      //fill globals
+      //relay event to nodes
+      Relay_uScriptLateStart_73( );
+   }
+   
    void Instance_KeyEvent_140(object o, System.EventArgs e)
    {
       //reset event call
@@ -6316,6 +6339,18 @@ public class CodeGenTest : uScriptLogic
       //fill globals
       //relay event to nodes
       Relay_uScriptStart_459( );
+   }
+   
+   void Instance_uScriptLateStart_459(object o, System.EventArgs e)
+   {
+      //reset event call
+      //if it ever goes above MaxRelayCallCount before being reset
+      //then we assume it is stuck in an infinite loop
+      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
+      
+      //fill globals
+      //relay event to nodes
+      Relay_uScriptLateStart_459( );
    }
    
    void uScriptCon_Gate_Out_95(object o, System.EventArgs e)
@@ -6526,13 +6561,13 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_FocusEvent_0()
    {
-      if (true == CheckDebugBreak("5249e810-8011-4af6-b144-a1eacb21239a", "Application Focus", Relay_FocusEvent_0)) return; 
+      if (true == CheckDebugBreak("5249e810-8011-4af6-b144-a1eacb21239a", "Application_Focus", Relay_FocusEvent_0)) return; 
       Relay_In_2();
    }
    
    void Relay_QuitEvent_1()
    {
-      if (true == CheckDebugBreak("fed0475d-3060-46c0-8c33-56add62e7419", "Application Quit", Relay_QuitEvent_1)) return; 
+      if (true == CheckDebugBreak("fed0475d-3060-46c0-8c33-56add62e7419", "Application_Quit", Relay_QuitEvent_1)) return; 
       Relay_In_6();
    }
    
@@ -6547,9 +6582,13 @@ public class CodeGenTest : uScriptLogic
                
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_Named_Variable_System_String);
-               logic_uScriptAct_Log_Target_2 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_2.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_2, index + 1);
+               }
+               logic_uScriptAct_Log_Target_2[ index++ ] = local_Named_Variable_System_String;
+               
             }
             {
                logic_uScriptAct_Log_Postfix_2 = local_4_System_String;
@@ -6593,68 +6632,68 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_OnCustomEvent_7()
    {
-      if (true == CheckDebugBreak("b64b5b49-0c59-497e-8579-c60e9dfe49e8", "Custom Event", Relay_OnCustomEvent_7)) return; 
+      if (true == CheckDebugBreak("b64b5b49-0c59-497e-8579-c60e9dfe49e8", "Custom_Event", Relay_OnCustomEvent_7)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventBool_8()
    {
-      if (true == CheckDebugBreak("c3d5afcc-d1c9-4fd5-b652-736a156be362", "Custom Event (Bool)", Relay_OnCustomEventBool_8)) return; 
+      if (true == CheckDebugBreak("c3d5afcc-d1c9-4fd5-b652-736a156be362", "Custom_Event__Bool_", Relay_OnCustomEventBool_8)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventColor_9()
    {
-      if (true == CheckDebugBreak("5e10c895-9686-4ae0-be3c-c3817e6ddb85", "Custom Event (Color)", Relay_OnCustomEventColor_9)) return; 
+      if (true == CheckDebugBreak("5e10c895-9686-4ae0-be3c-c3817e6ddb85", "Custom_Event__Color_", Relay_OnCustomEventColor_9)) return; 
       local_19_System_String = event_UnityEngine_GameObject_EventName_9;
       Relay_In_20();
    }
    
    void Relay_OnCustomEventFloat_10()
    {
-      if (true == CheckDebugBreak("382058ef-0dd8-4c7b-9dfe-91c8c2aa0e36", "Custom Event (Float)", Relay_OnCustomEventFloat_10)) return; 
+      if (true == CheckDebugBreak("382058ef-0dd8-4c7b-9dfe-91c8c2aa0e36", "Custom_Event__Float_", Relay_OnCustomEventFloat_10)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventGameObject_11()
    {
-      if (true == CheckDebugBreak("e4e85a6f-4498-4222-9309-c0b9ddb7cdfa", "Custom Event (GameObject)", Relay_OnCustomEventGameObject_11)) return; 
+      if (true == CheckDebugBreak("e4e85a6f-4498-4222-9309-c0b9ddb7cdfa", "Custom_Event__GameObject_", Relay_OnCustomEventGameObject_11)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventInt_12()
    {
-      if (true == CheckDebugBreak("4229cbc2-06ce-40bd-9c27-bff56c414838", "Custom Event (Int)", Relay_OnCustomEventInt_12)) return; 
+      if (true == CheckDebugBreak("4229cbc2-06ce-40bd-9c27-bff56c414838", "Custom_Event__Int_", Relay_OnCustomEventInt_12)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventObject_13()
    {
-      if (true == CheckDebugBreak("6a4412eb-92e1-4824-a1ab-90f790017ce5", "Custom Event (Object)", Relay_OnCustomEventObject_13)) return; 
+      if (true == CheckDebugBreak("6a4412eb-92e1-4824-a1ab-90f790017ce5", "Custom_Event__Object_", Relay_OnCustomEventObject_13)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventString_14()
    {
-      if (true == CheckDebugBreak("982aa3ee-f9e1-482f-83c0-0dfa25e046e1", "Custom Event (String)", Relay_OnCustomEventString_14)) return; 
+      if (true == CheckDebugBreak("982aa3ee-f9e1-482f-83c0-0dfa25e046e1", "Custom_Event__String_", Relay_OnCustomEventString_14)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventVector2_15()
    {
-      if (true == CheckDebugBreak("2b841a97-54fe-420a-a9f9-09a9e117a919", "Custom Event (Vector2)", Relay_OnCustomEventVector2_15)) return; 
+      if (true == CheckDebugBreak("2b841a97-54fe-420a-a9f9-09a9e117a919", "Custom_Event__Vector2_", Relay_OnCustomEventVector2_15)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventVector3_16()
    {
-      if (true == CheckDebugBreak("5803201b-adda-4e1e-b1a5-9a51647e8ea6", "Custom Event (Vector3)", Relay_OnCustomEventVector3_16)) return; 
+      if (true == CheckDebugBreak("5803201b-adda-4e1e-b1a5-9a51647e8ea6", "Custom_Event__Vector3_", Relay_OnCustomEventVector3_16)) return; 
       Relay_In_20();
    }
    
    void Relay_OnCustomEventVector4_17()
    {
-      if (true == CheckDebugBreak("5e2e9ce1-d144-4385-be64-aecedf858721", "Custom Event (Vector4)", Relay_OnCustomEventVector4_17)) return; 
+      if (true == CheckDebugBreak("5e2e9ce1-d144-4385-be64-aecedf858721", "Custom_Event__Vector4_", Relay_OnCustomEventVector4_17)) return; 
       Relay_In_20();
    }
    
@@ -6684,31 +6723,31 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_OnUpdate_21()
    {
-      if (true == CheckDebugBreak("d1b827f1-07d9-4f30-9a32-f22ca8a61a27", "Global Update", Relay_OnUpdate_21)) return; 
+      if (true == CheckDebugBreak("d1b827f1-07d9-4f30-9a32-f22ca8a61a27", "Global_Update", Relay_OnUpdate_21)) return; 
       Relay_In_24();
    }
    
    void Relay_OnLateUpdate_21()
    {
-      if (true == CheckDebugBreak("d1b827f1-07d9-4f30-9a32-f22ca8a61a27", "Global Update", Relay_OnLateUpdate_21)) return; 
+      if (true == CheckDebugBreak("d1b827f1-07d9-4f30-9a32-f22ca8a61a27", "Global_Update", Relay_OnLateUpdate_21)) return; 
       Relay_In_24();
    }
    
    void Relay_OnFixedUpdate_21()
    {
-      if (true == CheckDebugBreak("d1b827f1-07d9-4f30-9a32-f22ca8a61a27", "Global Update", Relay_OnFixedUpdate_21)) return; 
+      if (true == CheckDebugBreak("d1b827f1-07d9-4f30-9a32-f22ca8a61a27", "Global_Update", Relay_OnFixedUpdate_21)) return; 
       Relay_In_24();
    }
    
    void Relay_OnGui_22()
    {
-      if (true == CheckDebugBreak("50e4eee8-9dfe-41a5-b805-c697a0af6714", "GUI Events", Relay_OnGui_22)) return; 
+      if (true == CheckDebugBreak("50e4eee8-9dfe-41a5-b805-c697a0af6714", "GUI_Events", Relay_OnGui_22)) return; 
       Relay_In_27();
    }
    
    void Relay_LevelWasLoaded_23()
    {
-      if (true == CheckDebugBreak("dfcdd053-54d1-436a-9655-1632de36d696", "Level Load", Relay_LevelWasLoaded_23)) return; 
+      if (true == CheckDebugBreak("dfcdd053-54d1-436a-9655-1632de36d696", "Level_Load", Relay_LevelWasLoaded_23)) return; 
       Relay_In_25();
    }
    
@@ -6792,32 +6831,32 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_EnableEvent_28()
    {
-      if (true == CheckDebugBreak("4ab0acbb-9221-4cc9-9244-26d648bc1082", "GameObject Events", Relay_EnableEvent_28)) return; 
+      if (true == CheckDebugBreak("4ab0acbb-9221-4cc9-9244-26d648bc1082", "GameObject_Events", Relay_EnableEvent_28)) return; 
       Relay_ShowLabel_106();
    }
    
    void Relay_DisableEvent_28()
    {
-      if (true == CheckDebugBreak("4ab0acbb-9221-4cc9-9244-26d648bc1082", "GameObject Events", Relay_DisableEvent_28)) return; 
+      if (true == CheckDebugBreak("4ab0acbb-9221-4cc9-9244-26d648bc1082", "GameObject_Events", Relay_DisableEvent_28)) return; 
       Relay_In_30();
       Relay_HideLabel_106();
    }
    
    void Relay_DestroyEvent_28()
    {
-      if (true == CheckDebugBreak("4ab0acbb-9221-4cc9-9244-26d648bc1082", "GameObject Events", Relay_DestroyEvent_28)) return; 
+      if (true == CheckDebugBreak("4ab0acbb-9221-4cc9-9244-26d648bc1082", "GameObject_Events", Relay_DestroyEvent_28)) return; 
       Relay_In_30();
    }
    
    void Relay_BecameVisible_29()
    {
-      if (true == CheckDebugBreak("b7ab768f-71d2-450d-a809-cd8cac6dacbb", "Visibility Events", Relay_BecameVisible_29)) return; 
+      if (true == CheckDebugBreak("b7ab768f-71d2-450d-a809-cd8cac6dacbb", "Visibility_Events", Relay_BecameVisible_29)) return; 
       Relay_In_31();
    }
    
    void Relay_BecameInvisible_29()
    {
-      if (true == CheckDebugBreak("b7ab768f-71d2-450d-a809-cd8cac6dacbb", "Visibility Events", Relay_BecameInvisible_29)) return; 
+      if (true == CheckDebugBreak("b7ab768f-71d2-450d-a809-cd8cac6dacbb", "Visibility_Events", Relay_BecameInvisible_29)) return; 
       Relay_In_31();
    }
    
@@ -6871,127 +6910,127 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_OnAccelerationEvent_33()
    {
-      if (true == CheckDebugBreak("9ccc7462-c084-4960-a39d-d0e1575baa2a", "Accelerometer Events", Relay_OnAccelerationEvent_33)) return; 
+      if (true == CheckDebugBreak("9ccc7462-c084-4960-a39d-d0e1575baa2a", "Accelerometer_Events", Relay_OnAccelerationEvent_33)) return; 
       Relay_In_41();
    }
    
    void Relay_OnDevicePortrait_34()
    {
-      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device Orientation Events", Relay_OnDevicePortrait_34)) return; 
+      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device_Orientation_Events", Relay_OnDevicePortrait_34)) return; 
       Relay_In_42();
    }
    
    void Relay_OnDevicePortraitUpsideDown_34()
    {
-      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device Orientation Events", Relay_OnDevicePortraitUpsideDown_34)) return; 
+      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device_Orientation_Events", Relay_OnDevicePortraitUpsideDown_34)) return; 
       Relay_In_42();
    }
    
    void Relay_OnDeviceLandscapeLeft_34()
    {
-      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device Orientation Events", Relay_OnDeviceLandscapeLeft_34)) return; 
+      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device_Orientation_Events", Relay_OnDeviceLandscapeLeft_34)) return; 
       Relay_In_42();
    }
    
    void Relay_OnDeviceLandscapeRight_34()
    {
-      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device Orientation Events", Relay_OnDeviceLandscapeRight_34)) return; 
+      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device_Orientation_Events", Relay_OnDeviceLandscapeRight_34)) return; 
       Relay_In_42();
    }
    
    void Relay_OnDeviceFaceUp_34()
    {
-      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device Orientation Events", Relay_OnDeviceFaceUp_34)) return; 
+      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device_Orientation_Events", Relay_OnDeviceFaceUp_34)) return; 
       Relay_In_42();
    }
    
    void Relay_OnDeviceFaceDown_34()
    {
-      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device Orientation Events", Relay_OnDeviceFaceDown_34)) return; 
+      if (true == CheckDebugBreak("1b042531-5783-4395-9e6c-b1e4cc92010d", "Device_Orientation_Events", Relay_OnDeviceFaceDown_34)) return; 
       Relay_In_42();
    }
    
    void Relay_KeyEvent_35()
    {
-      if (true == CheckDebugBreak("3972e7d7-4f74-4d5d-9a32-1bd5e27004c6", "Input Events", Relay_KeyEvent_35)) return; 
+      if (true == CheckDebugBreak("3972e7d7-4f74-4d5d-9a32-1bd5e27004c6", "Input_Events", Relay_KeyEvent_35)) return; 
       Relay_In_44();
    }
    
    void Relay_OnInputEvent_36()
    {
-      if (true == CheckDebugBreak("ac7fb206-648c-439c-a7e6-9664f6e7284e", "Managed Input Events", Relay_OnInputEvent_36)) return; 
+      if (true == CheckDebugBreak("ac7fb206-648c-439c-a7e6-9664f6e7284e", "Managed_Input_Events", Relay_OnInputEvent_36)) return; 
       Relay_In_46();
    }
    
    void Relay_OnEnter_37()
    {
-      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse Cursor Events", Relay_OnEnter_37)) return; 
+      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse_Cursor_Events", Relay_OnEnter_37)) return; 
       Relay_In_43();
    }
    
    void Relay_OnOver_37()
    {
-      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse Cursor Events", Relay_OnOver_37)) return; 
+      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse_Cursor_Events", Relay_OnOver_37)) return; 
       Relay_In_43();
    }
    
    void Relay_OnExit_37()
    {
-      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse Cursor Events", Relay_OnExit_37)) return; 
+      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse_Cursor_Events", Relay_OnExit_37)) return; 
       Relay_In_43();
    }
    
    void Relay_OnDown_37()
    {
-      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse Cursor Events", Relay_OnDown_37)) return; 
+      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse_Cursor_Events", Relay_OnDown_37)) return; 
       Relay_In_43();
    }
    
    void Relay_OnUp_37()
    {
-      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse Cursor Events", Relay_OnUp_37)) return; 
+      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse_Cursor_Events", Relay_OnUp_37)) return; 
       Relay_In_43();
    }
    
    void Relay_OnDrag_37()
    {
-      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse Cursor Events", Relay_OnDrag_37)) return; 
+      if (true == CheckDebugBreak("de94afe5-796f-4ab9-9675-5492fb0e91f6", "Mouse_Cursor_Events", Relay_OnDrag_37)) return; 
       Relay_In_43();
    }
    
    void Relay_OnKeyboardSlidOut_38()
    {
-      if (true == CheckDebugBreak("8c225a6f-b289-4dd3-98a5-ac7557892fad", "On-Screen Keyboard Events", Relay_OnKeyboardSlidOut_38)) return; 
+      if (true == CheckDebugBreak("8c225a6f-b289-4dd3-98a5-ac7557892fad", "On_Screen_Keyboard_Events", Relay_OnKeyboardSlidOut_38)) return; 
       Relay_In_47();
    }
    
    void Relay_OnTouchBegan_39()
    {
-      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch Events", Relay_OnTouchBegan_39)) return; 
+      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch_Events", Relay_OnTouchBegan_39)) return; 
       Relay_In_45();
    }
    
    void Relay_OnTouchMoved_39()
    {
-      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch Events", Relay_OnTouchMoved_39)) return; 
+      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch_Events", Relay_OnTouchMoved_39)) return; 
       Relay_In_45();
    }
    
    void Relay_OnTouchStationary_39()
    {
-      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch Events", Relay_OnTouchStationary_39)) return; 
+      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch_Events", Relay_OnTouchStationary_39)) return; 
       Relay_In_45();
    }
    
    void Relay_OnTouchEnded_39()
    {
-      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch Events", Relay_OnTouchEnded_39)) return; 
+      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch_Events", Relay_OnTouchEnded_39)) return; 
       Relay_In_45();
    }
    
    void Relay_OnTouchCanceled_39()
    {
-      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch Events", Relay_OnTouchCanceled_39)) return; 
+      if (true == CheckDebugBreak("58ab34c7-3228-402a-8334-3555da8384b1", "Touch_Events", Relay_OnTouchCanceled_39)) return; 
       Relay_In_45();
    }
    
@@ -7165,97 +7204,97 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_ConnectedToServer_48()
    {
-      if (true == CheckDebugBreak("d733a5b7-31b0-4bbf-88a4-2cc4f4eae7e8", "Network Client Connection", Relay_ConnectedToServer_48)) return; 
+      if (true == CheckDebugBreak("d733a5b7-31b0-4bbf-88a4-2cc4f4eae7e8", "Network_Client_Connection", Relay_ConnectedToServer_48)) return; 
       Relay_In_61();
    }
    
    void Relay_DisconnectedFromServer_48()
    {
-      if (true == CheckDebugBreak("d733a5b7-31b0-4bbf-88a4-2cc4f4eae7e8", "Network Client Connection", Relay_DisconnectedFromServer_48)) return; 
+      if (true == CheckDebugBreak("d733a5b7-31b0-4bbf-88a4-2cc4f4eae7e8", "Network_Client_Connection", Relay_DisconnectedFromServer_48)) return; 
       Relay_In_61();
    }
    
    void Relay_FailedToConnect_49()
    {
-      if (true == CheckDebugBreak("e4e6a0d7-c7b9-43f7-b3a6-be1e5361095a", "Network Failed Connection", Relay_FailedToConnect_49)) return; 
+      if (true == CheckDebugBreak("e4e6a0d7-c7b9-43f7-b3a6-be1e5361095a", "Network_Failed_Connection", Relay_FailedToConnect_49)) return; 
       Relay_In_61();
    }
    
    void Relay_FailedToConnectToMaster_49()
    {
-      if (true == CheckDebugBreak("e4e6a0d7-c7b9-43f7-b3a6-be1e5361095a", "Network Failed Connection", Relay_FailedToConnectToMaster_49)) return; 
+      if (true == CheckDebugBreak("e4e6a0d7-c7b9-43f7-b3a6-be1e5361095a", "Network_Failed_Connection", Relay_FailedToConnectToMaster_49)) return; 
       Relay_In_61();
    }
    
    void Relay_OnInstantiate_50()
    {
-      if (true == CheckDebugBreak("c231d072-c927-4a50-b475-f0346e722441", "Network Instantiate", Relay_OnInstantiate_50)) return; 
+      if (true == CheckDebugBreak("c231d072-c927-4a50-b475-f0346e722441", "Network_Instantiate", Relay_OnInstantiate_50)) return; 
       Relay_In_61();
    }
    
    void Relay_OnEvent_51()
    {
-      if (true == CheckDebugBreak("4d2ec7d5-fdc9-41ed-b189-a86c814564be", "Network Master Server", Relay_OnEvent_51)) return; 
+      if (true == CheckDebugBreak("4d2ec7d5-fdc9-41ed-b189-a86c814564be", "Network_Master_Server", Relay_OnEvent_51)) return; 
       Relay_In_61();
    }
    
    void Relay_OnSerialize_52()
    {
-      if (true == CheckDebugBreak("292f9439-837e-4c94-8131-24a3cefcea74", "Network Serialization", Relay_OnSerialize_52)) return; 
+      if (true == CheckDebugBreak("292f9439-837e-4c94-8131-24a3cefcea74", "Network_Serialization", Relay_OnSerialize_52)) return; 
       Relay_In_61();
    }
    
    void Relay_OnInitialized_53()
    {
-      if (true == CheckDebugBreak("949b0156-2461-4637-b988-13fe1b467a8a", "Network Server Initialized", Relay_OnInitialized_53)) return; 
+      if (true == CheckDebugBreak("949b0156-2461-4637-b988-13fe1b467a8a", "Network_Server_Initialized", Relay_OnInitialized_53)) return; 
       Relay_In_61();
    }
    
    void Relay_PlayerConnected_54()
    {
-      if (true == CheckDebugBreak("9a7caaf5-fcc3-495c-8129-bcd66c02b384", "Network Server Player", Relay_PlayerConnected_54)) return; 
+      if (true == CheckDebugBreak("9a7caaf5-fcc3-495c-8129-bcd66c02b384", "Network_Server_Player", Relay_PlayerConnected_54)) return; 
       Relay_In_61();
    }
    
    void Relay_PlayerDisconnected_54()
    {
-      if (true == CheckDebugBreak("9a7caaf5-fcc3-495c-8129-bcd66c02b384", "Network Server Player", Relay_PlayerDisconnected_54)) return; 
+      if (true == CheckDebugBreak("9a7caaf5-fcc3-495c-8129-bcd66c02b384", "Network_Server_Player", Relay_PlayerDisconnected_54)) return; 
       Relay_In_61();
    }
    
    void Relay_Collision_56()
    {
-      if (true == CheckDebugBreak("8ec9f06c-b6ce-4648-8f99-3ac2c712d158", "Particle Collision", Relay_Collision_56)) return; 
+      if (true == CheckDebugBreak("8ec9f06c-b6ce-4648-8f99-3ac2c712d158", "Particle_Collision", Relay_Collision_56)) return; 
       Relay_In_62();
    }
    
    void Relay_OnHit_58()
    {
-      if (true == CheckDebugBreak("d2fc6117-c285-4418-beb9-84e42ed13a4a", "Controller Collision", Relay_OnHit_58)) return; 
+      if (true == CheckDebugBreak("d2fc6117-c285-4418-beb9-84e42ed13a4a", "Controller_Collision", Relay_OnHit_58)) return; 
       Relay_In_65();
    }
    
    void Relay_JointBreak_59()
    {
-      if (true == CheckDebugBreak("e7d09578-6608-43c1-859c-a740687f6929", "Joint Break", Relay_JointBreak_59)) return; 
+      if (true == CheckDebugBreak("e7d09578-6608-43c1-859c-a740687f6929", "Joint_Break", Relay_JointBreak_59)) return; 
       Relay_In_63();
    }
    
    void Relay_OnEnterCollision_60()
    {
-      if (true == CheckDebugBreak("43ef98b3-234d-4ec7-afad-73033ee19f46", "On Collision", Relay_OnEnterCollision_60)) return; 
+      if (true == CheckDebugBreak("43ef98b3-234d-4ec7-afad-73033ee19f46", "On_Collision", Relay_OnEnterCollision_60)) return; 
       Relay_In_64();
    }
    
    void Relay_OnExitCollision_60()
    {
-      if (true == CheckDebugBreak("43ef98b3-234d-4ec7-afad-73033ee19f46", "On Collision", Relay_OnExitCollision_60)) return; 
+      if (true == CheckDebugBreak("43ef98b3-234d-4ec7-afad-73033ee19f46", "On_Collision", Relay_OnExitCollision_60)) return; 
       Relay_In_64();
    }
    
    void Relay_WhileInsideCollision_60()
    {
-      if (true == CheckDebugBreak("43ef98b3-234d-4ec7-afad-73033ee19f46", "On Collision", Relay_WhileInsideCollision_60)) return; 
+      if (true == CheckDebugBreak("43ef98b3-234d-4ec7-afad-73033ee19f46", "On_Collision", Relay_WhileInsideCollision_60)) return; 
       Relay_In_64();
    }
    
@@ -7381,55 +7420,55 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_RenderImage_66()
    {
-      if (true == CheckDebugBreak("2e502e15-0c76-44fb-ad1d-30a7e0b57e21", "Post Effect Events", Relay_RenderImage_66)) return; 
+      if (true == CheckDebugBreak("2e502e15-0c76-44fb-ad1d-30a7e0b57e21", "Post_Effect_Events", Relay_RenderImage_66)) return; 
       Relay_In_70();
    }
    
    void Relay_PreCull_67()
    {
-      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render Events", Relay_PreCull_67)) return; 
+      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render_Events", Relay_PreCull_67)) return; 
       Relay_In_71();
    }
    
    void Relay_PreRender_67()
    {
-      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render Events", Relay_PreRender_67)) return; 
+      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render_Events", Relay_PreRender_67)) return; 
       Relay_In_71();
    }
    
    void Relay_PostRender_67()
    {
-      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render Events", Relay_PostRender_67)) return; 
+      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render_Events", Relay_PostRender_67)) return; 
       Relay_In_71();
    }
    
    void Relay_RenderObject_67()
    {
-      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render Events", Relay_RenderObject_67)) return; 
+      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render_Events", Relay_RenderObject_67)) return; 
       Relay_In_71();
    }
    
    void Relay_WillRenderObject_67()
    {
-      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render Events", Relay_WillRenderObject_67)) return; 
+      if (true == CheckDebugBreak("a31bd27c-1ad3-4737-a72d-b5a3ea802bb6", "Render_Events", Relay_WillRenderObject_67)) return; 
       Relay_In_71();
    }
    
    void Relay_OnEnterTrigger_68()
    {
-      if (true == CheckDebugBreak("4f6f50df-b6fc-45ae-8578-69cb9730b824", "Trigger Events", Relay_OnEnterTrigger_68)) return; 
+      if (true == CheckDebugBreak("4f6f50df-b6fc-45ae-8578-69cb9730b824", "Trigger_Events__Use_Trigger_Event_", Relay_OnEnterTrigger_68)) return; 
       Relay_In_72();
    }
    
    void Relay_OnExitTrigger_68()
    {
-      if (true == CheckDebugBreak("4f6f50df-b6fc-45ae-8578-69cb9730b824", "Trigger Events", Relay_OnExitTrigger_68)) return; 
+      if (true == CheckDebugBreak("4f6f50df-b6fc-45ae-8578-69cb9730b824", "Trigger_Events__Use_Trigger_Event_", Relay_OnExitTrigger_68)) return; 
       Relay_In_72();
    }
    
    void Relay_WhileInsideTrigger_68()
    {
-      if (true == CheckDebugBreak("4f6f50df-b6fc-45ae-8578-69cb9730b824", "Trigger Events", Relay_WhileInsideTrigger_68)) return; 
+      if (true == CheckDebugBreak("4f6f50df-b6fc-45ae-8578-69cb9730b824", "Trigger_Events__Use_Trigger_Event_", Relay_WhileInsideTrigger_68)) return; 
       Relay_In_72();
    }
    
@@ -7507,17 +7546,22 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_uScriptStart_73()
    {
-      if (true == CheckDebugBreak("80ed47c7-3107-45eb-8988-8ff67b0f95eb", "uScript Events", Relay_uScriptStart_73)) return; 
+      if (true == CheckDebugBreak("80ed47c7-3107-45eb-8988-8ff67b0f95eb", "uScript_Events", Relay_uScriptStart_73)) return; 
       Relay_In_74();
       Relay_In_93();
       Relay_In_98();
+   }
+   
+   void Relay_uScriptLateStart_73()
+   {
+      if (true == CheckDebugBreak("80ed47c7-3107-45eb-8988-8ff67b0f95eb", "uScript_Events", Relay_uScriptLateStart_73)) return; 
    }
    
    void Relay_In_74()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ede69a15-49ae-497b-82d2-41a5fa5b6c1d", "Check Distance", Relay_In_74)) return; 
+         if (true == CheckDebugBreak("ede69a15-49ae-497b-82d2-41a5fa5b6c1d", "Check_Distance", Relay_In_74)) return; 
          {
             {
             }
@@ -7556,7 +7600,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("656811a5-65ae-473b-b8c2-7db302457ce8", "Compare Bool", Relay_In_76)) return; 
+         if (true == CheckDebugBreak("656811a5-65ae-473b-b8c2-7db302457ce8", "Compare_Bool", Relay_In_76)) return; 
          {
             {
             }
@@ -7610,7 +7654,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7e051208-9107-4aea-a2d8-1df778c2b275", "Compare Bool Equality", Relay_In_78)) return; 
+         if (true == CheckDebugBreak("7e051208-9107-4aea-a2d8-1df778c2b275", "Compare_Bool_Equality", Relay_In_78)) return; 
          {
             {
             }
@@ -7642,7 +7686,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("23bd23c9-57a9-4496-89fc-2e087eab4701", "Compare Float", Relay_In_79)) return; 
+         if (true == CheckDebugBreak("23bd23c9-57a9-4496-89fc-2e087eab4701", "Compare_Float", Relay_In_79)) return; 
          {
             {
             }
@@ -7694,7 +7738,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2bab199a-9b9f-4e60-b3ef-397c60255d7a", "Compare GameObjects", Relay_In_80)) return; 
+         if (true == CheckDebugBreak("2bab199a-9b9f-4e60-b3ef-397c60255d7a", "Compare_GameObjects", Relay_In_80)) return; 
          {
             {
             }
@@ -7732,7 +7776,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f61830e4-db76-4e4a-b437-9225a278277f", "Compare Int", Relay_In_81)) return; 
+         if (true == CheckDebugBreak("f61830e4-db76-4e4a-b437-9225a278277f", "Compare_Int", Relay_In_81)) return; 
          {
             {
             }
@@ -7754,7 +7798,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("93d97096-2713-4d0b-b317-11e70ecd6134", "Compare String", Relay_In_82)) return; 
+         if (true == CheckDebugBreak("93d97096-2713-4d0b-b317-11e70ecd6134", "Compare_String", Relay_In_82)) return; 
          {
             {
             }
@@ -7776,7 +7820,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("04b72023-7513-4b42-9a80-6e81899bce3e", "Compare Vector2", Relay_In_83)) return; 
+         if (true == CheckDebugBreak("04b72023-7513-4b42-9a80-6e81899bce3e", "Compare_Vector2", Relay_In_83)) return; 
          {
             {
             }
@@ -7808,7 +7852,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9cea64af-6d10-49c5-b5af-8ee2290eac75", "Compare Vector3", Relay_In_84)) return; 
+         if (true == CheckDebugBreak("9cea64af-6d10-49c5-b5af-8ee2290eac75", "Compare_Vector3", Relay_In_84)) return; 
          {
             {
             }
@@ -7840,7 +7884,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3ccffeca-2107-413b-80bf-1333526841b3", "Compare Vector4", Relay_In_85)) return; 
+         if (true == CheckDebugBreak("3ccffeca-2107-413b-80bf-1333526841b3", "Compare_Vector4", Relay_In_85)) return; 
          {
             {
             }
@@ -7901,7 +7945,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("85940cfa-d517-468a-8667-b0f0313ac442", "GameObject Has Tag", Relay_In_87)) return; 
+         if (true == CheckDebugBreak("85940cfa-d517-468a-8667-b0f0313ac442", "GameObject_Has_Tag", Relay_In_87)) return; 
          {
             {
             }
@@ -7923,7 +7967,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("017b8b82-3b3e-4164-8454-3f86add04fec", "Is Platform", Relay_In_88)) return; 
+         if (true == CheckDebugBreak("017b8b82-3b3e-4164-8454-3f86add04fec", "Is_Platform", Relay_In_88)) return; 
          {
             {
             }
@@ -7953,7 +7997,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("547bf0cc-6ba8-41fc-a483-2e6c98ff7d28", "Is Power of Two", Relay_In_89)) return; 
+         if (true == CheckDebugBreak("547bf0cc-6ba8-41fc-a483-2e6c98ff7d28", "Is_Power_of_Two", Relay_In_89)) return; 
          {
             {
             }
@@ -7983,7 +8027,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d71d798f-b7c1-4763-b998-e7f7b7d6cd1a", "String Contains", Relay_In_90)) return; 
+         if (true == CheckDebugBreak("d71d798f-b7c1-4763-b998-e7f7b7d6cd1a", "String_Contains", Relay_In_90)) return; 
          {
             {
             }
@@ -8063,7 +8107,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ef44a5a9-1a88-4453-a7cc-fa4f303e5fcd", "Float Counter", Relay_In_93)) return; 
+         if (true == CheckDebugBreak("ef44a5a9-1a88-4453-a7cc-fa4f303e5fcd", "Float_Counter", Relay_In_93)) return; 
          {
             {
             }
@@ -8097,7 +8141,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ef44a5a9-1a88-4453-a7cc-fa4f303e5fcd", "Float Counter", Relay_Reset_93)) return; 
+         if (true == CheckDebugBreak("ef44a5a9-1a88-4453-a7cc-fa4f303e5fcd", "Float_Counter", Relay_Reset_93)) return; 
          {
             {
             }
@@ -8131,7 +8175,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c6948915-1df4-4ef7-bee1-9a95d282bda9", "Int Counter", Relay_In_94)) return; 
+         if (true == CheckDebugBreak("c6948915-1df4-4ef7-bee1-9a95d282bda9", "Int_Counter", Relay_In_94)) return; 
          {
             {
             }
@@ -8180,7 +8224,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c6948915-1df4-4ef7-bee1-9a95d282bda9", "Int Counter", Relay_Reset_94)) return; 
+         if (true == CheckDebugBreak("c6948915-1df4-4ef7-bee1-9a95d282bda9", "Int_Counter", Relay_Reset_94)) return; 
          {
             {
             }
@@ -8253,8 +8297,6 @@ public class CodeGenTest : uScriptLogic
          }
          logic_uScriptCon_Gate_uScriptCon_Gate_95.In(logic_uScriptCon_Gate_StartOpen_95, logic_uScriptCon_Gate_AutoCloseCount_95, out logic_uScriptCon_Gate_IsOpen_95);
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
       else
       {
@@ -8276,8 +8318,6 @@ public class CodeGenTest : uScriptLogic
             }
          }
          logic_uScriptCon_Gate_uScriptCon_Gate_95.Open(logic_uScriptCon_Gate_StartOpen_95, logic_uScriptCon_Gate_AutoCloseCount_95, out logic_uScriptCon_Gate_IsOpen_95);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
       }
       else
@@ -8301,8 +8341,6 @@ public class CodeGenTest : uScriptLogic
          }
          logic_uScriptCon_Gate_uScriptCon_Gate_95.Close(logic_uScriptCon_Gate_StartOpen_95, logic_uScriptCon_Gate_AutoCloseCount_95, out logic_uScriptCon_Gate_IsOpen_95);
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
       else
       {
@@ -8325,8 +8363,6 @@ public class CodeGenTest : uScriptLogic
          }
          logic_uScriptCon_Gate_uScriptCon_Gate_95.Toggle(logic_uScriptCon_Gate_StartOpen_95, logic_uScriptCon_Gate_AutoCloseCount_95, out logic_uScriptCon_Gate_IsOpen_95);
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
       else
       {
@@ -8338,7 +8374,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e1c706dd-91b8-4d41-a680-57ad2856bef0", "Timed Gate", Relay_Out_96)) return; 
+         if (true == CheckDebugBreak("e1c706dd-91b8-4d41-a680-57ad2856bef0", "Timed_Gate", Relay_Out_96)) return; 
          Relay_Reset_93();
       }
       else
@@ -8351,7 +8387,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e1c706dd-91b8-4d41-a680-57ad2856bef0", "Timed Gate", Relay_In_96)) return; 
+         if (true == CheckDebugBreak("e1c706dd-91b8-4d41-a680-57ad2856bef0", "Timed_Gate", Relay_In_96)) return; 
          {
             {
             }
@@ -8402,7 +8438,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual Switch", Relay_Output1_98)) return; 
+         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual_Switch", Relay_Output1_98)) return; 
          Relay_In_99();
          Relay_In_104();
       }
@@ -8416,7 +8452,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual Switch", Relay_Output2_98)) return; 
+         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual_Switch", Relay_Output2_98)) return; 
       }
       else
       {
@@ -8428,7 +8464,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual Switch", Relay_Output3_98)) return; 
+         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual_Switch", Relay_Output3_98)) return; 
       }
       else
       {
@@ -8440,7 +8476,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual Switch", Relay_Output4_98)) return; 
+         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual_Switch", Relay_Output4_98)) return; 
       }
       else
       {
@@ -8452,7 +8488,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual Switch", Relay_Output5_98)) return; 
+         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual_Switch", Relay_Output5_98)) return; 
       }
       else
       {
@@ -8464,7 +8500,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual Switch", Relay_Output6_98)) return; 
+         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual_Switch", Relay_Output6_98)) return; 
       }
       else
       {
@@ -8476,14 +8512,12 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual Switch", Relay_In_98)) return; 
+         if (true == CheckDebugBreak("c56e0e89-5878-4b4e-8019-ace81d4b8b6b", "Manual_Switch", Relay_In_98)) return; 
          {
             {
             }
          }
          logic_uScriptCon_ManualSwitch_uScriptCon_ManualSwitch_98.In(logic_uScriptCon_ManualSwitch_CurrentOutput_98);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
       }
       else
@@ -8496,7 +8530,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b8cecc7-c46b-4382-a8a2-52e0277698b7", "Random Switch", Relay_In_99)) return; 
+         if (true == CheckDebugBreak("3b8cecc7-c46b-4382-a8a2-52e0277698b7", "Random_Switch", Relay_In_99)) return; 
          {
             {
             }
@@ -8658,12 +8692,19 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9214ca3c-accd-43bd-a5a7-dea8f1315ab0", "Print String List", Relay_In_104)) return; 
+         if (true == CheckDebugBreak("9214ca3c-accd-43bd-a5a7-dea8f1315ab0", "Print_String_List", Relay_In_104)) return; 
          {
             {
-               List<System.String> properties = new List<System.String>();
-               properties.AddRange(local_105_System_StringArray);
-               logic_uScriptAct_PrintList_Strings_104 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_105_System_StringArray;
+               if ( logic_uScriptAct_PrintList_Strings_104.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PrintList_Strings_104, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_PrintList_Strings_104, index, properties.Length);
+               index += properties.Length;
+               
             }
          }
          logic_uScriptAct_PrintList_uScriptAct_PrintList_104.In(logic_uScriptAct_PrintList_Strings_104);
@@ -8681,7 +8722,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("765e27f9-3962-4d37-b58b-eace4309385d", "Print Text", Relay_ShowLabel_106)) return; 
+         if (true == CheckDebugBreak("765e27f9-3962-4d37-b58b-eace4309385d", "Print_Text", Relay_ShowLabel_106)) return; 
          {
             {
             }
@@ -8720,7 +8761,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("765e27f9-3962-4d37-b58b-eace4309385d", "Print Text", Relay_HideLabel_106)) return; 
+         if (true == CheckDebugBreak("765e27f9-3962-4d37-b58b-eace4309385d", "Print_Text", Relay_HideLabel_106)) return; 
          {
             {
             }
@@ -8759,7 +8800,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c3c38a5d-4520-4328-afc8-432a9b7cc695", "GUI Get Background Color", Relay_In_108)) return; 
+         if (true == CheckDebugBreak("c3c38a5d-4520-4328-afc8-432a9b7cc695", "GUI_Get_Background_Color", Relay_In_108)) return; 
          {
             {
             }
@@ -8784,7 +8825,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("bd935672-2bd5-4e2d-af49-aafe5fb40ea1", "GUI Get Color", Relay_In_109)) return; 
+         if (true == CheckDebugBreak("bd935672-2bd5-4e2d-af49-aafe5fb40ea1", "GUI_Get_Color", Relay_In_109)) return; 
          {
             {
             }
@@ -8809,7 +8850,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b6a72473-fa3f-40b5-bd0f-28e9f8f55b57", "GUI Get Content Color", Relay_In_110)) return; 
+         if (true == CheckDebugBreak("b6a72473-fa3f-40b5-bd0f-28e9f8f55b57", "GUI_Get_Content_Color", Relay_In_110)) return; 
          {
             {
             }
@@ -8834,7 +8875,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("13724d72-6b8e-48c9-a9a1-baa7ca63834d", "GUI Get Enabled State", Relay_In_111)) return; 
+         if (true == CheckDebugBreak("13724d72-6b8e-48c9-a9a1-baa7ca63834d", "GUI_Get_Enabled_State", Relay_In_111)) return; 
          {
             {
             }
@@ -8859,7 +8900,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3f15d74a-0624-450f-9e04-13e80aba3f47", "GUI Get Tooltip", Relay_In_112)) return; 
+         if (true == CheckDebugBreak("3f15d74a-0624-450f-9e04-13e80aba3f47", "GUI_Get_Tooltip", Relay_In_112)) return; 
          {
             {
             }
@@ -8884,7 +8925,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a649ad3e-17cc-4619-9927-bcac4e84c4b7", "GUI Set Background Color", Relay_In_113)) return; 
+         if (true == CheckDebugBreak("a649ad3e-17cc-4619-9927-bcac4e84c4b7", "GUI_Set_Background_Color", Relay_In_113)) return; 
          {
             {
             }
@@ -8909,7 +8950,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("bc904c7a-d9c9-4d3a-993f-65169b44b177", "GUI Set Color", Relay_In_114)) return; 
+         if (true == CheckDebugBreak("bc904c7a-d9c9-4d3a-993f-65169b44b177", "GUI_Set_Color", Relay_In_114)) return; 
          {
             {
             }
@@ -8934,7 +8975,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9346b17e-1ed1-4fbe-a840-67bca18b7b21", "GUI Set Content Color", Relay_In_115)) return; 
+         if (true == CheckDebugBreak("9346b17e-1ed1-4fbe-a840-67bca18b7b21", "GUI_Set_Content_Color", Relay_In_115)) return; 
          {
             {
             }
@@ -8959,7 +9000,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a8884b71-f37b-46e7-ab8b-2701e09387d6", "GUI Set Enabled State", Relay_In_116)) return; 
+         if (true == CheckDebugBreak("a8884b71-f37b-46e7-ab8b-2701e09387d6", "GUI_Set_Enabled_State", Relay_In_116)) return; 
          {
             {
             }
@@ -8984,7 +9025,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("344b052a-485c-4825-9b6e-1b6b795c930d", "GUI Set Focused Control", Relay_In_117)) return; 
+         if (true == CheckDebugBreak("344b052a-485c-4825-9b6e-1b6b795c930d", "GUI_Set_Focused_Control", Relay_In_117)) return; 
          {
             {
             }
@@ -9009,7 +9050,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d04e24d0-f16c-40e1-b3d7-ec2d2ddee41d", "GUI Set Skin", Relay_In_118)) return; 
+         if (true == CheckDebugBreak("d04e24d0-f16c-40e1-b3d7-ec2d2ddee41d", "GUI_Set_Skin", Relay_In_118)) return; 
          {
             {
             }
@@ -9034,7 +9075,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7fbd6cc0-03c7-4e20-91c0-8f60d4048e1f", "GUI Begin Group", Relay_In_119)) return; 
+         if (true == CheckDebugBreak("7fbd6cc0-03c7-4e20-91c0-8f60d4048e1f", "GUI_Begin_Group", Relay_In_119)) return; 
          {
             {
             }
@@ -9067,7 +9108,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("48a07783-438f-4bdb-86fb-a55e17ccbcad", "GUI Box", Relay_In_120)) return; 
+         if (true == CheckDebugBreak("48a07783-438f-4bdb-86fb-a55e17ccbcad", "GUI_Box", Relay_In_120)) return; 
          {
             {
             }
@@ -9100,7 +9141,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI Button", Relay_OnButtonDown_121)) return; 
+         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI_Button", Relay_OnButtonDown_121)) return; 
          Relay_In_137();
       }
       else
@@ -9113,7 +9154,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI Button", Relay_OnButtonHeld_121)) return; 
+         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI_Button", Relay_OnButtonHeld_121)) return; 
          Relay_In_137();
       }
       else
@@ -9126,7 +9167,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI Button", Relay_OnButtonUp_121)) return; 
+         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI_Button", Relay_OnButtonUp_121)) return; 
          Relay_In_137();
       }
       else
@@ -9139,7 +9180,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI Button", Relay_OnButtonClicked_121)) return; 
+         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI_Button", Relay_OnButtonClicked_121)) return; 
          Relay_In_137();
       }
       else
@@ -9152,7 +9193,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI Button", Relay_In_121)) return; 
+         if (true == CheckDebugBreak("aa4757b2-ddf2-4621-abc2-a3362770e821", "GUI_Button", Relay_In_121)) return; 
          {
             {
             }
@@ -9187,7 +9228,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("dd32b266-b44c-4f84-8bf6-63c100e41b56", "GUI End Group", Relay_In_122)) return; 
+         if (true == CheckDebugBreak("dd32b266-b44c-4f84-8bf6-63c100e41b56", "GUI_End_Group", Relay_In_122)) return; 
          {
          }
          logic_uScriptAct_GUIEndGroup_uScriptAct_GUIEndGroup_122.In();
@@ -9210,7 +9251,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("72c3b020-51bf-4e03-8fd8-c434020ed423", "GUI Horizontal Scrollbar", Relay_In_123)) return; 
+         if (true == CheckDebugBreak("72c3b020-51bf-4e03-8fd8-c434020ed423", "GUI_Horizontal_Scrollbar", Relay_In_123)) return; 
          {
             {
             }
@@ -9245,7 +9286,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("09cb79e9-9bf2-4e7e-9759-411690a63601", "GUI Label", Relay_In_124)) return; 
+         if (true == CheckDebugBreak("09cb79e9-9bf2-4e7e-9759-411690a63601", "GUI_Label", Relay_In_124)) return; 
          {
             {
             }
@@ -9278,7 +9319,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1f2532ba-4110-4298-8df3-9a5010910c07", "GUI Password Field", Relay_In_125)) return; 
+         if (true == CheckDebugBreak("1f2532ba-4110-4298-8df3-9a5010910c07", "GUI_Password_Field", Relay_In_125)) return; 
          {
             {
             }
@@ -9316,7 +9357,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4b3b04bf-7b00-4445-b5cd-c784a12c4cd5", "GUI Text Area", Relay_In_126)) return; 
+         if (true == CheckDebugBreak("4b3b04bf-7b00-4445-b5cd-c784a12c4cd5", "GUI_Text_Area", Relay_In_126)) return; 
          {
             {
             }
@@ -9354,7 +9395,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5dbe33ba-998a-48eb-b091-141adfd44b23", "GUI Text Field", Relay_In_127)) return; 
+         if (true == CheckDebugBreak("5dbe33ba-998a-48eb-b091-141adfd44b23", "GUI_Text_Field", Relay_In_127)) return; 
          {
             {
             }
@@ -9392,7 +9433,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("62e5b93b-b1fa-4862-9a0f-9f077f5baf12", "GUI Texture", Relay_In_128)) return; 
+         if (true == CheckDebugBreak("62e5b93b-b1fa-4862-9a0f-9f077f5baf12", "GUI_Texture", Relay_In_128)) return; 
          {
             {
             }
@@ -9425,7 +9466,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("20c2a70d-529e-4621-989c-085f7ac341a4", "GUI Toggle", Relay_In_129)) return; 
+         if (true == CheckDebugBreak("20c2a70d-529e-4621-989c-085f7ac341a4", "GUI_Toggle", Relay_In_129)) return; 
          {
             {
             }
@@ -9465,7 +9506,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("278d39c8-2f19-4bd3-8b1e-3cbe8d220da0", "GUI Vertical Scrollbar", Relay_In_130)) return; 
+         if (true == CheckDebugBreak("278d39c8-2f19-4bd3-8b1e-3cbe8d220da0", "GUI_Vertical_Scrollbar", Relay_In_130)) return; 
          {
             {
             }
@@ -9724,7 +9765,7 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_KeyEvent_140()
    {
-      if (true == CheckDebugBreak("6c64af80-0d71-422b-8a35-7ac5f8fec549", "Input Events", Relay_KeyEvent_140)) return; 
+      if (true == CheckDebugBreak("6c64af80-0d71-422b-8a35-7ac5f8fec549", "Input_Events", Relay_KeyEvent_140)) return; 
       Relay_In_141();
    }
    
@@ -9732,7 +9773,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5300f893-ee98-43da-89d8-3dee7d29a05d", "Input Events Filter", Relay_In_141)) return; 
+         if (true == CheckDebugBreak("5300f893-ee98-43da-89d8-3dee7d29a05d", "Input_Events_Filter", Relay_In_141)) return; 
          {
             {
             }
@@ -9767,7 +9808,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5b1e0f89-b2d9-4a1a-89d4-a244f8019003", "Send Custom Event", Relay_SendCustomEvent_142)) return; 
+         if (true == CheckDebugBreak("5b1e0f89-b2d9-4a1a-89d4-a244f8019003", "Send_Custom_Event", Relay_SendCustomEvent_142)) return; 
          {
             {
                logic_uScriptAct_SendCustomEvent_EventName_142 = local_MyEvent_System_String;
@@ -9798,7 +9839,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cc728a11-e3df-46f6-b7fd-b7a519b386b5", "Send Custom Event (Bool)", Relay_SendCustomEvent_143)) return; 
+         if (true == CheckDebugBreak("cc728a11-e3df-46f6-b7fd-b7a519b386b5", "Send_Custom_Event__Bool_", Relay_SendCustomEvent_143)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventBool_EventName_143 = local_MyEvent_System_String;
@@ -9833,7 +9874,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2cd291c8-5de2-4cc5-817a-7e7e56bbdbec", "Send Custom Event (Color)", Relay_SendCustomEvent_144)) return; 
+         if (true == CheckDebugBreak("2cd291c8-5de2-4cc5-817a-7e7e56bbdbec", "Send_Custom_Event__Color_", Relay_SendCustomEvent_144)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventColor_EventName_144 = local_156_System_String;
@@ -9866,7 +9907,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7cc953e4-c973-4c9a-932e-041745e62189", "Send Custom Event (Float)", Relay_SendCustomEvent_145)) return; 
+         if (true == CheckDebugBreak("7cc953e4-c973-4c9a-932e-041745e62189", "Send_Custom_Event__Float_", Relay_SendCustomEvent_145)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventFloat_EventName_145 = local_MyEvent_System_String;
@@ -9901,7 +9942,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("57eb475a-2c31-4308-abd0-1fc3ed2ea4ac", "Send Custom Event (GameObject)", Relay_SendCustomEvent_146)) return; 
+         if (true == CheckDebugBreak("57eb475a-2c31-4308-abd0-1fc3ed2ea4ac", "Send_Custom_Event__GameObject_", Relay_SendCustomEvent_146)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventGameObject_EventName_146 = local_MyEvent_System_String;
@@ -9947,7 +9988,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eeeb6f5c-deec-4843-807f-db15124fb17c", "Send Custom Event (Int)", Relay_SendCustomEvent_147)) return; 
+         if (true == CheckDebugBreak("eeeb6f5c-deec-4843-807f-db15124fb17c", "Send_Custom_Event__Int_", Relay_SendCustomEvent_147)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventInt_EventName_147 = local_MyEvent_System_String;
@@ -9980,7 +10021,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("43d39919-719e-4f40-9831-9831b40100c2", "Send Custom Event (Object)", Relay_SendCustomEvent_148)) return; 
+         if (true == CheckDebugBreak("43d39919-719e-4f40-9831-9831b40100c2", "Send_Custom_Event__Object_", Relay_SendCustomEvent_148)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventObject_EventName_148 = local_156_System_String;
@@ -10013,7 +10054,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f8206026-a339-4bc5-bf5b-d3c6cdffeb8c", "Send Custom Event (String)", Relay_SendCustomEvent_149)) return; 
+         if (true == CheckDebugBreak("f8206026-a339-4bc5-bf5b-d3c6cdffeb8c", "Send_Custom_Event__String_", Relay_SendCustomEvent_149)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventString_EventName_149 = local_MyEvent_System_String;
@@ -10048,7 +10089,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("816903b6-ddd8-4c40-a901-01eec6a9fc25", "Send Custom Event (Vector2)", Relay_SendCustomEvent_150)) return; 
+         if (true == CheckDebugBreak("816903b6-ddd8-4c40-a901-01eec6a9fc25", "Send_Custom_Event__Vector2_", Relay_SendCustomEvent_150)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventVector2_EventName_150 = local_MyEvent_System_String;
@@ -10081,7 +10122,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f8f32807-bbc9-4325-8a11-000079c69766", "Send Custom Event (Vector3)", Relay_SendCustomEvent_151)) return; 
+         if (true == CheckDebugBreak("f8f32807-bbc9-4325-8a11-000079c69766", "Send_Custom_Event__Vector3_", Relay_SendCustomEvent_151)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventVector3_EventName_151 = local_MyEvent_System_String;
@@ -10114,7 +10155,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2c649e26-17f5-4a97-a15f-302f2d0ec885", "Send Custom Event (Vector4)", Relay_SendCustomEvent_152)) return; 
+         if (true == CheckDebugBreak("2c649e26-17f5-4a97-a15f-302f2d0ec885", "Send_Custom_Event__Vector4_", Relay_SendCustomEvent_152)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventVector4_EventName_152 = local_MyEvent_System_String;
@@ -10176,12 +10217,16 @@ public class CodeGenTest : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               foreach (UnityEngine.Camera _fet in local_Camera_List_UnityEngine_CameraArray)
+               System.Array properties;
+               int index = 0;
+               properties = local_Camera_List_UnityEngine_CameraArray;
+               if ( logic_uScriptAct_Log_Target_162.Length != index + properties.Length)
                {
-                  properties.Add((System.Object) _fet);
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_162, index + properties.Length);
                }
-               logic_uScriptAct_Log_Target_162 = properties.ToArray();
+               System.Array.Copy(properties, 0, logic_uScriptAct_Log_Target_162, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -10199,7 +10244,7 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_KeyEvent_164()
    {
-      if (true == CheckDebugBreak("b0288e75-bbd4-47b5-aea7-ec4e135522fc", "Input Events", Relay_KeyEvent_164)) return; 
+      if (true == CheckDebugBreak("b0288e75-bbd4-47b5-aea7-ec4e135522fc", "Input_Events", Relay_KeyEvent_164)) return; 
       Relay_In_165();
    }
    
@@ -10207,7 +10252,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aea606d3-d71f-4b69-9a15-8acc97ac5f01", "Input Events Filter", Relay_In_165)) return; 
+         if (true == CheckDebugBreak("aea606d3-d71f-4b69-9a15-8acc97ac5f01", "Input_Events_Filter", Relay_In_165)) return; 
          {
             {
             }
@@ -10232,7 +10277,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("72ec7f36-f914-4d5b-9517-ca4fba4b2f63", "Load AudioClip", Relay_In_166)) return; 
+         if (true == CheckDebugBreak("72ec7f36-f914-4d5b-9517-ca4fba4b2f63", "Load_AudioClip", Relay_In_166)) return; 
          {
             {
             }
@@ -10259,7 +10304,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a46efc0d-c5f0-43a0-8548-834ddd560c77", "Load Cubemap", Relay_In_167)) return; 
+         if (true == CheckDebugBreak("a46efc0d-c5f0-43a0-8548-834ddd560c77", "Load_Cubemap", Relay_In_167)) return; 
          {
             {
             }
@@ -10287,7 +10332,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a2d03dea-3436-4472-a6b5-980b6540bb16", "Load Flare", Relay_In_168)) return; 
+         if (true == CheckDebugBreak("a2d03dea-3436-4472-a6b5-980b6540bb16", "Load_Flare", Relay_In_168)) return; 
          {
             {
             }
@@ -10316,7 +10361,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6e02ecab-2622-42c0-ba79-1c4e69137c92", "Load Font", Relay_In_169)) return; 
+         if (true == CheckDebugBreak("6e02ecab-2622-42c0-ba79-1c4e69137c92", "Load_Font", Relay_In_169)) return; 
          {
             {
             }
@@ -10344,7 +10389,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("de919561-5dfd-4d82-aa45-a46fd87dc4c6", "Load GUISkin", Relay_In_170)) return; 
+         if (true == CheckDebugBreak("de919561-5dfd-4d82-aa45-a46fd87dc4c6", "Load_GUISkin", Relay_In_170)) return; 
          {
             {
             }
@@ -10372,7 +10417,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("90b3a3b4-0560-4a40-b2ba-dafc720a103d", "Load Material", Relay_In_171)) return; 
+         if (true == CheckDebugBreak("90b3a3b4-0560-4a40-b2ba-dafc720a103d", "Load_Material", Relay_In_171)) return; 
          {
             {
             }
@@ -10399,7 +10444,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("73981f7e-9d79-4782-9f21-dee9aa53959c", "Load Mesh", Relay_In_172)) return; 
+         if (true == CheckDebugBreak("73981f7e-9d79-4782-9f21-dee9aa53959c", "Load_Mesh", Relay_In_172)) return; 
          {
             {
             }
@@ -10427,7 +10472,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("45ed017a-060f-4526-a3ce-d1c1a89b66bf", "Load PhysicMaterial", Relay_In_173)) return; 
+         if (true == CheckDebugBreak("45ed017a-060f-4526-a3ce-d1c1a89b66bf", "Load_PhysicMaterial", Relay_In_173)) return; 
          {
             {
             }
@@ -10455,7 +10500,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1864d27d-089e-471c-b5ef-8f144bfa83ea", "Load Prefab", Relay_In_174)) return; 
+         if (true == CheckDebugBreak("1864d27d-089e-471c-b5ef-8f144bfa83ea", "Load_Prefab", Relay_In_174)) return; 
          {
             {
             }
@@ -10494,7 +10539,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("58286d14-fe9b-4b36-8e04-2ef7ce511165", "Load Shader", Relay_In_175)) return; 
+         if (true == CheckDebugBreak("58286d14-fe9b-4b36-8e04-2ef7ce511165", "Load_Shader", Relay_In_175)) return; 
          {
             {
             }
@@ -10522,7 +10567,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("be1f5a82-ad9e-4d29-ac1d-f93fe869938a", "Load TextAsset", Relay_In_176)) return; 
+         if (true == CheckDebugBreak("be1f5a82-ad9e-4d29-ac1d-f93fe869938a", "Load_TextAsset", Relay_In_176)) return; 
          {
             {
             }
@@ -10550,7 +10595,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a95ee918-d185-4621-8366-8699bf08d117", "Load Texture2D", Relay_In_177)) return; 
+         if (true == CheckDebugBreak("a95ee918-d185-4621-8366-8699bf08d117", "Load_Texture2D", Relay_In_177)) return; 
          {
             {
             }
@@ -10625,7 +10670,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9d5b5bea-f41a-4909-b7a9-fb7806eb772c", "Input Events Filter", Relay_In_193)) return; 
+         if (true == CheckDebugBreak("9d5b5bea-f41a-4909-b7a9-fb7806eb772c", "Input_Events_Filter", Relay_In_193)) return; 
          {
             {
             }
@@ -10653,7 +10698,7 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_KeyEvent_194()
    {
-      if (true == CheckDebugBreak("bdcd1a2c-7caa-4f58-b3a0-517704faf909", "Input Events", Relay_KeyEvent_194)) return; 
+      if (true == CheckDebugBreak("bdcd1a2c-7caa-4f58-b3a0-517704faf909", "Input_Events", Relay_KeyEvent_194)) return; 
       Relay_In_193();
    }
    
@@ -10661,7 +10706,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("dcdaa2ab-aa59-4739-8f80-bf3ac9252665", "Play Animation", Relay_Finished_195)) return; 
+         if (true == CheckDebugBreak("dcdaa2ab-aa59-4739-8f80-bf3ac9252665", "Play_Animation", Relay_Finished_195)) return; 
          Relay_In_197();
       }
       else
@@ -10674,10 +10719,10 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("dcdaa2ab-aa59-4739-8f80-bf3ac9252665", "Play Animation", Relay_In_195)) return; 
+         if (true == CheckDebugBreak("dcdaa2ab-aa59-4739-8f80-bf3ac9252665", "Play_Animation", Relay_In_195)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_MasterGO_UnityEngine_GameObject_previous != local_MasterGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -11229,17 +11274,6 @@ public class CodeGenTest : uScriptLogic
                            }
                            if ( null != component )
                            {
-                              component.TimesToTrigger = event_UnityEngine_GameObject_TimesToTrigger_68;
-                           }
-                        }
-                        {
-                           uScript_Triggers component = local_MasterGO_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
-                           if ( null == component )
-                           {
-                              component = local_MasterGO_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
-                           }
-                           if ( null != component )
-                           {
                               component.OnEnterTrigger += Instance_OnEnterTrigger_68;
                               component.OnExitTrigger += Instance_OnExitTrigger_68;
                               component.WhileInsideTrigger += Instance_WhileInsideTrigger_68;
@@ -11248,8 +11282,12 @@ public class CodeGenTest : uScriptLogic
                      }
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_MasterGO_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_195 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_195.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_195, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_195[ index++ ] = local_MasterGO_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -11280,10 +11318,10 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a3bbe232-0f50-4093-bb7f-99e34c29ed9f", "Rewind Animation", Relay_In_197)) return; 
+         if (true == CheckDebugBreak("a3bbe232-0f50-4093-bb7f-99e34c29ed9f", "Rewind_Animation", Relay_In_197)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_MasterGO_UnityEngine_GameObject_previous != local_MasterGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -11835,17 +11873,6 @@ public class CodeGenTest : uScriptLogic
                            }
                            if ( null != component )
                            {
-                              component.TimesToTrigger = event_UnityEngine_GameObject_TimesToTrigger_68;
-                           }
-                        }
-                        {
-                           uScript_Triggers component = local_MasterGO_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
-                           if ( null == component )
-                           {
-                              component = local_MasterGO_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
-                           }
-                           if ( null != component )
-                           {
                               component.OnEnterTrigger += Instance_OnEnterTrigger_68;
                               component.OnExitTrigger += Instance_OnExitTrigger_68;
                               component.WhileInsideTrigger += Instance_WhileInsideTrigger_68;
@@ -11854,8 +11881,12 @@ public class CodeGenTest : uScriptLogic
                      }
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_MasterGO_UnityEngine_GameObject);
-               logic_uScriptAct_RewindAnimation_Target_197 = properties.ToArray();
+               if ( logic_uScriptAct_RewindAnimation_Target_197.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_RewindAnimation_Target_197, index + 1);
+               }
+               logic_uScriptAct_RewindAnimation_Target_197[ index++ ] = local_MasterGO_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -11880,10 +11911,10 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("851026ae-c7ef-455e-9ece-7e76fecb5719", "Stop Animation", Relay_In_198)) return; 
+         if (true == CheckDebugBreak("851026ae-c7ef-455e-9ece-7e76fecb5719", "Stop_Animation", Relay_In_198)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_MasterGO_UnityEngine_GameObject_previous != local_MasterGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -12435,17 +12466,6 @@ public class CodeGenTest : uScriptLogic
                            }
                            if ( null != component )
                            {
-                              component.TimesToTrigger = event_UnityEngine_GameObject_TimesToTrigger_68;
-                           }
-                        }
-                        {
-                           uScript_Triggers component = local_MasterGO_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
-                           if ( null == component )
-                           {
-                              component = local_MasterGO_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
-                           }
-                           if ( null != component )
-                           {
                               component.OnEnterTrigger += Instance_OnEnterTrigger_68;
                               component.OnExitTrigger += Instance_OnExitTrigger_68;
                               component.WhileInsideTrigger += Instance_WhileInsideTrigger_68;
@@ -12454,8 +12474,12 @@ public class CodeGenTest : uScriptLogic
                      }
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_MasterGO_UnityEngine_GameObject);
-               logic_uScriptAct_StopAnimation_Target_198 = properties.ToArray();
+               if ( logic_uScriptAct_StopAnimation_Target_198.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_StopAnimation_Target_198, index + 1);
+               }
+               logic_uScriptAct_StopAnimation_Target_198[ index++ ] = local_MasterGO_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -12480,7 +12504,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a064ab2f-4092-42af-8877-cc118d16fb63", "Get Application Info", Relay_In_199)) return; 
+         if (true == CheckDebugBreak("a064ab2f-4092-42af-8877-cc118d16fb63", "Get_Application_Info", Relay_In_199)) return; 
          {
             {
             }
@@ -12524,10 +12548,8 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
-            {
-            }
          }
-         //logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.In(out logic_uScriptAct_ApplicationInfo_levelCount_199, out logic_uScriptAct_ApplicationInfo_loadedLevel_199, out logic_uScriptAct_ApplicationInfo_loadedLevelName_199, out logic_uScriptAct_ApplicationInfo_isEditor_199, out logic_uScriptAct_ApplicationInfo_isLoadingLevel_199, out logic_uScriptAct_ApplicationInfo_isPlaying_199, out logic_uScriptAct_ApplicationInfo_isWebPlayer_199, out logic_uScriptAct_ApplicationInfo_streamedBytes_199, out logic_uScriptAct_ApplicationInfo_platform_199, out logic_uScriptAct_ApplicationInfo_dataPath_199, out logic_uScriptAct_ApplicationInfo_persistentDataPath_199, out logic_uScriptAct_ApplicationInfo_temporaryCachePath_199, out logic_uScriptAct_ApplicationInfo_srcValue_199, out logic_uScriptAct_ApplicationInfo_absoluteURL_199, out logic_uScriptAct_ApplicationInfo_systemLanguage_199, out logic_uScriptAct_ApplicationInfo_internetReachability_199, out logic_uScriptAct_ApplicationInfo_webSecurityEnabled_199, out logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_199, out logic_uScriptAct_ApplicationInfo_runInBackground_199, out logic_uScriptAct_ApplicationInfo_targetFrameRate_199, out logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_199, out logic_uScriptAct_ApplicationInfo_unityVersion_199);
+         logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.In(out logic_uScriptAct_ApplicationInfo_levelCount_199, out logic_uScriptAct_ApplicationInfo_loadedLevel_199, out logic_uScriptAct_ApplicationInfo_loadedLevelName_199, out logic_uScriptAct_ApplicationInfo_isEditor_199, out logic_uScriptAct_ApplicationInfo_isPlaying_199, out logic_uScriptAct_ApplicationInfo_isWebPlayer_199, out logic_uScriptAct_ApplicationInfo_streamedBytes_199, out logic_uScriptAct_ApplicationInfo_platform_199, out logic_uScriptAct_ApplicationInfo_dataPath_199, out logic_uScriptAct_ApplicationInfo_persistentDataPath_199, out logic_uScriptAct_ApplicationInfo_temporaryCachePath_199, out logic_uScriptAct_ApplicationInfo_srcValue_199, out logic_uScriptAct_ApplicationInfo_absoluteURL_199, out logic_uScriptAct_ApplicationInfo_systemLanguage_199, out logic_uScriptAct_ApplicationInfo_internetReachability_199, out logic_uScriptAct_ApplicationInfo_webSecurityEnabled_199, out logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_199, out logic_uScriptAct_ApplicationInfo_runInBackground_199, out logic_uScriptAct_ApplicationInfo_targetFrameRate_199, out logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_199, out logic_uScriptAct_ApplicationInfo_unityVersion_199);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.Out;
@@ -12547,7 +12569,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("14b1e9e2-8465-445a-8d29-61482f5dbe77", "Delete Preference Key", Relay_In_200)) return; 
+         if (true == CheckDebugBreak("14b1e9e2-8465-445a-8d29-61482f5dbe77", "Delete_Preference_Key", Relay_In_200)) return; 
          {
             {
             }
@@ -12572,7 +12594,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2cdfb6f9-c37a-46cc-b221-1fe8eed21810", "Does Preference Key Exist", Relay_In_201)) return; 
+         if (true == CheckDebugBreak("2cdfb6f9-c37a-46cc-b221-1fe8eed21810", "Does_Preference_Key_Exist", Relay_In_201)) return; 
          {
             {
             }
@@ -12602,7 +12624,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9f9be75f-272b-4f56-aae3-96eb59da3647", "Get Preference Key (Bool)", Relay_In_202)) return; 
+         if (true == CheckDebugBreak("9f9be75f-272b-4f56-aae3-96eb59da3647", "Get_Preference_Key__Bool_", Relay_In_202)) return; 
          {
             {
             }
@@ -12631,7 +12653,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9e68ca14-20f0-46fe-8f0e-b4a960184efa", "Get Preference Key (Float)", Relay_In_203)) return; 
+         if (true == CheckDebugBreak("9e68ca14-20f0-46fe-8f0e-b4a960184efa", "Get_Preference_Key__Float_", Relay_In_203)) return; 
          {
             {
             }
@@ -12660,7 +12682,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a7a137f5-770d-4538-ada7-b6df44cfbe38", "Get Preference Key (Int)", Relay_In_204)) return; 
+         if (true == CheckDebugBreak("a7a137f5-770d-4538-ada7-b6df44cfbe38", "Get_Preference_Key__Int_", Relay_In_204)) return; 
          {
             {
             }
@@ -12689,7 +12711,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f8c3f3cd-eae1-46db-b7d3-a90c4d924aac", "Get Preference Key (Rect)", Relay_In_205)) return; 
+         if (true == CheckDebugBreak("f8c3f3cd-eae1-46db-b7d3-a90c4d924aac", "Get_Preference_Key__Rect_", Relay_In_205)) return; 
          {
             {
             }
@@ -12718,7 +12740,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5f42061d-70da-4e45-a87c-fa8d542070e5", "Get Preference Key (String)", Relay_In_206)) return; 
+         if (true == CheckDebugBreak("5f42061d-70da-4e45-a87c-fa8d542070e5", "Get_Preference_Key__String_", Relay_In_206)) return; 
          {
             {
             }
@@ -12747,7 +12769,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("605ec78e-64f1-45ea-be0d-5bf4304cdf61", "Get Preference Key (Vector2)", Relay_In_207)) return; 
+         if (true == CheckDebugBreak("605ec78e-64f1-45ea-be0d-5bf4304cdf61", "Get_Preference_Key__Vector2_", Relay_In_207)) return; 
          {
             {
             }
@@ -12776,7 +12798,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b1919125-641f-4874-b3ae-b8efa98dfb36", "Get Preference Key (Vector3)", Relay_In_208)) return; 
+         if (true == CheckDebugBreak("b1919125-641f-4874-b3ae-b8efa98dfb36", "Get_Preference_Key__Vector3_", Relay_In_208)) return; 
          {
             {
             }
@@ -12805,7 +12827,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("04d59501-c099-4d5c-b52d-4a4a46d98a76", "Get Preference Key (Vector4)", Relay_In_209)) return; 
+         if (true == CheckDebugBreak("04d59501-c099-4d5c-b52d-4a4a46d98a76", "Get_Preference_Key__Vector4_", Relay_In_209)) return; 
          {
             {
             }
@@ -12834,7 +12856,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("df1759d9-2021-4f54-b965-888038af3ec0", "Open Browser", Relay_In_210)) return; 
+         if (true == CheckDebugBreak("df1759d9-2021-4f54-b965-888038af3ec0", "Open_Browser", Relay_In_210)) return; 
          {
             {
             }
@@ -12882,7 +12904,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ce76374f-02ab-4353-9c4e-38032c6d31a8", "Set Preference Key (Bool)", Relay_In_212)) return; 
+         if (true == CheckDebugBreak("ce76374f-02ab-4353-9c4e-38032c6d31a8", "Set_Preference_Key__Bool_", Relay_In_212)) return; 
          {
             {
             }
@@ -12909,7 +12931,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c7e9bbdb-6ba8-4078-bdac-874861969d75", "Set Preference Key (Float)", Relay_In_213)) return; 
+         if (true == CheckDebugBreak("c7e9bbdb-6ba8-4078-bdac-874861969d75", "Set_Preference_Key__Float_", Relay_In_213)) return; 
          {
             {
             }
@@ -12936,7 +12958,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("47bba06b-4927-4e26-99cf-f6a9a3b877ec", "Set Preference Key (Int)", Relay_In_214)) return; 
+         if (true == CheckDebugBreak("47bba06b-4927-4e26-99cf-f6a9a3b877ec", "Set_Preference_Key__Int_", Relay_In_214)) return; 
          {
             {
             }
@@ -12963,7 +12985,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b85cc34f-2a4a-409e-abaf-7fdf2558e2b0", "Set Preference Key (Rect)", Relay_In_215)) return; 
+         if (true == CheckDebugBreak("b85cc34f-2a4a-409e-abaf-7fdf2558e2b0", "Set_Preference_Key__Rect_", Relay_In_215)) return; 
          {
             {
             }
@@ -12990,7 +13012,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("93ff48c7-bca4-4145-87d0-170083e4c188", "Set Preference Key (String)", Relay_In_216)) return; 
+         if (true == CheckDebugBreak("93ff48c7-bca4-4145-87d0-170083e4c188", "Set_Preference_Key__String_", Relay_In_216)) return; 
          {
             {
                logic_uScriptAct_SetPreferenceKeyString_KeyName_216 = local_222_System_String;
@@ -13021,7 +13043,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("14831c01-37d8-4b07-ac4b-8a397d60e907", "Set Preference Key (Vector2)", Relay_In_217)) return; 
+         if (true == CheckDebugBreak("14831c01-37d8-4b07-ac4b-8a397d60e907", "Set_Preference_Key__Vector2_", Relay_In_217)) return; 
          {
             {
             }
@@ -13048,7 +13070,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("bc344cdc-d31c-42db-9738-177efcb406aa", "Set Preference Key (Vector3)", Relay_In_218)) return; 
+         if (true == CheckDebugBreak("bc344cdc-d31c-42db-9738-177efcb406aa", "Set_Preference_Key__Vector3_", Relay_In_218)) return; 
          {
             {
             }
@@ -13075,7 +13097,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("504f84cd-7e57-44ae-9189-1f4c057eacc6", "Set Preference Key (Vector4)", Relay_In_219)) return; 
+         if (true == CheckDebugBreak("504f84cd-7e57-44ae-9189-1f4c057eacc6", "Set_Preference_Key__Vector4_", Relay_In_219)) return; 
          {
             {
             }
@@ -13172,7 +13194,7 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_KeyEvent_225()
    {
-      if (true == CheckDebugBreak("cddc7eca-315e-4039-b917-00def574c5b0", "Input Events", Relay_KeyEvent_225)) return; 
+      if (true == CheckDebugBreak("cddc7eca-315e-4039-b917-00def574c5b0", "Input_Events", Relay_KeyEvent_225)) return; 
       Relay_In_226();
    }
    
@@ -13180,7 +13202,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cc375d82-63fe-4c2b-bc78-00a4598f3bf7", "Input Events Filter", Relay_In_226)) return; 
+         if (true == CheckDebugBreak("cc375d82-63fe-4c2b-bc78-00a4598f3bf7", "Input_Events_Filter", Relay_In_226)) return; 
          {
             {
                logic_uScriptAct_OnInputEventFilter_KeyCode_226 = local_263_UnityEngine_KeyCode;
@@ -13217,7 +13239,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("98439a97-ec27-4d54-bd56-87d1f24bbb12", "Play Sound", Relay_Finished_227)) return; 
+         if (true == CheckDebugBreak("98439a97-ec27-4d54-bd56-87d1f24bbb12", "Play_Sound", Relay_Finished_227)) return; 
          Relay_In_232();
       }
       else
@@ -13230,7 +13252,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("98439a97-ec27-4d54-bd56-87d1f24bbb12", "Play Sound", Relay_Play_227)) return; 
+         if (true == CheckDebugBreak("98439a97-ec27-4d54-bd56-87d1f24bbb12", "Play_Sound", Relay_Play_227)) return; 
          {
             {
             }
@@ -13261,7 +13283,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("98439a97-ec27-4d54-bd56-87d1f24bbb12", "Play Sound", Relay_UpdateVolume_227)) return; 
+         if (true == CheckDebugBreak("98439a97-ec27-4d54-bd56-87d1f24bbb12", "Play_Sound", Relay_UpdateVolume_227)) return; 
          {
             {
             }
@@ -13292,7 +13314,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("98439a97-ec27-4d54-bd56-87d1f24bbb12", "Play Sound", Relay_Stop_227)) return; 
+         if (true == CheckDebugBreak("98439a97-ec27-4d54-bd56-87d1f24bbb12", "Play_Sound", Relay_Stop_227)) return; 
          {
             {
             }
@@ -13323,7 +13345,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a6086f59-6d63-4bc4-9792-2cb68d04c664", "Set Active Audio Listener", Relay_In_228)) return; 
+         if (true == CheckDebugBreak("a6086f59-6d63-4bc4-9792-2cb68d04c664", "Set_Active_Audio_Listener", Relay_In_228)) return; 
          {
             {
             }
@@ -13348,7 +13370,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6ed7354e-1280-4b89-98c9-80e62dfccd74", "Set Camera Depth", Relay_In_229)) return; 
+         if (true == CheckDebugBreak("6ed7354e-1280-4b89-98c9-80e62dfccd74", "Set_Camera_Depth", Relay_In_229)) return; 
          {
             {
             }
@@ -13377,7 +13399,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e8cf73f1-3b05-4799-9ef3-26de7dd4b48c", "Switch Cameras", Relay_In_230)) return; 
+         if (true == CheckDebugBreak("e8cf73f1-3b05-4799-9ef3-26de7dd4b48c", "Switch_Cameras", Relay_In_230)) return; 
          {
             {
             }
@@ -13406,7 +13428,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6630ad4a-de46-42f2-83e3-295ac8163a37", "Update Camera Orbit", Relay_In_231)) return; 
+         if (true == CheckDebugBreak("6630ad4a-de46-42f2-83e3-295ac8163a37", "Update_Camera_Orbit", Relay_In_231)) return; 
          {
             {
             }
@@ -13445,7 +13467,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("77b263d2-e9b7-4988-aefd-64ef506d97a0", "Load Level", Relay_Loaded_232)) return; 
+         if (true == CheckDebugBreak("77b263d2-e9b7-4988-aefd-64ef506d97a0", "Load_Level", Relay_Loaded_232)) return; 
          Relay_In_235();
       }
       else
@@ -13458,7 +13480,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("77b263d2-e9b7-4988-aefd-64ef506d97a0", "Load Level", Relay_In_232)) return; 
+         if (true == CheckDebugBreak("77b263d2-e9b7-4988-aefd-64ef506d97a0", "Load_Level", Relay_In_232)) return; 
          {
             {
             }
@@ -13487,7 +13509,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4d65e717-1686-4704-9d1f-3f56f49c1092", "Load Level By Index", Relay_Loaded_233)) return; 
+         if (true == CheckDebugBreak("4d65e717-1686-4704-9d1f-3f56f49c1092", "Load_Level_By_Index", Relay_Loaded_233)) return; 
          Relay_In_236();
       }
       else
@@ -13500,7 +13522,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4d65e717-1686-4704-9d1f-3f56f49c1092", "Load Level By Index", Relay_In_233)) return; 
+         if (true == CheckDebugBreak("4d65e717-1686-4704-9d1f-3f56f49c1092", "Load_Level_By_Index", Relay_In_233)) return; 
          {
             {
             }
@@ -13666,7 +13688,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("90e34b8f-a685-48e2-8585-c750c647b298", "Add Force", Relay_In_238)) return; 
+         if (true == CheckDebugBreak("90e34b8f-a685-48e2-8585-c750c647b298", "Add_Force", Relay_In_238)) return; 
          {
             {
             }
@@ -13699,7 +13721,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5d4b0741-1c65-4ce9-9af0-493a8b5bd6d2", "Add Relative Force", Relay_In_239)) return; 
+         if (true == CheckDebugBreak("5d4b0741-1c65-4ce9-9af0-493a8b5bd6d2", "Add_Relative_Force", Relay_In_239)) return; 
          {
             {
             }
@@ -13732,7 +13754,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("281df410-5eed-43ac-8783-cc8b97123db3", "Add Relative Torque", Relay_In_240)) return; 
+         if (true == CheckDebugBreak("281df410-5eed-43ac-8783-cc8b97123db3", "Add_Relative_Torque", Relay_In_240)) return; 
          {
             {
             }
@@ -13765,7 +13787,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("39ba23b8-6093-4b6c-bbda-326c16a0a410", "Add Torque", Relay_In_241)) return; 
+         if (true == CheckDebugBreak("39ba23b8-6093-4b6c-bbda-326c16a0a410", "Add_Torque", Relay_In_241)) return; 
          {
             {
             }
@@ -13798,7 +13820,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("28c70167-c348-4474-81ed-35324ddd296b", "Check Layer Collision", Relay_In_242)) return; 
+         if (true == CheckDebugBreak("28c70167-c348-4474-81ed-35324ddd296b", "Check_Layer_Collision", Relay_In_242)) return; 
          {
             {
             }
@@ -13827,7 +13849,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("44a07c8f-d3d5-46cc-a15c-df8512e30058", "Get Gravity", Relay_In_243)) return; 
+         if (true == CheckDebugBreak("44a07c8f-d3d5-46cc-a15c-df8512e30058", "Get_Gravity", Relay_In_243)) return; 
          {
             {
             }
@@ -13852,7 +13874,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("24ad29cd-75ee-45a5-920a-6d9906668316", "Get Rigidbody Velocity", Relay_In_244)) return; 
+         if (true == CheckDebugBreak("24ad29cd-75ee-45a5-920a-6d9906668316", "Get_Rigidbody_Velocity", Relay_In_244)) return; 
          {
             {
             }
@@ -13881,7 +13903,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3126d846-31b4-457c-8672-d82baf6787c0", "Ignore Collision", Relay_In_245)) return; 
+         if (true == CheckDebugBreak("3126d846-31b4-457c-8672-d82baf6787c0", "Ignore_Collision", Relay_In_245)) return; 
          {
             {
             }
@@ -13910,7 +13932,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a638bdb3-b1c0-4767-8f48-23a2dba0b6b4", "Ignore Layer Collision", Relay_In_246)) return; 
+         if (true == CheckDebugBreak("a638bdb3-b1c0-4767-8f48-23a2dba0b6b4", "Ignore_Layer_Collision", Relay_In_246)) return; 
          {
             {
             }
@@ -13985,7 +14007,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9d4f4e9a-aaee-48a8-9041-69f15341a6ba", "Raycast From Camera", Relay_In_248)) return; 
+         if (true == CheckDebugBreak("9d4f4e9a-aaee-48a8-9041-69f15341a6ba", "Raycast_From_Camera", Relay_In_248)) return; 
          {
             {
             }
@@ -14035,7 +14057,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6ccc1cbd-887c-49c6-9c31-de9903652870", "Raycast From Mouse Cursor", Relay_In_249)) return; 
+         if (true == CheckDebugBreak("6ccc1cbd-887c-49c6-9c31-de9903652870", "Raycast_From_Mouse_Cursor", Relay_In_249)) return; 
          {
             {
             }
@@ -14081,7 +14103,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c01c13e7-d037-442a-a391-0fc9b1476aca", "Raycast From Screen Point", Relay_In_250)) return; 
+         if (true == CheckDebugBreak("c01c13e7-d037-442a-a391-0fc9b1476aca", "Raycast_From_Screen_Point", Relay_In_250)) return; 
          {
             {
             }
@@ -14129,7 +14151,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b2c7c824-7c4a-409f-a634-83bbc1be5bf0", "Set Gravity", Relay_In_251)) return; 
+         if (true == CheckDebugBreak("b2c7c824-7c4a-409f-a634-83bbc1be5bf0", "Set_Gravity", Relay_In_251)) return; 
          {
             {
             }
@@ -14154,7 +14176,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f4667e29-c6a8-4eb5-b949-13f5ae7355e7", "Set Joint Drive", Relay_In_252)) return; 
+         if (true == CheckDebugBreak("f4667e29-c6a8-4eb5-b949-13f5ae7355e7", "Set_Joint_Drive", Relay_In_252)) return; 
          {
             {
             }
@@ -14164,10 +14186,8 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
-            {
-            }
          }
-         logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_252.In(logic_uScriptAct_SetJointDrive_mode_252, logic_uScriptAct_SetJointDrive_positionSpring_252, logic_uScriptAct_SetJointDrive_positionDamper_252, logic_uScriptAct_SetJointDrive_maximumForce_252, out logic_uScriptAct_SetJointDrive_jointDrive_252);
+         logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_252.In(logic_uScriptAct_SetJointDrive_positionSpring_252, logic_uScriptAct_SetJointDrive_positionDamper_252, logic_uScriptAct_SetJointDrive_maximumForce_252, out logic_uScriptAct_SetJointDrive_jointDrive_252);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_252.Out;
@@ -14187,7 +14207,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4ff0bd6d-edf1-4df3-89d0-d3d3e6121217", "Set Rigidbody Velocity", Relay_In_253)) return; 
+         if (true == CheckDebugBreak("4ff0bd6d-edf1-4df3-89d0-d3d3e6121217", "Set_Rigidbody_Velocity", Relay_In_253)) return; 
          {
             {
             }
@@ -14310,7 +14330,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("32d68b19-bc77-481c-8868-cebb4824c64c", "Get Mouse Position", Relay_In_258)) return; 
+         if (true == CheckDebugBreak("32d68b19-bc77-481c-8868-cebb4824c64c", "Get_Mouse_Position", Relay_In_258)) return; 
          {
             {
             }
@@ -14344,7 +14364,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c582ae9d-8d21-42a9-b299-6faa574bdbc1", "Get Screen Size", Relay_In_259)) return; 
+         if (true == CheckDebugBreak("c582ae9d-8d21-42a9-b299-6faa574bdbc1", "Get_Screen_Size", Relay_In_259)) return; 
          {
             {
             }
@@ -14379,7 +14399,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f5d24118-0e58-46d2-a206-58eeca7a25bc", "Lock Mouse Cursor", Relay_In_260)) return; 
+         if (true == CheckDebugBreak("f5d24118-0e58-46d2-a206-58eeca7a25bc", "Lock_Mouse_Cursor", Relay_In_260)) return; 
          {
             {
             }
@@ -14404,7 +14424,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7eb0908a-ec00-4978-ae03-1cbdac5287b5", "Show Mouse Cursor", Relay_In_261)) return; 
+         if (true == CheckDebugBreak("7eb0908a-ec00-4978-ae03-1cbdac5287b5", "Show_Mouse_Cursor", Relay_In_261)) return; 
          {
             {
             }
@@ -14453,7 +14473,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c82e8660-dd12-41dc-a5e8-8a76fb501d30", "Count Time", Relay_In_264)) return; 
+         if (true == CheckDebugBreak("c82e8660-dd12-41dc-a5e8-8a76fb501d30", "Count_Time", Relay_In_264)) return; 
          {
             {
             }
@@ -14478,7 +14498,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c82e8660-dd12-41dc-a5e8-8a76fb501d30", "Count Time", Relay_Stop_264)) return; 
+         if (true == CheckDebugBreak("c82e8660-dd12-41dc-a5e8-8a76fb501d30", "Count_Time", Relay_Stop_264)) return; 
          {
             {
             }
@@ -14597,7 +14617,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("993139b0-5418-4b99-b153-02abb694647e", "Get Delta Time", Relay_In_266)) return; 
+         if (true == CheckDebugBreak("993139b0-5418-4b99-b153-02abb694647e", "Get_Delta_Time", Relay_In_266)) return; 
          {
             {
             }
@@ -14626,7 +14646,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e82d94ff-4ff6-43f0-8fbc-1378d9c71caf", "Get Game Time", Relay_In_267)) return; 
+         if (true == CheckDebugBreak("e82d94ff-4ff6-43f0-8fbc-1378d9c71caf", "Get_Game_Time", Relay_In_267)) return; 
          {
             {
             }
@@ -14655,7 +14675,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("02b9ae86-fb6e-4c39-95bd-cc57cceae280", "Get Run Time", Relay_In_268)) return; 
+         if (true == CheckDebugBreak("02b9ae86-fb6e-4c39-95bd-cc57cceae280", "Get_Run_Time", Relay_In_268)) return; 
          {
             {
             }
@@ -14682,7 +14702,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("baabf191-c309-4743-a640-72d746f4ff78", "Get System Date", Relay_In_269)) return; 
+         if (true == CheckDebugBreak("baabf191-c309-4743-a640-72d746f4ff78", "Get_System_Date", Relay_In_269)) return; 
          {
             {
             }
@@ -14716,7 +14736,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2b29b06f-5b3c-40e2-b41b-444afccc23c3", "Get System Time", Relay_In_270)) return; 
+         if (true == CheckDebugBreak("2b29b06f-5b3c-40e2-b41b-444afccc23c3", "Get_System_Time", Relay_In_270)) return; 
          {
             {
             }
@@ -14752,7 +14772,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("46b10fa0-3297-4868-b6f3-f805fe8b9f93", "Set Game Time", Relay_In_271)) return; 
+         if (true == CheckDebugBreak("46b10fa0-3297-4868-b6f3-f805fe8b9f93", "Set_Game_Time", Relay_In_271)) return; 
          {
             {
             }
@@ -14803,7 +14823,7 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_KeyEvent_274()
    {
-      if (true == CheckDebugBreak("9231de05-14b5-4fd1-b585-09585d31b2fa", "Input Events", Relay_KeyEvent_274)) return; 
+      if (true == CheckDebugBreak("9231de05-14b5-4fd1-b585-09585d31b2fa", "Input_Events", Relay_KeyEvent_274)) return; 
       Relay_In_276();
    }
    
@@ -14811,7 +14831,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d698528e-6ac9-44d7-85ea-7cc1bedd377c", "Input Events Filter", Relay_In_276)) return; 
+         if (true == CheckDebugBreak("d698528e-6ac9-44d7-85ea-7cc1bedd377c", "Input_Events_Filter", Relay_In_276)) return; 
          {
             {
                logic_uScriptAct_OnInputEventFilter_KeyCode_276 = local_275_UnityEngine_KeyCode;
@@ -14968,7 +14988,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0b85b15b-ce87-4439-a8b5-33bc4a581249", "Toggle Bool", Relay_Toggle_278)) return; 
+         if (true == CheckDebugBreak("0b85b15b-ce87-4439-a8b5-33bc4a581249", "Toggle_Bool", Relay_Toggle_278)) return; 
          {
             {
             }
@@ -14996,7 +15016,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle Component", Relay_OnOut_279)) return; 
+         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle_Component", Relay_OnOut_279)) return; 
          Relay_In_280();
       }
       else
@@ -15009,7 +15029,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle Component", Relay_OffOut_279)) return; 
+         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle_Component", Relay_OffOut_279)) return; 
          Relay_In_280();
       }
       else
@@ -15022,7 +15042,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle Component", Relay_ToggleOut_279)) return; 
+         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle_Component", Relay_ToggleOut_279)) return; 
          Relay_In_280();
          Relay_True_286();
       }
@@ -15036,7 +15056,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle Component", Relay_TurnOn_279)) return; 
+         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle_Component", Relay_TurnOn_279)) return; 
          {
             {
             }
@@ -15063,7 +15083,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle Component", Relay_TurnOff_279)) return; 
+         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle_Component", Relay_TurnOff_279)) return; 
          {
             {
             }
@@ -15090,7 +15110,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle Component", Relay_Toggle_279)) return; 
+         if (true == CheckDebugBreak("904c0e80-e329-4efb-aa22-e963d3667d16", "Toggle_Component", Relay_Toggle_279)) return; 
          {
             {
             }
@@ -15146,7 +15166,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9b9d6d2f-6368-4600-b059-277e8f1c65d3", "Capture Screenshot", Relay_In_281)) return; 
+         if (true == CheckDebugBreak("9b9d6d2f-6368-4600-b059-277e8f1c65d3", "Capture_Screenshot", Relay_In_281)) return; 
          {
             {
             }
@@ -15179,7 +15199,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b87fcfc1-8cbd-47a7-9498-ca404600536a", "Get Object From List", Relay_In_282)) return; 
+         if (true == CheckDebugBreak("b87fcfc1-8cbd-47a7-9498-ca404600536a", "Get_Object_From_List", Relay_In_282)) return; 
          {
             {
             }
@@ -15209,7 +15229,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("275d6a26-6c84-40fc-bd72-284d903d1383", "Output FPS", Relay_In_283)) return; 
+         if (true == CheckDebugBreak("275d6a26-6c84-40fc-bd72-284d903d1383", "Output_FPS", Relay_In_283)) return; 
          {
             {
             }
@@ -15234,7 +15254,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b4293836-bebb-4b2c-9bbd-c994ef3818e1", "Shuffle List", Relay_In_284)) return; 
+         if (true == CheckDebugBreak("b4293836-bebb-4b2c-9bbd-c994ef3818e1", "Shuffle_List", Relay_In_284)) return; 
          {
             {
             }
@@ -15285,7 +15305,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("faea9892-d60d-4ea3-8b21-d167aa0e6375", "Set Bool", Relay_True_286)) return; 
+         if (true == CheckDebugBreak("faea9892-d60d-4ea3-8b21-d167aa0e6375", "Set_Bool", Relay_True_286)) return; 
          {
             {
             }
@@ -15315,7 +15335,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("faea9892-d60d-4ea3-8b21-d167aa0e6375", "Set Bool", Relay_False_286)) return; 
+         if (true == CheckDebugBreak("faea9892-d60d-4ea3-8b21-d167aa0e6375", "Set_Bool", Relay_False_286)) return; 
          {
             {
             }
@@ -15345,7 +15365,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0e960492-118e-454a-95c5-b701167cd517", "Set Random Bool", Relay_In_288)) return; 
+         if (true == CheckDebugBreak("0e960492-118e-454a-95c5-b701167cd517", "Set_Random_Bool", Relay_In_288)) return; 
          {
             {
             }
@@ -15371,7 +15391,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8e60e83c-5cb9-42df-85ab-09097fb396f4", "Get Components (Color)", Relay_In_289)) return; 
+         if (true == CheckDebugBreak("8e60e83c-5cb9-42df-85ab-09097fb396f4", "Get_Components__Color_", Relay_In_289)) return; 
          {
             {
                logic_uScriptAct_GetComponentsColor_InputColor_289 = local_294_UnityEngine_Color;
@@ -15406,7 +15426,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("23d25c3e-b612-42cc-a7ed-8114ea5aaa9b", "Set Color", Relay_In_290)) return; 
+         if (true == CheckDebugBreak("23d25c3e-b612-42cc-a7ed-8114ea5aaa9b", "Set_Color", Relay_In_290)) return; 
          {
             {
             }
@@ -15434,7 +15454,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cb971c9b-f485-4f77-9700-8a55dc03c798", "Set Color Alpha", Relay_In_291)) return; 
+         if (true == CheckDebugBreak("cb971c9b-f485-4f77-9700-8a55dc03c798", "Set_Color_Alpha", Relay_In_291)) return; 
          {
             {
                logic_uScriptAct_SetColorAlpha_Value_291 = local_294_UnityEngine_Color;
@@ -15468,7 +15488,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("35428afc-9887-40dc-b414-86410fa3521e", "Set Components (Color)", Relay_In_292)) return; 
+         if (true == CheckDebugBreak("35428afc-9887-40dc-b414-86410fa3521e", "Set_Components__Color_", Relay_In_292)) return; 
          {
             {
             }
@@ -15504,7 +15524,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("21803b3d-4dee-4180-a383-51f9fcd99eea", "Set Random Color", Relay_In_293)) return; 
+         if (true == CheckDebugBreak("21803b3d-4dee-4180-a383-51f9fcd99eea", "Set_Random_Color", Relay_In_293)) return; 
          {
             {
             }
@@ -15551,9 +15571,13 @@ public class CodeGenTest : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_296_UnityEngine_Color);
-               logic_uScriptAct_Log_Target_295 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_295.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_295, index + 1);
+               }
+               logic_uScriptAct_Log_Target_295[ index++ ] = local_296_UnityEngine_Color;
+               
             }
             {
             }
@@ -15573,7 +15597,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b4c67654-21cc-478b-b59e-461034ccfa8d", "Set Float", Relay_In_297)) return; 
+         if (true == CheckDebugBreak("b4c67654-21cc-478b-b59e-461034ccfa8d", "Set_Float", Relay_In_297)) return; 
          {
             {
             }
@@ -15601,7 +15625,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b5c2f0e5-7bde-4924-85fe-263d7787f94b", "Set Random Float", Relay_In_298)) return; 
+         if (true == CheckDebugBreak("b5c2f0e5-7bde-4924-85fe-263d7787f94b", "Set_Random_Float", Relay_In_298)) return; 
          {
             {
             }
@@ -15631,7 +15655,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1fc9ef24-ab88-4e4f-9805-f902e4c40947", "Set GameObject", Relay_In_299)) return; 
+         if (true == CheckDebugBreak("1fc9ef24-ab88-4e4f-9805-f902e4c40947", "Set_GameObject", Relay_In_299)) return; 
          {
             {
             }
@@ -15670,10 +15694,10 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("70e50d20-09d9-4986-a7f5-268e4b5a2aef", "Set Random GameObject", Relay_In_300)) return; 
+         if (true == CheckDebugBreak("70e50d20-09d9-4986-a7f5-268e4b5a2aef", "Set_Random_GameObject", Relay_In_300)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_303_UnityEngine_GameObject_previous != local_303_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -15685,8 +15709,12 @@ public class CodeGenTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_303_UnityEngine_GameObject);
-               logic_uScriptAct_SetRandomGameObject_ObjectSet_300 = properties.ToArray();
+               if ( logic_uScriptAct_SetRandomGameObject_ObjectSet_300.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SetRandomGameObject_ObjectSet_300, index + 1);
+               }
+               logic_uScriptAct_SetRandomGameObject_ObjectSet_300[ index++ ] = local_303_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -15711,7 +15739,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("55f198e2-0547-4565-948f-83c2b0145dcf", "Set Int", Relay_In_304)) return; 
+         if (true == CheckDebugBreak("55f198e2-0547-4565-948f-83c2b0145dcf", "Set_Int", Relay_In_304)) return; 
          {
             {
             }
@@ -15740,7 +15768,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("950079ac-2899-4bab-8afd-37a4625f2762", "Set Random Int", Relay_In_305)) return; 
+         if (true == CheckDebugBreak("950079ac-2899-4bab-8afd-37a4625f2762", "Set_Random_Int", Relay_In_305)) return; 
          {
             {
             }
@@ -15793,7 +15821,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b55851d6-ccae-4498-b90b-985d28ad6f8f", "Set Quaternion", Relay_In_308)) return; 
+         if (true == CheckDebugBreak("b55851d6-ccae-4498-b90b-985d28ad6f8f", "Set_Quaternion", Relay_In_308)) return; 
          {
             {
             }
@@ -15821,7 +15849,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("74a4051c-480c-4c61-b740-909bb71b8795", "Create Relative Rect", Relay_In_310)) return; 
+         if (true == CheckDebugBreak("74a4051c-480c-4c61-b740-909bb71b8795", "Create_Relative_Rect", Relay_In_310)) return; 
          {
             {
             }
@@ -15860,7 +15888,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b1343d1d-78b7-4436-830f-9449fe9d6354", "Create Relative Rect (Mouse)", Relay_In_311)) return; 
+         if (true == CheckDebugBreak("b1343d1d-78b7-4436-830f-9449fe9d6354", "Create_Relative_Rect__Mouse_", Relay_In_311)) return; 
          {
             {
             }
@@ -15893,7 +15921,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e06b9b0-7548-4107-81be-8936a0c758d6", "Get Components (Rect)", Relay_In_312)) return; 
+         if (true == CheckDebugBreak("4e06b9b0-7548-4107-81be-8936a0c758d6", "Get_Components__Rect_", Relay_In_312)) return; 
          {
             {
                logic_uScriptAct_GetComponentsRect_InputRect_312 = local_315_UnityEngine_Rect;
@@ -15928,7 +15956,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c979e6ad-390e-439a-b4e6-f85000295031", "Set Components (Rect)", Relay_In_313)) return; 
+         if (true == CheckDebugBreak("c979e6ad-390e-439a-b4e6-f85000295031", "Set_Components__Rect_", Relay_In_313)) return; 
          {
             {
             }
@@ -15961,7 +15989,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b3b9988-373c-438f-bcd8-c379f8ce2eb6", "Set Rect", Relay_In_314)) return; 
+         if (true == CheckDebugBreak("3b3b9988-373c-438f-bcd8-c379f8ce2eb6", "Set_Rect", Relay_In_314)) return; 
          {
             {
             }
@@ -16012,7 +16040,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5b8ca2c6-635a-4687-91f1-2fe027a93c8f", "Change Case", Relay_In_317)) return; 
+         if (true == CheckDebugBreak("5b8ca2c6-635a-4687-91f1-2fe027a93c8f", "Change_Case", Relay_In_317)) return; 
          {
             {
             }
@@ -16073,7 +16101,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9d68b467-b3b0-4d4a-bf5c-2ca7fd0b1fea", "Get String Length", Relay_In_319)) return; 
+         if (true == CheckDebugBreak("9d68b467-b3b0-4d4a-bf5c-2ca7fd0b1fea", "Get_String_Length", Relay_In_319)) return; 
          {
             {
             }
@@ -16104,7 +16132,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d2a7e077-339b-4a8f-9812-708bdda4e203", "Get Sub-String", Relay_In_320)) return; 
+         if (true == CheckDebugBreak("d2a7e077-339b-4a8f-9812-708bdda4e203", "Get_Sub_String", Relay_In_320)) return; 
          {
             {
             }
@@ -16137,7 +16165,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c68505e1-2f7b-40f4-a001-6bc662b7494c", "Pad String", Relay_In_321)) return; 
+         if (true == CheckDebugBreak("c68505e1-2f7b-40f4-a001-6bc662b7494c", "Pad_String", Relay_In_321)) return; 
          {
             {
             }
@@ -16170,7 +16198,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("46994833-e1fb-4046-b2e7-8853178096b4", "Replace Characters", Relay_In_322)) return; 
+         if (true == CheckDebugBreak("46994833-e1fb-4046-b2e7-8853178096b4", "Replace_Characters", Relay_In_322)) return; 
          {
             {
             }
@@ -16201,7 +16229,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ff896dae-9240-4778-96f8-3d5fb4708126", "Set String", Relay_In_323)) return; 
+         if (true == CheckDebugBreak("ff896dae-9240-4778-96f8-3d5fb4708126", "Set_String", Relay_In_323)) return; 
          {
             {
             }
@@ -16234,7 +16262,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ee1e8a90-399b-4ff9-902f-c1f7676e3ae0", "Trim String", Relay_In_324)) return; 
+         if (true == CheckDebugBreak("ee1e8a90-399b-4ff9-902f-c1f7676e3ae0", "Trim_String", Relay_In_324)) return; 
          {
             {
             }
@@ -16265,7 +16293,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cfd7986d-b832-46df-ab89-be5a4f31536e", "Set Texture2D", Relay_In_326)) return; 
+         if (true == CheckDebugBreak("cfd7986d-b832-46df-ab89-be5a4f31536e", "Set_Texture2D", Relay_In_326)) return; 
          {
             {
             }
@@ -16293,7 +16321,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6ba5687e-17dc-47ff-b5ae-ef751d1cb542", "Get Components (Vector2)", Relay_In_327)) return; 
+         if (true == CheckDebugBreak("6ba5687e-17dc-47ff-b5ae-ef751d1cb542", "Get_Components__Vector2_", Relay_In_327)) return; 
          {
             {
             }
@@ -16322,7 +16350,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("05aeb1a6-914d-4be5-bdff-dbce8b0e1373", "Set Components (Vector2)", Relay_In_328)) return; 
+         if (true == CheckDebugBreak("05aeb1a6-914d-4be5-bdff-dbce8b0e1373", "Set_Components__Vector2_", Relay_In_328)) return; 
          {
             {
             }
@@ -16351,7 +16379,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("35406187-d19b-4045-9b67-a6a6da4e7bd7", "Set Random Vector2", Relay_In_329)) return; 
+         if (true == CheckDebugBreak("35406187-d19b-4045-9b67-a6a6da4e7bd7", "Set_Random_Vector2", Relay_In_329)) return; 
          {
             {
             }
@@ -16384,7 +16412,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("23de8229-5449-43d6-9fc9-0e44e745e101", "Set Vector2", Relay_In_330)) return; 
+         if (true == CheckDebugBreak("23de8229-5449-43d6-9fc9-0e44e745e101", "Set_Vector2", Relay_In_330)) return; 
          {
             {
             }
@@ -16411,7 +16439,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7c5499f4-3ad9-4282-ad10-a14a3babc9e3", "Get Components (Vector3)", Relay_In_332)) return; 
+         if (true == CheckDebugBreak("7c5499f4-3ad9-4282-ad10-a14a3babc9e3", "Get_Components__Vector3_", Relay_In_332)) return; 
          {
             {
             }
@@ -16442,7 +16470,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0fe94c08-628e-40e0-a2a5-35669bda5bb5", "Set Random Vector3", Relay_In_333)) return; 
+         if (true == CheckDebugBreak("0fe94c08-628e-40e0-a2a5-35669bda5bb5", "Set_Random_Vector3", Relay_In_333)) return; 
          {
             {
             }
@@ -16479,7 +16507,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f4e1897a-5dbd-42a1-a80d-736d52bc53bc", "Set Random Vector3", Relay_In_334)) return; 
+         if (true == CheckDebugBreak("f4e1897a-5dbd-42a1-a80d-736d52bc53bc", "Set_Random_Vector3", Relay_In_334)) return; 
          {
             {
             }
@@ -16516,7 +16544,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d12309ac-3e05-4b67-bdd8-7fd75016de47", "Set Vector3", Relay_In_335)) return; 
+         if (true == CheckDebugBreak("d12309ac-3e05-4b67-bdd8-7fd75016de47", "Set_Vector3", Relay_In_335)) return; 
          {
             {
             }
@@ -16545,7 +16573,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9666ee1c-8ab3-49d2-87ae-79cebbbe3560", "Get Components (Vector4)", Relay_In_337)) return; 
+         if (true == CheckDebugBreak("9666ee1c-8ab3-49d2-87ae-79cebbbe3560", "Get_Components__Vector4_", Relay_In_337)) return; 
          {
             {
                logic_uScriptAct_GetComponentsVector4_InputVector4_337 = local_344_UnityEngine_Vector4;
@@ -16580,7 +16608,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6e3a7a2e-a5cf-4c9c-8d82-8cc8077f6773", "Set Components (Vector4)", Relay_In_338)) return; 
+         if (true == CheckDebugBreak("6e3a7a2e-a5cf-4c9c-8d82-8cc8077f6773", "Set_Components__Vector4_", Relay_In_338)) return; 
          {
             {
             }
@@ -16613,7 +16641,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8c471b93-047d-48f0-9dd2-ed8303516f96", "Set Random Vector4", Relay_In_339)) return; 
+         if (true == CheckDebugBreak("8c471b93-047d-48f0-9dd2-ed8303516f96", "Set_Random_Vector4", Relay_In_339)) return; 
          {
             {
             }
@@ -16654,7 +16682,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("19ae5405-3e0f-41c2-9cec-0e1d95b0a224", "Set Vector4", Relay_In_340)) return; 
+         if (true == CheckDebugBreak("19ae5405-3e0f-41c2-9cec-0e1d95b0a224", "Set_Vector4", Relay_In_340)) return; 
          {
             {
             }
@@ -16682,7 +16710,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("158ac635-a443-408a-a47c-8d816ee54bac", "Set Random Seed", Relay_In_341)) return; 
+         if (true == CheckDebugBreak("158ac635-a443-408a-a47c-8d816ee54bac", "Set_Random_Seed", Relay_In_341)) return; 
          {
             {
             }
@@ -16755,7 +16783,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("71e247b1-2bce-4688-90b8-0cb96c2f22c8", "Input Events Filter", Relay_In_346)) return; 
+         if (true == CheckDebugBreak("71e247b1-2bce-4688-90b8-0cb96c2f22c8", "Input_Events_Filter", Relay_In_346)) return; 
          {
             {
                logic_uScriptAct_OnInputEventFilter_KeyCode_346 = local_345_UnityEngine_KeyCode;
@@ -16790,7 +16818,7 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_KeyEvent_347()
    {
-      if (true == CheckDebugBreak("33caa532-05e5-48f8-897e-5e9f75d792d5", "Input Events", Relay_KeyEvent_347)) return; 
+      if (true == CheckDebugBreak("33caa532-05e5-48f8-897e-5e9f75d792d5", "Input_Events", Relay_KeyEvent_347)) return; 
       Relay_In_346();
    }
    
@@ -16798,7 +16826,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4d0ba539-9db4-4084-bd8b-759dd9ffc13d", "Assign Material", Relay_In_348)) return; 
+         if (true == CheckDebugBreak("4d0ba539-9db4-4084-bd8b-759dd9ffc13d", "Assign_Material", Relay_In_348)) return; 
          {
             {
             }
@@ -16829,7 +16857,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("17f34eb7-e337-4dd7-95bc-5046cb7e8eca", "Assign Material Color", Relay_In_350)) return; 
+         if (true == CheckDebugBreak("17f34eb7-e337-4dd7-95bc-5046cb7e8eca", "Assign_Material_Color", Relay_In_350)) return; 
          {
             {
             }
@@ -16858,10 +16886,10 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f988874a-b58f-439d-b269-bdd8a63f9b85", "Attach Component", Relay_In_351)) return; 
+         if (true == CheckDebugBreak("f988874a-b58f-439d-b269-bdd8a63f9b85", "Attach_Component", Relay_In_351)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_MasterGO_UnityEngine_GameObject_previous != local_MasterGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -17413,17 +17441,6 @@ public class CodeGenTest : uScriptLogic
                            }
                            if ( null != component )
                            {
-                              component.TimesToTrigger = event_UnityEngine_GameObject_TimesToTrigger_68;
-                           }
-                        }
-                        {
-                           uScript_Triggers component = local_MasterGO_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
-                           if ( null == component )
-                           {
-                              component = local_MasterGO_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
-                           }
-                           if ( null != component )
-                           {
                               component.OnEnterTrigger += Instance_OnEnterTrigger_68;
                               component.OnExitTrigger += Instance_OnExitTrigger_68;
                               component.WhileInsideTrigger += Instance_WhileInsideTrigger_68;
@@ -17432,8 +17449,12 @@ public class CodeGenTest : uScriptLogic
                      }
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_MasterGO_UnityEngine_GameObject);
-               logic_uScriptAct_AttachScript_Target_351 = properties.ToArray();
+               if ( logic_uScriptAct_AttachScript_Target_351.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AttachScript_Target_351, index + 1);
+               }
+               logic_uScriptAct_AttachScript_Target_351[ index++ ] = local_MasterGO_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -17458,7 +17479,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a501577a-fa4e-4bcb-8a67-1f58fad1c068", "Attach To GameObject", Relay_In_353)) return; 
+         if (true == CheckDebugBreak("a501577a-fa4e-4bcb-8a67-1f58fad1c068", "Attach_To_GameObject", Relay_In_353)) return; 
          {
             {
             }
@@ -17493,7 +17514,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b20a9614-fa46-4b57-be91-b5aa2799f2d8", "Create Primitive", Relay_In_354)) return; 
+         if (true == CheckDebugBreak("b20a9614-fa46-4b57-be91-b5aa2799f2d8", "Create_Primitive", Relay_In_354)) return; 
          {
             {
             }
@@ -17576,7 +17597,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3a4ffd8c-9b7f-46f8-982f-f5f9549d03bf", "Destroy Component", Relay_In_356)) return; 
+         if (true == CheckDebugBreak("3a4ffd8c-9b7f-46f8-982f-f5f9549d03bf", "Destroy_Component", Relay_In_356)) return; 
          {
             {
             }
@@ -17629,7 +17650,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("edf88dab-8de6-41cc-bb4c-b7080960b9fb", "Get All Children", Relay_In_359)) return; 
+         if (true == CheckDebugBreak("edf88dab-8de6-41cc-bb4c-b7080960b9fb", "Get_All_Children", Relay_In_359)) return; 
          {
             {
             }
@@ -17667,7 +17688,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("88859c58-6a0d-457b-a9f6-9642c35ccaa3", "Get Children By Name", Relay_In_360)) return; 
+         if (true == CheckDebugBreak("88859c58-6a0d-457b-a9f6-9642c35ccaa3", "Get_Children_By_Name", Relay_In_360)) return; 
          {
             {
             }
@@ -17714,7 +17735,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b7126028-9f0e-47c6-99a0-d1c59d9959b2", "Get Children By Tag", Relay_In_361)) return; 
+         if (true == CheckDebugBreak("b7126028-9f0e-47c6-99a0-d1c59d9959b2", "Get_Children_By_Tag", Relay_In_361)) return; 
          {
             {
             }
@@ -17785,7 +17806,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ee966de2-f778-47d3-a89d-2500479e46d8", "Get Distance", Relay_In_363)) return; 
+         if (true == CheckDebugBreak("ee966de2-f778-47d3-a89d-2500479e46d8", "Get_Distance", Relay_In_363)) return; 
          {
             {
             }
@@ -17814,7 +17835,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("fb8c9968-7ceb-4731-ad4c-8a3a57fe39e4", "Get GameObject By Name", Relay_In_364)) return; 
+         if (true == CheckDebugBreak("fb8c9968-7ceb-4731-ad4c-8a3a57fe39e4", "Get_GameObject_By_Name", Relay_In_364)) return; 
          {
             {
             }
@@ -17851,7 +17872,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("62a3d4e8-e421-4791-9739-3d72553b8644", "Get GameObjects By Tag", Relay_In_365)) return; 
+         if (true == CheckDebugBreak("62a3d4e8-e421-4791-9739-3d72553b8644", "Get_GameObjects_By_Tag", Relay_In_365)) return; 
          {
             {
             }
@@ -17892,7 +17913,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("31d21448-b0b7-47df-a0c5-767494766045", "Get Material", Relay_In_366)) return; 
+         if (true == CheckDebugBreak("31d21448-b0b7-47df-a0c5-767494766045", "Get_Material", Relay_In_366)) return; 
          {
             {
             }
@@ -17925,7 +17946,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e64e77dd-90fd-49fa-80f8-a7621193e5bd", "Get Position and Rotation", Relay_In_367)) return; 
+         if (true == CheckDebugBreak("e64e77dd-90fd-49fa-80f8-a7621193e5bd", "Get_Position_and_Rotation", Relay_In_367)) return; 
          {
             {
             }
@@ -17965,7 +17986,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("47dee004-e8c1-4277-bd65-93f7fe4ff5f6", "Get Scale", Relay_In_368)) return; 
+         if (true == CheckDebugBreak("47dee004-e8c1-4277-bd65-93f7fe4ff5f6", "Get_Scale", Relay_In_368)) return; 
          {
             {
             }
@@ -17998,7 +18019,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b7ecabb7-0d85-4591-bb39-712c8c932863", "Get Vector2 Distance", Relay_In_370)) return; 
+         if (true == CheckDebugBreak("b7ecabb7-0d85-4591-bb39-712c8c932863", "Get_Vector2_Distance", Relay_In_370)) return; 
          {
             {
             }
@@ -18027,7 +18048,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("69f4381f-960b-47ab-9d70-ac2830f0a7f7", "Get Vector3 Distance", Relay_In_371)) return; 
+         if (true == CheckDebugBreak("69f4381f-960b-47ab-9d70-ac2830f0a7f7", "Get_Vector3_Distance", Relay_In_371)) return; 
          {
             {
             }
@@ -18056,7 +18077,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("bf52c8a8-f714-4a07-a0e0-27bc6346fbd9", "Get Vector4 Distance", Relay_In_372)) return; 
+         if (true == CheckDebugBreak("bf52c8a8-f714-4a07-a0e0-27bc6346fbd9", "Get_Vector4_Distance", Relay_In_372)) return; 
          {
             {
             }
@@ -18085,7 +18106,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b61cdc4c-daa7-4a0c-932c-3dc3fa12cc9f", "Is GameObject Active", Relay_In_373)) return; 
+         if (true == CheckDebugBreak("b61cdc4c-daa7-4a0c-932c-3dc3fa12cc9f", "Is_GameObject_Active", Relay_In_373)) return; 
          {
             {
             }
@@ -18115,7 +18136,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric Character Controller", Relay_MoveForward_374)) return; 
+         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric_Character_Controller", Relay_MoveForward_374)) return; 
          {
             {
             }
@@ -18152,7 +18173,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric Character Controller", Relay_MoveBackward_374)) return; 
+         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric_Character_Controller", Relay_MoveBackward_374)) return; 
          {
             {
             }
@@ -18189,7 +18210,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric Character Controller", Relay_StrafeRight_374)) return; 
+         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric_Character_Controller", Relay_StrafeRight_374)) return; 
          {
             {
             }
@@ -18226,7 +18247,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric Character Controller", Relay_StrafeLeft_374)) return; 
+         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric_Character_Controller", Relay_StrafeLeft_374)) return; 
          {
             {
             }
@@ -18263,7 +18284,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric Character Controller", Relay_RotateRight_374)) return; 
+         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric_Character_Controller", Relay_RotateRight_374)) return; 
          {
             {
             }
@@ -18300,7 +18321,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric Character Controller", Relay_RotateLeft_374)) return; 
+         if (true == CheckDebugBreak("eb585a33-181e-46e2-b454-29ab50924b44", "Isometric_Character_Controller", Relay_RotateLeft_374)) return; 
          {
             {
             }
@@ -18337,7 +18358,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0b980d65-b249-4350-9152-0644beb6ce11", "Look At", Relay_Finished_375)) return; 
+         if (true == CheckDebugBreak("0b980d65-b249-4350-9152-0644beb6ce11", "Look_At", Relay_Finished_375)) return; 
          Relay_In_376();
       }
       else
@@ -18350,7 +18371,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0b980d65-b249-4350-9152-0644beb6ce11", "Look At", Relay_In_375)) return; 
+         if (true == CheckDebugBreak("0b980d65-b249-4350-9152-0644beb6ce11", "Look_At", Relay_In_375)) return; 
          {
             {
             }
@@ -18381,7 +18402,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1021e20f-8e93-4356-8dbd-5d2e1a197fcd", "Move To Location", Relay_Finished_376)) return; 
+         if (true == CheckDebugBreak("1021e20f-8e93-4356-8dbd-5d2e1a197fcd", "Move_To_Location", Relay_Finished_376)) return; 
          Relay_In_379();
       }
       else
@@ -18394,7 +18415,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1021e20f-8e93-4356-8dbd-5d2e1a197fcd", "Move To Location", Relay_In_376)) return; 
+         if (true == CheckDebugBreak("1021e20f-8e93-4356-8dbd-5d2e1a197fcd", "Move_To_Location", Relay_In_376)) return; 
          {
             {
             }
@@ -18425,7 +18446,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1021e20f-8e93-4356-8dbd-5d2e1a197fcd", "Move To Location", Relay_Cancel_376)) return; 
+         if (true == CheckDebugBreak("1021e20f-8e93-4356-8dbd-5d2e1a197fcd", "Move_To_Location", Relay_Cancel_376)) return; 
          {
             {
             }
@@ -18480,7 +18501,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("25d30c87-deb7-4abb-8bef-738a7bca5487", "Normalize Vector2", Relay_In_378)) return; 
+         if (true == CheckDebugBreak("25d30c87-deb7-4abb-8bef-738a7bca5487", "Normalize_Vector2", Relay_In_378)) return; 
          {
             {
             }
@@ -18507,7 +18528,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ae67991e-cb5b-44e6-94e2-5ee4a43f7732", "Normalize Vector4", Relay_In_379)) return; 
+         if (true == CheckDebugBreak("ae67991e-cb5b-44e6-94e2-5ee4a43f7732", "Normalize_Vector4", Relay_In_379)) return; 
          {
             {
             }
@@ -18534,7 +18555,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("21982441-6b9e-4580-9651-cfaa573d4892", "Normalize Vector3", Relay_In_380)) return; 
+         if (true == CheckDebugBreak("21982441-6b9e-4580-9651-cfaa573d4892", "Normalize_Vector3", Relay_In_380)) return; 
          {
             {
             }
@@ -18594,7 +18615,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d80098cd-a1b3-419f-aabe-d20ee92c7974", "Set Euler Angles", Relay_In_382)) return; 
+         if (true == CheckDebugBreak("d80098cd-a1b3-419f-aabe-d20ee92c7974", "Set_Euler_Angles", Relay_In_382)) return; 
          {
             {
             }
@@ -18633,7 +18654,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8d0f4027-8bf3-46fa-83c4-28fa64d847ec", "Set Position", Relay_In_383)) return; 
+         if (true == CheckDebugBreak("8d0f4027-8bf3-46fa-83c4-28fa64d847ec", "Set_Position", Relay_In_383)) return; 
          {
             {
             }
@@ -18665,7 +18686,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e43a5b5c-8394-4a52-a494-e62b72b46d04", "Set Random Position", Relay_In_384)) return; 
+         if (true == CheckDebugBreak("e43a5b5c-8394-4a52-a494-e62b72b46d04", "Set_Random_Position", Relay_In_384)) return; 
          {
             {
             }
@@ -18712,7 +18733,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ddd877a8-5319-4e0d-a78a-8474850d6311", "Set Random Rotation", Relay_In_385)) return; 
+         if (true == CheckDebugBreak("ddd877a8-5319-4e0d-a78a-8474850d6311", "Set_Random_Rotation", Relay_In_385)) return; 
          {
             {
             }
@@ -18756,7 +18777,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1d591df0-f2b7-406a-b8f2-40cad553010c", "Set Random Scale", Relay_In_386)) return; 
+         if (true == CheckDebugBreak("1d591df0-f2b7-406a-b8f2-40cad553010c", "Set_Random_Scale", Relay_In_386)) return; 
          {
             {
             }
@@ -18801,7 +18822,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("09717985-9473-465e-b215-73f0a48f7311", "Set Rotation", Relay_In_387)) return; 
+         if (true == CheckDebugBreak("09717985-9473-465e-b215-73f0a48f7311", "Set_Rotation", Relay_In_387)) return; 
          {
             {
             }
@@ -18842,7 +18863,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e94265e1-84df-4497-9c03-bc9231a8ef1f", "Set Scale", Relay_In_388)) return; 
+         if (true == CheckDebugBreak("e94265e1-84df-4497-9c03-bc9231a8ef1f", "Set_Scale", Relay_In_388)) return; 
          {
             {
             }
@@ -18869,7 +18890,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("819422bd-738d-470b-add8-dcab19e3aa10", "Spawn Prefab", Relay_FinishedSpawning_389)) return; 
+         if (true == CheckDebugBreak("819422bd-738d-470b-add8-dcab19e3aa10", "Spawn_Prefab", Relay_FinishedSpawning_389)) return; 
          Relay_In_391();
       }
       else
@@ -18882,7 +18903,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("819422bd-738d-470b-add8-dcab19e3aa10", "Spawn Prefab", Relay_In_389)) return; 
+         if (true == CheckDebugBreak("819422bd-738d-470b-add8-dcab19e3aa10", "Spawn_Prefab", Relay_In_389)) return; 
          {
             {
             }
@@ -18931,7 +18952,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f358e570-42cf-4985-8fef-347a7a2db5a7", "Spawn Prefab At Location", Relay_FinishedSpawning_390)) return; 
+         if (true == CheckDebugBreak("f358e570-42cf-4985-8fef-347a7a2db5a7", "Spawn_Prefab_At_Location", Relay_FinishedSpawning_390)) return; 
          Relay_In_393();
       }
       else
@@ -18944,7 +18965,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f358e570-42cf-4985-8fef-347a7a2db5a7", "Spawn Prefab At Location", Relay_In_390)) return; 
+         if (true == CheckDebugBreak("f358e570-42cf-4985-8fef-347a7a2db5a7", "Spawn_Prefab_At_Location", Relay_In_390)) return; 
          {
             {
             }
@@ -18984,7 +19005,7 @@ public class CodeGenTest : uScriptLogic
          if (true == CheckDebugBreak("db8434f7-2dd0-4f48-8a3c-3118b59f4277", "Teleport", Relay_In_391)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_392_UnityEngine_GameObject_previous != local_392_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -18996,8 +19017,12 @@ public class CodeGenTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_392_UnityEngine_GameObject);
-               logic_uScriptAct_Teleport_Target_391 = properties.ToArray();
+               if ( logic_uScriptAct_Teleport_Target_391.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Teleport_Target_391, index + 1);
+               }
+               logic_uScriptAct_Teleport_Target_391[ index++ ] = local_392_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -19048,7 +19073,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ad1598b6-f669-4132-a251-29638f86c2b9", "Input Events Filter", Relay_In_395)) return; 
+         if (true == CheckDebugBreak("ad1598b6-f669-4132-a251-29638f86c2b9", "Input_Events_Filter", Relay_In_395)) return; 
          {
             {
                logic_uScriptAct_OnInputEventFilter_KeyCode_395 = local_394_UnityEngine_KeyCode;
@@ -19083,7 +19108,7 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_KeyEvent_396()
    {
-      if (true == CheckDebugBreak("377c9d39-251f-47c3-bb69-6e669ded1fba", "Input Events", Relay_KeyEvent_396)) return; 
+      if (true == CheckDebugBreak("377c9d39-251f-47c3-bb69-6e669ded1fba", "Input_Events", Relay_KeyEvent_396)) return; 
       Relay_In_395();
    }
    
@@ -19091,7 +19116,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3910028f-e211-4ea8-9223-e669d11aebdb", "Interpolate Color Linear", Relay_Begin_397)) return; 
+         if (true == CheckDebugBreak("3910028f-e211-4ea8-9223-e669d11aebdb", "Interpolate_Color_Linear__Smooth_", Relay_Begin_397)) return; 
          {
             {
             }
@@ -19107,15 +19132,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Begin(logic_uScriptAct_InterpolateColorLinear_startValue_397, logic_uScriptAct_InterpolateColorLinear_endValue_397, logic_uScriptAct_InterpolateColorLinear_time_397, logic_uScriptAct_InterpolateColorLinear_loopType_397, logic_uScriptAct_InterpolateColorLinear_loopDelay_397, logic_uScriptAct_InterpolateColorLinear_loopCount_397, out logic_uScriptAct_InterpolateColorLinear_currentValue_397);
-         logic_uScriptAct_InterpolateColorLinear_Driven_397 = true;
+         logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Begin(logic_uScriptAct_InterpolateColorLinearSmooth_startValue_397, logic_uScriptAct_InterpolateColorLinearSmooth_endValue_397, logic_uScriptAct_InterpolateColorLinearSmooth_time_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopType_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopDelay_397, logic_uScriptAct_InterpolateColorLinearSmooth_smooth_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopCount_397, out logic_uScriptAct_InterpolateColorLinearSmooth_currentValue_397);
+         logic_uScriptAct_InterpolateColorLinearSmooth_Driven_397 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Started;
-         bool test_1 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Started;
+         bool test_1 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Finished;
          
          if ( test_0 == true )
          {
@@ -19136,7 +19163,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Color Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Color Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19144,7 +19171,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3910028f-e211-4ea8-9223-e669d11aebdb", "Interpolate Color Linear", Relay_Stop_397)) return; 
+         if (true == CheckDebugBreak("3910028f-e211-4ea8-9223-e669d11aebdb", "Interpolate_Color_Linear__Smooth_", Relay_Stop_397)) return; 
          {
             {
             }
@@ -19160,15 +19187,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Stop(logic_uScriptAct_InterpolateColorLinear_startValue_397, logic_uScriptAct_InterpolateColorLinear_endValue_397, logic_uScriptAct_InterpolateColorLinear_time_397, logic_uScriptAct_InterpolateColorLinear_loopType_397, logic_uScriptAct_InterpolateColorLinear_loopDelay_397, logic_uScriptAct_InterpolateColorLinear_loopCount_397, out logic_uScriptAct_InterpolateColorLinear_currentValue_397);
-         logic_uScriptAct_InterpolateColorLinear_Driven_397 = true;
+         logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Stop(logic_uScriptAct_InterpolateColorLinearSmooth_startValue_397, logic_uScriptAct_InterpolateColorLinearSmooth_endValue_397, logic_uScriptAct_InterpolateColorLinearSmooth_time_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopType_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopDelay_397, logic_uScriptAct_InterpolateColorLinearSmooth_smooth_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopCount_397, out logic_uScriptAct_InterpolateColorLinearSmooth_currentValue_397);
+         logic_uScriptAct_InterpolateColorLinearSmooth_Driven_397 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Started;
-         bool test_1 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Started;
+         bool test_1 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Finished;
          
          if ( test_0 == true )
          {
@@ -19189,7 +19218,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Color Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Color Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19197,7 +19226,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3910028f-e211-4ea8-9223-e669d11aebdb", "Interpolate Color Linear", Relay_Resume_397)) return; 
+         if (true == CheckDebugBreak("3910028f-e211-4ea8-9223-e669d11aebdb", "Interpolate_Color_Linear__Smooth_", Relay_Resume_397)) return; 
          {
             {
             }
@@ -19213,15 +19242,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Resume(logic_uScriptAct_InterpolateColorLinear_startValue_397, logic_uScriptAct_InterpolateColorLinear_endValue_397, logic_uScriptAct_InterpolateColorLinear_time_397, logic_uScriptAct_InterpolateColorLinear_loopType_397, logic_uScriptAct_InterpolateColorLinear_loopDelay_397, logic_uScriptAct_InterpolateColorLinear_loopCount_397, out logic_uScriptAct_InterpolateColorLinear_currentValue_397);
-         logic_uScriptAct_InterpolateColorLinear_Driven_397 = true;
+         logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Resume(logic_uScriptAct_InterpolateColorLinearSmooth_startValue_397, logic_uScriptAct_InterpolateColorLinearSmooth_endValue_397, logic_uScriptAct_InterpolateColorLinearSmooth_time_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopType_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopDelay_397, logic_uScriptAct_InterpolateColorLinearSmooth_smooth_397, logic_uScriptAct_InterpolateColorLinearSmooth_loopCount_397, out logic_uScriptAct_InterpolateColorLinearSmooth_currentValue_397);
+         logic_uScriptAct_InterpolateColorLinearSmooth_Driven_397 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Started;
-         bool test_1 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Started;
+         bool test_1 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Finished;
          
          if ( test_0 == true )
          {
@@ -19242,7 +19273,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Color Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Color Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19265,23 +19296,25 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateColorLinear_Driven_397 = logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Driven(out logic_uScriptAct_InterpolateColorLinear_currentValue_397);
-         if ( true == logic_uScriptAct_InterpolateColorLinear_Driven_397 )
+         logic_uScriptAct_InterpolateColorLinearSmooth_Driven_397 = logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Driven(out logic_uScriptAct_InterpolateColorLinearSmooth_currentValue_397);
+         if ( true == logic_uScriptAct_InterpolateColorLinearSmooth_Driven_397 )
          {
-            if ( logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Started == true )
+            if ( logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Started == true )
             {
                Relay_Begin_400();
             }
-            if ( logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Stopped == true )
+            if ( logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Stopped == true )
             {
                Relay_Stop_400();
             }
-            if ( logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Interpolating == true )
             {
                Relay_Resume_400();
             }
-            if ( logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397.Finished == true )
+            if ( logic_uScriptAct_InterpolateColorLinearSmooth_uScriptAct_InterpolateColorLinearSmooth_397.Finished == true )
             {
                Relay_In_407();
             }
@@ -19289,14 +19322,14 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Color Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Color Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_Begin_398()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c84595f2-dcf4-4226-83cb-e31a0b45a90a", "Interpolate Float Linear", Relay_Begin_398)) return; 
+         if (true == CheckDebugBreak("c84595f2-dcf4-4226-83cb-e31a0b45a90a", "Interpolate_Float_Linear__Smooth_", Relay_Begin_398)) return; 
          {
             {
             }
@@ -19312,15 +19345,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Begin(logic_uScriptAct_InterpolateFloatLinear_startValue_398, logic_uScriptAct_InterpolateFloatLinear_endValue_398, logic_uScriptAct_InterpolateFloatLinear_time_398, logic_uScriptAct_InterpolateFloatLinear_loopType_398, logic_uScriptAct_InterpolateFloatLinear_loopDelay_398, logic_uScriptAct_InterpolateFloatLinear_loopCount_398, out logic_uScriptAct_InterpolateFloatLinear_currentValue_398);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_398 = true;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Begin(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_398, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_398, logic_uScriptAct_InterpolateFloatLinearSmooth_time_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_398, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_398, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_398);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_398 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Started;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Started;
+         bool test_1 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Finished;
          
          if ( test_0 == true )
          {
@@ -19341,7 +19376,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19349,7 +19384,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c84595f2-dcf4-4226-83cb-e31a0b45a90a", "Interpolate Float Linear", Relay_Stop_398)) return; 
+         if (true == CheckDebugBreak("c84595f2-dcf4-4226-83cb-e31a0b45a90a", "Interpolate_Float_Linear__Smooth_", Relay_Stop_398)) return; 
          {
             {
             }
@@ -19365,15 +19400,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Stop(logic_uScriptAct_InterpolateFloatLinear_startValue_398, logic_uScriptAct_InterpolateFloatLinear_endValue_398, logic_uScriptAct_InterpolateFloatLinear_time_398, logic_uScriptAct_InterpolateFloatLinear_loopType_398, logic_uScriptAct_InterpolateFloatLinear_loopDelay_398, logic_uScriptAct_InterpolateFloatLinear_loopCount_398, out logic_uScriptAct_InterpolateFloatLinear_currentValue_398);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_398 = true;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Stop(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_398, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_398, logic_uScriptAct_InterpolateFloatLinearSmooth_time_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_398, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_398, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_398);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_398 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Started;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Started;
+         bool test_1 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Finished;
          
          if ( test_0 == true )
          {
@@ -19394,7 +19431,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19402,7 +19439,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c84595f2-dcf4-4226-83cb-e31a0b45a90a", "Interpolate Float Linear", Relay_Resume_398)) return; 
+         if (true == CheckDebugBreak("c84595f2-dcf4-4226-83cb-e31a0b45a90a", "Interpolate_Float_Linear__Smooth_", Relay_Resume_398)) return; 
          {
             {
             }
@@ -19418,15 +19455,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Resume(logic_uScriptAct_InterpolateFloatLinear_startValue_398, logic_uScriptAct_InterpolateFloatLinear_endValue_398, logic_uScriptAct_InterpolateFloatLinear_time_398, logic_uScriptAct_InterpolateFloatLinear_loopType_398, logic_uScriptAct_InterpolateFloatLinear_loopDelay_398, logic_uScriptAct_InterpolateFloatLinear_loopCount_398, out logic_uScriptAct_InterpolateFloatLinear_currentValue_398);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_398 = true;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Resume(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_398, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_398, logic_uScriptAct_InterpolateFloatLinearSmooth_time_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_398, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_398, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_398, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_398);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_398 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Started;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Started;
+         bool test_1 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Finished;
          
          if ( test_0 == true )
          {
@@ -19447,7 +19486,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19470,23 +19509,25 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateFloatLinear_Driven_398 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Driven(out logic_uScriptAct_InterpolateFloatLinear_currentValue_398);
-         if ( true == logic_uScriptAct_InterpolateFloatLinear_Driven_398 )
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_398 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Driven(out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_398);
+         if ( true == logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_398 )
          {
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Started == true )
+            if ( logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Started == true )
             {
                Relay_Begin_399();
             }
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Stopped == true )
+            if ( logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Stopped == true )
             {
                Relay_Stop_399();
             }
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Interpolating == true )
             {
                Relay_Resume_399();
             }
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_398.Finished == true )
+            if ( logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_398.Finished == true )
             {
                Relay_Resume_399();
             }
@@ -19494,14 +19535,14 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_Begin_399()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6390e41d-0450-424d-8be0-7b1a9dc81934", "Interpolate Int Linear", Relay_Begin_399)) return; 
+         if (true == CheckDebugBreak("6390e41d-0450-424d-8be0-7b1a9dc81934", "Interpolate_Int_Linear__Smooth_", Relay_Begin_399)) return; 
          {
             {
             }
@@ -19517,15 +19558,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Begin(logic_uScriptAct_InterpolateIntLinear_startValue_399, logic_uScriptAct_InterpolateIntLinear_endValue_399, logic_uScriptAct_InterpolateIntLinear_time_399, logic_uScriptAct_InterpolateIntLinear_loopType_399, logic_uScriptAct_InterpolateIntLinear_loopDelay_399, logic_uScriptAct_InterpolateIntLinear_loopCount_399, out logic_uScriptAct_InterpolateIntLinear_currentValue_399);
-         logic_uScriptAct_InterpolateIntLinear_Driven_399 = true;
+         logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Begin(logic_uScriptAct_InterpolateIntLinearSmooth_startValue_399, logic_uScriptAct_InterpolateIntLinearSmooth_endValue_399, logic_uScriptAct_InterpolateIntLinearSmooth_time_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopType_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopDelay_399, logic_uScriptAct_InterpolateIntLinearSmooth_smooth_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopCount_399, out logic_uScriptAct_InterpolateIntLinearSmooth_currentValue_399);
+         logic_uScriptAct_InterpolateIntLinearSmooth_Driven_399 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Started;
-         bool test_1 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Started;
+         bool test_1 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Finished;
          
          if ( test_0 == true )
          {
@@ -19546,7 +19589,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Int Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Int Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19554,7 +19597,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6390e41d-0450-424d-8be0-7b1a9dc81934", "Interpolate Int Linear", Relay_Stop_399)) return; 
+         if (true == CheckDebugBreak("6390e41d-0450-424d-8be0-7b1a9dc81934", "Interpolate_Int_Linear__Smooth_", Relay_Stop_399)) return; 
          {
             {
             }
@@ -19570,15 +19613,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Stop(logic_uScriptAct_InterpolateIntLinear_startValue_399, logic_uScriptAct_InterpolateIntLinear_endValue_399, logic_uScriptAct_InterpolateIntLinear_time_399, logic_uScriptAct_InterpolateIntLinear_loopType_399, logic_uScriptAct_InterpolateIntLinear_loopDelay_399, logic_uScriptAct_InterpolateIntLinear_loopCount_399, out logic_uScriptAct_InterpolateIntLinear_currentValue_399);
-         logic_uScriptAct_InterpolateIntLinear_Driven_399 = true;
+         logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Stop(logic_uScriptAct_InterpolateIntLinearSmooth_startValue_399, logic_uScriptAct_InterpolateIntLinearSmooth_endValue_399, logic_uScriptAct_InterpolateIntLinearSmooth_time_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopType_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopDelay_399, logic_uScriptAct_InterpolateIntLinearSmooth_smooth_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopCount_399, out logic_uScriptAct_InterpolateIntLinearSmooth_currentValue_399);
+         logic_uScriptAct_InterpolateIntLinearSmooth_Driven_399 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Started;
-         bool test_1 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Started;
+         bool test_1 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Finished;
          
          if ( test_0 == true )
          {
@@ -19599,7 +19644,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Int Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Int Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19607,7 +19652,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6390e41d-0450-424d-8be0-7b1a9dc81934", "Interpolate Int Linear", Relay_Resume_399)) return; 
+         if (true == CheckDebugBreak("6390e41d-0450-424d-8be0-7b1a9dc81934", "Interpolate_Int_Linear__Smooth_", Relay_Resume_399)) return; 
          {
             {
             }
@@ -19623,15 +19668,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Resume(logic_uScriptAct_InterpolateIntLinear_startValue_399, logic_uScriptAct_InterpolateIntLinear_endValue_399, logic_uScriptAct_InterpolateIntLinear_time_399, logic_uScriptAct_InterpolateIntLinear_loopType_399, logic_uScriptAct_InterpolateIntLinear_loopDelay_399, logic_uScriptAct_InterpolateIntLinear_loopCount_399, out logic_uScriptAct_InterpolateIntLinear_currentValue_399);
-         logic_uScriptAct_InterpolateIntLinear_Driven_399 = true;
+         logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Resume(logic_uScriptAct_InterpolateIntLinearSmooth_startValue_399, logic_uScriptAct_InterpolateIntLinearSmooth_endValue_399, logic_uScriptAct_InterpolateIntLinearSmooth_time_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopType_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopDelay_399, logic_uScriptAct_InterpolateIntLinearSmooth_smooth_399, logic_uScriptAct_InterpolateIntLinearSmooth_loopCount_399, out logic_uScriptAct_InterpolateIntLinearSmooth_currentValue_399);
+         logic_uScriptAct_InterpolateIntLinearSmooth_Driven_399 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Started;
-         bool test_1 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Started;
+         bool test_1 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Finished;
          
          if ( test_0 == true )
          {
@@ -19652,7 +19699,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Int Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Int Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19675,23 +19722,25 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateIntLinear_Driven_399 = logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Driven(out logic_uScriptAct_InterpolateIntLinear_currentValue_399);
-         if ( true == logic_uScriptAct_InterpolateIntLinear_Driven_399 )
+         logic_uScriptAct_InterpolateIntLinearSmooth_Driven_399 = logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Driven(out logic_uScriptAct_InterpolateIntLinearSmooth_currentValue_399);
+         if ( true == logic_uScriptAct_InterpolateIntLinearSmooth_Driven_399 )
          {
-            if ( logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Started == true )
+            if ( logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Started == true )
             {
                Relay_Begin_402();
             }
-            if ( logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Stopped == true )
+            if ( logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Stopped == true )
             {
                Relay_Stop_402();
             }
-            if ( logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Interpolating == true )
             {
                Relay_Resume_402();
             }
-            if ( logic_uScriptAct_InterpolateIntLinear_uScriptAct_InterpolateIntLinear_399.Finished == true )
+            if ( logic_uScriptAct_InterpolateIntLinearSmooth_uScriptAct_InterpolateIntLinearSmooth_399.Finished == true )
             {
                Relay_Resume_402();
             }
@@ -19699,14 +19748,14 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Int Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Int Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_Begin_400()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6b94aeec-f228-4fc1-bf90-ec09e0aabffd", "Interpolate Quaternion Linear", Relay_Begin_400)) return; 
+         if (true == CheckDebugBreak("6b94aeec-f228-4fc1-bf90-ec09e0aabffd", "Interpolate_Quaternion_Linear__Smooth_", Relay_Begin_400)) return; 
          {
             {
             }
@@ -19722,14 +19771,16 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Begin(logic_uScriptAct_InterpolateQuaternionLinear_startValue_400, logic_uScriptAct_InterpolateQuaternionLinear_endValue_400, logic_uScriptAct_InterpolateQuaternionLinear_time_400, logic_uScriptAct_InterpolateQuaternionLinear_loopType_400, logic_uScriptAct_InterpolateQuaternionLinear_loopDelay_400, logic_uScriptAct_InterpolateQuaternionLinear_loopCount_400, out logic_uScriptAct_InterpolateQuaternionLinear_currentValue_400);
-         logic_uScriptAct_InterpolateQuaternionLinear_Driven_400 = true;
+         logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Begin(logic_uScriptAct_InterpolateQuaternionLinearSmooth_startValue_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_endValue_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_time_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopType_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopDelay_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_smooth_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopCount_400, out logic_uScriptAct_InterpolateQuaternionLinearSmooth_currentValue_400);
+         logic_uScriptAct_InterpolateQuaternionLinearSmooth_Driven_400 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Started;
-         bool test_1 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Interpolating;
+         bool test_0 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Started;
+         bool test_1 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Interpolating;
          
          if ( test_0 == true )
          {
@@ -19746,7 +19797,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19754,7 +19805,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6b94aeec-f228-4fc1-bf90-ec09e0aabffd", "Interpolate Quaternion Linear", Relay_Stop_400)) return; 
+         if (true == CheckDebugBreak("6b94aeec-f228-4fc1-bf90-ec09e0aabffd", "Interpolate_Quaternion_Linear__Smooth_", Relay_Stop_400)) return; 
          {
             {
             }
@@ -19770,14 +19821,16 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Stop(logic_uScriptAct_InterpolateQuaternionLinear_startValue_400, logic_uScriptAct_InterpolateQuaternionLinear_endValue_400, logic_uScriptAct_InterpolateQuaternionLinear_time_400, logic_uScriptAct_InterpolateQuaternionLinear_loopType_400, logic_uScriptAct_InterpolateQuaternionLinear_loopDelay_400, logic_uScriptAct_InterpolateQuaternionLinear_loopCount_400, out logic_uScriptAct_InterpolateQuaternionLinear_currentValue_400);
-         logic_uScriptAct_InterpolateQuaternionLinear_Driven_400 = true;
+         logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Stop(logic_uScriptAct_InterpolateQuaternionLinearSmooth_startValue_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_endValue_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_time_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopType_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopDelay_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_smooth_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopCount_400, out logic_uScriptAct_InterpolateQuaternionLinearSmooth_currentValue_400);
+         logic_uScriptAct_InterpolateQuaternionLinearSmooth_Driven_400 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Started;
-         bool test_1 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Interpolating;
+         bool test_0 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Started;
+         bool test_1 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Interpolating;
          
          if ( test_0 == true )
          {
@@ -19794,7 +19847,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19802,7 +19855,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6b94aeec-f228-4fc1-bf90-ec09e0aabffd", "Interpolate Quaternion Linear", Relay_Resume_400)) return; 
+         if (true == CheckDebugBreak("6b94aeec-f228-4fc1-bf90-ec09e0aabffd", "Interpolate_Quaternion_Linear__Smooth_", Relay_Resume_400)) return; 
          {
             {
             }
@@ -19818,14 +19871,16 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Resume(logic_uScriptAct_InterpolateQuaternionLinear_startValue_400, logic_uScriptAct_InterpolateQuaternionLinear_endValue_400, logic_uScriptAct_InterpolateQuaternionLinear_time_400, logic_uScriptAct_InterpolateQuaternionLinear_loopType_400, logic_uScriptAct_InterpolateQuaternionLinear_loopDelay_400, logic_uScriptAct_InterpolateQuaternionLinear_loopCount_400, out logic_uScriptAct_InterpolateQuaternionLinear_currentValue_400);
-         logic_uScriptAct_InterpolateQuaternionLinear_Driven_400 = true;
+         logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Resume(logic_uScriptAct_InterpolateQuaternionLinearSmooth_startValue_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_endValue_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_time_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopType_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopDelay_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_smooth_400, logic_uScriptAct_InterpolateQuaternionLinearSmooth_loopCount_400, out logic_uScriptAct_InterpolateQuaternionLinearSmooth_currentValue_400);
+         logic_uScriptAct_InterpolateQuaternionLinearSmooth_Driven_400 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Started;
-         bool test_1 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Interpolating;
+         bool test_0 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Started;
+         bool test_1 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Interpolating;
          
          if ( test_0 == true )
          {
@@ -19842,7 +19897,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19865,19 +19920,21 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateQuaternionLinear_Driven_400 = logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Driven(out logic_uScriptAct_InterpolateQuaternionLinear_currentValue_400);
-         if ( true == logic_uScriptAct_InterpolateQuaternionLinear_Driven_400 )
+         logic_uScriptAct_InterpolateQuaternionLinearSmooth_Driven_400 = logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Driven(out logic_uScriptAct_InterpolateQuaternionLinearSmooth_currentValue_400);
+         if ( true == logic_uScriptAct_InterpolateQuaternionLinearSmooth_Driven_400 )
          {
-            if ( logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Started == true )
+            if ( logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Started == true )
             {
                Relay_Begin_398();
             }
-            if ( logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Stopped == true )
+            if ( logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Stopped == true )
             {
                Relay_Stop_398();
             }
-            if ( logic_uScriptAct_InterpolateQuaternionLinear_uScriptAct_InterpolateQuaternionLinear_400.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateQuaternionLinearSmooth_uScriptAct_InterpolateQuaternionLinearSmooth_400.Interpolating == true )
             {
                Relay_Resume_398();
             }
@@ -19885,14 +19942,14 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_Begin_401()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ceff65c9-4ce2-40d0-90d4-2b3bb7cbd6d0", "Interpolate Quaternion Slerp", Relay_Begin_401)) return; 
+         if (true == CheckDebugBreak("ceff65c9-4ce2-40d0-90d4-2b3bb7cbd6d0", "Interpolate_Quaternion_Slerp__Smooth_", Relay_Begin_401)) return; 
          {
             {
             }
@@ -19908,15 +19965,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Begin(logic_uScriptAct_InterpolateQuaternionSlerp_startValue_401, logic_uScriptAct_InterpolateQuaternionSlerp_endValue_401, logic_uScriptAct_InterpolateQuaternionSlerp_time_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopType_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopDelay_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopCount_401, out logic_uScriptAct_InterpolateQuaternionSlerp_currentValue_401);
-         logic_uScriptAct_InterpolateQuaternionSlerp_Driven_401 = true;
+         logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Begin(logic_uScriptAct_InterpolateQuaternionSlerpSmooth_startValue_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_endValue_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_time_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopType_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopDelay_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_smooth_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopCount_401, out logic_uScriptAct_InterpolateQuaternionSlerpSmooth_currentValue_401);
+         logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Driven_401 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Started;
-         bool test_1 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Started;
+         bool test_1 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Finished;
          
          if ( test_0 == true )
          {
@@ -19937,7 +19996,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Slerp.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Slerp (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19945,7 +20004,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ceff65c9-4ce2-40d0-90d4-2b3bb7cbd6d0", "Interpolate Quaternion Slerp", Relay_Stop_401)) return; 
+         if (true == CheckDebugBreak("ceff65c9-4ce2-40d0-90d4-2b3bb7cbd6d0", "Interpolate_Quaternion_Slerp__Smooth_", Relay_Stop_401)) return; 
          {
             {
             }
@@ -19961,15 +20020,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Stop(logic_uScriptAct_InterpolateQuaternionSlerp_startValue_401, logic_uScriptAct_InterpolateQuaternionSlerp_endValue_401, logic_uScriptAct_InterpolateQuaternionSlerp_time_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopType_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopDelay_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopCount_401, out logic_uScriptAct_InterpolateQuaternionSlerp_currentValue_401);
-         logic_uScriptAct_InterpolateQuaternionSlerp_Driven_401 = true;
+         logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Stop(logic_uScriptAct_InterpolateQuaternionSlerpSmooth_startValue_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_endValue_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_time_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopType_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopDelay_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_smooth_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopCount_401, out logic_uScriptAct_InterpolateQuaternionSlerpSmooth_currentValue_401);
+         logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Driven_401 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Started;
-         bool test_1 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Started;
+         bool test_1 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Finished;
          
          if ( test_0 == true )
          {
@@ -19990,7 +20051,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Slerp.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Slerp (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -19998,7 +20059,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ceff65c9-4ce2-40d0-90d4-2b3bb7cbd6d0", "Interpolate Quaternion Slerp", Relay_Resume_401)) return; 
+         if (true == CheckDebugBreak("ceff65c9-4ce2-40d0-90d4-2b3bb7cbd6d0", "Interpolate_Quaternion_Slerp__Smooth_", Relay_Resume_401)) return; 
          {
             {
             }
@@ -20014,15 +20075,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Resume(logic_uScriptAct_InterpolateQuaternionSlerp_startValue_401, logic_uScriptAct_InterpolateQuaternionSlerp_endValue_401, logic_uScriptAct_InterpolateQuaternionSlerp_time_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopType_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopDelay_401, logic_uScriptAct_InterpolateQuaternionSlerp_loopCount_401, out logic_uScriptAct_InterpolateQuaternionSlerp_currentValue_401);
-         logic_uScriptAct_InterpolateQuaternionSlerp_Driven_401 = true;
+         logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Resume(logic_uScriptAct_InterpolateQuaternionSlerpSmooth_startValue_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_endValue_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_time_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopType_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopDelay_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_smooth_401, logic_uScriptAct_InterpolateQuaternionSlerpSmooth_loopCount_401, out logic_uScriptAct_InterpolateQuaternionSlerpSmooth_currentValue_401);
+         logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Driven_401 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Started;
-         bool test_1 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Started;
+         bool test_1 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Finished;
          
          if ( test_0 == true )
          {
@@ -20043,7 +20106,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Slerp.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Slerp (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20066,23 +20129,25 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateQuaternionSlerp_Driven_401 = logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Driven(out logic_uScriptAct_InterpolateQuaternionSlerp_currentValue_401);
-         if ( true == logic_uScriptAct_InterpolateQuaternionSlerp_Driven_401 )
+         logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Driven_401 = logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Driven(out logic_uScriptAct_InterpolateQuaternionSlerpSmooth_currentValue_401);
+         if ( true == logic_uScriptAct_InterpolateQuaternionSlerpSmooth_Driven_401 )
          {
-            if ( logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Started == true )
+            if ( logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Started == true )
             {
                Relay_Begin_403();
             }
-            if ( logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Stopped == true )
+            if ( logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Stopped == true )
             {
                Relay_Stop_403();
             }
-            if ( logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Interpolating == true )
             {
                Relay_Resume_403();
             }
-            if ( logic_uScriptAct_InterpolateQuaternionSlerp_uScriptAct_InterpolateQuaternionSlerp_401.Finished == true )
+            if ( logic_uScriptAct_InterpolateQuaternionSlerpSmooth_uScriptAct_InterpolateQuaternionSlerpSmooth_401.Finished == true )
             {
                Relay_Resume_403();
             }
@@ -20090,14 +20155,14 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Slerp.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Quaternion Slerp (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_Begin_402()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("342e2b98-9edf-4e16-9fee-39a1c1f42e06", "Interpolate Rect Linear", Relay_Begin_402)) return; 
+         if (true == CheckDebugBreak("342e2b98-9edf-4e16-9fee-39a1c1f42e06", "Interpolate_Rect_Linear__Smooth_", Relay_Begin_402)) return; 
          {
             {
             }
@@ -20113,15 +20178,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Begin(logic_uScriptAct_InterpolateRectLinear_startValue_402, logic_uScriptAct_InterpolateRectLinear_endValue_402, logic_uScriptAct_InterpolateRectLinear_time_402, logic_uScriptAct_InterpolateRectLinear_loopType_402, logic_uScriptAct_InterpolateRectLinear_loopDelay_402, logic_uScriptAct_InterpolateRectLinear_loopCount_402, out logic_uScriptAct_InterpolateRectLinear_currentValue_402);
-         logic_uScriptAct_InterpolateRectLinear_Driven_402 = true;
+         logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Begin(logic_uScriptAct_InterpolateRectLinearSmooth_startValue_402, logic_uScriptAct_InterpolateRectLinearSmooth_endValue_402, logic_uScriptAct_InterpolateRectLinearSmooth_time_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopType_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopDelay_402, logic_uScriptAct_InterpolateRectLinearSmooth_smooth_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopCount_402, out logic_uScriptAct_InterpolateRectLinearSmooth_currentValue_402);
+         logic_uScriptAct_InterpolateRectLinearSmooth_Driven_402 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Started;
-         bool test_1 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Started;
+         bool test_1 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Finished;
          
          if ( test_0 == true )
          {
@@ -20142,7 +20209,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Rect Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Rect Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20150,7 +20217,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("342e2b98-9edf-4e16-9fee-39a1c1f42e06", "Interpolate Rect Linear", Relay_Stop_402)) return; 
+         if (true == CheckDebugBreak("342e2b98-9edf-4e16-9fee-39a1c1f42e06", "Interpolate_Rect_Linear__Smooth_", Relay_Stop_402)) return; 
          {
             {
             }
@@ -20166,15 +20233,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Stop(logic_uScriptAct_InterpolateRectLinear_startValue_402, logic_uScriptAct_InterpolateRectLinear_endValue_402, logic_uScriptAct_InterpolateRectLinear_time_402, logic_uScriptAct_InterpolateRectLinear_loopType_402, logic_uScriptAct_InterpolateRectLinear_loopDelay_402, logic_uScriptAct_InterpolateRectLinear_loopCount_402, out logic_uScriptAct_InterpolateRectLinear_currentValue_402);
-         logic_uScriptAct_InterpolateRectLinear_Driven_402 = true;
+         logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Stop(logic_uScriptAct_InterpolateRectLinearSmooth_startValue_402, logic_uScriptAct_InterpolateRectLinearSmooth_endValue_402, logic_uScriptAct_InterpolateRectLinearSmooth_time_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopType_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopDelay_402, logic_uScriptAct_InterpolateRectLinearSmooth_smooth_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopCount_402, out logic_uScriptAct_InterpolateRectLinearSmooth_currentValue_402);
+         logic_uScriptAct_InterpolateRectLinearSmooth_Driven_402 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Started;
-         bool test_1 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Started;
+         bool test_1 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Finished;
          
          if ( test_0 == true )
          {
@@ -20195,7 +20264,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Rect Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Rect Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20203,7 +20272,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("342e2b98-9edf-4e16-9fee-39a1c1f42e06", "Interpolate Rect Linear", Relay_Resume_402)) return; 
+         if (true == CheckDebugBreak("342e2b98-9edf-4e16-9fee-39a1c1f42e06", "Interpolate_Rect_Linear__Smooth_", Relay_Resume_402)) return; 
          {
             {
             }
@@ -20219,15 +20288,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Resume(logic_uScriptAct_InterpolateRectLinear_startValue_402, logic_uScriptAct_InterpolateRectLinear_endValue_402, logic_uScriptAct_InterpolateRectLinear_time_402, logic_uScriptAct_InterpolateRectLinear_loopType_402, logic_uScriptAct_InterpolateRectLinear_loopDelay_402, logic_uScriptAct_InterpolateRectLinear_loopCount_402, out logic_uScriptAct_InterpolateRectLinear_currentValue_402);
-         logic_uScriptAct_InterpolateRectLinear_Driven_402 = true;
+         logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Resume(logic_uScriptAct_InterpolateRectLinearSmooth_startValue_402, logic_uScriptAct_InterpolateRectLinearSmooth_endValue_402, logic_uScriptAct_InterpolateRectLinearSmooth_time_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopType_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopDelay_402, logic_uScriptAct_InterpolateRectLinearSmooth_smooth_402, logic_uScriptAct_InterpolateRectLinearSmooth_loopCount_402, out logic_uScriptAct_InterpolateRectLinearSmooth_currentValue_402);
+         logic_uScriptAct_InterpolateRectLinearSmooth_Driven_402 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Started;
-         bool test_1 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Started;
+         bool test_1 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Finished;
          
          if ( test_0 == true )
          {
@@ -20248,7 +20319,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Rect Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Rect Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20271,23 +20342,25 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateRectLinear_Driven_402 = logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Driven(out logic_uScriptAct_InterpolateRectLinear_currentValue_402);
-         if ( true == logic_uScriptAct_InterpolateRectLinear_Driven_402 )
+         logic_uScriptAct_InterpolateRectLinearSmooth_Driven_402 = logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Driven(out logic_uScriptAct_InterpolateRectLinearSmooth_currentValue_402);
+         if ( true == logic_uScriptAct_InterpolateRectLinearSmooth_Driven_402 )
          {
-            if ( logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Started == true )
+            if ( logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Started == true )
             {
                Relay_Begin_401();
             }
-            if ( logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Stopped == true )
+            if ( logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Stopped == true )
             {
                Relay_Stop_401();
             }
-            if ( logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Interpolating == true )
             {
                Relay_Resume_401();
             }
-            if ( logic_uScriptAct_InterpolateRectLinear_uScriptAct_InterpolateRectLinear_402.Finished == true )
+            if ( logic_uScriptAct_InterpolateRectLinearSmooth_uScriptAct_InterpolateRectLinearSmooth_402.Finished == true )
             {
                Relay_Resume_401();
             }
@@ -20295,14 +20368,14 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Rect Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Rect Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_Begin_403()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8319a720-f2fe-42a3-9d3b-73ba81f44a97", "Interpolate Vector2 Linear", Relay_Begin_403)) return; 
+         if (true == CheckDebugBreak("8319a720-f2fe-42a3-9d3b-73ba81f44a97", "Interpolate_Vector2_Linear__Smooth_", Relay_Begin_403)) return; 
          {
             {
             }
@@ -20318,15 +20391,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Begin(logic_uScriptAct_InterpolateVector2Linear_startValue_403, logic_uScriptAct_InterpolateVector2Linear_endValue_403, logic_uScriptAct_InterpolateVector2Linear_time_403, logic_uScriptAct_InterpolateVector2Linear_loopType_403, logic_uScriptAct_InterpolateVector2Linear_loopDelay_403, logic_uScriptAct_InterpolateVector2Linear_loopCount_403, out logic_uScriptAct_InterpolateVector2Linear_currentValue_403);
-         logic_uScriptAct_InterpolateVector2Linear_Driven_403 = true;
+         logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Begin(logic_uScriptAct_InterpolateVector2LinearSmooth_startValue_403, logic_uScriptAct_InterpolateVector2LinearSmooth_endValue_403, logic_uScriptAct_InterpolateVector2LinearSmooth_time_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopType_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopDelay_403, logic_uScriptAct_InterpolateVector2LinearSmooth_smooth_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopCount_403, out logic_uScriptAct_InterpolateVector2LinearSmooth_currentValue_403);
+         logic_uScriptAct_InterpolateVector2LinearSmooth_Driven_403 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Finished;
          
          if ( test_0 == true )
          {
@@ -20347,7 +20422,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector2 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector2 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20355,7 +20430,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8319a720-f2fe-42a3-9d3b-73ba81f44a97", "Interpolate Vector2 Linear", Relay_Stop_403)) return; 
+         if (true == CheckDebugBreak("8319a720-f2fe-42a3-9d3b-73ba81f44a97", "Interpolate_Vector2_Linear__Smooth_", Relay_Stop_403)) return; 
          {
             {
             }
@@ -20371,15 +20446,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Stop(logic_uScriptAct_InterpolateVector2Linear_startValue_403, logic_uScriptAct_InterpolateVector2Linear_endValue_403, logic_uScriptAct_InterpolateVector2Linear_time_403, logic_uScriptAct_InterpolateVector2Linear_loopType_403, logic_uScriptAct_InterpolateVector2Linear_loopDelay_403, logic_uScriptAct_InterpolateVector2Linear_loopCount_403, out logic_uScriptAct_InterpolateVector2Linear_currentValue_403);
-         logic_uScriptAct_InterpolateVector2Linear_Driven_403 = true;
+         logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Stop(logic_uScriptAct_InterpolateVector2LinearSmooth_startValue_403, logic_uScriptAct_InterpolateVector2LinearSmooth_endValue_403, logic_uScriptAct_InterpolateVector2LinearSmooth_time_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopType_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopDelay_403, logic_uScriptAct_InterpolateVector2LinearSmooth_smooth_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopCount_403, out logic_uScriptAct_InterpolateVector2LinearSmooth_currentValue_403);
+         logic_uScriptAct_InterpolateVector2LinearSmooth_Driven_403 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Finished;
          
          if ( test_0 == true )
          {
@@ -20400,7 +20477,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector2 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector2 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20408,7 +20485,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8319a720-f2fe-42a3-9d3b-73ba81f44a97", "Interpolate Vector2 Linear", Relay_Resume_403)) return; 
+         if (true == CheckDebugBreak("8319a720-f2fe-42a3-9d3b-73ba81f44a97", "Interpolate_Vector2_Linear__Smooth_", Relay_Resume_403)) return; 
          {
             {
             }
@@ -20424,15 +20501,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Resume(logic_uScriptAct_InterpolateVector2Linear_startValue_403, logic_uScriptAct_InterpolateVector2Linear_endValue_403, logic_uScriptAct_InterpolateVector2Linear_time_403, logic_uScriptAct_InterpolateVector2Linear_loopType_403, logic_uScriptAct_InterpolateVector2Linear_loopDelay_403, logic_uScriptAct_InterpolateVector2Linear_loopCount_403, out logic_uScriptAct_InterpolateVector2Linear_currentValue_403);
-         logic_uScriptAct_InterpolateVector2Linear_Driven_403 = true;
+         logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Resume(logic_uScriptAct_InterpolateVector2LinearSmooth_startValue_403, logic_uScriptAct_InterpolateVector2LinearSmooth_endValue_403, logic_uScriptAct_InterpolateVector2LinearSmooth_time_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopType_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopDelay_403, logic_uScriptAct_InterpolateVector2LinearSmooth_smooth_403, logic_uScriptAct_InterpolateVector2LinearSmooth_loopCount_403, out logic_uScriptAct_InterpolateVector2LinearSmooth_currentValue_403);
+         logic_uScriptAct_InterpolateVector2LinearSmooth_Driven_403 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Finished;
          
          if ( test_0 == true )
          {
@@ -20453,7 +20532,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector2 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector2 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20476,23 +20555,25 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector2Linear_Driven_403 = logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Driven(out logic_uScriptAct_InterpolateVector2Linear_currentValue_403);
-         if ( true == logic_uScriptAct_InterpolateVector2Linear_Driven_403 )
+         logic_uScriptAct_InterpolateVector2LinearSmooth_Driven_403 = logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Driven(out logic_uScriptAct_InterpolateVector2LinearSmooth_currentValue_403);
+         if ( true == logic_uScriptAct_InterpolateVector2LinearSmooth_Driven_403 )
          {
-            if ( logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Started == true )
+            if ( logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Started == true )
             {
                Relay_Begin_405();
             }
-            if ( logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Stopped == true )
+            if ( logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Stopped == true )
             {
                Relay_Stop_405();
             }
-            if ( logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Interpolating == true )
             {
                Relay_Resume_405();
             }
-            if ( logic_uScriptAct_InterpolateVector2Linear_uScriptAct_InterpolateVector2Linear_403.Finished == true )
+            if ( logic_uScriptAct_InterpolateVector2LinearSmooth_uScriptAct_InterpolateVector2LinearSmooth_403.Finished == true )
             {
                Relay_Resume_405();
             }
@@ -20500,14 +20581,14 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector2 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector2 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_Begin_404()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("87c2b392-0e7f-40a5-bbaa-6ecf2fdceb21", "Interpolate Vector3 Linear", Relay_Begin_404)) return; 
+         if (true == CheckDebugBreak("87c2b392-0e7f-40a5-bbaa-6ecf2fdceb21", "Interpolate_Vector3_Linear__Smooth_", Relay_Begin_404)) return; 
          {
             {
             }
@@ -20523,15 +20604,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Begin(logic_uScriptAct_InterpolateVector3Linear_startValue_404, logic_uScriptAct_InterpolateVector3Linear_endValue_404, logic_uScriptAct_InterpolateVector3Linear_time_404, logic_uScriptAct_InterpolateVector3Linear_loopType_404, logic_uScriptAct_InterpolateVector3Linear_loopDelay_404, logic_uScriptAct_InterpolateVector3Linear_loopCount_404, out logic_uScriptAct_InterpolateVector3Linear_currentValue_404);
-         logic_uScriptAct_InterpolateVector3Linear_Driven_404 = true;
+         logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Begin(logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_404, logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_404, logic_uScriptAct_InterpolateVector3LinearSmooth_time_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopType_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopDelay_404, logic_uScriptAct_InterpolateVector3LinearSmooth_smooth_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopCount_404, out logic_uScriptAct_InterpolateVector3LinearSmooth_currentValue_404);
+         logic_uScriptAct_InterpolateVector3LinearSmooth_Driven_404 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Finished;
          
          if ( test_0 == true )
          {
@@ -20552,7 +20635,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector3 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector3 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20560,7 +20643,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("87c2b392-0e7f-40a5-bbaa-6ecf2fdceb21", "Interpolate Vector3 Linear", Relay_Stop_404)) return; 
+         if (true == CheckDebugBreak("87c2b392-0e7f-40a5-bbaa-6ecf2fdceb21", "Interpolate_Vector3_Linear__Smooth_", Relay_Stop_404)) return; 
          {
             {
             }
@@ -20576,15 +20659,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Stop(logic_uScriptAct_InterpolateVector3Linear_startValue_404, logic_uScriptAct_InterpolateVector3Linear_endValue_404, logic_uScriptAct_InterpolateVector3Linear_time_404, logic_uScriptAct_InterpolateVector3Linear_loopType_404, logic_uScriptAct_InterpolateVector3Linear_loopDelay_404, logic_uScriptAct_InterpolateVector3Linear_loopCount_404, out logic_uScriptAct_InterpolateVector3Linear_currentValue_404);
-         logic_uScriptAct_InterpolateVector3Linear_Driven_404 = true;
+         logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Stop(logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_404, logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_404, logic_uScriptAct_InterpolateVector3LinearSmooth_time_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopType_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopDelay_404, logic_uScriptAct_InterpolateVector3LinearSmooth_smooth_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopCount_404, out logic_uScriptAct_InterpolateVector3LinearSmooth_currentValue_404);
+         logic_uScriptAct_InterpolateVector3LinearSmooth_Driven_404 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Finished;
          
          if ( test_0 == true )
          {
@@ -20605,7 +20690,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector3 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector3 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20613,7 +20698,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("87c2b392-0e7f-40a5-bbaa-6ecf2fdceb21", "Interpolate Vector3 Linear", Relay_Resume_404)) return; 
+         if (true == CheckDebugBreak("87c2b392-0e7f-40a5-bbaa-6ecf2fdceb21", "Interpolate_Vector3_Linear__Smooth_", Relay_Resume_404)) return; 
          {
             {
             }
@@ -20629,15 +20714,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Resume(logic_uScriptAct_InterpolateVector3Linear_startValue_404, logic_uScriptAct_InterpolateVector3Linear_endValue_404, logic_uScriptAct_InterpolateVector3Linear_time_404, logic_uScriptAct_InterpolateVector3Linear_loopType_404, logic_uScriptAct_InterpolateVector3Linear_loopDelay_404, logic_uScriptAct_InterpolateVector3Linear_loopCount_404, out logic_uScriptAct_InterpolateVector3Linear_currentValue_404);
-         logic_uScriptAct_InterpolateVector3Linear_Driven_404 = true;
+         logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Resume(logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_404, logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_404, logic_uScriptAct_InterpolateVector3LinearSmooth_time_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopType_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopDelay_404, logic_uScriptAct_InterpolateVector3LinearSmooth_smooth_404, logic_uScriptAct_InterpolateVector3LinearSmooth_loopCount_404, out logic_uScriptAct_InterpolateVector3LinearSmooth_currentValue_404);
+         logic_uScriptAct_InterpolateVector3LinearSmooth_Driven_404 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Finished;
          
          if ( test_0 == true )
          {
@@ -20658,7 +20745,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector3 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector3 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20681,23 +20768,25 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector3Linear_Driven_404 = logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Driven(out logic_uScriptAct_InterpolateVector3Linear_currentValue_404);
-         if ( true == logic_uScriptAct_InterpolateVector3Linear_Driven_404 )
+         logic_uScriptAct_InterpolateVector3LinearSmooth_Driven_404 = logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Driven(out logic_uScriptAct_InterpolateVector3LinearSmooth_currentValue_404);
+         if ( true == logic_uScriptAct_InterpolateVector3LinearSmooth_Driven_404 )
          {
-            if ( logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Started == true )
+            if ( logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Started == true )
             {
                Relay_In_406();
             }
-            if ( logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Stopped == true )
+            if ( logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Stopped == true )
             {
                Relay_In_406();
             }
-            if ( logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Interpolating == true )
             {
                Relay_In_406();
             }
-            if ( logic_uScriptAct_InterpolateVector3Linear_uScriptAct_InterpolateVector3Linear_404.Finished == true )
+            if ( logic_uScriptAct_InterpolateVector3LinearSmooth_uScriptAct_InterpolateVector3LinearSmooth_404.Finished == true )
             {
                Relay_In_406();
             }
@@ -20705,14 +20794,14 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector3 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector3 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_Begin_405()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d9083417-4522-4927-9ecc-8235767e311e", "Interpolate Vector4 Linear", Relay_Begin_405)) return; 
+         if (true == CheckDebugBreak("d9083417-4522-4927-9ecc-8235767e311e", "Interpolate_Vector4_Linear__Smooth_", Relay_Begin_405)) return; 
          {
             {
             }
@@ -20728,15 +20817,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Begin(logic_uScriptAct_InterpolateVector4Linear_startValue_405, logic_uScriptAct_InterpolateVector4Linear_endValue_405, logic_uScriptAct_InterpolateVector4Linear_time_405, logic_uScriptAct_InterpolateVector4Linear_loopType_405, logic_uScriptAct_InterpolateVector4Linear_loopDelay_405, logic_uScriptAct_InterpolateVector4Linear_loopCount_405, out logic_uScriptAct_InterpolateVector4Linear_currentValue_405);
-         logic_uScriptAct_InterpolateVector4Linear_Driven_405 = true;
+         logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Begin(logic_uScriptAct_InterpolateVector4LinearSmooth_startValue_405, logic_uScriptAct_InterpolateVector4LinearSmooth_endValue_405, logic_uScriptAct_InterpolateVector4LinearSmooth_time_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopType_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopDelay_405, logic_uScriptAct_InterpolateVector4LinearSmooth_smooth_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopCount_405, out logic_uScriptAct_InterpolateVector4LinearSmooth_currentValue_405);
+         logic_uScriptAct_InterpolateVector4LinearSmooth_Driven_405 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Finished;
          
          if ( test_0 == true )
          {
@@ -20757,7 +20848,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector4 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector4 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20765,7 +20856,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d9083417-4522-4927-9ecc-8235767e311e", "Interpolate Vector4 Linear", Relay_Stop_405)) return; 
+         if (true == CheckDebugBreak("d9083417-4522-4927-9ecc-8235767e311e", "Interpolate_Vector4_Linear__Smooth_", Relay_Stop_405)) return; 
          {
             {
             }
@@ -20781,15 +20872,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Stop(logic_uScriptAct_InterpolateVector4Linear_startValue_405, logic_uScriptAct_InterpolateVector4Linear_endValue_405, logic_uScriptAct_InterpolateVector4Linear_time_405, logic_uScriptAct_InterpolateVector4Linear_loopType_405, logic_uScriptAct_InterpolateVector4Linear_loopDelay_405, logic_uScriptAct_InterpolateVector4Linear_loopCount_405, out logic_uScriptAct_InterpolateVector4Linear_currentValue_405);
-         logic_uScriptAct_InterpolateVector4Linear_Driven_405 = true;
+         logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Stop(logic_uScriptAct_InterpolateVector4LinearSmooth_startValue_405, logic_uScriptAct_InterpolateVector4LinearSmooth_endValue_405, logic_uScriptAct_InterpolateVector4LinearSmooth_time_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopType_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopDelay_405, logic_uScriptAct_InterpolateVector4LinearSmooth_smooth_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopCount_405, out logic_uScriptAct_InterpolateVector4LinearSmooth_currentValue_405);
+         logic_uScriptAct_InterpolateVector4LinearSmooth_Driven_405 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Finished;
          
          if ( test_0 == true )
          {
@@ -20810,7 +20903,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector4 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector4 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20818,7 +20911,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d9083417-4522-4927-9ecc-8235767e311e", "Interpolate Vector4 Linear", Relay_Resume_405)) return; 
+         if (true == CheckDebugBreak("d9083417-4522-4927-9ecc-8235767e311e", "Interpolate_Vector4_Linear__Smooth_", Relay_Resume_405)) return; 
          {
             {
             }
@@ -20834,15 +20927,17 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Resume(logic_uScriptAct_InterpolateVector4Linear_startValue_405, logic_uScriptAct_InterpolateVector4Linear_endValue_405, logic_uScriptAct_InterpolateVector4Linear_time_405, logic_uScriptAct_InterpolateVector4Linear_loopType_405, logic_uScriptAct_InterpolateVector4Linear_loopDelay_405, logic_uScriptAct_InterpolateVector4Linear_loopCount_405, out logic_uScriptAct_InterpolateVector4Linear_currentValue_405);
-         logic_uScriptAct_InterpolateVector4Linear_Driven_405 = true;
+         logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Resume(logic_uScriptAct_InterpolateVector4LinearSmooth_startValue_405, logic_uScriptAct_InterpolateVector4LinearSmooth_endValue_405, logic_uScriptAct_InterpolateVector4LinearSmooth_time_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopType_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopDelay_405, logic_uScriptAct_InterpolateVector4LinearSmooth_smooth_405, logic_uScriptAct_InterpolateVector4LinearSmooth_loopCount_405, out logic_uScriptAct_InterpolateVector4LinearSmooth_currentValue_405);
+         logic_uScriptAct_InterpolateVector4LinearSmooth_Driven_405 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Started;
-         bool test_1 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Stopped;
-         bool test_2 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Interpolating;
-         bool test_3 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Started;
+         bool test_1 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Stopped;
+         bool test_2 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Interpolating;
+         bool test_3 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Finished;
          
          if ( test_0 == true )
          {
@@ -20863,7 +20958,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector4 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector4 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -20886,23 +20981,25 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateVector4Linear_Driven_405 = logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Driven(out logic_uScriptAct_InterpolateVector4Linear_currentValue_405);
-         if ( true == logic_uScriptAct_InterpolateVector4Linear_Driven_405 )
+         logic_uScriptAct_InterpolateVector4LinearSmooth_Driven_405 = logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Driven(out logic_uScriptAct_InterpolateVector4LinearSmooth_currentValue_405);
+         if ( true == logic_uScriptAct_InterpolateVector4LinearSmooth_Driven_405 )
          {
-            if ( logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Started == true )
+            if ( logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Started == true )
             {
                Relay_Begin_404();
             }
-            if ( logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Stopped == true )
+            if ( logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Stopped == true )
             {
                Relay_Stop_404();
             }
-            if ( logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Interpolating == true )
             {
                Relay_Resume_404();
             }
-            if ( logic_uScriptAct_InterpolateVector4Linear_uScriptAct_InterpolateVector4Linear_405.Finished == true )
+            if ( logic_uScriptAct_InterpolateVector4LinearSmooth_uScriptAct_InterpolateVector4LinearSmooth_405.Finished == true )
             {
                Relay_Resume_404();
             }
@@ -20910,7 +21007,7 @@ public class CodeGenTest : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector4 Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Interpolate Vector4 Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_In_406()
@@ -20965,7 +21062,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("472d2245-9e95-4c1c-9ad0-65dbc046d780", "Input Events Filter", Relay_In_409)) return; 
+         if (true == CheckDebugBreak("472d2245-9e95-4c1c-9ad0-65dbc046d780", "Input_Events_Filter", Relay_In_409)) return; 
          {
             {
                logic_uScriptAct_OnInputEventFilter_KeyCode_409 = local_408_UnityEngine_KeyCode;
@@ -20995,7 +21092,7 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_KeyEvent_410()
    {
-      if (true == CheckDebugBreak("1eaf03ab-e292-4b7b-ab26-6d182ccf555f", "Input Events", Relay_KeyEvent_410)) return; 
+      if (true == CheckDebugBreak("1eaf03ab-e292-4b7b-ab26-6d182ccf555f", "Input_Events", Relay_KeyEvent_410)) return; 
       Relay_In_409();
    }
    
@@ -21003,7 +21100,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab334fe1-a4f1-4228-b209-f6a1a51ba05c", "Add Float", Relay_In_411)) return; 
+         if (true == CheckDebugBreak("ab334fe1-a4f1-4228-b209-f6a1a51ba05c", "Add_Float", Relay_In_411)) return; 
          {
             {
             }
@@ -21014,10 +21111,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddFloat_uScriptAct_AddFloat_411.In(logic_uScriptAct_AddFloat_A_411, logic_uScriptAct_AddFloat_B_411, out logic_uScriptAct_AddFloat_FloatResult_411, out logic_uScriptAct_AddFloat_IntResult_411);
+         logic_uScriptAct_AddFloat_v2_uScriptAct_AddFloat_v2_411.In(logic_uScriptAct_AddFloat_v2_A_411, logic_uScriptAct_AddFloat_v2_B_411, out logic_uScriptAct_AddFloat_v2_FloatResult_411, out logic_uScriptAct_AddFloat_v2_IntResult_411);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddFloat_uScriptAct_AddFloat_411.Out;
+         bool test_0 = logic_uScriptAct_AddFloat_v2_uScriptAct_AddFloat_v2_411.Out;
          
          if ( test_0 == true )
          {
@@ -21034,7 +21131,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8c523ca2-b313-4ef0-87ec-58d65755b685", "Add Int", Relay_In_412)) return; 
+         if (true == CheckDebugBreak("8c523ca2-b313-4ef0-87ec-58d65755b685", "Add_Int", Relay_In_412)) return; 
          {
             {
             }
@@ -21045,10 +21142,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_412.In(logic_uScriptAct_AddInt_A_412, logic_uScriptAct_AddInt_B_412, out logic_uScriptAct_AddInt_IntResult_412, out logic_uScriptAct_AddInt_FloatResult_412);
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_412.In(logic_uScriptAct_AddInt_v2_A_412, logic_uScriptAct_AddInt_v2_B_412, out logic_uScriptAct_AddInt_v2_IntResult_412, out logic_uScriptAct_AddInt_v2_FloatResult_412);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddInt_uScriptAct_AddInt_412.Out;
+         bool test_0 = logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_412.Out;
          
          if ( test_0 == true )
          {
@@ -21065,7 +21162,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("534662cb-a4d5-4be3-8d2e-ec687f317cb3", "Add Rect", Relay_In_413)) return; 
+         if (true == CheckDebugBreak("534662cb-a4d5-4be3-8d2e-ec687f317cb3", "Add_Rect", Relay_In_413)) return; 
          {
             {
             }
@@ -21074,10 +21171,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddRect_uScriptAct_AddRect_413.In(logic_uScriptAct_AddRect_A_413, logic_uScriptAct_AddRect_B_413, out logic_uScriptAct_AddRect_Result_413);
+         logic_uScriptAct_AddRect_v2_uScriptAct_AddRect_v2_413.In(logic_uScriptAct_AddRect_v2_A_413, logic_uScriptAct_AddRect_v2_B_413, out logic_uScriptAct_AddRect_v2_Result_413);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddRect_uScriptAct_AddRect_413.Out;
+         bool test_0 = logic_uScriptAct_AddRect_v2_uScriptAct_AddRect_v2_413.Out;
          
          if ( test_0 == true )
          {
@@ -21094,7 +21191,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f44f636a-fa7d-4e8b-a9fe-ee36dde65d3c", "Add Vector3", Relay_In_414)) return; 
+         if (true == CheckDebugBreak("f44f636a-fa7d-4e8b-a9fe-ee36dde65d3c", "Add_Vector3", Relay_In_414)) return; 
          {
             {
             }
@@ -21103,10 +21200,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_414.In(logic_uScriptAct_AddVector3_A_414, logic_uScriptAct_AddVector3_B_414, out logic_uScriptAct_AddVector3_Result_414);
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_414.In(logic_uScriptAct_AddVector3_v2_A_414, logic_uScriptAct_AddVector3_v2_B_414, out logic_uScriptAct_AddVector3_v2_Result_414);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_414.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_414.Out;
          
          if ( test_0 == true )
          {
@@ -21123,7 +21220,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7aa5bb4d-37bc-4875-b1a6-892244474c7e", "Add Vector4", Relay_In_415)) return; 
+         if (true == CheckDebugBreak("7aa5bb4d-37bc-4875-b1a6-892244474c7e", "Add_Vector4", Relay_In_415)) return; 
          {
             {
             }
@@ -21132,10 +21229,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddVector4_uScriptAct_AddVector4_415.In(logic_uScriptAct_AddVector4_A_415, logic_uScriptAct_AddVector4_B_415, out logic_uScriptAct_AddVector4_Result_415);
+         logic_uScriptAct_AddVector4_v2_uScriptAct_AddVector4_v2_415.In(logic_uScriptAct_AddVector4_v2_A_415, logic_uScriptAct_AddVector4_v2_B_415, out logic_uScriptAct_AddVector4_v2_Result_415);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector4_uScriptAct_AddVector4_415.Out;
+         bool test_0 = logic_uScriptAct_AddVector4_v2_uScriptAct_AddVector4_v2_415.Out;
          
          if ( test_0 == true )
          {
@@ -21152,7 +21249,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab24a477-ded1-4b30-ab7c-304234ca45f7", "Clamp Float", Relay_In_416)) return; 
+         if (true == CheckDebugBreak("ab24a477-ded1-4b30-ab7c-304234ca45f7", "Clamp_Float", Relay_In_416)) return; 
          {
             {
             }
@@ -21185,7 +21282,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("45ffac9f-f387-4a62-9199-16b27261a56d", "Clamp Int", Relay_In_417)) return; 
+         if (true == CheckDebugBreak("45ffac9f-f387-4a62-9199-16b27261a56d", "Clamp_Int", Relay_In_417)) return; 
          {
             {
             }
@@ -21218,7 +21315,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8a79259c-58b6-4471-a948-5d48df440d3b", "Convert Rect To Vector4", Relay_In_418)) return; 
+         if (true == CheckDebugBreak("8a79259c-58b6-4471-a948-5d48df440d3b", "Convert_Rect_To_Vector4", Relay_In_418)) return; 
          {
             {
             }
@@ -21247,7 +21344,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("114ddc48-7ff1-4cf9-a0b8-1bf1162693bc", "Convert Variable", Relay_In_419)) return; 
+         if (true == CheckDebugBreak("114ddc48-7ff1-4cf9-a0b8-1bf1162693bc", "Convert_Variable", Relay_In_419)) return; 
          {
             {
             }
@@ -21287,7 +21384,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9e241720-383f-4298-89dc-e42595bc54f7", "Convert Vector4 To Rect", Relay_In_420)) return; 
+         if (true == CheckDebugBreak("9e241720-383f-4298-89dc-e42595bc54f7", "Convert_Vector4_To_Rect", Relay_In_420)) return; 
          {
             {
             }
@@ -21315,7 +21412,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1636b80a-59a8-4631-a876-5088524fab67", "Divide Float", Relay_In_421)) return; 
+         if (true == CheckDebugBreak("1636b80a-59a8-4631-a876-5088524fab67", "Divide_Float", Relay_In_421)) return; 
          {
             {
             }
@@ -21347,7 +21444,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c8228838-65ac-4c99-bf9f-073ce2c612ff", "Divide Int", Relay_In_422)) return; 
+         if (true == CheckDebugBreak("c8228838-65ac-4c99-bf9f-073ce2c612ff", "Divide_Int", Relay_In_422)) return; 
          {
             {
             }
@@ -21378,7 +21475,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2c5c33e1-40e7-42f0-ae49-caf8218e8432", "Exponent & Logarithmic Functions", Relay_Exp_423)) return; 
+         if (true == CheckDebugBreak("2c5c33e1-40e7-42f0-ae49-caf8218e8432", "Exponent___Logarithmic_Functions", Relay_Exp_423)) return; 
          {
             {
             }
@@ -21407,7 +21504,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2c5c33e1-40e7-42f0-ae49-caf8218e8432", "Exponent & Logarithmic Functions", Relay_Log_423)) return; 
+         if (true == CheckDebugBreak("2c5c33e1-40e7-42f0-ae49-caf8218e8432", "Exponent___Logarithmic_Functions", Relay_Log_423)) return; 
          {
             {
             }
@@ -21436,7 +21533,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2c5c33e1-40e7-42f0-ae49-caf8218e8432", "Exponent & Logarithmic Functions", Relay_Log10_423)) return; 
+         if (true == CheckDebugBreak("2c5c33e1-40e7-42f0-ae49-caf8218e8432", "Exponent___Logarithmic_Functions", Relay_Log10_423)) return; 
          {
             {
             }
@@ -21465,7 +21562,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2c5c33e1-40e7-42f0-ae49-caf8218e8432", "Exponent & Logarithmic Functions", Relay_Pow_423)) return; 
+         if (true == CheckDebugBreak("2c5c33e1-40e7-42f0-ae49-caf8218e8432", "Exponent___Logarithmic_Functions", Relay_Pow_423)) return; 
          {
             {
             }
@@ -21494,7 +21591,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e29ad40e-0e42-4b09-b306-4f38f6f569da", "Filter Float", Relay_Reset_424)) return; 
+         if (true == CheckDebugBreak("e29ad40e-0e42-4b09-b306-4f38f6f569da", "Filter_Float", Relay_Reset_424)) return; 
          {
             {
             }
@@ -21524,7 +21621,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e29ad40e-0e42-4b09-b306-4f38f6f569da", "Filter Float", Relay_Filter_424)) return; 
+         if (true == CheckDebugBreak("e29ad40e-0e42-4b09-b306-4f38f6f569da", "Filter_Float", Relay_Filter_424)) return; 
          {
             {
             }
@@ -21554,7 +21651,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2f69971c-45e2-43ab-90fc-89ccc626d6bb", "Filter Rect", Relay_Reset_425)) return; 
+         if (true == CheckDebugBreak("2f69971c-45e2-43ab-90fc-89ccc626d6bb", "Filter_Rect", Relay_Reset_425)) return; 
          {
             {
             }
@@ -21587,7 +21684,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2f69971c-45e2-43ab-90fc-89ccc626d6bb", "Filter Rect", Relay_Filter_425)) return; 
+         if (true == CheckDebugBreak("2f69971c-45e2-43ab-90fc-89ccc626d6bb", "Filter_Rect", Relay_Filter_425)) return; 
          {
             {
             }
@@ -21620,7 +21717,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5f13c569-9a64-4f62-bc6e-55c7952ba0a8", "Filter Vector", Relay_Reset_426)) return; 
+         if (true == CheckDebugBreak("5f13c569-9a64-4f62-bc6e-55c7952ba0a8", "Filter_Vector", Relay_Reset_426)) return; 
          {
             {
             }
@@ -21652,7 +21749,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5f13c569-9a64-4f62-bc6e-55c7952ba0a8", "Filter Vector", Relay_Filter_426)) return; 
+         if (true == CheckDebugBreak("5f13c569-9a64-4f62-bc6e-55c7952ba0a8", "Filter_Vector", Relay_Filter_426)) return; 
          {
             {
             }
@@ -21684,7 +21781,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating Point Functions", Relay_Abs_427)) return; 
+         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating_Point_Functions", Relay_Abs_427)) return; 
          {
             {
             }
@@ -21714,7 +21811,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating Point Functions", Relay_Ceiling_427)) return; 
+         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating_Point_Functions", Relay_Ceiling_427)) return; 
          {
             {
             }
@@ -21744,7 +21841,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating Point Functions", Relay_Floor_427)) return; 
+         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating_Point_Functions", Relay_Floor_427)) return; 
          {
             {
             }
@@ -21774,7 +21871,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating Point Functions", Relay_Round_427)) return; 
+         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating_Point_Functions", Relay_Round_427)) return; 
          {
             {
             }
@@ -21804,7 +21901,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating Point Functions", Relay_Sign_427)) return; 
+         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating_Point_Functions", Relay_Sign_427)) return; 
          {
             {
             }
@@ -21834,7 +21931,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating Point Functions", Relay_Sqrt_427)) return; 
+         if (true == CheckDebugBreak("663d51f4-7a88-45da-a70b-7674161d8801", "Floating_Point_Functions", Relay_Sqrt_427)) return; 
          {
             {
             }
@@ -21864,7 +21961,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("fcf040ec-925e-4692-ba54-cf5b96c2284b", "Get Math Constants", Relay_In_428)) return; 
+         if (true == CheckDebugBreak("fcf040ec-925e-4692-ba54-cf5b96c2284b", "Get_Math_Constants", Relay_In_428)) return; 
          {
             {
             }
@@ -21897,7 +21994,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7118a1f7-1273-4e03-bc66-cd535d7a4625", "Invert Bool", Relay_In_429)) return; 
+         if (true == CheckDebugBreak("7118a1f7-1273-4e03-bc66-cd535d7a4625", "Invert_Bool", Relay_In_429)) return; 
          {
             {
             }
@@ -21924,7 +22021,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("090af5d7-31ea-4f51-94b1-bd363ff05477", "Invert Float", Relay_In_430)) return; 
+         if (true == CheckDebugBreak("090af5d7-31ea-4f51-94b1-bd363ff05477", "Invert_Float", Relay_In_430)) return; 
          {
             {
             }
@@ -21951,7 +22048,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5a30459b-8ab2-4034-a7b0-75c6f51f9eb0", "Invert Int", Relay_In_431)) return; 
+         if (true == CheckDebugBreak("5a30459b-8ab2-4034-a7b0-75c6f51f9eb0", "Invert_Int", Relay_In_431)) return; 
          {
             {
             }
@@ -21978,7 +22075,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("14b2ae6c-9975-4d41-80d2-f1b5e6bdd513", "Invert String", Relay_In_432)) return; 
+         if (true == CheckDebugBreak("14b2ae6c-9975-4d41-80d2-f1b5e6bdd513", "Invert_String", Relay_In_432)) return; 
          {
             {
             }
@@ -22005,7 +22102,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("050df580-8cd2-46cc-bbeb-ff12fbbd704c", "Invert Vector2", Relay_In_433)) return; 
+         if (true == CheckDebugBreak("050df580-8cd2-46cc-bbeb-ff12fbbd704c", "Invert_Vector2", Relay_In_433)) return; 
          {
             {
             }
@@ -22036,7 +22133,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("bca504f9-f925-44f8-98c7-3066884c5533", "Invert Vector3", Relay_In_434)) return; 
+         if (true == CheckDebugBreak("bca504f9-f925-44f8-98c7-3066884c5533", "Invert_Vector3", Relay_In_434)) return; 
          {
             {
             }
@@ -22069,7 +22166,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7c1a91d6-3763-4202-ba2b-2ed22b0f4918", "Invert Vector4", Relay_In_435)) return; 
+         if (true == CheckDebugBreak("7c1a91d6-3763-4202-ba2b-2ed22b0f4918", "Invert_Vector4", Relay_In_435)) return; 
          {
             {
             }
@@ -22104,7 +22201,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f995d3fe-cc66-4ad9-876e-a14211aa7ed4", "Max Float", Relay_In_436)) return; 
+         if (true == CheckDebugBreak("f995d3fe-cc66-4ad9-876e-a14211aa7ed4", "Max_Float", Relay_In_436)) return; 
          {
             {
             }
@@ -22131,7 +22228,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("caafffd2-89bd-4158-a8e7-7ba5d8973516", "Max Int", Relay_In_437)) return; 
+         if (true == CheckDebugBreak("caafffd2-89bd-4158-a8e7-7ba5d8973516", "Max_Int", Relay_In_437)) return; 
          {
             {
             }
@@ -22158,7 +22255,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("458a3145-66e6-4e21-85a7-0f8ab67372e3", "Min Float", Relay_In_438)) return; 
+         if (true == CheckDebugBreak("458a3145-66e6-4e21-85a7-0f8ab67372e3", "Min_Float", Relay_In_438)) return; 
          {
             {
             }
@@ -22185,7 +22282,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("fd40576d-6861-4c73-990f-9ba4d31d494f", "Min Int", Relay_In_439)) return; 
+         if (true == CheckDebugBreak("fd40576d-6861-4c73-990f-9ba4d31d494f", "Min_Int", Relay_In_439)) return; 
          {
             {
             }
@@ -22212,7 +22309,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c675a49e-9bea-48b8-bea3-7c8623ee1cba", "Multiply Float", Relay_In_440)) return; 
+         if (true == CheckDebugBreak("c675a49e-9bea-48b8-bea3-7c8623ee1cba", "Multiply_Float", Relay_In_440)) return; 
          {
             {
             }
@@ -22223,10 +22320,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_MultiplyFloat_uScriptAct_MultiplyFloat_440.In(logic_uScriptAct_MultiplyFloat_A_440, logic_uScriptAct_MultiplyFloat_B_440, out logic_uScriptAct_MultiplyFloat_FloatResult_440, out logic_uScriptAct_MultiplyFloat_IntResult_440);
+         logic_uScriptAct_MultiplyFloat_v2_uScriptAct_MultiplyFloat_v2_440.In(logic_uScriptAct_MultiplyFloat_v2_A_440, logic_uScriptAct_MultiplyFloat_v2_B_440, out logic_uScriptAct_MultiplyFloat_v2_FloatResult_440, out logic_uScriptAct_MultiplyFloat_v2_IntResult_440);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_MultiplyFloat_uScriptAct_MultiplyFloat_440.Out;
+         bool test_0 = logic_uScriptAct_MultiplyFloat_v2_uScriptAct_MultiplyFloat_v2_440.Out;
          
          if ( test_0 == true )
          {
@@ -22243,7 +22340,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eae7c48b-c199-452f-ba28-fb96870318c7", "Multiply Int", Relay_In_441)) return; 
+         if (true == CheckDebugBreak("eae7c48b-c199-452f-ba28-fb96870318c7", "Multiply_Int", Relay_In_441)) return; 
          {
             {
             }
@@ -22254,10 +22351,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_MultiplyInt_uScriptAct_MultiplyInt_441.In(logic_uScriptAct_MultiplyInt_A_441, logic_uScriptAct_MultiplyInt_B_441, out logic_uScriptAct_MultiplyInt_IntResult_441, out logic_uScriptAct_MultiplyInt_FloatResult_441);
+         logic_uScriptAct_MultiplyInt_v2_uScriptAct_MultiplyInt_v2_441.In(logic_uScriptAct_MultiplyInt_v2_A_441, logic_uScriptAct_MultiplyInt_v2_B_441, out logic_uScriptAct_MultiplyInt_v2_IntResult_441, out logic_uScriptAct_MultiplyInt_v2_FloatResult_441);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_MultiplyInt_uScriptAct_MultiplyInt_441.Out;
+         bool test_0 = logic_uScriptAct_MultiplyInt_v2_uScriptAct_MultiplyInt_v2_441.Out;
          
          if ( test_0 == true )
          {
@@ -22274,7 +22371,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0df4d5da-ce83-4c74-8a90-d1f77ddc7e55", "Quaternion Euler", Relay_In_442)) return; 
+         if (true == CheckDebugBreak("0df4d5da-ce83-4c74-8a90-d1f77ddc7e55", "Quaternion_Euler", Relay_In_442)) return; 
          {
             {
             }
@@ -22305,7 +22402,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e5213fd8-8845-4e66-b438-1ef355f027a9", "Quaternion From Vectors", Relay_In_443)) return; 
+         if (true == CheckDebugBreak("e5213fd8-8845-4e66-b438-1ef355f027a9", "Quaternion_From_Vectors", Relay_In_443)) return; 
          {
             {
             }
@@ -22334,7 +22431,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("59abd3c4-8ea3-4f46-8074-7c8a27130306", "Round Float", Relay_In_444)) return; 
+         if (true == CheckDebugBreak("59abd3c4-8ea3-4f46-8074-7c8a27130306", "Round_Float", Relay_In_444)) return; 
          {
             {
             }
@@ -22364,7 +22461,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c2f57584-9d0a-48f9-a3da-dda4e3727b1d", "Scale Vector2", Relay_In_445)) return; 
+         if (true == CheckDebugBreak("c2f57584-9d0a-48f9-a3da-dda4e3727b1d", "Scale_Vector2", Relay_In_445)) return; 
          {
             {
             }
@@ -22393,7 +22490,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b1fe8827-88d7-4f4b-b599-333d337f2785", "Scale Vector3", Relay_In_446)) return; 
+         if (true == CheckDebugBreak("b1fe8827-88d7-4f4b-b599-333d337f2785", "Scale_Vector3", Relay_In_446)) return; 
          {
             {
             }
@@ -22422,7 +22519,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2f821cf0-ce1d-46a3-9a11-ccc799c9c61e", "Scale Vector4", Relay_In_447)) return; 
+         if (true == CheckDebugBreak("2f821cf0-ce1d-46a3-9a11-ccc799c9c61e", "Scale_Vector4", Relay_In_447)) return; 
          {
             {
             }
@@ -22451,7 +22548,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3e267952-c9b4-40bf-98ce-3900350531e8", "Subtract Float", Relay_In_448)) return; 
+         if (true == CheckDebugBreak("3e267952-c9b4-40bf-98ce-3900350531e8", "Subtract_Float", Relay_In_448)) return; 
          {
             {
             }
@@ -22483,7 +22580,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("356f5975-cb91-45c3-b9dc-99cff74028fe", "Subtract Int", Relay_In_449)) return; 
+         if (true == CheckDebugBreak("356f5975-cb91-45c3-b9dc-99cff74028fe", "Subtract_Int", Relay_In_449)) return; 
          {
             {
             }
@@ -22515,7 +22612,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b9b94cb7-c5b4-4396-b85e-4d297151fbc9", "Subtract Rect", Relay_In_450)) return; 
+         if (true == CheckDebugBreak("b9b94cb7-c5b4-4396-b85e-4d297151fbc9", "Subtract_Rect", Relay_In_450)) return; 
          {
             {
             }
@@ -22524,10 +22621,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_SubtractRect_uScriptAct_SubtractRect_450.In(logic_uScriptAct_SubtractRect_A_450, logic_uScriptAct_SubtractRect_B_450, out logic_uScriptAct_SubtractRect_Result_450);
+         logic_uScriptAct_SubtractRect_v2_uScriptAct_SubtractRect_v2_450.In(logic_uScriptAct_SubtractRect_v2_A_450, logic_uScriptAct_SubtractRect_v2_B_450, out logic_uScriptAct_SubtractRect_v2_Result_450);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_SubtractRect_uScriptAct_SubtractRect_450.Out;
+         bool test_0 = logic_uScriptAct_SubtractRect_v2_uScriptAct_SubtractRect_v2_450.Out;
          
          if ( test_0 == true )
          {
@@ -22545,7 +22642,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("db227ddb-6c38-4063-a5a8-81df909a341a", "Subtract Vector2", Relay_In_451)) return; 
+         if (true == CheckDebugBreak("db227ddb-6c38-4063-a5a8-81df909a341a", "Subtract_Vector2", Relay_In_451)) return; 
          {
             {
             }
@@ -22575,7 +22672,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2401d887-e79d-4aff-9329-cda4f4fd8dd8", "Subtract Vector3", Relay_In_452)) return; 
+         if (true == CheckDebugBreak("2401d887-e79d-4aff-9329-cda4f4fd8dd8", "Subtract_Vector3", Relay_In_452)) return; 
          {
             {
             }
@@ -22604,7 +22701,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("abbbff86-972a-4f86-9e44-95694c2e0b46", "Subtract Vector4", Relay_In_453)) return; 
+         if (true == CheckDebugBreak("abbbff86-972a-4f86-9e44-95694c2e0b46", "Subtract_Vector4", Relay_In_453)) return; 
          {
             {
             }
@@ -22613,10 +22710,10 @@ public class CodeGenTest : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_SubtractVector4_uScriptAct_SubtractVector4_453.In(logic_uScriptAct_SubtractVector4_A_453, logic_uScriptAct_SubtractVector4_B_453, out logic_uScriptAct_SubtractVector4_Result_453);
+         logic_uScriptAct_SubtractVector4_v2_uScriptAct_SubtractVector4_v2_453.In(logic_uScriptAct_SubtractVector4_v2_A_453, logic_uScriptAct_SubtractVector4_v2_B_453, out logic_uScriptAct_SubtractVector4_v2_Result_453);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_SubtractVector4_uScriptAct_SubtractVector4_453.Out;
+         bool test_0 = logic_uScriptAct_SubtractVector4_v2_uScriptAct_SubtractVector4_v2_453.Out;
          
          if ( test_0 == true )
          {
@@ -22633,7 +22730,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1f4902ee-0887-45bb-bfff-67867d02af39", "Vectors From Quaternion", Relay_In_454)) return; 
+         if (true == CheckDebugBreak("1f4902ee-0887-45bb-bfff-67867d02af39", "Vectors_From_Quaternion", Relay_In_454)) return; 
          {
             {
             }
@@ -22850,7 +22947,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f200bb10-03f3-4ba7-9bf9-82bd55d4b3f2", "Nested Node Test", Relay_Node_Is_Done_458)) return; 
+         if (true == CheckDebugBreak("f200bb10-03f3-4ba7-9bf9-82bd55d4b3f2", "Nested_Node_Test", Relay_Node_Is_Done_458)) return; 
       }
       else
       {
@@ -22862,21 +22959,26 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f200bb10-03f3-4ba7-9bf9-82bd55d4b3f2", "Nested Node Test", Relay_In_458)) return; 
+         if (true == CheckDebugBreak("f200bb10-03f3-4ba7-9bf9-82bd55d4b3f2", "Nested_Node_Test", Relay_In_458)) return; 
          {
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)owner_Connection_460);
-               logic_CodeGenTest_Nested_Int_Name_Test_458 = properties.ToArray();
+               int index = 0;
+               if ( logic_CodeGenTest_Nested_Int_Name_Test_458.Length <= index)
+               {
+                  System.Array.Resize(ref logic_CodeGenTest_Nested_Int_Name_Test_458, index + 1);
+               }
+               logic_CodeGenTest_Nested_Int_Name_Test_458[ index++ ] = owner_Connection_460;
+               
             }
             {
             }
          }
          logic_CodeGenTest_Nested_CodeGenTest_Nested_458.In(logic_CodeGenTest_Nested_Socket_1_458, logic_CodeGenTest_Nested_Int_Name_Test_458, logic_CodeGenTest_Nested_Socket_3_458);
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
+         //and those values get set through an event which is called before the above method exited
          
       }
       else
@@ -22887,20 +22989,32 @@ public class CodeGenTest : uScriptLogic
    
    void Relay_uScriptStart_459()
    {
-      if (true == CheckDebugBreak("77313efe-3085-416d-b487-61be8f88819c", "uScript Events", Relay_uScriptStart_459)) return; 
+      if (true == CheckDebugBreak("77313efe-3085-416d-b487-61be8f88819c", "uScript_Events", Relay_uScriptStart_459)) return; 
       Relay_In_458();
+   }
+   
+   void Relay_uScriptLateStart_459()
+   {
+      if (true == CheckDebugBreak("77313efe-3085-416d-b487-61be8f88819c", "uScript_Events", Relay_uScriptLateStart_459)) return; 
    }
    
    void Relay_First_465()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2d2950d9-2957-4371-b60c-8bda96ec6e92", "Access List (AudioClip)", Relay_First_465)) return; 
+         if (true == CheckDebugBreak("2d2950d9-2957-4371-b60c-8bda96ec6e92", "Access_List__AudioClip_", Relay_First_465)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_AccessListAudioClip_List_465 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_AccessListAudioClip_List_465.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AccessListAudioClip_List_465, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_AccessListAudioClip_List_465, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -22927,12 +23041,19 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2d2950d9-2957-4371-b60c-8bda96ec6e92", "Access List (AudioClip)", Relay_Last_465)) return; 
+         if (true == CheckDebugBreak("2d2950d9-2957-4371-b60c-8bda96ec6e92", "Access_List__AudioClip_", Relay_Last_465)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_AccessListAudioClip_List_465 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_AccessListAudioClip_List_465.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AccessListAudioClip_List_465, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_AccessListAudioClip_List_465, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -22959,12 +23080,19 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2d2950d9-2957-4371-b60c-8bda96ec6e92", "Access List (AudioClip)", Relay_Random_465)) return; 
+         if (true == CheckDebugBreak("2d2950d9-2957-4371-b60c-8bda96ec6e92", "Access_List__AudioClip_", Relay_Random_465)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_AccessListAudioClip_List_465 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_AccessListAudioClip_List_465.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AccessListAudioClip_List_465, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_AccessListAudioClip_List_465, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -22991,12 +23119,19 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2d2950d9-2957-4371-b60c-8bda96ec6e92", "Access List (AudioClip)", Relay_AtIndex_465)) return; 
+         if (true == CheckDebugBreak("2d2950d9-2957-4371-b60c-8bda96ec6e92", "Access_List__AudioClip_", Relay_AtIndex_465)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_AccessListAudioClip_List_465 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_AccessListAudioClip_List_465.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AccessListAudioClip_List_465, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_AccessListAudioClip_List_465, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -23023,12 +23158,19 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("467d51c6-743f-44f7-8bf1-01f5ed03f472", "For Each In List (AudioClip)", Relay_Reset_466)) return; 
+         if (true == CheckDebugBreak("467d51c6-743f-44f7-8bf1-01f5ed03f472", "For_Each_In_List__AudioClip_", Relay_Reset_466)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_ForEachListAudioClip_List_466 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_ForEachListAudioClip_List_466.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ForEachListAudioClip_List_466, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_ForEachListAudioClip_List_466, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -23062,12 +23204,19 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("467d51c6-743f-44f7-8bf1-01f5ed03f472", "For Each In List (AudioClip)", Relay_In_466)) return; 
+         if (true == CheckDebugBreak("467d51c6-743f-44f7-8bf1-01f5ed03f472", "For_Each_In_List__AudioClip_", Relay_In_466)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_ForEachListAudioClip_List_466 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_ForEachListAudioClip_List_466.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ForEachListAudioClip_List_466, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_ForEachListAudioClip_List_466, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -23101,7 +23250,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("159ce9c9-e5a5-4812-afb8-4d7c1e7aaaca", "For Each In List Auto (AudioClip)", Relay_In_468)) return; 
+         if (true == CheckDebugBreak("159ce9c9-e5a5-4812-afb8-4d7c1e7aaaca", "For_Each_In_List_Auto__AudioClip_", Relay_In_468)) return; 
          {
             {
             }
@@ -23162,9 +23311,13 @@ public class CodeGenTest : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_470_UnityEngine_AudioClip);
-               logic_uScriptAct_Log_Target_469 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_469.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_469, index + 1);
+               }
+               logic_uScriptAct_Log_Target_469[ index++ ] = local_470_UnityEngine_AudioClip;
+               
             }
             {
             }
@@ -23184,17 +23337,28 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5f26ea54-dca9-4cad-a6ec-416379c66f95", "Is In List (AudioClip)", Relay_TestIfInList_471)) return; 
+         if (true == CheckDebugBreak("5f26ea54-dca9-4cad-a6ec-416379c66f95", "Is_In_List__AudioClip_", Relay_TestIfInList_471)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.Add((UnityEngine.AudioClip)local_470_UnityEngine_AudioClip);
-               logic_uScriptAct_IsInListAudioClip_Target_471 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_IsInListAudioClip_Target_471.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_IsInListAudioClip_Target_471, index + 1);
+               }
+               logic_uScriptAct_IsInListAudioClip_Target_471[ index++ ] = local_470_UnityEngine_AudioClip;
+               
             }
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_IsInListAudioClip_List_471 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_IsInListAudioClip_List_471.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_IsInListAudioClip_List_471, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_IsInListAudioClip_List_471, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -23220,17 +23384,28 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f5f9214f-8a35-43b2-a3cf-eb060010cda9", "Modify List (AudioClip)", Relay_AddToList_472)) return; 
+         if (true == CheckDebugBreak("f5f9214f-8a35-43b2-a3cf-eb060010cda9", "Modify_List__AudioClip_", Relay_AddToList_472)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.Add((UnityEngine.AudioClip)local_470_UnityEngine_AudioClip);
-               logic_uScriptAct_ModifyListAudioClip_Target_472 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ModifyListAudioClip_Target_472.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ModifyListAudioClip_Target_472, index + 1);
+               }
+               logic_uScriptAct_ModifyListAudioClip_Target_472[ index++ ] = local_470_UnityEngine_AudioClip;
+               
             }
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_ModifyListAudioClip_List_472 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_ModifyListAudioClip_List_472.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ModifyListAudioClip_List_472, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_ModifyListAudioClip_List_472, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -23256,17 +23431,28 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f5f9214f-8a35-43b2-a3cf-eb060010cda9", "Modify List (AudioClip)", Relay_RemoveFromList_472)) return; 
+         if (true == CheckDebugBreak("f5f9214f-8a35-43b2-a3cf-eb060010cda9", "Modify_List__AudioClip_", Relay_RemoveFromList_472)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.Add((UnityEngine.AudioClip)local_470_UnityEngine_AudioClip);
-               logic_uScriptAct_ModifyListAudioClip_Target_472 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ModifyListAudioClip_Target_472.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ModifyListAudioClip_Target_472, index + 1);
+               }
+               logic_uScriptAct_ModifyListAudioClip_Target_472[ index++ ] = local_470_UnityEngine_AudioClip;
+               
             }
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_ModifyListAudioClip_List_472 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_ModifyListAudioClip_List_472.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ModifyListAudioClip_List_472, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_ModifyListAudioClip_List_472, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -23292,17 +23478,28 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f5f9214f-8a35-43b2-a3cf-eb060010cda9", "Modify List (AudioClip)", Relay_EmptyList_472)) return; 
+         if (true == CheckDebugBreak("f5f9214f-8a35-43b2-a3cf-eb060010cda9", "Modify_List__AudioClip_", Relay_EmptyList_472)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.Add((UnityEngine.AudioClip)local_470_UnityEngine_AudioClip);
-               logic_uScriptAct_ModifyListAudioClip_Target_472 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ModifyListAudioClip_Target_472.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ModifyListAudioClip_Target_472, index + 1);
+               }
+               logic_uScriptAct_ModifyListAudioClip_Target_472[ index++ ] = local_470_UnityEngine_AudioClip;
+               
             }
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_467_UnityEngine_AudioClipArray);
-               logic_uScriptAct_ModifyListAudioClip_List_472 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_467_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_ModifyListAudioClip_List_472.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ModifyListAudioClip_List_472, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_ModifyListAudioClip_List_472, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -23328,12 +23525,19 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a66560bf-c209-44d3-91bc-f83c93b45eee", "Replace Value In List (AudioClip)", Relay_In_473)) return; 
+         if (true == CheckDebugBreak("a66560bf-c209-44d3-91bc-f83c93b45eee", "Replace_Value_In_List__AudioClip_", Relay_In_473)) return; 
          {
             {
-               List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.AddRange(local_474_UnityEngine_AudioClipArray);
-               logic_uScriptAct_ReplaceValueInListAudioClip_TargetList_473 = properties.ToArray();
+               System.Array properties;
+               int index = 0;
+               properties = local_474_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_ReplaceValueInListAudioClip_TargetList_473.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ReplaceValueInListAudioClip_TargetList_473, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_ReplaceValueInListAudioClip_TargetList_473, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
                logic_uScriptAct_ReplaceValueInListAudioClip_OldValue_473 = local_475_UnityEngine_AudioClip;
@@ -23374,12 +23578,16 @@ public class CodeGenTest : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               foreach (UnityEngine.AudioClip _fet in local_477_UnityEngine_AudioClipArray)
+               System.Array properties;
+               int index = 0;
+               properties = local_477_UnityEngine_AudioClipArray;
+               if ( logic_uScriptAct_Log_Target_478.Length != index + properties.Length)
                {
-                  properties.Add((System.Object) _fet);
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_478, index + properties.Length);
                }
-               logic_uScriptAct_Log_Target_478 = properties.ToArray();
+               System.Array.Copy(properties, 0, logic_uScriptAct_Log_Target_478, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
             }
@@ -23399,7 +23607,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9ed695c6-ff9c-4edf-af8e-37b71bcbd5e8", "Generate MD5 Hash", Relay_In_479)) return; 
+         if (true == CheckDebugBreak("9ed695c6-ff9c-4edf-af8e-37b71bcbd5e8", "Generate_MD5_Hash", Relay_In_479)) return; 
          {
             {
                logic_uScriptAct_GenerateMD5Hash_Key_479 = local_482_System_String;
@@ -23429,7 +23637,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e3281a6c-dd3a-4035-9b41-2e40885bcef9", "Check MD5 Hash", Relay_In_480)) return; 
+         if (true == CheckDebugBreak("e3281a6c-dd3a-4035-9b41-2e40885bcef9", "Check_MD5_Hash", Relay_In_480)) return; 
          {
             {
                logic_uScriptAct_CheckMD5Hash_Key_480 = local_482_System_String;
@@ -23494,7 +23702,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3847e8f7-0072-4647-866e-00286c8752e3", "Create GameObject", Relay_In_484)) return; 
+         if (true == CheckDebugBreak("3847e8f7-0072-4647-866e-00286c8752e3", "Create_GameObject", Relay_In_484)) return; 
          {
             {
             }
@@ -23535,10 +23743,10 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f1d6d3f7-7f11-46cd-871c-0a023be50e09", "Set Parent", Relay_In_486)) return; 
+         if (true == CheckDebugBreak("f1d6d3f7-7f11-46cd-871c-0a023be50e09", "Set_Parent", Relay_In_486)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_485_UnityEngine_GameObject_previous != local_485_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -23550,8 +23758,12 @@ public class CodeGenTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_485_UnityEngine_GameObject);
-               logic_uScriptAct_SetParent_Target_486 = properties.ToArray();
+               if ( logic_uScriptAct_SetParent_Target_486.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SetParent_Target_486, index + 1);
+               }
+               logic_uScriptAct_SetParent_Target_486[ index++ ] = local_485_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -23693,7 +23905,7 @@ public class CodeGenTest : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {
