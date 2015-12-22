@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -139,7 +139,11 @@ public class AlarmGameplay_MainGame : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.Color property_color_Detox_ScriptEditor_Parameter_color_10_Get_Refresh( )
    {
-      UnityEngine.Light component = property_color_Detox_ScriptEditor_Parameter_Instance_10.GetComponent<UnityEngine.Light>();
+      UnityEngine.Light component = null;
+      if (property_color_Detox_ScriptEditor_Parameter_Instance_10 != null)
+      {
+         component = property_color_Detox_ScriptEditor_Parameter_Instance_10.GetComponent<UnityEngine.Light>();
+      }
       if ( null != component )
       {
          return component.color;
@@ -152,7 +156,11 @@ public class AlarmGameplay_MainGame : uScriptLogic
    
    void property_color_Detox_ScriptEditor_Parameter_color_10_Set_Refresh( )
    {
-      UnityEngine.Light component = property_color_Detox_ScriptEditor_Parameter_Instance_10.GetComponent<UnityEngine.Light>();
+      UnityEngine.Light component = null;
+      if (property_color_Detox_ScriptEditor_Parameter_Instance_10 != null)
+      {
+         component = property_color_Detox_ScriptEditor_Parameter_Instance_10.GetComponent<UnityEngine.Light>();
+      }
       if ( null != component )
       {
          component.color = property_color_Detox_ScriptEditor_Parameter_color_10;
@@ -1221,7 +1229,7 @@ public class AlarmGameplay_MainGame : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "8240847b-bc3f-4eb1-a58c-94736df4bece", local_26_System_String);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "AlarmGameplay_MainGame.uscript:Hack String", local_Hack_String_System_String);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "c9a8c8d3-e5ec-443f-b520-a1464ba32339", local_Hack_String_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "13d5ac84-faf7-4ad3-9e0b-fdfdf1c7f201", property_color_Detox_ScriptEditor_Parameter_color_10);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "13d5ac84-faf7-4ad3-9e0b-fdfdf1c7f201", property_color_Detox_ScriptEditor_Parameter_color_10_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -279,6 +279,10 @@ public class FireBot_FireLogic : uScriptLogic
       logic_uScriptAct_SetRandomFloat_uScriptAct_SetRandomFloat_26.SetParent(g);
       logic_uScriptAct_GetGameObjectName_uScriptAct_GetGameObjectName_27.SetParent(g);
       logic_uScriptCon_StringContains_uScriptCon_StringContains_29.SetParent(g);
+      owner_Connection_8 = parentGameObject;
+      owner_Connection_15 = parentGameObject;
+      owner_Connection_18 = parentGameObject;
+      owner_Connection_20 = parentGameObject;
    }
    public void Awake()
    {
@@ -668,9 +672,13 @@ public class FireBot_FireLogic : uScriptLogic
          if (true == CheckDebugBreak("d66ab67f-0def-4372-b869-83fb08fd18e6", "Destroy", Relay_In_24)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add((UnityEngine.GameObject)owner_Connection_20);
-               logic_uScriptAct_Destroy_Target_24 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Destroy_Target_24.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_24, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_24[ index++ ] = owner_Connection_20;
+               
             }
             {
             }
@@ -693,9 +701,13 @@ public class FireBot_FireLogic : uScriptLogic
       {
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add((UnityEngine.GameObject)owner_Connection_20);
-               logic_uScriptAct_Destroy_Target_24 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Destroy_Target_24.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_24, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_24[ index++ ] = owner_Connection_20;
+               
             }
             {
             }

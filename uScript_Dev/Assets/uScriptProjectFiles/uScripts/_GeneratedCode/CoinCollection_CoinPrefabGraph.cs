@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -110,7 +110,11 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    //functions to refresh properties from entities
    System.Int32 property_CoinPointsGold_Detox_ScriptEditor_Parameter_CoinPointsGold_20_Get_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_CoinPointsGold_Detox_ScriptEditor_Parameter_Instance_20.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_CoinPointsGold_Detox_ScriptEditor_Parameter_Instance_20 != null)
+      {
+         component = property_CoinPointsGold_Detox_ScriptEditor_Parameter_Instance_20.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          return component.CoinPointsGold;
@@ -123,7 +127,11 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    
    void property_CoinPointsGold_Detox_ScriptEditor_Parameter_CoinPointsGold_20_Set_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_CoinPointsGold_Detox_ScriptEditor_Parameter_Instance_20.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_CoinPointsGold_Detox_ScriptEditor_Parameter_Instance_20 != null)
+      {
+         component = property_CoinPointsGold_Detox_ScriptEditor_Parameter_Instance_20.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          component.CoinPointsGold = property_CoinPointsGold_Detox_ScriptEditor_Parameter_CoinPointsGold_20;
@@ -132,7 +140,11 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    
    System.Int32 property_CoinPointsSilver_Detox_ScriptEditor_Parameter_CoinPointsSilver_21_Get_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_CoinPointsSilver_Detox_ScriptEditor_Parameter_Instance_21.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_CoinPointsSilver_Detox_ScriptEditor_Parameter_Instance_21 != null)
+      {
+         component = property_CoinPointsSilver_Detox_ScriptEditor_Parameter_Instance_21.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          return component.CoinPointsSilver;
@@ -145,7 +157,11 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    
    void property_CoinPointsSilver_Detox_ScriptEditor_Parameter_CoinPointsSilver_21_Set_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_CoinPointsSilver_Detox_ScriptEditor_Parameter_Instance_21.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_CoinPointsSilver_Detox_ScriptEditor_Parameter_Instance_21 != null)
+      {
+         component = property_CoinPointsSilver_Detox_ScriptEditor_Parameter_Instance_21.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          component.CoinPointsSilver = property_CoinPointsSilver_Detox_ScriptEditor_Parameter_CoinPointsSilver_21;
@@ -392,6 +408,11 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       logic_uScriptAct_SendCustomEventInt_uScriptAct_SendCustomEventInt_15.SetParent(g);
       logic_uScriptAct_SendCustomEventInt_uScriptAct_SendCustomEventInt_16.SetParent(g);
       logic_uScriptAct_Destroy_uScriptAct_Destroy_18.SetParent(g);
+      owner_Connection_2 = parentGameObject;
+      owner_Connection_3 = parentGameObject;
+      owner_Connection_4 = parentGameObject;
+      owner_Connection_11 = parentGameObject;
+      owner_Connection_19 = parentGameObject;
    }
    public void Awake()
    {
@@ -529,9 +550,13 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
          if (true == CheckDebugBreak("0cc7ead0-8295-4129-b4b2-be3bb5292918", "Rotate", Relay_In_1)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add((UnityEngine.GameObject)owner_Connection_3);
-               logic_uScriptAct_Rotate_Target_1 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Rotate_Target_1.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Rotate_Target_1, index + 1);
+               }
+               logic_uScriptAct_Rotate_Target_1[ index++ ] = owner_Connection_3;
+               
             }
             {
             }
@@ -703,7 +728,6 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
             }
             {
                logic_uScriptAct_SendCustomEventInt_EventValue_15 = property_CoinPointsGold_Detox_ScriptEditor_Parameter_CoinPointsGold_20_Get_Refresh( );
-               
             }
             {
             }
@@ -738,7 +762,6 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
             }
             {
                logic_uScriptAct_SendCustomEventInt_EventValue_16 = property_CoinPointsSilver_Detox_ScriptEditor_Parameter_CoinPointsSilver_21_Get_Refresh( );
-               
             }
             {
             }
@@ -768,9 +791,13 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
          if (true == CheckDebugBreak("0d471649-055a-49d9-9f2e-897b9453ca70", "Destroy", Relay_In_18)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add((UnityEngine.GameObject)owner_Connection_19);
-               logic_uScriptAct_Destroy_Target_18 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Destroy_Target_18.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_18, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_18[ index++ ] = owner_Connection_19;
+               
             }
             {
             }
@@ -793,9 +820,13 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       {
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add((UnityEngine.GameObject)owner_Connection_19);
-               logic_uScriptAct_Destroy_Target_18 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Destroy_Target_18.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_18, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_18[ index++ ] = owner_Connection_19;
+               
             }
             {
             }
@@ -876,8 +907,8 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "4f047d1f-956f-4dc8-8dac-8e61efa83007", local_14_System_String);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "CoinCollection_CoinPrefabGraph.uscript:17", local_17_System_String);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "33b537dc-f1a5-4f74-81e8-dbf6e166c752", local_17_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "5f1334f7-2d37-4642-b772-cb3a1df76145", property_CoinPointsGold_Detox_ScriptEditor_Parameter_CoinPointsGold_20);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "3817eb6b-843a-4ff8-86c0-ba472924523d", property_CoinPointsSilver_Detox_ScriptEditor_Parameter_CoinPointsSilver_21);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "5f1334f7-2d37-4642-b772-cb3a1df76145", property_CoinPointsGold_Detox_ScriptEditor_Parameter_CoinPointsGold_20_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "3817eb6b-843a-4ff8-86c0-ba472924523d", property_CoinPointsSilver_Detox_ScriptEditor_Parameter_CoinPointsSilver_21_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

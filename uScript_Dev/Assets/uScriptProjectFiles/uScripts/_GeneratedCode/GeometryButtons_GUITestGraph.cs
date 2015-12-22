@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -896,7 +896,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
          if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_TurnOn_0)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_4_UnityEngine_GameObject_previous != local_4_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -908,13 +908,21 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_0 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_0, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_0[ index++ ] = local_4_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_23_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_0 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_0, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_0[ index++ ] = local_23_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_0.TurnOn(logic_uScriptAct_ToggleComponent_Target_0, logic_uScriptAct_ToggleComponent_ComponentName_0);
@@ -935,7 +943,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
          if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_TurnOff_0)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_4_UnityEngine_GameObject_previous != local_4_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -947,13 +955,21 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_0 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_0, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_0[ index++ ] = local_4_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_23_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_0 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_0, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_0[ index++ ] = local_23_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_0.TurnOff(logic_uScriptAct_ToggleComponent_Target_0, logic_uScriptAct_ToggleComponent_ComponentName_0);
@@ -974,7 +990,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
          if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_Toggle_0)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_4_UnityEngine_GameObject_previous != local_4_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -986,13 +1002,21 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_0 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_0, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_0[ index++ ] = local_4_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_23_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_0 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_0, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_0[ index++ ] = local_23_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_0.Toggle(logic_uScriptAct_ToggleComponent_Target_0, logic_uScriptAct_ToggleComponent_ComponentName_0);
@@ -1259,7 +1283,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
          if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_TurnOn_11)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_4_UnityEngine_GameObject_previous != local_4_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1271,13 +1295,21 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_11 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_11.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_11, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_11[ index++ ] = local_4_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_23_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_11 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_11.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_11, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_11[ index++ ] = local_23_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_11.TurnOn(logic_uScriptAct_ToggleComponent_Target_11, logic_uScriptAct_ToggleComponent_ComponentName_11);
@@ -1298,7 +1330,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
          if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_TurnOff_11)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_4_UnityEngine_GameObject_previous != local_4_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1310,13 +1342,21 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_11 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_11.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_11, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_11[ index++ ] = local_4_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_23_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_11 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_11.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_11, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_11[ index++ ] = local_23_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_11.TurnOff(logic_uScriptAct_ToggleComponent_Target_11, logic_uScriptAct_ToggleComponent_ComponentName_11);
@@ -1337,7 +1377,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
          if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_Toggle_11)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_4_UnityEngine_GameObject_previous != local_4_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1349,13 +1389,21 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_11 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_11.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_11, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_11[ index++ ] = local_4_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_23_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_11 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_11.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_11, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_11[ index++ ] = local_23_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_11.Toggle(logic_uScriptAct_ToggleComponent_Target_11, logic_uScriptAct_ToggleComponent_ComponentName_11);

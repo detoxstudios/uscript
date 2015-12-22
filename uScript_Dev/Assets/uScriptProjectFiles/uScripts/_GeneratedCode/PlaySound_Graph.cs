@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -491,7 +491,7 @@ public class PlaySound_Graph : uScriptLogic
                
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -503,8 +503,12 @@ public class PlaySound_Graph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_1 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_1.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_1, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_1[ index++ ] = local_6_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -533,7 +537,7 @@ public class PlaySound_Graph : uScriptLogic
                
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -545,8 +549,12 @@ public class PlaySound_Graph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_1 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_1.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_1, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_1[ index++ ] = local_6_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -575,7 +583,7 @@ public class PlaySound_Graph : uScriptLogic
                
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -587,8 +595,12 @@ public class PlaySound_Graph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_1 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_1.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_1, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_1[ index++ ] = local_6_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -722,7 +734,7 @@ public class PlaySound_Graph : uScriptLogic
          if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_TurnOn_9)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_10_UnityEngine_GameObject_previous != local_10_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -734,8 +746,12 @@ public class PlaySound_Graph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_10_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_9 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_9.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_9, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_9[ index++ ] = local_10_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -758,7 +774,7 @@ public class PlaySound_Graph : uScriptLogic
          if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_TurnOff_9)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_10_UnityEngine_GameObject_previous != local_10_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -770,8 +786,12 @@ public class PlaySound_Graph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_10_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_9 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_9.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_9, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_9[ index++ ] = local_10_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -794,7 +814,7 @@ public class PlaySound_Graph : uScriptLogic
          if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_Toggle_9)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_10_UnityEngine_GameObject_previous != local_10_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -806,8 +826,12 @@ public class PlaySound_Graph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_10_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_9 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_9.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_9, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_9[ index++ ] = local_10_UnityEngine_GameObject;
+               
             }
             {
             }

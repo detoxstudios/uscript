@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -210,7 +210,11 @@ public class CoinCollection_PlayerController : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.AudioClip property_JumpAudio_Detox_ScriptEditor_Parameter_JumpAudio_48_Get_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_JumpAudio_Detox_ScriptEditor_Parameter_Instance_48.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_JumpAudio_Detox_ScriptEditor_Parameter_Instance_48 != null)
+      {
+         component = property_JumpAudio_Detox_ScriptEditor_Parameter_Instance_48.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          return component.JumpAudio;
@@ -223,7 +227,11 @@ public class CoinCollection_PlayerController : uScriptLogic
    
    void property_JumpAudio_Detox_ScriptEditor_Parameter_JumpAudio_48_Set_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_JumpAudio_Detox_ScriptEditor_Parameter_Instance_48.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_JumpAudio_Detox_ScriptEditor_Parameter_Instance_48 != null)
+      {
+         component = property_JumpAudio_Detox_ScriptEditor_Parameter_Instance_48.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          component.JumpAudio = property_JumpAudio_Detox_ScriptEditor_Parameter_JumpAudio_48;
@@ -639,6 +647,13 @@ public class CoinCollection_PlayerController : uScriptLogic
       logic_uScriptAct_SetBool_uScriptAct_SetBool_35.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_37.SetParent(g);
       logic_uScriptAct_AddVector3_uScriptAct_AddVector3_40.SetParent(g);
+      owner_Connection_41 = parentGameObject;
+      owner_Connection_42 = parentGameObject;
+      owner_Connection_43 = parentGameObject;
+      owner_Connection_44 = parentGameObject;
+      owner_Connection_45 = parentGameObject;
+      owner_Connection_46 = parentGameObject;
+      owner_Connection_47 = parentGameObject;
    }
    public void Awake()
    {
@@ -897,17 +912,25 @@ public class CoinCollection_PlayerController : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("967db53c-3733-4c11-93ce-a73b83a96add", "Add_Vector3", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("967db53c-3733-4c11-93ce-a73b83a96add", "Add_Vector3__OLD_", Relay_In_2)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_14_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_2 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_2.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_2, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_2[ index++ ] = local_14_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_24_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_2 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_2.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_2, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_2[ index++ ] = local_24_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -925,7 +948,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1018,17 +1041,25 @@ public class CoinCollection_PlayerController : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e976feed-4333-4068-90c0-9a79a374d832", "Add_Vector3", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("e976feed-4333-4068-90c0-9a79a374d832", "Add_Vector3__OLD_", Relay_In_12)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_38_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_12 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_12.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_12, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_12[ index++ ] = local_38_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_1_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_12 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_12.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_12, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_12[ index++ ] = local_1_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -1046,7 +1077,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1097,10 +1128,9 @@ public class CoinCollection_PlayerController : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_15 = property_JumpAudio_Detox_ScriptEditor_Parameter_JumpAudio_48_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_21_UnityEngine_GameObject_previous != local_21_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1112,8 +1142,12 @@ public class CoinCollection_PlayerController : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_21_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_15 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_15.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_15, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_15[ index++ ] = local_21_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1139,10 +1173,9 @@ public class CoinCollection_PlayerController : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_15 = property_JumpAudio_Detox_ScriptEditor_Parameter_JumpAudio_48_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_21_UnityEngine_GameObject_previous != local_21_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1154,8 +1187,12 @@ public class CoinCollection_PlayerController : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_21_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_15 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_15.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_15, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_15[ index++ ] = local_21_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1181,10 +1218,9 @@ public class CoinCollection_PlayerController : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_15 = property_JumpAudio_Detox_ScriptEditor_Parameter_JumpAudio_48_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_21_UnityEngine_GameObject_previous != local_21_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1196,8 +1232,12 @@ public class CoinCollection_PlayerController : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_21_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_15 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_15.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_15, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_15[ index++ ] = local_21_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1314,17 +1354,25 @@ public class CoinCollection_PlayerController : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("64321cec-2fd0-4ddb-b83e-ba1970d0e890", "Add_Vector3", Relay_In_20)) return; 
+         if (true == CheckDebugBreak("64321cec-2fd0-4ddb-b83e-ba1970d0e890", "Add_Vector3__OLD_", Relay_In_20)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_33_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_20 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_20.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_20, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_20[ index++ ] = local_33_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_9_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_20 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_20.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_20, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_20[ index++ ] = local_9_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -1342,7 +1390,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1676,17 +1724,25 @@ public class CoinCollection_PlayerController : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("06d1b029-d25f-4ced-a3ac-431bb671c3d2", "Add_Vector3", Relay_In_40)) return; 
+         if (true == CheckDebugBreak("06d1b029-d25f-4ced-a3ac-431bb671c3d2", "Add_Vector3__OLD_", Relay_In_40)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_22_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_40 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_40.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_40, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_40[ index++ ] = local_22_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_8_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_40 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_40.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_40, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_40[ index++ ] = local_8_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -1704,7 +1760,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1736,7 +1792,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "a3f22101-d852-432f-a3dc-3efdfdc40f1b", local_38_UnityEngine_Vector3);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "CoinCollection_PlayerController.uscript:39", local_39_UnityEngine_Vector3);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "2bddf279-21a3-47c4-a248-8c3dd385d6a9", local_39_UnityEngine_Vector3);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "793689b5-bb68-47c3-81a6-2ccdf40bd1c3", property_JumpAudio_Detox_ScriptEditor_Parameter_JumpAudio_48);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "793689b5-bb68-47c3-81a6-2ccdf40bd1c3", property_JumpAudio_Detox_ScriptEditor_Parameter_JumpAudio_48_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

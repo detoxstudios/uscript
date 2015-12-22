@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -382,7 +382,7 @@ public class TeleportCube_TeleportGraph : uScriptLogic
          if (true == CheckDebugBreak("4780ae9d-31f4-4e2f-9e76-68b8486b9ee0", "Teleport", Relay_In_0)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_1_UnityEngine_GameObject_previous != local_1_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -394,8 +394,12 @@ public class TeleportCube_TeleportGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_1_UnityEngine_GameObject);
-               logic_uScriptAct_Teleport_Target_0 = properties.ToArray();
+               if ( logic_uScriptAct_Teleport_Target_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Teleport_Target_0, index + 1);
+               }
+               logic_uScriptAct_Teleport_Target_0[ index++ ] = local_1_UnityEngine_GameObject;
+               
             }
             {
                {
@@ -450,7 +454,7 @@ public class TeleportCube_TeleportGraph : uScriptLogic
          if (true == CheckDebugBreak("107f42dc-0bb6-43bb-9471-9d364183d2b6", "Move_To_Location", Relay_In_3)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_8_UnityEngine_GameObject_previous != local_8_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -462,8 +466,12 @@ public class TeleportCube_TeleportGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_8_UnityEngine_GameObject);
-               logic_uScriptAct_MoveToLocation_targetArray_3 = properties.ToArray();
+               if ( logic_uScriptAct_MoveToLocation_targetArray_3.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_MoveToLocation_targetArray_3, index + 1);
+               }
+               logic_uScriptAct_MoveToLocation_targetArray_3[ index++ ] = local_8_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_MoveToLocation_location_3 = local_7_UnityEngine_Vector3;
@@ -492,7 +500,7 @@ public class TeleportCube_TeleportGraph : uScriptLogic
          if (true == CheckDebugBreak("107f42dc-0bb6-43bb-9471-9d364183d2b6", "Move_To_Location", Relay_Cancel_3)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_8_UnityEngine_GameObject_previous != local_8_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -504,8 +512,12 @@ public class TeleportCube_TeleportGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_8_UnityEngine_GameObject);
-               logic_uScriptAct_MoveToLocation_targetArray_3 = properties.ToArray();
+               if ( logic_uScriptAct_MoveToLocation_targetArray_3.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_MoveToLocation_targetArray_3, index + 1);
+               }
+               logic_uScriptAct_MoveToLocation_targetArray_3[ index++ ] = local_8_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_MoveToLocation_location_3 = local_7_UnityEngine_Vector3;

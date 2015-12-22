@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2998
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -429,12 +429,25 @@ public class NodeDepTest : uScriptLogic
          if (true == CheckDebugBreak("20abfc54-833d-452a-937e-b95c694dec43", "Subtract_Rect__OLD_", Relay_In_13)) return; 
          {
             {
-               logic_uScriptAct_SubtractRect_A_13 = local_14_UnityEngine_RectArray;
+               System.Array properties;
+               int index = 0;
+               properties = local_14_UnityEngine_RectArray;
+               if ( logic_uScriptAct_SubtractRect_A_13.Length != index + properties.Length)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SubtractRect_A_13, index + properties.Length);
+               }
+               System.Array.Copy(properties, 0, logic_uScriptAct_SubtractRect_A_13, index, properties.Length);
+               index += properties.Length;
+               
             }
             {
-               List<UnityEngine.Rect> properties = new List<UnityEngine.Rect>();
-               properties.Add((UnityEngine.Rect)local_15_UnityEngine_Rect);
-               logic_uScriptAct_SubtractRect_B_13 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_SubtractRect_B_13.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SubtractRect_B_13, index + 1);
+               }
+               logic_uScriptAct_SubtractRect_B_13[ index++ ] = local_15_UnityEngine_Rect;
+               
             }
             {
             }
@@ -487,14 +500,22 @@ public class NodeDepTest : uScriptLogic
          if (true == CheckDebugBreak("4bfa5f5a-b656-4540-abd8-55e6308d0073", "Add_Vector2__OLD_", Relay_In_23)) return; 
          {
             {
-               List<UnityEngine.Vector2> properties = new List<UnityEngine.Vector2>();
-               properties.Add((UnityEngine.Vector2)local_24_UnityEngine_Vector2);
-               logic_uScriptAct_AddVector2_A_23 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector2_A_23.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector2_A_23, index + 1);
+               }
+               logic_uScriptAct_AddVector2_A_23[ index++ ] = local_24_UnityEngine_Vector2;
+               
             }
             {
-               List<UnityEngine.Vector2> properties = new List<UnityEngine.Vector2>();
-               properties.Add((UnityEngine.Vector2)local_25_UnityEngine_Vector2);
-               logic_uScriptAct_AddVector2_B_23 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector2_B_23.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector2_B_23, index + 1);
+               }
+               logic_uScriptAct_AddVector2_B_23[ index++ ] = local_25_UnityEngine_Vector2;
+               
             }
             {
             }
@@ -518,14 +539,22 @@ public class NodeDepTest : uScriptLogic
          if (true == CheckDebugBreak("51a00afa-779b-49e0-99a8-15ef583cf0de", "Add_Vector4__OLD_", Relay_In_28)) return; 
          {
             {
-               List<UnityEngine.Vector4> properties = new List<UnityEngine.Vector4>();
-               properties.Add((UnityEngine.Vector4)local_30_UnityEngine_Vector4);
-               logic_uScriptAct_AddVector4_A_28 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector4_A_28.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector4_A_28, index + 1);
+               }
+               logic_uScriptAct_AddVector4_A_28[ index++ ] = local_30_UnityEngine_Vector4;
+               
             }
             {
-               List<UnityEngine.Vector4> properties = new List<UnityEngine.Vector4>();
-               properties.Add((UnityEngine.Vector4)local_31_UnityEngine_Vector4);
-               logic_uScriptAct_AddVector4_B_28 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector4_B_28.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector4_B_28, index + 1);
+               }
+               logic_uScriptAct_AddVector4_B_28[ index++ ] = local_31_UnityEngine_Vector4;
+               
             }
             {
             }
@@ -549,14 +578,22 @@ public class NodeDepTest : uScriptLogic
          if (true == CheckDebugBreak("018f9360-a0c2-4636-a31b-46d6db7eb3e2", "Multiply_Vector2__OLD_", Relay_In_35)) return; 
          {
             {
-               List<UnityEngine.Vector2> properties = new List<UnityEngine.Vector2>();
-               properties.Add((UnityEngine.Vector2)local_36_UnityEngine_Vector2);
-               logic_uScriptAct_MultiplyVector2_A_35 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_MultiplyVector2_A_35.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_MultiplyVector2_A_35, index + 1);
+               }
+               logic_uScriptAct_MultiplyVector2_A_35[ index++ ] = local_36_UnityEngine_Vector2;
+               
             }
             {
-               List<UnityEngine.Vector2> properties = new List<UnityEngine.Vector2>();
-               properties.Add((UnityEngine.Vector2)local_37_UnityEngine_Vector2);
-               logic_uScriptAct_MultiplyVector2_B_35 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_MultiplyVector2_B_35.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_MultiplyVector2_B_35, index + 1);
+               }
+               logic_uScriptAct_MultiplyVector2_B_35[ index++ ] = local_37_UnityEngine_Vector2;
+               
             }
             {
             }

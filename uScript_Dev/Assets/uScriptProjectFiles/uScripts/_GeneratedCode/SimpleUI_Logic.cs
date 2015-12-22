@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -138,7 +138,11 @@ public class SimpleUI_Logic : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_25_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_25.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_25 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_25.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -151,7 +155,11 @@ public class SimpleUI_Logic : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_25_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_25.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_25 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_25.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_25;
@@ -1063,14 +1071,22 @@ public class SimpleUI_Logic : uScriptLogic
          if (true == CheckDebugBreak("e569fd81-1a7c-4db2-a3ef-fb383d01c00c", "Concatenate", Relay_In_21)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_24_System_String);
-               logic_uScriptAct_Concatenate_A_21 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_21.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_21, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_21[ index++ ] = local_24_System_String;
+               
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)property_position_Detox_ScriptEditor_Parameter_position_25_Get_Refresh());
-               logic_uScriptAct_Concatenate_B_21 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_21.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_21, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_21[ index++ ] = property_position_Detox_ScriptEditor_Parameter_position_25_Get_Refresh( );
+               
             }
             {
             }
@@ -1122,7 +1138,7 @@ public class SimpleUI_Logic : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "00cc2bd5-6d15-4639-8f4a-86129e7881fe", local_22_System_String);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "SimpleUI_Logic.uscript:24", local_24_System_String);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "9eb2e6cc-d2d0-4960-ae2f-5aab68796ea9", local_24_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "91948ae5-5928-4534-b8e0-887ba3e7d9a6", property_position_Detox_ScriptEditor_Parameter_position_25);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "91948ae5-5928-4534-b8e0-887ba3e7d9a6", property_position_Detox_ScriptEditor_Parameter_position_25_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

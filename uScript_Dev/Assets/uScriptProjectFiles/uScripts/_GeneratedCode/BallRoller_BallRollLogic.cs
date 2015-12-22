@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -329,7 +329,11 @@ public class BallRoller_BallRollLogic : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_34_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_34.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_34 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_34.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -342,7 +346,11 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_34_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_34.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_34 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_34.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_34;
@@ -1577,7 +1585,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
          if (true == CheckDebugBreak("025b3342-e5c9-4f11-adcf-afbc228558ae", "Set_Euler_Angles", Relay_In_13)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_30_UnityEngine_GameObject_previous != local_30_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1589,8 +1597,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_30_UnityEngine_GameObject);
-               logic_uScriptAct_SetGameObjectEulerAngles_Target_13 = properties.ToArray();
+               if ( logic_uScriptAct_SetGameObjectEulerAngles_Target_13.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SetGameObjectEulerAngles_Target_13, index + 1);
+               }
+               logic_uScriptAct_SetGameObjectEulerAngles_Target_13[ index++ ] = local_30_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1642,7 +1654,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
          if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look_At", Relay_In_14)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_9_UnityEngine_GameObject_previous != local_9_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1654,8 +1666,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_9_UnityEngine_GameObject);
-               logic_uScriptAct_LookAt_Target_14 = properties.ToArray();
+               if ( logic_uScriptAct_LookAt_Target_14.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_14, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_14[ index++ ] = local_9_UnityEngine_GameObject;
+               
             }
             {
                {
@@ -1692,17 +1708,25 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a7784265-1624-4584-bc4e-0f9d2573f7d3", "Add_Vector3", Relay_In_15)) return; 
+         if (true == CheckDebugBreak("a7784265-1624-4584-bc4e-0f9d2573f7d3", "Add_Vector3__OLD_", Relay_In_15)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_16_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_15 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_15.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_15, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_15[ index++ ] = local_16_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_6_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_15 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_15.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_15, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_15[ index++ ] = local_6_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -1720,7 +1744,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1747,7 +1771,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_29_UnityEngine_GameObject_previous != local_29_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1759,8 +1783,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_29_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_17 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_17.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_17, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_17[ index++ ] = local_29_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1789,7 +1817,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_29_UnityEngine_GameObject_previous != local_29_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1801,8 +1829,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_29_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_17 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_17.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_17, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_17[ index++ ] = local_29_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1831,7 +1863,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_29_UnityEngine_GameObject_previous != local_29_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1843,8 +1875,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_29_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_17 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_17.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_17, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_17[ index++ ] = local_29_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2076,17 +2112,25 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1ffa62bc-db40-4dba-a030-a74d3fa2d11d", "Add_Vector3", Relay_In_21)) return; 
+         if (true == CheckDebugBreak("1ffa62bc-db40-4dba-a030-a74d3fa2d11d", "Add_Vector3__OLD_", Relay_In_21)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_35_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_21 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_21.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_21, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_21[ index++ ] = local_35_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_40_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_21 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_21.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_21, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_21[ index++ ] = local_40_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -2104,7 +2148,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -2137,17 +2181,25 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add_Vector3", Relay_In_23)) return; 
+         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add_Vector3__OLD_", Relay_In_23)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_32_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_23 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_23.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_23, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_23[ index++ ] = local_32_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_Camera_Offset_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_23 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_23.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_23, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_23[ index++ ] = local_Camera_Offset_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -2165,7 +2217,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -2205,17 +2257,25 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aed4cbb7-1a43-441d-9b8a-2d2aa6a54887", "Add_Vector3", Relay_In_27)) return; 
+         if (true == CheckDebugBreak("aed4cbb7-1a43-441d-9b8a-2d2aa6a54887", "Add_Vector3__OLD_", Relay_In_27)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_10_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_27 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_27.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_27, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_27[ index++ ] = local_10_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_46_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_27 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_27.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_27, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_27[ index++ ] = local_46_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -2233,7 +2293,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -2355,17 +2415,25 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0e39d844-aafe-4bd6-ae3d-93278c0c62d6", "Add_Vector3", Relay_In_42)) return; 
+         if (true == CheckDebugBreak("0e39d844-aafe-4bd6-ae3d-93278c0c62d6", "Add_Vector3__OLD_", Relay_In_42)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_11_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_42 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_42.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_42, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_42[ index++ ] = local_11_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_31_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_42 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_42.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_42, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_42[ index++ ] = local_31_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -2383,7 +2451,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript BallRoller_BallRollLogic.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -2454,9 +2522,13 @@ public class BallRoller_BallRollLogic : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_Attach_Camera_System_Boolean);
-               logic_uScriptAct_Log_Target_48 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_48.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_48, index + 1);
+               }
+               logic_uScriptAct_Log_Target_48[ index++ ] = local_Attach_Camera_System_Boolean;
+               
             }
             {
             }
@@ -2479,7 +2551,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
          if (true == CheckDebugBreak("d9cbe2c7-b65f-4d59-b76c-1c564e60549f", "Set_Position", Relay_In_49)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_30_UnityEngine_GameObject_previous != local_30_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2491,8 +2563,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_30_UnityEngine_GameObject);
-               logic_uScriptAct_SetGameObjectPosition_Target_49 = properties.ToArray();
+               if ( logic_uScriptAct_SetGameObjectPosition_Target_49.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SetGameObjectPosition_Target_49, index + 1);
+               }
+               logic_uScriptAct_SetGameObjectPosition_Target_49[ index++ ] = local_30_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -3117,7 +3193,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "ae4fb8a3-14bd-473c-ae86-a3deae44953a", local_Can_Jump__System_Boolean);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "BallRoller_BallRollLogic.uscript:Col_Sound", local_Col_Sound_UnityEngine_AudioClip);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "44b3db84-6540-456e-9482-ce23723709ad", local_Col_Sound_UnityEngine_AudioClip);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "fe0476bf-cd81-419c-a23a-58f4c4d16dfb", property_position_Detox_ScriptEditor_Parameter_position_34);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "fe0476bf-cd81-419c-a23a-58f4c4d16dfb", property_position_Detox_ScriptEditor_Parameter_position_34_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

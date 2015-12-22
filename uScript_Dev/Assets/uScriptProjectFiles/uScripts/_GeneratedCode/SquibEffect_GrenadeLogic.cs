@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -122,6 +122,7 @@ public class SquibEffect_GrenadeLogic : uScriptLogic
       parentGameObject = g;
       
       logic_uScriptAct_Destroy_uScriptAct_Destroy_0.SetParent(g);
+      owner_Connection_3 = parentGameObject;
    }
    public void Awake()
    {
@@ -208,9 +209,13 @@ public class SquibEffect_GrenadeLogic : uScriptLogic
          if (true == CheckDebugBreak("25166e9c-a1aa-4230-9e5d-86e52dbecd46", "Destroy", Relay_In_0)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add((UnityEngine.GameObject)owner_Connection_3);
-               logic_uScriptAct_Destroy_Target_0 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Destroy_Target_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_0, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_0[ index++ ] = owner_Connection_3;
+               
             }
             {
                logic_uScriptAct_Destroy_DelayTime_0 = local_2_System_Single;
@@ -235,9 +240,13 @@ public class SquibEffect_GrenadeLogic : uScriptLogic
       {
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add((UnityEngine.GameObject)owner_Connection_3);
-               logic_uScriptAct_Destroy_Target_0 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Destroy_Target_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_0, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_0[ index++ ] = owner_Connection_3;
+               
             }
             {
                logic_uScriptAct_Destroy_DelayTime_0 = local_2_System_Single;

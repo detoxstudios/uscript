@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -596,7 +596,11 @@ public class FireBot_Gameplay : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.Vector3 property_forward_Detox_ScriptEditor_Parameter_forward_77_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_forward_Detox_ScriptEditor_Parameter_Instance_77.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_forward_Detox_ScriptEditor_Parameter_Instance_77 != null)
+      {
+         component = property_forward_Detox_ScriptEditor_Parameter_Instance_77.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.forward;
@@ -609,7 +613,11 @@ public class FireBot_Gameplay : uScriptLogic
    
    void property_forward_Detox_ScriptEditor_Parameter_forward_77_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_forward_Detox_ScriptEditor_Parameter_Instance_77.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_forward_Detox_ScriptEditor_Parameter_Instance_77 != null)
+      {
+         component = property_forward_Detox_ScriptEditor_Parameter_Instance_77.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.forward = property_forward_Detox_ScriptEditor_Parameter_forward_77;
@@ -2117,7 +2125,7 @@ public class FireBot_Gameplay : uScriptLogic
          if (true == CheckDebugBreak("0e882847-e42e-4799-b21f-ab15202ff3fa", "Destroy", Relay_In_31)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_66_UnityEngine_GameObject_previous != local_66_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2129,8 +2137,12 @@ public class FireBot_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_66_UnityEngine_GameObject);
-               logic_uScriptAct_Destroy_Target_31 = properties.ToArray();
+               if ( logic_uScriptAct_Destroy_Target_31.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_31, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_31[ index++ ] = local_66_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2153,7 +2165,7 @@ public class FireBot_Gameplay : uScriptLogic
       {
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_66_UnityEngine_GameObject_previous != local_66_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2165,8 +2177,12 @@ public class FireBot_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_66_UnityEngine_GameObject);
-               logic_uScriptAct_Destroy_Target_31 = properties.ToArray();
+               if ( logic_uScriptAct_Destroy_Target_31.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_31, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_31[ index++ ] = local_66_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2849,9 +2865,13 @@ public class FireBot_Gameplay : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_Points_String_System_String);
-               logic_uScriptAct_Concatenate_B_58 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_58.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_58, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_58[ index++ ] = local_Points_String_System_String;
+               
             }
             {
             }
@@ -3049,17 +3069,25 @@ public class FireBot_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("96806546-d135-4046-9de8-a046ad698142", "Add_Float", Relay_In_65)) return; 
+         if (true == CheckDebugBreak("96806546-d135-4046-9de8-a046ad698142", "Add_Float__OLD_", Relay_In_65)) return; 
          {
             {
-               List<System.Single> properties = new List<System.Single>();
-               properties.Add((System.Single)local_115_System_Single);
-               logic_uScriptAct_AddFloat_A_65 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddFloat_A_65.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddFloat_A_65, index + 1);
+               }
+               logic_uScriptAct_AddFloat_A_65[ index++ ] = local_115_System_Single;
+               
             }
             {
-               List<System.Single> properties = new List<System.Single>();
-               properties.Add((System.Single)local_45_System_Single);
-               logic_uScriptAct_AddFloat_B_65 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddFloat_B_65.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddFloat_B_65, index + 1);
+               }
+               logic_uScriptAct_AddFloat_B_65[ index++ ] = local_45_System_Single;
+               
             }
             {
             }
@@ -3079,7 +3107,7 @@ public class FireBot_Gameplay : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Float.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Float (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -3180,7 +3208,7 @@ public class FireBot_Gameplay : uScriptLogic
          if (true == CheckDebugBreak("6fb23ca1-29ad-47cd-83ab-24e5057115bb", "Set_Position", Relay_In_74)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_117_UnityEngine_GameObject_previous != local_117_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -3192,8 +3220,12 @@ public class FireBot_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_117_UnityEngine_GameObject);
-               logic_uScriptAct_SetGameObjectPosition_Target_74 = properties.ToArray();
+               if ( logic_uScriptAct_SetGameObjectPosition_Target_74.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SetGameObjectPosition_Target_74, index + 1);
+               }
+               logic_uScriptAct_SetGameObjectPosition_Target_74[ index++ ] = local_117_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_SetGameObjectPosition_Position_74 = local_144_UnityEngine_Vector3;
@@ -3447,17 +3479,25 @@ public class FireBot_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7004c7c3-4361-47ff-8d06-20f232f5e207", "Add_Int", Relay_In_88)) return; 
+         if (true == CheckDebugBreak("7004c7c3-4361-47ff-8d06-20f232f5e207", "Add_Int__OLD_", Relay_In_88)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_95_System_Int32);
-               logic_uScriptAct_AddInt_A_88 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_A_88.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_88, index + 1);
+               }
+               logic_uScriptAct_AddInt_A_88[ index++ ] = local_95_System_Int32;
+               
             }
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_Points_System_Int32);
-               logic_uScriptAct_AddInt_B_88 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_B_88.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_88, index + 1);
+               }
+               logic_uScriptAct_AddInt_B_88[ index++ ] = local_Points_System_Int32;
+               
             }
             {
             }
@@ -3472,7 +3512,7 @@ public class FireBot_Gameplay : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -3693,9 +3733,13 @@ public class FireBot_Gameplay : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_Points_System_Int32);
-               logic_uScriptAct_Concatenate_B_108 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_108.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_108, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_108[ index++ ] = local_Points_System_Int32;
+               
             }
             {
             }
@@ -4243,14 +4287,18 @@ public class FireBot_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("15606cb3-61b4-4937-8ea5-475fb49e03aa", "Add_Int", Relay_In_137)) return; 
+         if (true == CheckDebugBreak("15606cb3-61b4-4937-8ea5-475fb49e03aa", "Add_Int__OLD_", Relay_In_137)) return; 
          {
             {
             }
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_150_System_Int32);
-               logic_uScriptAct_AddInt_B_137 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_B_137.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_137, index + 1);
+               }
+               logic_uScriptAct_AddInt_B_137[ index++ ] = local_150_System_Int32;
+               
             }
             {
             }
@@ -4270,7 +4318,7 @@ public class FireBot_Gameplay : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -4417,7 +4465,6 @@ public class FireBot_Gameplay : uScriptLogic
          {
             {
                logic_uScriptAct_ScaleVector3_v_146 = property_forward_Detox_ScriptEditor_Parameter_forward_77_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_ScaleVector3_s_146 = local_Bot_Speed_System_Single;
@@ -4632,7 +4679,7 @@ public class FireBot_Gameplay : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "903830b5-437c-4cca-97d1-a683e91b3552", local_151_UnityEngine_GameObject);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "FireBot_Gameplay.uscript:152", local_152_System_Int32);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "e32ec0d7-3705-4f02-b338-d8e2dcd2e51b", local_152_System_Int32);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "27741908-f05c-48d8-8bb1-66759fff7627", property_forward_Detox_ScriptEditor_Parameter_forward_77);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "27741908-f05c-48d8-8bb1-66759fff7627", property_forward_Detox_ScriptEditor_Parameter_forward_77_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {
