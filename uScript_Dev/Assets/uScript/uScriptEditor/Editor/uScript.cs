@@ -31,7 +31,10 @@ using Detox.ScriptEditor;
 using Detox.Windows.Forms;
 
 using UnityEditor;
+
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
 using UnityEditor.SceneManagement;
+#endif
 
 using UnityEngine;
 
