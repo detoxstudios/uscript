@@ -4,6 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
+#if (!UNITY_3_5 || !UNITY_4_6 || !UNITY_4_7 || !UNITY_5_0 || !UNITY_5_1 || !UNITY_5_2)
 [NodePath("Actions/Application")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
@@ -12,11 +13,7 @@ using System.Collections;
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Application Info", "This node allows access to application run-time data.")]
-
-#if (!UNITY_3_5 || !UNITY_4_6 || !UNITY_4_7 || !UNITY_5_0 || !UNITY_5_1 || !UNITY_5_2)
-   [NodeDeprecated(typeof(uScriptAct_ApplicationInfoV2))]
-#endif
-public class uScriptAct_ApplicationInfo : uScriptLogic
+public class uScriptAct_ApplicationInfoV2 : uScriptLogic
 {
    public bool Out { get { return true; } }
 
@@ -27,24 +24,16 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
 
       [FriendlyName("loadedLevel", "The level index that was last loaded.")]
       [SocketState(false, false)]
-      out int loadedLevel,
+      out int[] loadedLevels,
 
       [FriendlyName("loadedLevelName", "The name of the level that was last loaded.")]
       [SocketState(false, false)]
-      out string loadedLevelName,
+      out string[] loadedLevelNames,
 
       [FriendlyName("isEditor", "Are we running inside the Unity editor?")]
       [SocketState(false, false)]
       out bool isEditor,
 
-      // This functionality was depricated in 5.2. You now need to specify a level index, so for
-      // general application reporting you can no longer find out if ANY level might be currently loading, which
-      // is what this node's intention to report out from this socket was for.
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1)
-      [FriendlyName("isLoadingLevel", "Is some level being loaded?")]
-      [SocketState(false, false)]
-      out bool isLoadingLevel,
-#endif
       [FriendlyName("isPlaying", "Returns true when in any kind of player.")]
       [SocketState(false, false)]
       out bool isPlaying,
@@ -113,24 +102,19 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       out string unityVersion
       )
    {
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
-         levelCount = Application.levelCount;
-         loadedLevel = Application.loadedLevel;
-         loadedLevelName = Application.loadedLevelName;
-#else
-         levelCount = 0;
-         loadedLevel = 0;
-         loadedLevelName = "";
-#endif
+      levelCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
+
+      UnityEngine.SceneManagement.Scene[] scenes = UnityEngine.SceneManagement.SceneManager.GetAllScenes();
+      loadedLevels = new int[scenes.Length];
+      loadedLevelNames = new string[scenes.Length];
+
+      for (int i = 0; i < scenes.Length; i++)
+      {
+         loadedLevels[i] = scenes[i].buildIndex;
+         loadedLevelNames[i] = scenes[i].name;
+      }
 
       isEditor = Application.isEditor;
-
-      // This functionality was depricated in 5.2. You now need to specify a level index, so for
-      // general application reporting you can no longer find out if ANY level might be currently loading, which
-      // is what this node's intention to report out from this socket was for.
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1)
-      isLoadingLevel = Application.isLoadingLevel;
-#endif
 
       isPlaying = Application.isPlaying;
       isWebPlayer = Application.isWebPlayer;
@@ -156,3 +140,4 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       targetFrameRate = Application.targetFrameRate;
    }
 }
+#endif //#if (!UNITY_3_5 || !UNITY_4_6 || !UNITY_4_7 || !UNITY_5_0 || !UNITY_5_1 || !UNITY_5_2)
