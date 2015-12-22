@@ -3458,18 +3458,13 @@ public sealed partial class uScript : EditorWindow
 
    public void RebuildScript(string scriptFullName, bool stubCode)
    {
-      Debug.Log(string.Format("Rebuilding {0} - {1}...", scriptFullName, stubCode));
       var scriptEditor = new ScriptEditor(string.Empty, null, null);
-      Debug.Log("0");
       scriptEditor.Open(scriptFullName);
-      Debug.Log("1");
 
       scriptEditor = new ScriptEditor(string.Empty, this.PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
-      Debug.Log("2");
 
       if (scriptEditor.Open(scriptFullName))
       {
-         Debug.Log("3");
          if (this.SaveGraph(scriptEditor, scriptFullName, true, this.GenerateDebugInfo, stubCode))
          {
             uScriptDebug.Log(string.Format("Rebuilt:\t{0}", scriptFullName.RelativeAssetPath()));
@@ -3484,30 +3479,22 @@ public sealed partial class uScript : EditorWindow
    public void RebuildScripts(string path, bool stubCode)
    {
       Debug.Log(string.Format("RebuildScripts({0}, {1})", path, stubCode));
-      Debug.Log("4");
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
-      Debug.Log("5");
       List<string> files = GetGraphPaths();
-      Debug.Log("6");
       foreach (string file in files)
       {
-         Debug.Log("7");
          this.RebuildScript(file, stubCode);
       }
 #else
-      Debug.Log("8");
       var directory = new DirectoryInfo(path);
 
       var files = directory.GetFiles();
 
-      Debug.Log("9");
       foreach (var file in files.Where(file => ".uscript" == file.Extension))
       {
-         Debug.Log("10");
          this.RebuildScript(file.FullName, stubCode);
       }
 
-      Debug.Log("11");
       foreach (var subDirectory in directory.GetDirectories())
       {
          this.RebuildScripts(subDirectory.FullName, stubCode);

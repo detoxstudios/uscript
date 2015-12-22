@@ -7,7 +7,25 @@ public class uScriptBuildScript : MonoBehaviour
    [MenuItem("uScript/Internal/Rebuild All Graphs")]
    public static void RebuildAllGraphs()
    {
-      uScript.Instance.RebuildAllScripts(true);
+      Debug.Log("Start Rebuild All Graphs...");
+      AssetDatabase.StartAssetEditing();
+      uScript.Instance.StubGeneratedCode(uScript.Preferences.UserScripts);
+      AssetDatabase.StopAssetEditing();
+      AssetDatabase.Refresh();
+
+      int i = 0;
+      while (i++ < 1000000 && EditorApplication.isCompiling == true) { }
+
+      //now build any scripts which are used as nested nodes
+      //when these are done we will then build any scripts which references these
+      //see the m_DoRebuildScripts below
+      AssetDatabase.StartAssetEditing();
+      {
+         uScript.Instance.RebuildScripts(uScript.Preferences.UserScripts, false);
+      }
+      AssetDatabase.StopAssetEditing();
+      AssetDatabase.Refresh();
+      Debug.Log("End Rebuild All Graphs...");
    }
 
    [MenuItem("uScript/Internal/Fixup Example Scenes", false, 200)]
