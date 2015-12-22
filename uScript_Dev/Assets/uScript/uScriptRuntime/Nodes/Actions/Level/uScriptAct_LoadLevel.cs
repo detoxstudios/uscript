@@ -41,11 +41,19 @@ public class uScriptAct_LoadLevel : uScriptLogic
       {
          if ( true == destroyOtherObjects )
          {
-            Application.LoadLevel(name);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               Application.LoadLevel(name);
+            #else
+               UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+            #endif
          }
          else
          {
-            Application.LoadLevelAdditive(name);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               Application.LoadLevelAdditive(name);
+            #else
+               UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+            #endif
          }
 
          if ( null != Loaded ) Loaded( this, System.EventArgs.Empty );
