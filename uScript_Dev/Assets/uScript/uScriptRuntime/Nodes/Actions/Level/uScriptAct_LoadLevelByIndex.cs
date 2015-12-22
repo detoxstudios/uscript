@@ -40,11 +40,19 @@ public class uScriptAct_LoadLevelByIndex : uScriptLogic
       {
          if ( true == destroyOtherObjects )
          {
-            Application.LoadLevel(index);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               Application.LoadLevel(index);
+            #else
+               UnityEngine.SceneManagement.SceneManager.LoadScene(index);
+            #endif
          }
          else
          {
-            Application.LoadLevelAdditive(index);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               Application.LoadLevelAdditive(index);
+            #else
+               UnityEngine.SceneManagement.SceneManager.LoadScene(index, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            #endif
          }
 
          if ( null != Loaded ) Loaded( this, System.EventArgs.Empty );
@@ -55,11 +63,19 @@ public class uScriptAct_LoadLevelByIndex : uScriptLogic
 
          if ( true == destroyOtherObjects )
          {
-            m_Async = Application.LoadLevelAsync(index);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               m_Async = Application.LoadLevelAsync(index);
+            #else
+               m_Async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(index);
+            #endif
          }
          else
          {
-            m_Async = Application.LoadLevelAdditiveAsync(index);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               m_Async = Application.LoadLevelAdditiveAsync(index);
+            #else
+               m_Async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(index, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            #endif
          }
       }
    }

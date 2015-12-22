@@ -52,7 +52,7 @@ public class uScriptAct_LoadLevel : uScriptLogic
             #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
                Application.LoadLevelAdditive(name);
             #else
-               UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+               UnityEngine.SceneManagement.SceneManager.LoadScene(name, UnityEngine.SceneManagement.LoadSceneMode.Additive);
             #endif
          }
 
@@ -64,11 +64,19 @@ public class uScriptAct_LoadLevel : uScriptLogic
 
          if ( true == destroyOtherObjects )
          {
-            m_Async = Application.LoadLevelAsync(name);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               m_Async = Application.LoadLevelAsync(name);
+            #else
+               m_Async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(name);
+            #endif
          }
          else
          {
-            m_Async = Application.LoadLevelAdditiveAsync(name);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               m_Async = Application.LoadLevelAdditiveAsync(name);
+            #else
+               m_Async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(name, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            #endif
          }
       }
    }
