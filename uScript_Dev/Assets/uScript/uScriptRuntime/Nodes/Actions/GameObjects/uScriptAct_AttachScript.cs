@@ -2,8 +2,6 @@
 // (C) 2011 Detox Studios LLC
 
 using UnityEngine;
-using System.Collections;
-
 [NodePath("Actions/GameObjects")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
@@ -21,7 +19,7 @@ public class uScriptAct_AttachScript : uScriptLogic
       [FriendlyName("Target", "The GameObject(s) to attach the script to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
-      [FriendlyName("Component Name", "The names of the components or script filenames to attach to the specified GameObject(s).")]
+      [FriendlyName("Component Name", "Requires the component or script assembly fully qualified name.")]
       string[] ScriptName
       )
    {
