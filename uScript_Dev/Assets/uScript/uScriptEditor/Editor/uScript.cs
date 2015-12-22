@@ -404,7 +404,7 @@ public sealed partial class uScript : EditorWindow
       uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
       uScriptMaster.transform.position = Vector3.zero;
 
-#if !(UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
       EditorSceneManager.MarkSceneDirty(uScriptMaster.scene);
 #elif !(UNITY_3_5)
       EditorApplication.MarkSceneDirty();
