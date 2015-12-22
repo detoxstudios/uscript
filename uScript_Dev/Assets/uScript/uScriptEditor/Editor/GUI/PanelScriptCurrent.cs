@@ -367,7 +367,7 @@ namespace Detox.Editor.GUI
                this.currentSceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
             #else
                UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
-               this.currentSceneName = scene != null ? scene.name : "";
+               this.currentSceneName = scene.name;
             #endif
          }
 

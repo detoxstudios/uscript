@@ -3379,14 +3379,14 @@ public sealed partial class uScript : EditorWindow
       scriptEditor.Open(fullPath);
 
       scriptEditor = new Detox.ScriptEditor.ScriptEditor(string.Empty, PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
-
+ 
       if (scriptEditor.Open(fullPath))
       {
          #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
          #else
             UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
-            string sceneName = scene != null ? scene.name : "";
+            string sceneName = scene.name;
          #endif
          
          if (uScript.Preferences.EnableSceneWarning && scriptEditor.SceneName != string.Empty && scriptEditor.SceneName != sceneName)
@@ -3795,7 +3795,7 @@ public sealed partial class uScript : EditorWindow
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
          #else
             UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
-            string sceneName = scene != null ? scene.name : "";
+            string sceneName = scene.name;
          #endif
 
          script.SceneName = sceneName;

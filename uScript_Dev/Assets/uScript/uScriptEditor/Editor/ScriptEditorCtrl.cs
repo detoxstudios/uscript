@@ -2976,7 +2976,7 @@ namespace Detox.ScriptEditor
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
          #else
             UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
-            string sceneName = scene != null ? scene.name : "";
+            string sceneName = scene.name;
          #endif
 
          string sceneMenu = (typeHash == null
