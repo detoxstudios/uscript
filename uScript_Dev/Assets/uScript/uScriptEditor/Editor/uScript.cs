@@ -31,6 +31,7 @@ using Detox.ScriptEditor;
 using Detox.Windows.Forms;
 
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 using UnityEngine;
 
@@ -394,10 +395,20 @@ public sealed partial class uScript : EditorWindow
          uScriptDebug.Type.Debug);
 
       var uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-      if (null != uScriptMaster) return uScriptMaster;
+      if (null != uScriptMaster)
+      {
+         return uScriptMaster;
+      }
 
       uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
       uScriptMaster.transform.position = Vector3.zero;
+
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+      EditorSceneManager.MarkSceneDirty(uScriptMaster.scene);
+#else
+      EditorApplication.MarkSceneDirty();
+#endif
+
       return uScriptMaster;
    }
 
@@ -510,7 +521,7 @@ public sealed partial class uScript : EditorWindow
       }
       return files;
    }
-#endif 
+#endif
 
    public static List<string> GetGraphPaths(string label = "uScriptSource")
    {
@@ -1017,7 +1028,7 @@ public sealed partial class uScript : EditorWindow
 
          m_UndoPatches[m_UndoNumber] = base64;
 
-#if  UNITY_3_5
+#if UNITY_3_5
          UnityEditor.Undo.RegisterUndo(this.undoObject, p.Name + " (uScript)");
 #else
          UnityEditor.Undo.RecordObject(this.undoObject, p.Name + " (uScript)");
