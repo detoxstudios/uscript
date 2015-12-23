@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -1021,14 +1021,22 @@ public class SquibEffect_Gameplay : uScriptLogic
          if (true == CheckDebugBreak("ebe0881f-4ab9-45f3-b19a-9af4e7034095", "Concatenate", Relay_In_27)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_33_System_String);
-               logic_uScriptAct_Concatenate_A_27 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_27.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_27, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_27[ index++ ] = local_33_System_String;
+               
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_Grenades_On_Hand_System_Int32);
-               logic_uScriptAct_Concatenate_B_27 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_27.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_27, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_27[ index++ ] = local_Grenades_On_Hand_System_Int32;
+               
             }
             {
             }
@@ -1542,17 +1550,25 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d778b925-f5b1-4898-bd70-6d4178f8d456", "Add_Vector3", Relay_In_63)) return; 
+         if (true == CheckDebugBreak("d778b925-f5b1-4898-bd70-6d4178f8d456", "Add_Vector3__OLD_", Relay_In_63)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_2_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_63 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_63.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_63, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_63[ index++ ] = local_2_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_74_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_63 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_63.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_63, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_63[ index++ ] = local_74_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -1570,7 +1586,7 @@ public class SquibEffect_Gameplay : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript SquibEffect_Gameplay.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript SquibEffect_Gameplay.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1587,7 +1603,7 @@ public class SquibEffect_Gameplay : uScriptLogic
          if (true == CheckDebugBreak("f51e7402-d63e-490b-b146-2c054d8356ed", "Destroy", Relay_In_68)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_62_UnityEngine_GameObject_previous != local_62_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1599,8 +1615,12 @@ public class SquibEffect_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
-               logic_uScriptAct_Destroy_Target_68 = properties.ToArray();
+               if ( logic_uScriptAct_Destroy_Target_68.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_68, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_68[ index++ ] = local_62_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_Destroy_DelayTime_68 = local_13_System_Single;
@@ -1625,7 +1645,7 @@ public class SquibEffect_Gameplay : uScriptLogic
       {
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_62_UnityEngine_GameObject_previous != local_62_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1637,8 +1657,12 @@ public class SquibEffect_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
-               logic_uScriptAct_Destroy_Target_68 = properties.ToArray();
+               if ( logic_uScriptAct_Destroy_Target_68.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_68, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_68[ index++ ] = local_62_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_Destroy_DelayTime_68 = local_13_System_Single;
@@ -1840,7 +1864,7 @@ public class SquibEffect_Gameplay : uScriptLogic
          if (true == CheckDebugBreak("26f65288-e764-454f-b351-2f357bffed91", "Destroy", Relay_In_84)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_85_UnityEngine_GameObject_previous != local_85_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1852,8 +1876,12 @@ public class SquibEffect_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_85_UnityEngine_GameObject);
-               logic_uScriptAct_Destroy_Target_84 = properties.ToArray();
+               if ( logic_uScriptAct_Destroy_Target_84.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_84, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_84[ index++ ] = local_85_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_Destroy_DelayTime_84 = local_80_System_Single;
@@ -1883,7 +1911,7 @@ public class SquibEffect_Gameplay : uScriptLogic
       {
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_85_UnityEngine_GameObject_previous != local_85_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1895,8 +1923,12 @@ public class SquibEffect_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_85_UnityEngine_GameObject);
-               logic_uScriptAct_Destroy_Target_84 = properties.ToArray();
+               if ( logic_uScriptAct_Destroy_Target_84.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_84, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_84[ index++ ] = local_85_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_Destroy_DelayTime_84 = local_80_System_Single;
@@ -1921,17 +1953,25 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("237639bd-a378-4c40-8f07-db9dce0403ca", "Add_Vector3", Relay_In_88)) return; 
+         if (true == CheckDebugBreak("237639bd-a378-4c40-8f07-db9dce0403ca", "Add_Vector3__OLD_", Relay_In_88)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_93_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_88 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_88.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_88, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_88[ index++ ] = local_93_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_RayHitLocation_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_88 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_88.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_88, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_88[ index++ ] = local_RayHitLocation_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -1949,7 +1989,7 @@ public class SquibEffect_Gameplay : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript SquibEffect_Gameplay.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript SquibEffect_Gameplay.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    

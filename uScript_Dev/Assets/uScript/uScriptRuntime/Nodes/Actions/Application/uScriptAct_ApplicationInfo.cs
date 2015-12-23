@@ -12,6 +12,10 @@ using System.Collections;
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Application Info", "This node allows access to application run-time data.")]
+
+#if (!UNITY_3_5 && !UNITY_4_6 && !UNITY_4_7 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2)
+   [NodeDeprecated(typeof(uScriptAct_ApplicationInfoV2))]
+#endif
 public class uScriptAct_ApplicationInfo : uScriptLogic
 {
    public bool Out { get { return true; } }
@@ -109,9 +113,15 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       out string unityVersion
       )
    {
-      levelCount = Application.levelCount;
-      loadedLevel = Application.loadedLevel;
-      loadedLevelName = Application.loadedLevelName;
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+         levelCount = Application.levelCount;
+         loadedLevel = Application.loadedLevel;
+         loadedLevelName = Application.loadedLevelName;
+#else
+         levelCount = 0;
+         loadedLevel = 0;
+         loadedLevelName = "";
+#endif
 
       isEditor = Application.isEditor;
 

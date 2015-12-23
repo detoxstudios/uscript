@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -234,7 +234,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_13_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_13.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_13 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_13.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -247,7 +251,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_13_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_13.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_13 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_13.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_13;
@@ -256,7 +264,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    UnityEngine.AudioClip property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Get_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46 != null)
+      {
+         component = property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          return component.CoinAudioGold;
@@ -269,7 +281,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Set_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46 != null)
+      {
+         component = property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          component.CoinAudioGold = property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46;
@@ -278,7 +294,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    UnityEngine.AudioClip property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Get_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47 != null)
+      {
+         component = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          return component.CoinAudioSilver;
@@ -291,7 +311,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Set_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47 != null)
+      {
+         component = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          component.CoinAudioSilver = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47;
@@ -300,7 +324,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    UnityEngine.GameObject property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_Player_Detox_ScriptEditor_Parameter_Instance_48.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_Player_Detox_ScriptEditor_Parameter_Instance_48 != null)
+      {
+         component = property_Player_Detox_ScriptEditor_Parameter_Instance_48.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          return component.Player;
@@ -313,7 +341,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void property_Player_Detox_ScriptEditor_Parameter_Player_48_Set_Refresh( )
    {
-      CoinCollection_GameplayGlobals_Component component = property_Player_Detox_ScriptEditor_Parameter_Instance_48.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      CoinCollection_GameplayGlobals_Component component = null;
+      if (property_Player_Detox_ScriptEditor_Parameter_Instance_48 != null)
+      {
+         component = property_Player_Detox_ScriptEditor_Parameter_Instance_48.GetComponent<CoinCollection_GameplayGlobals_Component>();
+      }
       if ( null != component )
       {
          component.Player = property_Player_Detox_ScriptEditor_Parameter_Player_48;
@@ -1024,7 +1056,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          if (true == CheckDebugBreak("025b3342-e5c9-4f11-adcf-afbc228558ae", "Set_Euler_Angles", Relay_In_4)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_11_UnityEngine_GameObject_previous != local_11_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1036,8 +1068,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_11_UnityEngine_GameObject);
-               logic_uScriptAct_SetGameObjectEulerAngles_Target_4 = properties.ToArray();
+               if ( logic_uScriptAct_SetGameObjectEulerAngles_Target_4.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SetGameObjectEulerAngles_Target_4, index + 1);
+               }
+               logic_uScriptAct_SetGameObjectEulerAngles_Target_4[ index++ ] = local_11_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1089,7 +1125,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look_At", Relay_In_5)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_3_UnityEngine_GameObject_previous != local_3_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1101,8 +1137,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_3_UnityEngine_GameObject);
-               logic_uScriptAct_LookAt_Target_5 = properties.ToArray();
+               if ( logic_uScriptAct_LookAt_Target_5.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_5, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_5[ index++ ] = local_3_UnityEngine_GameObject;
+               
             }
             {
                {
@@ -1118,7 +1158,6 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                   }
                }
                logic_uScriptAct_LookAt_Focus_5 = property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh( );
-               
             }
             {
             }
@@ -1208,17 +1247,25 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add_Vector3", Relay_In_7)) return; 
+         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add_Vector3__OLD_", Relay_In_7)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_12_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_A_7 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_7.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_7, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_7[ index++ ] = local_12_UnityEngine_Vector3;
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_Camera_Offset_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_7 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_7.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_7, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_7[ index++ ] = local_Camera_Offset_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -1236,7 +1283,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_MetagameLogic.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_MetagameLogic.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1364,9 +1411,13 @@ public class CoinCollection_MetagameLogic : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_Attach_Camera_System_Boolean);
-               logic_uScriptAct_Log_Target_19 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_19.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_19, index + 1);
+               }
+               logic_uScriptAct_Log_Target_19[ index++ ] = local_Attach_Camera_System_Boolean;
+               
             }
             {
             }
@@ -1389,7 +1440,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          if (true == CheckDebugBreak("d9cbe2c7-b65f-4d59-b76c-1c564e60549f", "Set_Position", Relay_In_20)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_11_UnityEngine_GameObject_previous != local_11_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1401,8 +1452,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_11_UnityEngine_GameObject);
-               logic_uScriptAct_SetGameObjectPosition_Target_20 = properties.ToArray();
+               if ( logic_uScriptAct_SetGameObjectPosition_Target_20.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SetGameObjectPosition_Target_20, index + 1);
+               }
+               logic_uScriptAct_SetGameObjectPosition_Target_20[ index++ ] = local_11_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1442,7 +1497,6 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                   }
                }
                logic_uScriptAct_GetPositionAndRotation_Target_21 = property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh( );
-               
             }
             {
             }
@@ -1747,14 +1801,22 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          if (true == CheckDebugBreak("b0937780-42b9-40d2-8edf-8a09ca78aa2b", "Concatenate", Relay_In_29)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_31_System_String);
-               logic_uScriptAct_Concatenate_A_29 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_29.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_29, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_29[ index++ ] = local_31_System_String;
+               
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_CoinTotal_System_Int32);
-               logic_uScriptAct_Concatenate_B_29 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_29.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_29, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_29[ index++ ] = local_CoinTotal_System_Int32;
+               
             }
             {
             }
@@ -1790,17 +1852,25 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5889dc85-d6d7-4003-9136-877c419bd7c2", "Add_Int", Relay_In_37)) return; 
+         if (true == CheckDebugBreak("5889dc85-d6d7-4003-9136-877c419bd7c2", "Add_Int__OLD_", Relay_In_37)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_CoinValue_System_Int32);
-               logic_uScriptAct_AddInt_A_37 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_A_37.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_37, index + 1);
+               }
+               logic_uScriptAct_AddInt_A_37[ index++ ] = local_CoinValue_System_Int32;
+               
             }
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_CoinTotal_System_Int32);
-               logic_uScriptAct_AddInt_B_37 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_B_37.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_37, index + 1);
+               }
+               logic_uScriptAct_AddInt_B_37[ index++ ] = local_CoinTotal_System_Int32;
+               
             }
             {
             }
@@ -1820,7 +1890,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_MetagameLogic.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_MetagameLogic.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1878,10 +1948,9 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_42 = property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_44_UnityEngine_GameObject_previous != local_44_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1893,8 +1962,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_44_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_42 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_42.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_42, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_42[ index++ ] = local_44_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1920,10 +1993,9 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_42 = property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_44_UnityEngine_GameObject_previous != local_44_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1935,8 +2007,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_44_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_42 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_42.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_42, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_42[ index++ ] = local_44_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1962,10 +2038,9 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_42 = property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_44_UnityEngine_GameObject_previous != local_44_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1977,8 +2052,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_44_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_42 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_42.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_42, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_42[ index++ ] = local_44_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2016,10 +2095,9 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_43 = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2031,8 +2109,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_45_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_43 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_43.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_43, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_43[ index++ ] = local_45_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2058,10 +2140,9 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_43 = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2073,8 +2154,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_45_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_43 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_43.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_43, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_43[ index++ ] = local_45_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2100,10 +2185,9 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                logic_uScriptAct_PlaySound_audioClip_43 = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Get_Refresh( );
-               
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2115,8 +2199,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_45_UnityEngine_GameObject);
-               logic_uScriptAct_PlaySound_target_43 = properties.ToArray();
+               if ( logic_uScriptAct_PlaySound_target_43.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlaySound_target_43, index + 1);
+               }
+               logic_uScriptAct_PlaySound_target_43[ index++ ] = local_45_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2164,10 +2252,10 @@ public class CoinCollection_MetagameLogic : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "23bbac4d-35c9-4b8b-bfa6-6ebf53a8e84f", local_44_UnityEngine_GameObject);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "CoinCollection_MetagameLogic.uscript:45", local_45_UnityEngine_GameObject);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "460e94e8-1754-4d93-97c5-5c2ce528fab6", local_45_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "fe0476bf-cd81-419c-a23a-58f4c4d16dfb", property_position_Detox_ScriptEditor_Parameter_position_13);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "ae6558f2-7341-4252-a023-4a5a5d27581e", property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "999658d0-9e72-4671-ad37-bd86d46f3a3b", property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "033ee040-8f40-47ea-913a-8c32d0088eda", property_Player_Detox_ScriptEditor_Parameter_Player_48);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "fe0476bf-cd81-419c-a23a-58f4c4d16dfb", property_position_Detox_ScriptEditor_Parameter_position_13_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "ae6558f2-7341-4252-a023-4a5a5d27581e", property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "999658d0-9e72-4671-ad37-bd86d46f3a3b", property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "033ee040-8f40-47ea-913a-8c32d0088eda", property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

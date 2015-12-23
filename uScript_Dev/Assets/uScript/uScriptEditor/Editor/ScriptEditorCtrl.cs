@@ -2972,8 +2972,15 @@ namespace Detox.ScriptEditor
 
       private void BuildAddMenu(ToolStripMenuItem addMenu, Hashtable typeHash)
       {
+         #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
+         #else
+            UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
+            string sceneName = scene.name;
+         #endif
+
          string sceneMenu = (typeHash == null
-                             ? "Reflected (" + System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene) + ")"
+                             ? "Reflected (" + sceneName + ")"
                              : "Place <other>");
 
          //

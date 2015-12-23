@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -251,7 +251,11 @@ public class GameWheel_Metagame : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.Vector3 property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22_Get_Refresh( )
    {
-      UnityEngine.Rigidbody component = property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_22.GetComponent<UnityEngine.Rigidbody>();
+      UnityEngine.Rigidbody component = null;
+      if (property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_22 != null)
+      {
+         component = property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_22.GetComponent<UnityEngine.Rigidbody>();
+      }
       if ( null != component )
       {
          return component.angularVelocity;
@@ -264,7 +268,11 @@ public class GameWheel_Metagame : uScriptLogic
    
    void property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22_Set_Refresh( )
    {
-      UnityEngine.Rigidbody component = property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_22.GetComponent<UnityEngine.Rigidbody>();
+      UnityEngine.Rigidbody component = null;
+      if (property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_22 != null)
+      {
+         component = property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_22.GetComponent<UnityEngine.Rigidbody>();
+      }
       if ( null != component )
       {
          component.angularVelocity = property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22;
@@ -273,7 +281,11 @@ public class GameWheel_Metagame : uScriptLogic
    
    UnityEngine.Vector3 property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_23_Get_Refresh( )
    {
-      UnityEngine.Rigidbody component = property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_23.GetComponent<UnityEngine.Rigidbody>();
+      UnityEngine.Rigidbody component = null;
+      if (property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_23 != null)
+      {
+         component = property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_23.GetComponent<UnityEngine.Rigidbody>();
+      }
       if ( null != component )
       {
          return component.angularVelocity;
@@ -286,7 +298,11 @@ public class GameWheel_Metagame : uScriptLogic
    
    void property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_23_Set_Refresh( )
    {
-      UnityEngine.Rigidbody component = property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_23.GetComponent<UnityEngine.Rigidbody>();
+      UnityEngine.Rigidbody component = null;
+      if (property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_23 != null)
+      {
+         component = property_angularVelocity_Detox_ScriptEditor_Parameter_Instance_23.GetComponent<UnityEngine.Rigidbody>();
+      }
       if ( null != component )
       {
          component.angularVelocity = property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_23;
@@ -1401,7 +1417,6 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_21 = property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22_Get_Refresh( );
-               
             }
             {
             }
@@ -1447,7 +1462,6 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_21 = property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22_Get_Refresh( );
-               
             }
             {
             }
@@ -1493,7 +1507,6 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_21 = property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22_Get_Refresh( );
-               
             }
             {
             }
@@ -1538,7 +1551,6 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_21 = property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22_Get_Refresh( );
-               
             }
             {
             }
@@ -1701,17 +1713,25 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("58972c6a-0935-4eb0-ac27-25225a8389c9", "Add_Int", Relay_In_32)) return; 
+         if (true == CheckDebugBreak("58972c6a-0935-4eb0-ac27-25225a8389c9", "Add_Int__OLD_", Relay_In_32)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_34_System_Int32);
-               logic_uScriptAct_AddInt_A_32 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_A_32.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_32, index + 1);
+               }
+               logic_uScriptAct_AddInt_A_32[ index++ ] = local_34_System_Int32;
+               
             }
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_Score_System_Int32);
-               logic_uScriptAct_AddInt_B_32 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_B_32.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_32, index + 1);
+               }
+               logic_uScriptAct_AddInt_B_32[ index++ ] = local_Score_System_Int32;
+               
             }
             {
             }
@@ -1726,7 +1746,7 @@ public class GameWheel_Metagame : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1770,17 +1790,25 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c704c62b-1ad4-4dba-8b5a-4ef4670add8d", "Add_Int", Relay_In_38)) return; 
+         if (true == CheckDebugBreak("c704c62b-1ad4-4dba-8b5a-4ef4670add8d", "Add_Int__OLD_", Relay_In_38)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_35_System_Int32);
-               logic_uScriptAct_AddInt_A_38 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_A_38.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_38, index + 1);
+               }
+               logic_uScriptAct_AddInt_A_38[ index++ ] = local_35_System_Int32;
+               
             }
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_Score_System_Int32);
-               logic_uScriptAct_AddInt_B_38 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_B_38.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_38, index + 1);
+               }
+               logic_uScriptAct_AddInt_B_38[ index++ ] = local_Score_System_Int32;
+               
             }
             {
             }
@@ -1795,7 +1823,7 @@ public class GameWheel_Metagame : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1803,17 +1831,25 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("94c2a7b4-7bde-41d6-a09a-25afc4a4673f", "Add_Int", Relay_In_41)) return; 
+         if (true == CheckDebugBreak("94c2a7b4-7bde-41d6-a09a-25afc4a4673f", "Add_Int__OLD_", Relay_In_41)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_44_System_Int32);
-               logic_uScriptAct_AddInt_A_41 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_A_41.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_41, index + 1);
+               }
+               logic_uScriptAct_AddInt_A_41[ index++ ] = local_44_System_Int32;
+               
             }
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_Score_System_Int32);
-               logic_uScriptAct_AddInt_B_41 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_B_41.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_41, index + 1);
+               }
+               logic_uScriptAct_AddInt_B_41[ index++ ] = local_Score_System_Int32;
+               
             }
             {
             }
@@ -1828,7 +1864,7 @@ public class GameWheel_Metagame : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1872,17 +1908,25 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a8757f5b-b3df-41a1-8982-b6c0d314d9ff", "Add_Int", Relay_In_47)) return; 
+         if (true == CheckDebugBreak("a8757f5b-b3df-41a1-8982-b6c0d314d9ff", "Add_Int__OLD_", Relay_In_47)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_48_System_Int32);
-               logic_uScriptAct_AddInt_A_47 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_A_47.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_47, index + 1);
+               }
+               logic_uScriptAct_AddInt_A_47[ index++ ] = local_48_System_Int32;
+               
             }
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_Score_System_Int32);
-               logic_uScriptAct_AddInt_B_47 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddInt_B_47.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_47, index + 1);
+               }
+               logic_uScriptAct_AddInt_B_47[ index++ ] = local_Score_System_Int32;
+               
             }
             {
             }
@@ -1897,7 +1941,7 @@ public class GameWheel_Metagame : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1946,9 +1990,13 @@ public class GameWheel_Metagame : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_GOName_System_String);
-               logic_uScriptAct_Log_Target_53 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_53.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_53, index + 1);
+               }
+               logic_uScriptAct_Log_Target_53[ index++ ] = local_GOName_System_String;
+               
             }
             {
             }
@@ -2001,14 +2049,22 @@ public class GameWheel_Metagame : uScriptLogic
          if (true == CheckDebugBreak("38bb4a7d-fcb5-4f15-9d79-5711414e7b2e", "Concatenate", Relay_In_56)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_58_System_String);
-               logic_uScriptAct_Concatenate_A_56 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_56.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_56, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_56[ index++ ] = local_58_System_String;
+               
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_Score_System_Int32);
-               logic_uScriptAct_Concatenate_B_56 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_56.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_56, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_56[ index++ ] = local_Score_System_Int32;
+               
             }
             {
             }
@@ -2154,8 +2210,8 @@ public class GameWheel_Metagame : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "05679969-9812-40a2-95b6-f4416e6fce84", WheelStopTime);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "GameWheel_Metagame.uscript:63", local_63_System_Single);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "9ed6af8f-97f6-49ff-b33b-a2704fb62a4e", local_63_System_Single);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "42f73233-1248-40b6-952a-f4cd23b040ae", property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "7f2e56a3-9d34-4f36-a533-7f7992bc8356", property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_23);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "42f73233-1248-40b6-952a-f4cd23b040ae", property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "7f2e56a3-9d34-4f36-a533-7f7992bc8356", property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_23_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

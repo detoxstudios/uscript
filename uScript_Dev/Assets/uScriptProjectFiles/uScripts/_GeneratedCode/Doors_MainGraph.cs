@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -320,7 +320,11 @@ public class Doors_MainGraph : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_22_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_22.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_22 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_22.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -333,7 +337,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_22_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_22.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_22 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_22.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_22;
@@ -342,7 +350,11 @@ public class Doors_MainGraph : uScriptLogic
    
    UnityEngine.Color property_color_Detox_ScriptEditor_Parameter_color_26_Get_Refresh( )
    {
-      UnityEngine.Light component = property_color_Detox_ScriptEditor_Parameter_Instance_26.GetComponent<UnityEngine.Light>();
+      UnityEngine.Light component = null;
+      if (property_color_Detox_ScriptEditor_Parameter_Instance_26 != null)
+      {
+         component = property_color_Detox_ScriptEditor_Parameter_Instance_26.GetComponent<UnityEngine.Light>();
+      }
       if ( null != component )
       {
          return component.color;
@@ -355,7 +367,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_color_Detox_ScriptEditor_Parameter_color_26_Set_Refresh( )
    {
-      UnityEngine.Light component = property_color_Detox_ScriptEditor_Parameter_Instance_26.GetComponent<UnityEngine.Light>();
+      UnityEngine.Light component = null;
+      if (property_color_Detox_ScriptEditor_Parameter_Instance_26 != null)
+      {
+         component = property_color_Detox_ScriptEditor_Parameter_Instance_26.GetComponent<UnityEngine.Light>();
+      }
       if ( null != component )
       {
          component.color = property_color_Detox_ScriptEditor_Parameter_color_26;
@@ -364,7 +380,11 @@ public class Doors_MainGraph : uScriptLogic
    
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_32_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_32.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_32 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_32.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -377,7 +397,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_32_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_32.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_32 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_32.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_32;
@@ -386,7 +410,11 @@ public class Doors_MainGraph : uScriptLogic
    
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_45_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_45.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_45 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_45.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -399,7 +427,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_45_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_45.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_45 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_45.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_45;
@@ -408,7 +440,11 @@ public class Doors_MainGraph : uScriptLogic
    
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_53_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_53.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_53 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_53.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -421,7 +457,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_53_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_53.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_53 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_53.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_53;
@@ -430,7 +470,11 @@ public class Doors_MainGraph : uScriptLogic
    
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_58_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_58.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_58 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_58.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -443,7 +487,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_58_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_58.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_58 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_58.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_58;
@@ -452,7 +500,11 @@ public class Doors_MainGraph : uScriptLogic
    
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_71_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_71.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_71 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_71.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -465,7 +517,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_71_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_71.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_71 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_71.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_71;
@@ -474,7 +530,11 @@ public class Doors_MainGraph : uScriptLogic
    
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_75_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_75.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_75 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_75.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -487,7 +547,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_75_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_75.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_75 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_75.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_75;
@@ -496,7 +560,11 @@ public class Doors_MainGraph : uScriptLogic
    
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_81_Get_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_81.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_81 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_81.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          return component.position;
@@ -509,7 +577,11 @@ public class Doors_MainGraph : uScriptLogic
    
    void property_position_Detox_ScriptEditor_Parameter_position_81_Set_Refresh( )
    {
-      UnityEngine.Transform component = property_position_Detox_ScriptEditor_Parameter_Instance_81.GetComponent<UnityEngine.Transform>();
+      UnityEngine.Transform component = null;
+      if (property_position_Detox_ScriptEditor_Parameter_Instance_81 != null)
+      {
+         component = property_position_Detox_ScriptEditor_Parameter_Instance_81.GetComponent<UnityEngine.Transform>();
+      }
       if ( null != component )
       {
          component.position = property_position_Detox_ScriptEditor_Parameter_position_81;
@@ -1752,7 +1824,7 @@ public class Doors_MainGraph : uScriptLogic
          if (true == CheckDebugBreak("384da341-4a91-4527-b106-5845e694aea2", "Move_To_Location", Relay_In_1)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_59_UnityEngine_GameObject_previous != local_59_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1764,8 +1836,12 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_59_UnityEngine_GameObject);
-               logic_uScriptAct_MoveToLocation_targetArray_1 = properties.ToArray();
+               if ( logic_uScriptAct_MoveToLocation_targetArray_1.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_MoveToLocation_targetArray_1, index + 1);
+               }
+               logic_uScriptAct_MoveToLocation_targetArray_1[ index++ ] = local_59_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_MoveToLocation_location_1 = local_3_UnityEngine_Vector3;
@@ -1796,7 +1872,7 @@ public class Doors_MainGraph : uScriptLogic
          if (true == CheckDebugBreak("384da341-4a91-4527-b106-5845e694aea2", "Move_To_Location", Relay_Cancel_1)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_59_UnityEngine_GameObject_previous != local_59_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1808,8 +1884,12 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_59_UnityEngine_GameObject);
-               logic_uScriptAct_MoveToLocation_targetArray_1 = properties.ToArray();
+               if ( logic_uScriptAct_MoveToLocation_targetArray_1.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_MoveToLocation_targetArray_1, index + 1);
+               }
+               logic_uScriptAct_MoveToLocation_targetArray_1[ index++ ] = local_59_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_MoveToLocation_location_1 = local_3_UnityEngine_Vector3;
@@ -1923,17 +2003,25 @@ public class Doors_MainGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ce6ddcbd-a3fb-4e42-ba75-a85abb92e00f", "Add_Vector3", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("ce6ddcbd-a3fb-4e42-ba75-a85abb92e00f", "Add_Vector3__OLD_", Relay_In_5)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)property_position_Detox_ScriptEditor_Parameter_position_45_Get_Refresh());
-               logic_uScriptAct_AddVector3_A_5 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_5.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_5, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_5[ index++ ] = property_position_Detox_ScriptEditor_Parameter_position_45_Get_Refresh( );
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_48_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_5 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_5.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_5, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_5[ index++ ] = local_48_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -1951,7 +2039,7 @@ public class Doors_MainGraph : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -2079,7 +2167,6 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_12 = property_position_Detox_ScriptEditor_Parameter_position_71_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_12 = local_31_UnityEngine_Vector3;
@@ -2122,7 +2209,6 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_12 = property_position_Detox_ScriptEditor_Parameter_position_71_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_12 = local_31_UnityEngine_Vector3;
@@ -2165,7 +2251,6 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_12 = property_position_Detox_ScriptEditor_Parameter_position_71_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_12 = local_31_UnityEngine_Vector3;
@@ -2207,7 +2292,6 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_12 = property_position_Detox_ScriptEditor_Parameter_position_71_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_12 = local_31_UnityEngine_Vector3;
@@ -2260,7 +2344,7 @@ public class Doors_MainGraph : uScriptLogic
          if (true == CheckDebugBreak("2c58a3da-20be-4c4c-aa5e-4d73de68f83d", "Play_Animation", Relay_In_14)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_66_UnityEngine_GameObject_previous != local_66_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2272,8 +2356,12 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_66_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_14 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_14.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_14, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_14[ index++ ] = local_66_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2354,7 +2442,7 @@ public class Doors_MainGraph : uScriptLogic
          if (true == CheckDebugBreak("a37920ac-a636-4c20-a607-f048478063b0", "Destroy", Relay_In_23)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2394,8 +2482,12 @@ public class Doors_MainGraph : uScriptLogic
                      }
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
-               logic_uScriptAct_Destroy_Target_23 = properties.ToArray();
+               if ( logic_uScriptAct_Destroy_Target_23.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_23, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_23[ index++ ] = local_6_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2418,7 +2510,7 @@ public class Doors_MainGraph : uScriptLogic
       {
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2458,8 +2550,12 @@ public class Doors_MainGraph : uScriptLogic
                      }
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
-               logic_uScriptAct_Destroy_Target_23 = properties.ToArray();
+               if ( logic_uScriptAct_Destroy_Target_23.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Destroy_Target_23, index + 1);
+               }
+               logic_uScriptAct_Destroy_Target_23[ index++ ] = local_6_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2482,7 +2578,6 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_24 = property_position_Detox_ScriptEditor_Parameter_position_81_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_24 = local_63_UnityEngine_Vector3;
@@ -2525,7 +2620,6 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_24 = property_position_Detox_ScriptEditor_Parameter_position_81_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_24 = local_63_UnityEngine_Vector3;
@@ -2568,7 +2662,6 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_24 = property_position_Detox_ScriptEditor_Parameter_position_81_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_24 = local_63_UnityEngine_Vector3;
@@ -2610,7 +2703,6 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_startValue_24 = property_position_Detox_ScriptEditor_Parameter_position_81_Get_Refresh( );
-               
             }
             {
                logic_uScriptAct_InterpolateVector3LinearSmooth_endValue_24 = local_63_UnityEngine_Vector3;
@@ -2809,17 +2901,25 @@ public class Doors_MainGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ae512a97-6917-4ab9-87ad-bb5727a6f774", "Add_Vector3", Relay_In_34)) return; 
+         if (true == CheckDebugBreak("ae512a97-6917-4ab9-87ad-bb5727a6f774", "Add_Vector3__OLD_", Relay_In_34)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)property_position_Detox_ScriptEditor_Parameter_position_58_Get_Refresh());
-               logic_uScriptAct_AddVector3_A_34 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_34.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_34, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_34[ index++ ] = property_position_Detox_ScriptEditor_Parameter_position_58_Get_Refresh( );
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_10_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_34 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_34.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_34, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_34[ index++ ] = local_10_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -2837,7 +2937,7 @@ public class Doors_MainGraph : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -2861,7 +2961,7 @@ public class Doors_MainGraph : uScriptLogic
          if (true == CheckDebugBreak("da40dc5d-9415-43bc-9b03-ecc3cca739a7", "Play_Animation", Relay_In_35)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_41_UnityEngine_GameObject_previous != local_41_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2873,8 +2973,12 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_41_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_35 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_35.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_35, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_35[ index++ ] = local_41_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2900,17 +3004,25 @@ public class Doors_MainGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8cc0a5ea-0dba-4f69-8c3d-e10b9a141ede", "Add_Vector3", Relay_In_38)) return; 
+         if (true == CheckDebugBreak("8cc0a5ea-0dba-4f69-8c3d-e10b9a141ede", "Add_Vector3__OLD_", Relay_In_38)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)property_position_Detox_ScriptEditor_Parameter_position_22_Get_Refresh());
-               logic_uScriptAct_AddVector3_A_38 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_38.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_38, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_38[ index++ ] = property_position_Detox_ScriptEditor_Parameter_position_22_Get_Refresh( );
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_65_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_38 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_38.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_38, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_38[ index++ ] = local_65_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -2928,7 +3040,7 @@ public class Doors_MainGraph : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -3122,17 +3234,25 @@ public class Doors_MainGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("986204f6-2143-41b9-83e1-c0f292a8934b", "Add_Vector3", Relay_In_52)) return; 
+         if (true == CheckDebugBreak("986204f6-2143-41b9-83e1-c0f292a8934b", "Add_Vector3__OLD_", Relay_In_52)) return; 
          {
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)property_position_Detox_ScriptEditor_Parameter_position_75_Get_Refresh());
-               logic_uScriptAct_AddVector3_A_52 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_A_52.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_52, index + 1);
+               }
+               logic_uScriptAct_AddVector3_A_52[ index++ ] = property_position_Detox_ScriptEditor_Parameter_position_75_Get_Refresh( );
+               
             }
             {
-               List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add((UnityEngine.Vector3)local_77_UnityEngine_Vector3);
-               logic_uScriptAct_AddVector3_B_52 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_AddVector3_B_52.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_52, index + 1);
+               }
+               logic_uScriptAct_AddVector3_B_52[ index++ ] = local_77_UnityEngine_Vector3;
+               
             }
             {
             }
@@ -3150,7 +3270,7 @@ public class Doors_MainGraph : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -3344,7 +3464,7 @@ public class Doors_MainGraph : uScriptLogic
          if (true == CheckDebugBreak("b64730f3-9ee9-4d97-a644-ad01f0e801dc", "Move_To_Location", Relay_In_69)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_33_UnityEngine_GameObject_previous != local_33_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -3356,8 +3476,12 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_33_UnityEngine_GameObject);
-               logic_uScriptAct_MoveToLocation_targetArray_69 = properties.ToArray();
+               if ( logic_uScriptAct_MoveToLocation_targetArray_69.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_MoveToLocation_targetArray_69, index + 1);
+               }
+               logic_uScriptAct_MoveToLocation_targetArray_69[ index++ ] = local_33_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_MoveToLocation_location_69 = local_4_UnityEngine_Vector3;
@@ -3388,7 +3512,7 @@ public class Doors_MainGraph : uScriptLogic
          if (true == CheckDebugBreak("b64730f3-9ee9-4d97-a644-ad01f0e801dc", "Move_To_Location", Relay_Cancel_69)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_33_UnityEngine_GameObject_previous != local_33_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -3400,8 +3524,12 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_33_UnityEngine_GameObject);
-               logic_uScriptAct_MoveToLocation_targetArray_69 = properties.ToArray();
+               if ( logic_uScriptAct_MoveToLocation_targetArray_69.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_MoveToLocation_targetArray_69, index + 1);
+               }
+               logic_uScriptAct_MoveToLocation_targetArray_69[ index++ ] = local_33_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_MoveToLocation_location_69 = local_4_UnityEngine_Vector3;
@@ -3625,15 +3753,15 @@ public class Doors_MainGraph : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "4983f4bf-f59e-4350-be28-3cf448dd9f31", local_77_UnityEngine_Vector3);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "Doors_MainGraph.uscript:Door1 Open?", local_Door1_Open__System_Boolean);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "7f44a938-631c-467a-9311-171718fe55fc", local_Door1_Open__System_Boolean);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "097baa99-2bc2-478b-915b-f7a886da26af", property_position_Detox_ScriptEditor_Parameter_position_22);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "a6825d91-b7df-4139-aa7e-2aae9c3b51be", property_color_Detox_ScriptEditor_Parameter_color_26);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "b3acae1f-4743-4cf1-940d-40127aeeb29e", property_position_Detox_ScriptEditor_Parameter_position_32);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "aacfd7d2-9e52-4823-90da-5bd12c55fbae", property_position_Detox_ScriptEditor_Parameter_position_45);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "1fb07904-084d-4449-8353-4f42a45bd51e", property_position_Detox_ScriptEditor_Parameter_position_53);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "8369cb9b-d275-4c6e-a7cd-c8bfbbcfe3be", property_position_Detox_ScriptEditor_Parameter_position_58);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "a4ca1f9d-3f20-44c1-ba9b-2e26d2ab0f48", property_position_Detox_ScriptEditor_Parameter_position_71);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "bb075d3f-a251-4e0d-bfcc-ae5675ec026b", property_position_Detox_ScriptEditor_Parameter_position_75);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "ab45b753-0843-4c49-a65b-07c61cad8091", property_position_Detox_ScriptEditor_Parameter_position_81);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "097baa99-2bc2-478b-915b-f7a886da26af", property_position_Detox_ScriptEditor_Parameter_position_22_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "a6825d91-b7df-4139-aa7e-2aae9c3b51be", property_color_Detox_ScriptEditor_Parameter_color_26_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "b3acae1f-4743-4cf1-940d-40127aeeb29e", property_position_Detox_ScriptEditor_Parameter_position_32_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "aacfd7d2-9e52-4823-90da-5bd12c55fbae", property_position_Detox_ScriptEditor_Parameter_position_45_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "1fb07904-084d-4449-8353-4f42a45bd51e", property_position_Detox_ScriptEditor_Parameter_position_53_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "8369cb9b-d275-4c6e-a7cd-c8bfbbcfe3be", property_position_Detox_ScriptEditor_Parameter_position_58_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "a4ca1f9d-3f20-44c1-ba9b-2e26d2ab0f48", property_position_Detox_ScriptEditor_Parameter_position_71_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "bb075d3f-a251-4e0d-bfcc-ae5675ec026b", property_position_Detox_ScriptEditor_Parameter_position_75_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "ab45b753-0843-4c49-a65b-07c61cad8091", property_position_Detox_ScriptEditor_Parameter_position_81_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

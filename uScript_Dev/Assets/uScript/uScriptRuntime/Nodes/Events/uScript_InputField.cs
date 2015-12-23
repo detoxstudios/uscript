@@ -44,8 +44,17 @@ public class uScript_InputField : uScriptEvent
    public void Start()
    {
       UnityEngine.UI.InputField inputField = GetComponent<UnityEngine.UI.InputField>();
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
       inputField.onValueChange.RemoveAllListeners();
+#else
+      inputField.onValueChanged.RemoveAllListeners();
+#endif
+
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
       inputField.onValueChange.AddListener(HandleValueChange);
+#else
+      inputField.onValueChanged.AddListener(HandleValueChange);
+#endif
       inputField.onEndEdit.RemoveAllListeners();
       inputField.onEndEdit.AddListener(HandleEndEdit);
    }

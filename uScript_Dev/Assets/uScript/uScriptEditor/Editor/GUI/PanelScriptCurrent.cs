@@ -363,7 +363,12 @@ namespace Detox.Editor.GUI
             //   }
             //}
 
-            this.currentSceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
+            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               this.currentSceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
+            #else
+               UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
+               this.currentSceneName = scene.name;
+            #endif
          }
 
          private static class Content

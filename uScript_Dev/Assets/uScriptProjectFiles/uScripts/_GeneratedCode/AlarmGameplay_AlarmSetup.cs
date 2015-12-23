@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -392,7 +392,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
          if (true == CheckDebugBreak("a5ca0fd2-64f4-42b7-b54d-061fd8491670", "Play_Animation", Relay_In_1)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_7_UnityEngine_GameObject_previous != local_7_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -404,8 +404,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_7_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_1 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_1.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_1, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_1[ index++ ] = local_7_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -434,7 +438,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
          if (true == CheckDebugBreak("e633a215-4669-4fa2-a627-80cde87800e6", "Rotate", Relay_In_2)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_16_UnityEngine_GameObject_previous != local_16_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -446,8 +450,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_16_UnityEngine_GameObject);
-               logic_uScriptAct_Rotate_Target_2 = properties.ToArray();
+               if ( logic_uScriptAct_Rotate_Target_2.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Rotate_Target_2, index + 1);
+               }
+               logic_uScriptAct_Rotate_Target_2[ index++ ] = local_16_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_Rotate_Degrees_2 = local_13_System_Single;
@@ -535,7 +543,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
          if (true == CheckDebugBreak("1384e518-81de-4435-aca2-127aad5be020", "Play_Animation", Relay_In_5)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_7_UnityEngine_GameObject_previous != local_7_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -547,8 +555,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_7_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_5 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_5.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_5, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_5[ index++ ] = local_7_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -620,7 +632,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
          if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_TurnOn_6)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_14_UnityEngine_GameObject_previous != local_14_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -632,7 +644,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_14_UnityEngine_GameObject);
+               if ( logic_uScriptAct_ToggleComponent_Target_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_6[ index++ ] = local_14_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_16_UnityEngine_GameObject_previous != local_16_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -644,13 +661,21 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_16_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_6 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_6[ index++ ] = local_16_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_9_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_6 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_6[ index++ ] = local_9_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_6.TurnOn(logic_uScriptAct_ToggleComponent_Target_6, logic_uScriptAct_ToggleComponent_ComponentName_6);
@@ -671,7 +696,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
          if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_TurnOff_6)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_14_UnityEngine_GameObject_previous != local_14_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -683,7 +708,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_14_UnityEngine_GameObject);
+               if ( logic_uScriptAct_ToggleComponent_Target_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_6[ index++ ] = local_14_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_16_UnityEngine_GameObject_previous != local_16_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -695,13 +725,21 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_16_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_6 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_6[ index++ ] = local_16_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_9_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_6 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_6[ index++ ] = local_9_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_6.TurnOff(logic_uScriptAct_ToggleComponent_Target_6, logic_uScriptAct_ToggleComponent_ComponentName_6);
@@ -722,7 +760,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
          if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_Toggle_6)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_14_UnityEngine_GameObject_previous != local_14_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -734,7 +772,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_14_UnityEngine_GameObject);
+               if ( logic_uScriptAct_ToggleComponent_Target_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_6[ index++ ] = local_14_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_16_UnityEngine_GameObject_previous != local_16_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -746,13 +789,21 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_16_UnityEngine_GameObject);
-               logic_uScriptAct_ToggleComponent_Target_6 = properties.ToArray();
+               if ( logic_uScriptAct_ToggleComponent_Target_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_Target_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_Target_6[ index++ ] = local_16_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_9_System_String);
-               logic_uScriptAct_ToggleComponent_ComponentName_6 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_ToggleComponent_ComponentName_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_ToggleComponent_ComponentName_6, index + 1);
+               }
+               logic_uScriptAct_ToggleComponent_ComponentName_6[ index++ ] = local_9_System_String;
+               
             }
          }
          logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_6.Toggle(logic_uScriptAct_ToggleComponent_Target_6, logic_uScriptAct_ToggleComponent_ComponentName_6);
@@ -893,7 +944,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
          if (true == CheckDebugBreak("a663162e-a064-4845-a3ca-e4cad485f234", "Rotate", Relay_In_22)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_14_UnityEngine_GameObject_previous != local_14_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -905,8 +956,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_14_UnityEngine_GameObject);
-               logic_uScriptAct_Rotate_Target_22 = properties.ToArray();
+               if ( logic_uScriptAct_Rotate_Target_22.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Rotate_Target_22, index + 1);
+               }
+               logic_uScriptAct_Rotate_Target_22[ index++ ] = local_14_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_Rotate_Degrees_22 = local_21_System_Single;

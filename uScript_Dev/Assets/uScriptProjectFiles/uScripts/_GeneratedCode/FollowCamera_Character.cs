@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -686,7 +686,7 @@ public class FollowCamera_Character : uScriptLogic
             {
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_5_UnityEngine_GameObject_previous != local_5_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -698,8 +698,12 @@ public class FollowCamera_Character : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_5_UnityEngine_GameObject);
-               logic_FollowCamera_Camera_0 = properties.ToArray();
+               if ( logic_FollowCamera_Camera_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_FollowCamera_Camera_0, index + 1);
+               }
+               logic_FollowCamera_Camera_0[ index++ ] = local_5_UnityEngine_GameObject;
+               
             }
          }
          logic_FollowCamera_FollowCamera_0.Reset_Position(logic_FollowCamera_Follow_Object_0, logic_FollowCamera_Follow_Distance_0, logic_FollowCamera_Follow_Height_0, logic_FollowCamera_Look_At_Object_0, logic_FollowCamera_Filter_Value_0, logic_FollowCamera_Camera_0);
@@ -757,7 +761,7 @@ public class FollowCamera_Character : uScriptLogic
             {
             }
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_5_UnityEngine_GameObject_previous != local_5_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -769,8 +773,12 @@ public class FollowCamera_Character : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_5_UnityEngine_GameObject);
-               logic_FollowCamera_Camera_0 = properties.ToArray();
+               if ( logic_FollowCamera_Camera_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_FollowCamera_Camera_0, index + 1);
+               }
+               logic_FollowCamera_Camera_0[ index++ ] = local_5_UnityEngine_GameObject;
+               
             }
          }
          logic_FollowCamera_FollowCamera_0.Update_Position(logic_FollowCamera_Follow_Object_0, logic_FollowCamera_Follow_Distance_0, logic_FollowCamera_Follow_Height_0, logic_FollowCamera_Look_At_Object_0, logic_FollowCamera_Filter_Value_0, logic_FollowCamera_Camera_0);

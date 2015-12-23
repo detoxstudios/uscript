@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -116,7 +116,11 @@ public class SimpleLogic_Graph : uScriptLogic
    //functions to refresh properties from entities
    UnityEngine.Color property_color_Detox_ScriptEditor_Parameter_color_1_Get_Refresh( )
    {
-      UnityEngine.Light component = property_color_Detox_ScriptEditor_Parameter_Instance_1.GetComponent<UnityEngine.Light>();
+      UnityEngine.Light component = null;
+      if (property_color_Detox_ScriptEditor_Parameter_Instance_1 != null)
+      {
+         component = property_color_Detox_ScriptEditor_Parameter_Instance_1.GetComponent<UnityEngine.Light>();
+      }
       if ( null != component )
       {
          return component.color;
@@ -129,7 +133,11 @@ public class SimpleLogic_Graph : uScriptLogic
    
    void property_color_Detox_ScriptEditor_Parameter_color_1_Set_Refresh( )
    {
-      UnityEngine.Light component = property_color_Detox_ScriptEditor_Parameter_Instance_1.GetComponent<UnityEngine.Light>();
+      UnityEngine.Light component = null;
+      if (property_color_Detox_ScriptEditor_Parameter_Instance_1 != null)
+      {
+         component = property_color_Detox_ScriptEditor_Parameter_Instance_1.GetComponent<UnityEngine.Light>();
+      }
       if ( null != component )
       {
          component.color = property_color_Detox_ScriptEditor_Parameter_color_1;
@@ -1039,7 +1047,7 @@ public class SimpleLogic_Graph : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "eb19681a-a617-432a-8d2c-76b4d4d3d72a", local_13_UnityEngine_GameObject);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "SimpleLogic_Graph.uscript:14", local_14_UnityEngine_GameObject);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "44fdaa97-18a9-4d23-9900-fb519089881d", local_14_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "82093ad5-6f8b-4261-85b5-8f9868bb335d", property_color_Detox_ScriptEditor_Parameter_color_1);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "82093ad5-6f8b-4261-85b5-8f9868bb335d", property_color_Detox_ScriptEditor_Parameter_color_1_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {

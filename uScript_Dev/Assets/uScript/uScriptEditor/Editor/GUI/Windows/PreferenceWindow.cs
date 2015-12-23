@@ -91,7 +91,12 @@ namespace Detox.Editor.GUI.Windows
             this.maxSize = this.minSize;
          }
 
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+         EditorGUIUtility.labelWidth = LabelWidth;
+         EditorGUIUtility.fieldWidth = ValueWidth;
+#else
          EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
+#endif
 
          EditorGUILayout.BeginVertical(Style.Window);
          {
@@ -185,10 +190,20 @@ namespace Detox.Editor.GUI.Windows
 
             EditorGUI.indentLevel--;
 
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+            EditorGUIUtility.fieldWidth = 30;
+#else
             EditorGUIUtility.LookLikeControls(0, 30);
-            this.preferences.GridColorMinor = EditorGUILayout.ColorField(this.preferences.GridColorMinor);
-            EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
+#endif
 
+            this.preferences.GridColorMinor = EditorGUILayout.ColorField(this.preferences.GridColorMinor);
+
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+            EditorGUIUtility.labelWidth = LabelWidth;
+            EditorGUIUtility.fieldWidth = ValueWidth;
+#else
+            EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
+#endif
             EditorGUI.indentLevel++;
          }
 
@@ -289,12 +304,23 @@ namespace Detox.Editor.GUI.Windows
             EditorGUI.indentLevel--;
 
             UnityEngine.GUI.enabled = this.preferences.Profiling;
+
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+            EditorGUIUtility.fieldWidth = 30;
+#else
             EditorGUIUtility.LookLikeControls(0, 30);
+#endif
 
             var floatValue = EditorGUILayout.FloatField(this.preferences.ProfileMin);
             this.preferences.ProfileMin = Mathf.Min(MaxProfileTime, Mathf.Max(MinProfileTime, floatValue));
 
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+            EditorGUIUtility.labelWidth = LabelWidth;
+            EditorGUIUtility.fieldWidth = ValueWidth;
+#else
             EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
+#endif
+
             UnityEngine.GUI.enabled = true;
             EditorGUI.indentLevel++;
          }

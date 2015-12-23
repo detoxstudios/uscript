@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -493,7 +493,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
          if (true == CheckDebugBreak("1263ddea-0adb-4e1a-b0b1-61a6e3e26ccc", "Set_Position", Relay_In_9)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_10_UnityEngine_GameObject_previous != local_10_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -505,8 +505,12 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_10_UnityEngine_GameObject);
-               logic_uScriptAct_SetGameObjectPosition_Target_9 = properties.ToArray();
+               if ( logic_uScriptAct_SetGameObjectPosition_Target_9.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_SetGameObjectPosition_Target_9, index + 1);
+               }
+               logic_uScriptAct_SetGameObjectPosition_Target_9[ index++ ] = local_10_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_SetGameObjectPosition_Position_9 = local_19_UnityEngine_Vector3;

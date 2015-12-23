@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2830
+//uScript Generated Code - Build 1.0.3008
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -270,6 +270,9 @@ public class Doors_DoorPrefabGraph : uScriptLogic
       logic_uScriptAct_PlayAnimation_uScriptAct_PlayAnimation_12.SetParent(g);
       logic_uScriptAct_Delay_uScriptAct_Delay_17.SetParent(g);
       logic_uScriptAct_GetChildrenByName_uScriptAct_GetChildrenByName_19.SetParent(g);
+      owner_Connection_10 = parentGameObject;
+      owner_Connection_14 = parentGameObject;
+      owner_Connection_21 = parentGameObject;
    }
    public void Awake()
    {
@@ -428,7 +431,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
          if (true == CheckDebugBreak("02c0120c-567a-4437-b5ab-2b496bce8f51", "Play_Animation", Relay_In_0)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Door_L_UnityEngine_GameObject_previous != local_Door_L_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -440,8 +443,12 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Door_L_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_0 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_0.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_0, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_0[ index++ ] = local_Door_L_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -579,7 +586,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
          if (true == CheckDebugBreak("931aa7ee-5f34-41a6-8b49-67961dc96934", "Play_Animation", Relay_In_6)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Door_L_UnityEngine_GameObject_previous != local_Door_L_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -591,8 +598,12 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Door_L_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_6 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_6.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_6, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_6[ index++ ] = local_Door_L_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -714,7 +725,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
          if (true == CheckDebugBreak("60d982a5-e90f-412f-9aa1-db3dcc46305f", "Play_Animation", Relay_In_9)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Door_R_UnityEngine_GameObject_previous != local_Door_R_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -726,8 +737,12 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Door_R_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_9 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_9.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_9, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_9[ index++ ] = local_Door_R_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -849,7 +864,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
          if (true == CheckDebugBreak("0003d525-2aaf-4de1-9d26-e53f02b5ac5b", "Play_Animation", Relay_In_12)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Door_R_UnityEngine_GameObject_previous != local_Door_R_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -861,8 +876,12 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Door_R_UnityEngine_GameObject);
-               logic_uScriptAct_PlayAnimation_Target_12 = properties.ToArray();
+               if ( logic_uScriptAct_PlayAnimation_Target_12.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_PlayAnimation_Target_12, index + 1);
+               }
+               logic_uScriptAct_PlayAnimation_Target_12[ index++ ] = local_Door_R_UnityEngine_GameObject;
+               
             }
             {
             }
