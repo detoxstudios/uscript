@@ -65,9 +65,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Detox_Store_PLE|AnyCPU' ">
-    <OutputPath>Temp\bin\Release_Detox_Store_PLE_4\</OutputPath>
-    <DefineConstants>TRACE;UNITY_4_7;UNITY_4;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_PLE</DefineConstants>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Unity_Store_PLE|AnyCPU' ">
+    <OutputPath>Temp\bin\Release_Unity_Store_PLE_4\</OutputPath>
+    <DefineConstants>TRACE;UNITY_4_7;UNITY_4;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_PLE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
     <DebugType>pdbonly</DebugType>
