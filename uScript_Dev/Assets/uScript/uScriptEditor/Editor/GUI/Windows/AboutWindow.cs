@@ -1,10 +1,7 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AboutWindow.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="AboutWindow.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
-// <summary>
-//   Defines the AboutWindow type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 #if !UNITY_3_5
@@ -23,23 +20,24 @@ namespace Detox.Editor.GUI.Windows
 
       private const int WindowHeight = 260;
 
+#if UNITY_3_5
+      private const string UnityVersion = "for Unity 3.5";
+#elif UNITY_4_6 || UNITY_4_7
+      private const string UnityVersion = "for Unity 4.7";
+#elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+      private const string UnityVersion = "for Unity 5.0";
+#else
+      private const string UnityVersion = "for Unity 5.3+";
+#endif
+
       private static AboutWindow window;
 
       private bool isFirstRun;
 
-#if UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
-      private static string unityVersion = "on Unity 3";
-#elif UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7
-      private static string unityVersion = "on Unity 4";
-#elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9
-      private static string unityVersion = "on Unity 5";
-#else
-      private static string unityVersion = "on Unity ?";
-#endif
-
-   public static void Open()
+      public static void Open()
       {
-         window = GetWindow<AboutWindow>(true, "About uScript", true);
+         // ReSharper disable once ArrangeStaticMemberQualifier
+         window = EditorWindow.GetWindow<AboutWindow>(true, "About uScript", true);
          window.isFirstRun = true;
          window.wantsMouseMove = true;
       }
@@ -75,9 +73,9 @@ namespace Detox.Editor.GUI.Windows
 
          GUILayout.Space(16);
 
-         GUILayout.Label("uScript " + uScriptBuild.Name, Style.ProductName);
-         GUILayout.Label("Build " + uScriptBuild.Number + " (" + unityVersion + ")", Style.ProductVersion);
-         GUILayout.Label("\n" + uScriptBuild.Copyright + "\nAll rights reserved.\n", Style.ProductCopyright);
+         GUILayout.Label(string.Format("uScript {0}", uScriptBuild.Name), Style.ProductName);
+         GUILayout.Label(string.Format("Build {0} ({1})", uScriptBuild.Number, UnityVersion), Style.ProductVersion);
+         GUILayout.Label(string.Format("\n{0}\nAll rights reserved.\n", uScriptBuild.Copyright), Style.ProductCopyright);
 
          if (GUILayout.Button("www.detoxstudios.com", Style.WebsiteLink))
          {
