@@ -101,6 +101,12 @@ namespace Detox.Editor
          set { this.LoadIfRequired(); this.preferences["MaximumNodeRecursionCount"] = value; }
       }
 
+      public int MultilineHeight
+      {
+         get { this.LoadIfRequired(); return (int)this.preferences["MultilineHeight"]; }
+         set { this.LoadIfRequired(); this.preferences["MultilineHeight"] = value; }
+      }
+
       public SaveMethodType SaveMethod
       {
          get { this.LoadIfRequired(); return (SaveMethodType)this.preferences["SaveMethod"]; }
@@ -446,6 +452,7 @@ namespace Detox.Editor
          this.SetDefault("RelativeNestedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode"));
          this.SetDefault("RelativeGeneratedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode"));
          this.SetDefault("MaximumNodeRecursionCount", 1000);
+         this.SetDefault("MultilineHeight", 3);
          this.SetDefault("SaveMethod", 1); // 0:Quick, 1:Debug, 2:Release
          this.SetDefault("MenuLocation", 1); // 0:Default, 1:Tools, 2:Window  // TODO: Default to 0 in a new project
          this.SetDefault("ProfileMin", 1f);
