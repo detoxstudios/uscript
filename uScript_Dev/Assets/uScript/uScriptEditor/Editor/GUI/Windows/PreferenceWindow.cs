@@ -168,8 +168,10 @@ namespace Detox.Editor.GUI.Windows
          var method = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", this.preferences.SaveMethod);
          this.preferences.SaveMethod = method;
 
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          var fieldWidth = EditorGUIUtility.fieldWidth;
          EditorGUIUtility.fieldWidth = 28;
+#endif
          var multilineHeight = EditorGUILayout.IntSlider(
             "Inspector MultiLine Height",
             this.preferences.MultilineHeight,
@@ -178,7 +180,9 @@ namespace Detox.Editor.GUI.Windows
          this.preferences.MultilineHeight = Mathf.Min(
             MultilineMaxHeight,
             Mathf.Max(MultilineMinHeight, multilineHeight));
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          EditorGUIUtility.fieldWidth = fieldWidth;
+#endif
 
          EditorGUILayout.Separator();
       }
