@@ -165,7 +165,7 @@ namespace Detox.Editor.GUI.Windows
          var maxValue = EditorGUILayout.IntField("Maximum Node Recursion", this.preferences.MaximumNodeRecursionCount);
          this.preferences.MaximumNodeRecursionCount = Mathf.Min(MaxRecursion, Mathf.Max(MinRecursion, maxValue));
 
-         var method = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", this.preferences.SaveMethod);
+         var method = (Detox.Editor.Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", this.preferences.SaveMethod);
          this.preferences.SaveMethod = method;
 
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
