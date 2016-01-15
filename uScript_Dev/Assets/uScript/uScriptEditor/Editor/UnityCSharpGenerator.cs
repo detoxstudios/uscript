@@ -2168,7 +2168,7 @@ namespace Detox.ScriptEditor
 
             #if (!UNITY_3_5)
                if (prefix != "" && (local.Value.Type == typeof(String).ToString() || local.Value.Type == typeof(String[]).ToString()))
-                  AddCSharpLine("[Multiline(2)]");
+                  AddCSharpLine("[Multiline(" + uScript.Preferences.MultilineHeight + ")]");
             #endif
 
             AddCSharpLine(prefix + FormatType(local.Value.Type) + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";");

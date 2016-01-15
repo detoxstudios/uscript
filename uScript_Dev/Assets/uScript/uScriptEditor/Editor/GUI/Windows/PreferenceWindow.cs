@@ -36,6 +36,9 @@ namespace Detox.Editor.GUI.Windows
       private const int MinRecursion = 100;
       private const int MaxRecursion = 10000;
 
+      private const int MultilineMinHeight = 1;
+      private const int MultilineMaxHeight = 10;
+
       private readonly RectOffset padding = new RectOffset(16, 16, 8, 16);
 
       private bool saveOnClose;
@@ -164,6 +167,22 @@ namespace Detox.Editor.GUI.Windows
 
          var method = (Detox.Editor.Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", this.preferences.SaveMethod);
          this.preferences.SaveMethod = method;
+
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
+         var fieldWidth = EditorGUIUtility.fieldWidth;
+         EditorGUIUtility.fieldWidth = 28;
+#endif
+         var multilineHeight = EditorGUILayout.IntSlider(
+            "Inspector MultiLine Height",
+            this.preferences.MultilineHeight,
+            MultilineMinHeight,
+            MultilineMaxHeight);
+         this.preferences.MultilineHeight = Mathf.Min(
+            MultilineMaxHeight,
+            Mathf.Max(MultilineMinHeight, multilineHeight));
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
+         EditorGUIUtility.fieldWidth = fieldWidth;
+#endif
 
          EditorGUILayout.Separator();
       }
