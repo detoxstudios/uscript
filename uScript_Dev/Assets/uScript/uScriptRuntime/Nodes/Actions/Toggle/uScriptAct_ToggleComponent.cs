@@ -62,7 +62,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
 #endif
 #endif
                }
-               else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+               else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer" || currentComponentName.ToLower() == "skinnedmeshrenderer" )
                {
 #if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
                   if ( currentTarget.renderer != null )
@@ -113,7 +113,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
 #endif
 #endif
                }
-               else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+               else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer" || currentComponentName.ToLower() == "skinnedmeshrenderer" )
                {
 #if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
                   if ( currentTarget.renderer != null )
