@@ -105,6 +105,16 @@ public class uScriptAct_ApplicationInfoV2 : uScriptLogic
       levelCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
 
 #if UNITY_5_3
+UnityEngine.SceneManagement.Scene[] scenes = UnityEngine.SceneManagement.SceneManager.GetAllScenes();
+      loadedLevels = new int[scenes.Length];
+      loadedLevelNames = new string[scenes.Length];
+
+      for (int i = 0; i < scenes.Length; i++)
+      {
+         loadedLevels[i] = scenes[i].buildIndex;
+         loadedLevelNames[i] = scenes[i].name;
+      }
+#else
       loadedLevels = new int[UnityEngine.SceneManagement.SceneManager.sceneCount];
       loadedLevelNames = new string[UnityEngine.SceneManagement.SceneManager.sceneCount];
 
@@ -113,16 +123,6 @@ public class uScriptAct_ApplicationInfoV2 : uScriptLogic
          UnityEngine.SceneManagement.Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
          loadedLevels[i] = scene.buildIndex;
          loadedLevelNames[i] = scene.name;
-      }
-#else
-      UnityEngine.SceneManagement.Scene[] scenes = UnityEngine.SceneManagement.SceneManager.GetAllScenes();
-      loadedLevels = new int[scenes.Length];
-      loadedLevelNames = new string[scenes.Length];
-
-      for (int i = 0; i < scenes.Length; i++)
-      {
-         loadedLevels[i] = scenes[i].buildIndex;
-         loadedLevelNames[i] = scenes[i].name;
       }
 #endif
 

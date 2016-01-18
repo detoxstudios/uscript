@@ -1,12 +1,12 @@
 // uScript Action Node
-// (C) 2010 Detox Studios LLC
+// (C) 2011-2016 Detox Studios LLC
 
 using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Variables")]
 
-[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeCopyright("Copyright 2011-2016 by Detox Studios LLC")]
 [NodeToolTip("Sets the seed for the random function.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
@@ -21,6 +21,12 @@ public class uScriptAct_SetRandomSeed : uScriptLogic
       int Seed
       )
    {
+#if (UNITY_3_5 || UNITY_4 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3)
       Random.seed = Seed;
+#else
+      Random.InitState(Seed);
+#endif
+
    }
+
 }
