@@ -195,12 +195,12 @@ namespace Detox.Editor.GUI.Windows
                              "iconWelcomeVideoTutorials",
                              "Video Tutorials",
                              "We have a selection of video tutorials that cover many uScript topics from basic to advanced.",
-                             "http://www.uscript.net/docs/index.php?title=Tutorials"),
+                             "http://www.uscript.net/home/tutorials"),
                           new Item(
                              "iconWelcomeExamples",
                              "Example Projects",
                              "Deconstruct our example projects to see exactly how they function.  Each project is well documented.",
-                             "http://www.uscript.net/docs/index.php?title=Example_Projects"),
+                             "http://www.uscript.net/home/tutorials"),
                           new Item(
                              "iconWelcomeCommunity",
                              "Community",
@@ -209,8 +209,8 @@ namespace Detox.Editor.GUI.Windows
                           new Item(
                              "iconWelcomeFeedback",
                              "Feedback",
-                             "Your feedback is important to us!  We setup a UserVoice account where you can vote on existing suggestions or add your own.",
-                             "http://uscript.uservoice.com/forums/125157-uscript-feedback"),
+                             "Your feedback is important to us!  Please add any suggestions you have for features on the 'Requests' section of the uScript Forum.",
+                             "http://www.uscript.net/forum/viewforum.php?f=10"), // old - http://uscript.uservoice.com/forums/125157-uscript-feedback
                        };
 
             Toggle = new PositionedContent("Show at Startup");
