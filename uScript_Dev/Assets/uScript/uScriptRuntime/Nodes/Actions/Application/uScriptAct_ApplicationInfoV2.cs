@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-#if (!UNITY_3_5 && !UNITY_4_6 && !UNITY_4_7 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2)
+#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
 [NodePath("Actions/Application")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
@@ -104,7 +104,7 @@ public class uScriptAct_ApplicationInfoV2 : uScriptLogic
    {
       levelCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
 
-#if UNITY_5_3
+#if UNITY_5_3_0
 UnityEngine.SceneManagement.Scene[] scenes = UnityEngine.SceneManagement.SceneManager.GetAllScenes();
       loadedLevels = new int[scenes.Length];
       loadedLevelNames = new string[scenes.Length];
