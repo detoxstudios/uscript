@@ -721,8 +721,7 @@ namespace Detox.Drawing
          if ( false == (p1 is Point) ) return false;
 
          Point p = (Point) p1;
-
-         return ! (p.X == X && p.Y == Y);
+         return p.X == X && p.Y == Y;
       }
 
       public override int GetHashCode()
