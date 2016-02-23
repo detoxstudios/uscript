@@ -29,7 +29,7 @@ public class uScriptAct_Log : uScriptLogic
       object Postfix
       )
    {
-      if (Target.Length > 0)
+      if (Target != null && Target.Length > 0)
       {
          foreach (object currentTarget in Target)
          {
