@@ -34,7 +34,7 @@ public class uScriptAct_Log : uScriptLogic
          foreach (object currentTarget in Target)
          {
             Debug.Log(((Prefix == null ? string.Empty : Prefix.ToString())
-                        + currentTarget.ToString()
+                        + (currentTarget != null ? currentTarget.ToString() : "(null)")
                         + (Postfix == null ? string.Empty : Postfix.ToString())
                         + "\n"));
          }
