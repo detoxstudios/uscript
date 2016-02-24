@@ -1,5 +1,10 @@
-// uScript Action Node
-// (C) 2011 Detox Studios LLC
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Detox Studios LLC" file="uScriptAct_AttachScript.cs">
+//   Copyright 2010-2016 Detox Studios LLC. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 
 using UnityEngine;
 [NodePath("Actions/GameObjects")]
@@ -19,47 +24,46 @@ public class uScriptAct_AttachScript : uScriptLogic
       [FriendlyName("Target", "The GameObject(s) to attach the script to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
-      [FriendlyName("Component Name", "Requires the component or script assembly fully qualified name.")]
+      [FriendlyName("Component Name", "Requires the component's complete assembly qualified name. For example, \"UnityEngine.BoxCollider, UnityEngine\".")]
       string[] ScriptName
       )
    {
-      foreach ( string currentScript in ScriptName )
+      for (var i = 0; i < ScriptName.Length; i++)
       {
-         if ( !string.IsNullOrEmpty(currentScript) )
+         var componentName = ScriptName[i].Trim();
+
+         if (string.IsNullOrEmpty(componentName))
          {
-            string tempScript = currentScript;
+            continue;
+         }
 
-            // Remove the file exstention that may have been added by the user
-            if (tempScript.EndsWith(".cs") || tempScript.EndsWith(".js"))
-            {
-               int stringLength = tempScript.Length - 3;
-               tempScript = tempScript.Remove(stringLength, 3);
-            }
-            if (tempScript.EndsWith(".boo"))
-            {
-               int stringLength = tempScript.Length - 4;
-               tempScript = tempScript.Remove(stringLength, 4);
-            }
+         // Remove the file exstention that may have been added by the user
+         if (componentName.EndsWith(".cs") || componentName.EndsWith(".js"))
+         {
+            componentName = componentName.Remove(componentName.Length - 3, 3);
+         }
+         if (componentName.EndsWith(".boo"))
+         {
+            componentName = componentName.Remove(componentName.Length - 4, 4);
+         }
 
-            try
+         try
+         {
+            // If this is null they must pass in the full assembly qualified name:
+            // http://blogs.unity3d.com/2015/01/21/addcomponentstring-api-removal-in-unity-5-0/
+            // We used to create this automatically but that caused compatibility issues with Windows 8 Store Compatibility
+
+            for (var j = 0; j < Target.Length; j++)
             {
-               // If this is null they must pass in the full assembly qualified name:
-               // http://blogs.unity3d.com/2015/01/21/addcomponentstring-api-removal-in-unity-5-0/
-               // We used to create this automatically but that caused compatibility issues with Windows 8 Store Compatibility
-               System.Type type = System.Type.GetType(tempScript);
-               foreach ( GameObject currentGameObject in Target )
+               if (Target[j] != null)
                {
-                  if (currentGameObject != null)
-                  {
-                     currentGameObject.AddComponent(type);
-                  }
-                  
+                  Target[j].AddComponent(Type.GetType(componentName));
                }
             }
-            catch (System.Exception e)
-            {
-               uScriptDebug.Log("[Attach Component] " + e.ToString(), uScriptDebug.Type.Error);
-            }
+         }
+         catch (Exception e)
+         {
+            uScriptDebug.Log("[Attach Component] " + e, uScriptDebug.Type.Error);
          }
       }
    }
