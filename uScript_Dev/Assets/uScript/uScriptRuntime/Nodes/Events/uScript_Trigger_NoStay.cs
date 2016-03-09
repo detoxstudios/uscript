@@ -6,13 +6,13 @@ using System.Collections;
 
 [NodePath("Events")]
 
-[NodeCopyright("Copyright 2016 by Detox Studios LLC / Matt Glanville")]
+[NodeCopyright("Copyright 2016 by Detox Studios LLC / Matt Glanville / John Gray")]
 [NodeToolTip("Fires an event signal when a GameObject enters or exits a trigger. Does NOT call when an object stays in a trigger.")]
-[NodeAuthor("Matt Glanville", "http://www.mglanville.co.uk")]
+[NodeAuthor("Matt Glanville / John Gray", "http://www.mglanville.co.uk / johnny@johnnygray.co.uk")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [NodePropertiesPath("Properties/Triggers")]
-[FriendlyName("Trigger Event - No Stay", "Fires an event signal when a GameObject enters or exits a trigger. Does NOT call when an object stays in a trigger. The Instance GameObject must have a collider component on it set to be a trigger. Also, only other Gameobjects with a rigidbody component will trigger this event (the 'Triggered By' GameObject).")]
+[FriendlyName("Trigger Event - No Stay", "Fires an event signal when a GameObject enters or exits a trigger. Does NOT call when an object stays in a trigger (this gives a performance boost over the nodes that DO check). The Instance GameObject must have a collider component on it set to be a trigger. Also, only other Gameobjects with a rigidbody component will trigger this event (the 'Triggered By' GameObject).")]
 public class uScript_Trigger_NoStay : uScriptEvent
 {
 	public delegate void uScriptEventHandler(object sender, TriggerEventArgs args);
