@@ -98,7 +98,7 @@ public class uScript_MasterComponent : MonoBehaviour
 
 #if UNITY_EDITOR && (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
 
-      GameObject[] gameObjects = GameObject.FindObjectsOfType<GameObject>();
+      GameObject[] gameObjects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
 
       PruneGameObjects( );
 
