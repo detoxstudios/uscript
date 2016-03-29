@@ -18,8 +18,11 @@ public class uScriptAct_Rotate : uScriptLogic
    float m_Seconds;
    float m_Time;
    bool m_Loop;
+   bool m_UseDegreesPerSecond;
    bool m_Done;
    float m_Degrees;
+   float m_RadiansPerSecond;
+   float m_RadiansRemaining;
    Quaternion[] m_TargetTransforms;
    Vector3 m_VectorAxis;
    
@@ -40,7 +43,14 @@ public class uScriptAct_Rotate : uScriptLogic
       
       [FriendlyName("Loop", "Whether or not to loop the rotation.")]
       [SocketState(false, false)]
-      bool Loop
+      bool Loop,
+
+      [FriendlyName("Degrees Per Second", "If Use Degrees Per Second is true, this is the speed at which the rotation will take place. NOTE: this variable must have the same sign (i.e. positive or negative) as the Degrees variable.")]
+      float DegreesPerSecond,
+
+      [FriendlyName("Use Degrees Per Second", "If this is true, the rotation will happen at a constant rate, no matter how many degrees of rotation are needed.  If false, the rotation will take the number of seconds in the variable Seconds to complete.")]
+      [SocketState(true, false)]
+      bool UseDegreesPerSecond
       )
    {
       m_Target = new GameObject[Target.Length];
@@ -68,8 +78,11 @@ public class uScriptAct_Rotate : uScriptLogic
       
       m_Seconds = Seconds;
       m_Degrees = Degrees;
+      m_RadiansPerSecond = DegreesPerSecond * Mathf.Deg2Rad;
       m_Loop = Loop;
+      m_UseDegreesPerSecond = UseDegreesPerSecond;
       m_Time = 0f;
+      m_RadiansRemaining = m_Degrees * Mathf.Deg2Rad;
       m_Done = false;
    }
    
@@ -80,33 +93,66 @@ public class uScriptAct_Rotate : uScriptLogic
       
       int i = 0;
 
-      if ( m_Time > m_Seconds && m_Loop == true )
+      if (!m_UseDegreesPerSecond)
       {
-         m_Time -= m_Seconds;         
+         if (m_Time > m_Seconds && m_Loop == true)
+         {
+            m_Time -= m_Seconds;
+         }
+         else if (m_Time > m_Seconds)
+         {
+            m_Time = m_Seconds;
+            m_Done = true;
+         }
+
+         float t = 1.0f;
+
+         // Prevent div by 0
+         if (m_Seconds != 0.0f)
+         {
+            t = m_Time / m_Seconds;
+         }
+         float degrees = m_Degrees * t;
+
+         foreach (GameObject obj in m_Target)
+         {
+            Quaternion finalRotation = Quaternion.AngleAxis(degrees, m_VectorAxis);
+            obj.transform.rotation = m_TargetTransforms[i] * finalRotation;
+
+            i++;
+         }
+
+         m_Time += Time.deltaTime;
       }
-      else if ( m_Time > m_Seconds )
+      else
       {
-         m_Time = m_Seconds;
-         m_Done = true;
+         float radians = m_RadiansPerSecond * Time.deltaTime;
+         if (m_Degrees >= 0.0f)  // rotating in the positive direction
+         {
+            // check if we've gone past
+            if (radians >= m_RadiansRemaining)
+            {
+               radians = m_RadiansRemaining;
+               m_Done = true;
+            }
+         }
+         else  // rotating in the negative direction
+         {
+            // check if we've gone past
+            if (radians <= m_RadiansRemaining)
+            {
+               radians = m_RadiansRemaining;
+               m_Done = true;
+            }
+         }
+         m_RadiansRemaining -= radians;
+
+         foreach (GameObject obj in m_Target)
+         {
+            obj.transform.RotateAround(m_VectorAxis, radians);
+
+            i++;
+         }
       }
-      
-      float t = 1.0f;
-      
-      // Prevent div by 0
-      if (m_Seconds != 0.0f)
-      {
-         t = m_Time / m_Seconds;
-      }      
-      float degrees = m_Degrees * t;
-      
-      foreach (GameObject obj in m_Target)
-      {        
-         Quaternion finalRotation = Quaternion.AngleAxis( degrees, m_VectorAxis );         
-         obj.transform.rotation = m_TargetTransforms[i] * finalRotation;
-                                   
-         i++;
-      }
-      
-      m_Time += Time.deltaTime;
    }
 }
