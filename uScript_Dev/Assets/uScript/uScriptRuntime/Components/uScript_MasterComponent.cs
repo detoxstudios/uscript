@@ -96,8 +96,8 @@ public class uScript_MasterComponent : MonoBehaviour
          m_LatestMasterComponent = this;
       }
 
+#if UNITY_EDITOR && (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
 
-#if UNITY_EDITOR
       GameObject[] gameObjects = GameObject.FindObjectsOfType<GameObject>();
 
       PruneGameObjects( );
@@ -105,15 +105,24 @@ public class uScript_MasterComponent : MonoBehaviour
       //build up our cache
       foreach ( GameObject gameObject in gameObjects )
       {
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
          CacheGameObject(gameObject);
-#else
+      }
+
+#elif UNITY_EDITOR
+
+      GameObject[] gameObjects = GameObject.FindObjectsOfType<GameObject>();
+
+      PruneGameObjects();
+
+      //build up our cache
+      foreach (GameObject gameObject in gameObjects)
+      {
          if (gameObject.scene == this.gameObject.scene)
          {
             CacheGameObject(gameObject);
          }
-#endif
       }
+
 #endif
    }
 
