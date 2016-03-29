@@ -271,6 +271,7 @@ public class uScript_MasterComponent : MonoBehaviour
       {
          if ( null == GameObjects[ i ] )
          {
+            // EXAMINE: If the indexed value is null, the last item in the array is moved to the current index and the array is resized. This fails to check if the last item is also null, so a null item may remain in the array. Also, resizing the array in the loop may be very inefficient depending on how frequently this code is run.
             GameObjects    [ i ] = GameObjects    [ GameObjects.Length - 1 ];
             GameObjectGuids[ i ] = GameObjectGuids[ GameObjects.Length - 1 ];
 
