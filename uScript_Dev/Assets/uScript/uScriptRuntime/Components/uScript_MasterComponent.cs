@@ -98,14 +98,17 @@ public class uScript_MasterComponent : MonoBehaviour
 
 
 #if UNITY_EDITOR
-      GameObject []gameObjects = (GameObject[]) GameObject.FindObjectsOfType( typeof(GameObject) );
+      GameObject[] gameObjects = GameObject.FindObjectsOfType<GameObject>();
 
       PruneGameObjects( );
 
       //build up our cache
       foreach ( GameObject gameObject in gameObjects )
       {
-         CacheGameObject( gameObject );
+         if (gameObject.scene == this.gameObject.scene)
+         {
+            CacheGameObject(gameObject);
+         }
       }
 #endif
    }
