@@ -1,7 +1,7 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
 
-#if !(UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1)
+#if !(UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1 || UNITY_WEBGL)
 using UnityEngine;
 using System.Collections;
 

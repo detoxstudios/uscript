@@ -1,7 +1,7 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
 
-#if (UNITY_ANDROID || UNITY_IPHONE || UNITY_FLASH || UNITY_PS4)
+#if (UNITY_ANDROID || UNITY_IPHONE || UNITY_FLASH || UNITY_PS4 || UNITY_WEBGL)
 
    // This node is not supported on these platforms at this time. This compiler directive is needed for the project to compile for these devices without error.
 
