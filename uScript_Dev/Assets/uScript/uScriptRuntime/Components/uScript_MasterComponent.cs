@@ -96,17 +96,33 @@ public class uScript_MasterComponent : MonoBehaviour
          m_LatestMasterComponent = this;
       }
 
+#if UNITY_EDITOR && (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
 
-#if UNITY_EDITOR
-      GameObject []gameObjects = (GameObject[]) GameObject.FindObjectsOfType( typeof(GameObject) );
+      GameObject[] gameObjects = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
 
       PruneGameObjects( );
 
       //build up our cache
       foreach ( GameObject gameObject in gameObjects )
       {
-         CacheGameObject( gameObject );
+         CacheGameObject(gameObject);
       }
+
+#elif UNITY_EDITOR
+
+      GameObject[] gameObjects = GameObject.FindObjectsOfType<GameObject>();
+
+      PruneGameObjects();
+
+      //build up our cache
+      foreach (GameObject gameObject in gameObjects)
+      {
+         if (gameObject.scene == this.gameObject.scene)
+         {
+            CacheGameObject(gameObject);
+         }
+      }
+
 #endif
    }
 
@@ -268,6 +284,7 @@ public class uScript_MasterComponent : MonoBehaviour
       {
          if ( null == GameObjects[ i ] )
          {
+            // EXAMINE: If the indexed value is null, the last item in the array is moved to the current index and the array is resized. This fails to check if the last item is also null, so a null item may remain in the array. Also, resizing the array in the loop may be very inefficient depending on how frequently this code is run.
             GameObjects    [ i ] = GameObjects    [ GameObjects.Length - 1 ];
             GameObjectGuids[ i ] = GameObjectGuids[ GameObjects.Length - 1 ];
 
