@@ -68,7 +68,7 @@ public class uScriptAct_FloatToString : uScriptLogic
    )
    {
       string format = CustomFormat;
-#if (!UNITY_FLASH && !UNITY_WEBPLAYER && !UNITY_WP8 && !UNITY_WP8_1 && !UNITY_WINRT_8_1)
+#if !(UNITY_FLASH || UNITY_WEBPLAYER || UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1 || UNITY_WSA_10_0)
       System.Globalization.CultureInfo ci = System.Globalization.CultureInfo.CreateSpecificCulture(CustomCulture);
 #endif
 
@@ -106,7 +106,7 @@ public class uScriptAct_FloatToString : uScriptLogic
          }
       }
 
-#if (!UNITY_FLASH && !UNITY_WEBPLAYER && !UNITY_WP8 && !UNITY_WP8_1 && !UNITY_WINRT_8_1)
+#if !(UNITY_FLASH || UNITY_WEBPLAYER || UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1 || UNITY_WSA_10_0)
       Result = Target.ToString(format, ci);
 #else
       Result = Target.ToString();

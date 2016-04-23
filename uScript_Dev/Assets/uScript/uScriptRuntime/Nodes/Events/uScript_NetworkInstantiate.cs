@@ -1,7 +1,7 @@
 // uScript uScript_NetworkInstantiate.cs
 // (C) 2010 Detox Studios LLC
 
-#if !(UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1)
+#if !(UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1 || UNITY_WSA_10_0)
 
 using UnityEngine;
 using System.Collections;
