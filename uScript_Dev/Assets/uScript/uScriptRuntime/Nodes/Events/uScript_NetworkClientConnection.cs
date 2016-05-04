@@ -1,7 +1,7 @@
 // uScript uScript_NetworkClientConnection.cs
 // (C) 2010 Detox Studios LLC
 
-#if !(UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1 || UNITY_WEBGL || UNITY_WSA_10_0)
+#if !(UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1 || UNITY_WSA_10_0 || UNITY_WEBGL)
 
 using UnityEngine;
 using System.Collections;
@@ -62,7 +62,7 @@ public class uScript_NetworkClientConnection : uScriptEvent
       if (ConnectedToServer != null) ConnectedToServer(this, new NetworkClientConnectionEventArgs());
    }
 
-#if !(UNITY_FLASH)
+#if !(UNITY_FLASH || UNITY_WEBGL)
    void OnDisconnectedFromServer(NetworkDisconnection disconnection)
    {
       if (DisconnectedFromServer != null) DisconnectedFromServer(this, new NetworkClientConnectionEventArgs(disconnection));

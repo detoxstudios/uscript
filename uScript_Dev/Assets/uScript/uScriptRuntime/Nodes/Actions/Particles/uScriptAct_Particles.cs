@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-
+#if (UNITY_3_5 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3)
 #if (UNITY_FLASH)
 
    // This node is not supported on Flash at this time. This compiler directive is needed for the project to compile for these devices without error.
@@ -94,4 +94,5 @@ public class uScriptAct_Particles : uScriptLogic
    //
 }
 
+#endif
 #endif
