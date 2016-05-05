@@ -45,14 +45,14 @@ public class uScriptAct_IsComponentActive : uScriptLogic
             m_IsActive = b.enabled;
             return;
          }
-
+#if (UNITY_3_5 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3)
          ParticleEmitter pe = comp as ParticleEmitter;
          if (pe != null)
          {
             m_IsActive = pe.enabled;
             return;
          }
-
+#endif
          Collider c = comp as Collider;
          if (c != null)
          {
