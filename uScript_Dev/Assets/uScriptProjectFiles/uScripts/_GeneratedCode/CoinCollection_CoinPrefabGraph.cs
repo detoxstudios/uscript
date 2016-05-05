@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3029
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -48,6 +48,8 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    System.String logic_uScriptAct_Rotate_Axis_1 = "X";
    System.Single logic_uScriptAct_Rotate_Seconds_1 = (float) 2;
    System.Boolean logic_uScriptAct_Rotate_Loop_1 = (bool) true;
+   System.Single logic_uScriptAct_Rotate_DegreesPerSecond_1 = (float) 0;
+   System.Boolean logic_uScriptAct_Rotate_UseDegreesPerSecond_1 = (bool) false;
    bool logic_uScriptAct_Rotate_Out_1 = true;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectName logic_uScriptAct_GetGameObjectName_uScriptAct_GetGameObjectName_5 = new uScriptAct_GetGameObjectName( );
@@ -94,7 +96,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    bool logic_uScriptAct_Destroy_WaitOneTick_18 = false;
    
    //event nodes
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_45 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_22 = default(UnityEngine.GameObject);
    
    //property nodes
    System.Int32 property_CoinPointsGold_Detox_ScriptEditor_Parameter_CoinPointsGold_20 = (int) 0;
@@ -243,9 +245,9 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_45;
-                  component.OnExitTrigger += Instance_OnExitTrigger_45;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_45;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_22;
+                  component.OnExitTrigger += Instance_OnExitTrigger_22;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_22;
                }
             }
          }
@@ -326,9 +328,9 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_45;
-                  component.OnExitTrigger += Instance_OnExitTrigger_45;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_45;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_22;
+                  component.OnExitTrigger += Instance_OnExitTrigger_22;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_22;
                }
             }
          }
@@ -388,9 +390,9 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
             uScript_Trigger component = owner_Connection_4.GetComponent<uScript_Trigger>();
             if ( null != component )
             {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_45;
-               component.OnExitTrigger -= Instance_OnExitTrigger_45;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_45;
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_22;
+               component.OnExitTrigger -= Instance_OnExitTrigger_22;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_22;
             }
          }
       }
@@ -493,7 +495,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       Relay_uScriptLateStart_0( );
    }
    
-   void Instance_OnEnterTrigger_45(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnEnterTrigger_22(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -501,12 +503,12 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_45 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_22 = e.GameObject;
       //relay event to nodes
-      Relay_OnEnterTrigger_45( );
+      Relay_OnEnterTrigger_22( );
    }
    
-   void Instance_OnExitTrigger_45(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnExitTrigger_22(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -514,12 +516,12 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_45 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_22 = e.GameObject;
       //relay event to nodes
-      Relay_OnExitTrigger_45( );
+      Relay_OnExitTrigger_22( );
    }
    
-   void Instance_WhileInsideTrigger_45(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_WhileInsideTrigger_22(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -527,9 +529,9 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_45 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_22 = e.GameObject;
       //relay event to nodes
-      Relay_WhileInsideTrigger_45( );
+      Relay_WhileInsideTrigger_22( );
    }
    
    void Relay_uScriptStart_0()
@@ -566,8 +568,12 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
             }
             {
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_Rotate_uScriptAct_Rotate_1.In(logic_uScriptAct_Rotate_Target_1, logic_uScriptAct_Rotate_Degrees_1, logic_uScriptAct_Rotate_Axis_1, logic_uScriptAct_Rotate_Seconds_1, logic_uScriptAct_Rotate_Loop_1);
+         logic_uScriptAct_Rotate_uScriptAct_Rotate_1.In(logic_uScriptAct_Rotate_Target_1, logic_uScriptAct_Rotate_Degrees_1, logic_uScriptAct_Rotate_Axis_1, logic_uScriptAct_Rotate_Seconds_1, logic_uScriptAct_Rotate_Loop_1, logic_uScriptAct_Rotate_DegreesPerSecond_1, logic_uScriptAct_Rotate_UseDegreesPerSecond_1);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -841,10 +847,10 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
          uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_CoinPrefabGraph.uscript at Destroy.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
-   void Relay_OnEnterTrigger_45()
+   void Relay_OnEnterTrigger_22()
    {
-      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_OnEnterTrigger_45)) return; 
-      local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_45;
+      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_OnEnterTrigger_22)) return; 
+      local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_22;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -859,10 +865,10 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       Relay_In_5();
    }
    
-   void Relay_OnExitTrigger_45()
+   void Relay_OnExitTrigger_22()
    {
-      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_OnExitTrigger_45)) return; 
-      local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_45;
+      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_OnExitTrigger_22)) return; 
+      local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_22;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -876,10 +882,10 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
       }
    }
    
-   void Relay_WhileInsideTrigger_45()
+   void Relay_WhileInsideTrigger_22()
    {
-      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_WhileInsideTrigger_45)) return; 
-      local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_45;
+      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_WhileInsideTrigger_22)) return; 
+      local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_22;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )

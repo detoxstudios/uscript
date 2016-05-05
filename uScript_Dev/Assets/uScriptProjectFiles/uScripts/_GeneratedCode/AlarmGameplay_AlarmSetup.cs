@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3029
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -69,6 +69,8 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    System.String logic_uScriptAct_Rotate_Axis_2 = "";
    System.Single logic_uScriptAct_Rotate_Seconds_2 = (float) 0;
    System.Boolean logic_uScriptAct_Rotate_Loop_2 = (bool) false;
+   System.Single logic_uScriptAct_Rotate_DegreesPerSecond_2 = (float) 0;
+   System.Boolean logic_uScriptAct_Rotate_UseDegreesPerSecond_2 = (bool) false;
    bool logic_uScriptAct_Rotate_Out_2 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareBool logic_uScriptCon_CompareBool_uScriptCon_CompareBool_4 = new uScriptCon_CompareBool( );
@@ -102,6 +104,8 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    System.String logic_uScriptAct_Rotate_Axis_22 = "";
    System.Single logic_uScriptAct_Rotate_Seconds_22 = (float) 0;
    System.Boolean logic_uScriptAct_Rotate_Loop_22 = (bool) false;
+   System.Single logic_uScriptAct_Rotate_DegreesPerSecond_22 = (float) 0;
+   System.Boolean logic_uScriptAct_Rotate_UseDegreesPerSecond_22 = (bool) false;
    bool logic_uScriptAct_Rotate_Out_22 = true;
    
    //event nodes
@@ -473,8 +477,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                logic_uScriptAct_Rotate_Loop_2 = local_8_System_Boolean;
                
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_Rotate_uScriptAct_Rotate_2.In(logic_uScriptAct_Rotate_Target_2, logic_uScriptAct_Rotate_Degrees_2, logic_uScriptAct_Rotate_Axis_2, logic_uScriptAct_Rotate_Seconds_2, logic_uScriptAct_Rotate_Loop_2);
+         logic_uScriptAct_Rotate_uScriptAct_Rotate_2.In(logic_uScriptAct_Rotate_Target_2, logic_uScriptAct_Rotate_Degrees_2, logic_uScriptAct_Rotate_Axis_2, logic_uScriptAct_Rotate_Seconds_2, logic_uScriptAct_Rotate_Loop_2, logic_uScriptAct_Rotate_DegreesPerSecond_2, logic_uScriptAct_Rotate_UseDegreesPerSecond_2);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -979,8 +987,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                logic_uScriptAct_Rotate_Loop_22 = local_20_System_Boolean;
                
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_Rotate_uScriptAct_Rotate_22.In(logic_uScriptAct_Rotate_Target_22, logic_uScriptAct_Rotate_Degrees_22, logic_uScriptAct_Rotate_Axis_22, logic_uScriptAct_Rotate_Seconds_22, logic_uScriptAct_Rotate_Loop_22);
+         logic_uScriptAct_Rotate_uScriptAct_Rotate_22.In(logic_uScriptAct_Rotate_Target_22, logic_uScriptAct_Rotate_Degrees_22, logic_uScriptAct_Rotate_Axis_22, logic_uScriptAct_Rotate_Seconds_22, logic_uScriptAct_Rotate_Loop_22, logic_uScriptAct_Rotate_DegreesPerSecond_22, logic_uScriptAct_Rotate_UseDegreesPerSecond_22);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_Rotate_uScriptAct_Rotate_22.Out;
