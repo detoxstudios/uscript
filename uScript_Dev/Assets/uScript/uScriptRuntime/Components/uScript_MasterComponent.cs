@@ -98,8 +98,24 @@ public class uScript_MasterComponent : MonoBehaviour
 
 
 #if UNITY_EDITOR
-      GameObject []gameObjects = (GameObject[]) GameObject.FindObjectsOfType( typeof(GameObject) );
+      #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+         GameObject []gameObjects = (GameObject[])FindObjectsOfType(typeof(GameObject));
+      #else
+            // we only want the GOs in our scene.  Unfortunately we can't query the active scene
+            // because we might not be the active scene - the only way I know around this is to 
+            // see if the scene for each GO matchs our GOs scene
+            var allGos = (GameObject[])FindObjectsOfType(typeof(GameObject));
+            List<GameObject> gosInOurScene = new List<GameObject>();
+            
+            foreach ( GameObject g in allGos )
+            {
+               if ( g.scene == gameObject.scene )
+                  gosInOurScene.Add(g);
+            }
 
+            GameObject []gameObjects = gosInOurScene.ToArray();
+      #endif
+      
       PruneGameObjects( );
 
       //build up our cache
