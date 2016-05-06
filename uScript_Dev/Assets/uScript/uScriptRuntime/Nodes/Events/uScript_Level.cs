@@ -14,6 +14,7 @@ using System.Collections;
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Level Load", "Fires an event signal when a level is finished loading.")]
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3)
 public class uScript_Level : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, LevelWasLoadedEventArgs args);
@@ -39,3 +40,22 @@ public class uScript_Level : uScriptEvent
       if ( LevelWasLoaded != null ) LevelWasLoaded(this, new LevelWasLoadedEventArgs(level));
    }
 }
+#else
+public class uScript_Level : uScriptEvent
+{
+   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
+
+   void Start( )
+   {
+      UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+   }
+
+   [FriendlyName("On Level Was Loaded")]
+   public event uScriptEventHandler LevelWasLoaded;
+
+   void OnSceneLoaded()
+   {
+      if ( LevelWasLoaded != null ) LevelWasLoaded(this, System.EventArgs.Empty);
+   }
+}
+#endif
