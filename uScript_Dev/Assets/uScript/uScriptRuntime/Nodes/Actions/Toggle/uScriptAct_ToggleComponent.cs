@@ -251,12 +251,14 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          return;
       }
 
+#if (UNIY_3_5 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3)
       ParticleEmitter pe = comp as ParticleEmitter;
       if (pe != null)
       {
          pe.enabled = enable;
          return;
       }
+#endif
 
       LineRenderer le = comp as LineRenderer;
       if (le != null)
@@ -274,14 +276,14 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          b.enabled = ! b.enabled;
          return b.enabled;
       }
-
+#if (UNIY_3_5 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3)
       ParticleEmitter pe = comp as ParticleEmitter;
       if (pe != null)
       {
          pe.enabled = ! pe.enabled;
          return pe.enabled;
       }
-
+#endif
       LineRenderer le = comp as LineRenderer;
       if (le != null)
       {
