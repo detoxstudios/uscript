@@ -1,10 +1,7 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Control.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="Control.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
-// <summary>
-//   Defines the Control type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.Editor.GUI
@@ -37,7 +34,10 @@ namespace Detox.Editor.GUI
             "Locate the object in the Hierarchy window.");
       }
 
-      internal delegate UnityEngine.Object SceneObjectPathFieldValidator(UnityEngine.Object[] references, Type type, SerializedProperty property);
+      internal delegate UnityEngine.Object SceneObjectPathFieldValidator(
+         UnityEngine.Object[] references,
+         Type type,
+         SerializedProperty property);
 
       public static string SceneObjectPathField(string text, Type type, params GUILayoutOption[] options)
       {
@@ -45,7 +45,11 @@ namespace Detox.Editor.GUI
          return SceneObjectPathField(position, text, type);
       }
 
-      public static string SceneObjectPathField(string text, Type type, [DefaultValue("EditorStyles.textField")] GUIStyle style, params GUILayoutOption[] options)
+      public static string SceneObjectPathField(
+         string text,
+         Type type,
+         [DefaultValue("EditorStyles.textField")] GUIStyle style,
+         params GUILayoutOption[] options)
       {
          var position = UnityEditorExtensions.GetControlRect(false, 16f, style, options);
          return SceneObjectPathField(position, text, type, style);
@@ -57,7 +61,11 @@ namespace Detox.Editor.GUI
          return SceneObjectPathField(position, text, type, style);
       }
 
-      public static string SceneObjectPathField(Rect position, string text, Type type, [DefaultValue("EditorStyles.textField")] GUIStyle style)
+      public static string SceneObjectPathField(
+         Rect position,
+         string text,
+         Type type,
+         [DefaultValue("EditorStyles.textField")] GUIStyle style)
       {
          position = EditorGUI.IndentedRect(position);
 
@@ -377,12 +385,12 @@ namespace Detox.Editor.GUI
          static Style()
          {
             SceneObjectFieldSearchButton = new GUIStyle(GUI.skin.button)
-            {
-               padding = new RectOffset(0, 0, 0, 0),
-               contentOffset = new Vector2(1, 0),
-               normal = EditorStyles.label.normal,
-               active = EditorStyles.label.active,
-            };
+               {
+                  padding = new RectOffset(0, 0, 0, 0),
+                  contentOffset = new Vector2(1, 0),
+                  normal = EditorStyles.label.normal,
+                  active = EditorStyles.label.active,
+               };
          }
 
          public static GUIStyle SceneObjectFieldSearchButton { get; private set; }

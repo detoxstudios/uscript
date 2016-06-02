@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AutoCompletePopup.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="AutoCompletePopup.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -545,55 +545,55 @@ namespace Detox.Editor.GUI
                var windowBackground = uScriptGUI.GetSkinnedTexture("MenuContext");
 
                RowEven = new GUIStyle(GUI.skin.button)
-               {
-                  alignment = TextAnchor.MiddleLeft,
-                  fixedHeight = 20,
-                  margin = new RectOffset(),
-                  padding = new RectOffset(),
-                  overflow = new RectOffset(),
-                  focused = GUI.skin.button.normal,
-                  normal = ((GUIStyle)"CN EntryBackEven").normal,
-                  onNormal = ((GUIStyle)"CN EntryBackEven").onNormal,
-               };
+                  {
+                     alignment = TextAnchor.MiddleLeft,
+                     fixedHeight = 20,
+                     margin = new RectOffset(),
+                     padding = new RectOffset(),
+                     overflow = new RectOffset(),
+                     focused = GUI.skin.button.normal,
+                     normal = ((GUIStyle)"CN EntryBackEven").normal,
+                     onNormal = ((GUIStyle)"CN EntryBackEven").onNormal,
+                  };
 
                RowOdd = new GUIStyle(RowEven)
-               {
-                  normal = ((GUIStyle)"CN EntryBackodd").normal,
-                  onNormal = ((GUIStyle)"CN EntryBackodd").onNormal,
-               };
+                  {
+                     normal = ((GUIStyle)"CN EntryBackodd").normal,
+                     onNormal = ((GUIStyle)"CN EntryBackodd").onNormal,
+                  };
 
                Item = new GUIStyle(GUI.skin.label)
-               {
-                  name = "AutoCompletePopup.Item",
-                  alignment = TextAnchor.MiddleLeft,
-                  fixedHeight = 20,
-                  margin = new RectOffset(),
-                  padding = new RectOffset(2, 2, 1, 2),
-                  onNormal = ((GUIStyle)"CN EntryBackEven").onNormal,
+                  {
+                     name = "AutoCompletePopup.Item",
+                     alignment = TextAnchor.MiddleLeft,
+                     fixedHeight = 20,
+                     margin = new RectOffset(),
+                     padding = new RectOffset(2, 2, 1, 2),
+                     onNormal = ((GUIStyle)"CN EntryBackEven").onNormal,
 #if !UNITY_3_5
-                  richText = true
+                     richText = true
 #endif
-               };
+                  };
 
                Message = new GUIStyle(GUI.skin.label)
-               {
-                  alignment = TextAnchor.MiddleRight,
-                  fixedHeight = 16,
-                  fontStyle = FontStyle.Italic,
-                  padding = new RectOffset(2, 8, 1, 2),
-               };
+                  {
+                     alignment = TextAnchor.MiddleRight,
+                     fixedHeight = 16,
+                     fontStyle = FontStyle.Italic,
+                     padding = new RectOffset(2, 8, 1, 2),
+                  };
 
                Warning = new GUIStyle(Item) { alignment = TextAnchor.MiddleRight };
 
                Window = new GUIStyle(GUI.skin.window)
-               {
-                  normal = { background = windowBackground },
-                  onNormal = { background = windowBackground },
-                  border = new RectOffset(10, 10, 10, 10),
-                  padding = new RectOffset(1, 1, 1, 1),
-                  overflow = new RectOffset(6, 6, 6, 6),
-                  contentOffset = Vector2.zero,
-               };
+                  {
+                     normal = { background = windowBackground },
+                     onNormal = { background = windowBackground },
+                     border = new RectOffset(10, 10, 10, 10),
+                     padding = new RectOffset(1, 1, 1, 1),
+                     overflow = new RectOffset(6, 6, 6, 6),
+                     contentOffset = Vector2.zero,
+                  };
             }
 
             public static GUIStyle Item { get; private set; }
