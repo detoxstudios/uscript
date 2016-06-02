@@ -1,10 +1,7 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RichTextExtensions.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="RichTextExtensions.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
-// <summary>
-//   Defines the RichTextExtensions type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.Editor.Extensions
@@ -62,6 +59,11 @@ namespace Detox.Editor.Extensions
 #if UNITY_3_5
          return value;
 #else
+         if (string.IsNullOrEmpty(match))
+         {
+            return value;
+         }
+
          var index = value.IndexOf(match, StringComparison.OrdinalIgnoreCase);
          if (index == -1)
          {
