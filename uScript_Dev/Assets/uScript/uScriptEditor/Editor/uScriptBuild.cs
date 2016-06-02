@@ -19,8 +19,8 @@ public static class uScriptBuild
 
    // Version Name and Version Data
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-BUILD-NUMBER
-   public static string Number { get { return "1.0.3036"; } }
-   private static string productNameAppendText = "";
+   public static string Number { get { return "1.0.3037"; } }
+   private static string productNameAppendText = " (RC)";
 
 
 #if DETOX_STORE_PLE || UNITY_STORE_PLE
