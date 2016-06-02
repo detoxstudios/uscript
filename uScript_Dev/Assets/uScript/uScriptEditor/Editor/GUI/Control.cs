@@ -4,6 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable LoopCanBeConvertedToQuery
+// ReSharper disable ForCanBeConvertedToForeach
+// ReSharper disable LoopCanBePartlyConvertedToQuery
+
 namespace Detox.Editor.GUI
 {
    using System;
@@ -237,7 +241,25 @@ namespace Detox.Editor.GUI
                }
             }
 
-            Cache.SceneObjects.Add(type, objectPaths);
+            objectPaths.Sort();
+
+            var dictionary = new Dictionary<string, Cache.SceneObject>();
+            for (var i = 0; i < objectPaths.Count; i++)
+            {
+               var objectPath = objectPaths[i];
+
+               Cache.SceneObject sceneObject;
+               if (dictionary.TryGetValue(objectPath, out sceneObject))
+               {
+                  sceneObject.ReferenceCount++;
+               }
+               else
+               {
+                  dictionary.Add(objectPath, new Cache.SceneObject(objectPath));
+               }
+            }
+
+            Cache.SceneObjects.Add(type, dictionary);
          }
 
          // Update the auto-complete list, if the text has changed
@@ -246,22 +268,26 @@ namespace Detox.Editor.GUI
             hierarchyChanged = false;
 
             // Get the list of object we've already generated
-            paths = Cache.SceneObjects[type];
+            paths = Cache.SceneObjects[type].Keys.ToList();
 
             AutoCompletePopup.Reset();
 
             if (value != string.Empty)
             {
-               foreach (var path in paths)
+               for (var i = 0; i < paths.Count; i++)
                {
+                  var path = paths[i];
                   var index = CultureInfo.InvariantCulture.CompareInfo.IndexOf(
                      path,
                      value,
                      CompareOptions.OrdinalIgnoreCase);
 
+                  var sceneObject = Cache.SceneObjects[type][path];
+                  sceneObject.Matched = index > -1;
+
                   if (index > -1)
                   {
-                     AutoCompletePopup.Add(path);
+                     AutoCompletePopup.Add(sceneObject);
                   }
                }
             }
@@ -317,9 +343,9 @@ namespace Detox.Editor.GUI
          }
 
          // ... otherwise return the first GameObject in the array.
-         foreach (var reference in references)
+         for (var i = 0; i < references.Length; i++)
          {
-            var gameObject = reference as GameObject;
+            var gameObject = references[i] as GameObject;
             if (gameObject != null && EditorUtility.IsPersistent(gameObject) == false)
             {
                return gameObject;
@@ -329,7 +355,7 @@ namespace Detox.Editor.GUI
          return null;
       }
 
-      private static class Cache
+      public static class Cache
       {
          private static readonly Dictionary<string, Dictionary<string, bool>> GameObjectFindCache;
 
@@ -337,13 +363,13 @@ namespace Detox.Editor.GUI
 
          static Cache()
          {
-            SceneObjects = new Dictionary<Type, List<string>>();
+            SceneObjects = new Dictionary<Type, Dictionary<string, SceneObject>>();
             selectedObjects = new List<Guid>();
 
             GameObjectFindCache = new Dictionary<string, Dictionary<string, bool>>();
          }
 
-         public static Dictionary<Type, List<string>> SceneObjects { get; private set; }
+         public static Dictionary<Type, Dictionary<string, SceneObject>> SceneObjects { get; private set; }
 
          public static bool SceneObjectFound(string propertyName, string hierarchyPath)
          {
@@ -377,6 +403,23 @@ namespace Detox.Editor.GUI
 
             GameObjectFindCache.Clear();
             SceneObjects.Clear();
+         }
+
+         public class SceneObject
+         {
+            public SceneObject(string path)
+            {
+               this.Path = path;
+               this.ReferenceCount = 1;
+            }
+
+            public string Markup { get; set; }
+
+            public bool Matched { get; set; }
+
+            public string Path { get; private set; }
+
+            public int ReferenceCount { get; set; }
          }
       }
 

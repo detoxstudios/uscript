@@ -4,6 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable LoopCanBeConvertedToQuery
+// ReSharper disable ForCanBeConvertedToForeach
+
 namespace Detox.Editor.GUI
 {
    using System;
@@ -21,11 +24,7 @@ namespace Detox.Editor.GUI
       {
          private const int MaxItems = 5;
 
-         private static readonly List<string> List = new List<string>();
-
-         private static readonly Dictionary<string, int> Duplicates = new Dictionary<string, int>();
-
-         private static readonly Dictionary<string, string> MarkupText = new Dictionary<string, string>();
+         private static readonly List<Cache.SceneObject> List = new List<Cache.SceneObject>(MaxItems);
 
          private static int currentIndex;
 
@@ -50,6 +49,8 @@ namespace Detox.Editor.GUI
          public static bool IsDrawing { get; set; }
 
          public static bool IsVisible { get; set; }
+
+         public static string Match { get; set; }
 
          public static int ParentControlID { get; set; }
 
@@ -79,23 +80,24 @@ namespace Detox.Editor.GUI
             EditorGUIUtility.AddCursorRect(debugBox, MouseCursor.Arrow);
          }
 
-         public static void Add(string label)
+         public static void Add(Cache.SceneObject sceneObject)
          {
-            if (List.Contains(label))
-            {
-               if (Duplicates.ContainsKey(label))
-               {
-                  Duplicates[label]++;
-               }
-               else
-               {
-                  Duplicates.Add(label, 1);
-               }
+            //if (List.Contains(label))
+            //{
+            //   if (Duplicates.ContainsKey(label))
+            //   {
+            //      Duplicates[label]++;
+            //   }
+            //   else
+            //   {
+            //      Duplicates.Add(label, 1);
+            //   }
 
-               return;
-            }
+            //   return;
+            //}
 
-            List.Add(label);
+            //sceneObject.Markup = sceneObject.Path.HighlightMatch(Match);
+            List.Add(sceneObject);
          }
 
          /// <summary>
@@ -152,7 +154,7 @@ namespace Detox.Editor.GUI
                if (currentIndex >= 0)
                {
                   WasReturnPressed = true;
-                  SelectedItem = List[currentIndex];
+                  SelectedItem = List[currentIndex].Path;
                   e.Use();
                   return;
                }
@@ -174,7 +176,7 @@ namespace Detox.Editor.GUI
             {
                if (currentIndex >= 0)
                {
-                  SelectedItem = List[currentIndex];
+                  SelectedItem = List[currentIndex].Path;
                   WasTabPressed = true;
                   e.Use();
                   ////return;
@@ -262,7 +264,7 @@ namespace Detox.Editor.GUI
                   // If over the same index, select it.
                   if (index == mouseDownIndex)
                   {
-                     SelectedItem = List[mouseDownIndex];
+                     SelectedItem = List[mouseDownIndex].Path;
                   }
                }
 
@@ -363,8 +365,6 @@ namespace Detox.Editor.GUI
          {
             currentIndex = -1;
             List.Clear();
-            MarkupText.Clear();
-            Duplicates.Clear();
             IsVisible = false;
 
             if (WasReturnPressed == false)
@@ -384,12 +384,16 @@ namespace Detox.Editor.GUI
 
             matchValue = matchPattern;
 
-            if (List.Contains(matchPattern))
+            for (var i = 0; i < List.Count; i++)
             {
-               return;
+               var item = List[i];
+               if (item.Path == matchPattern)
+               {
+                  return;
+               }
             }
 
-            List.Sort();
+            //List.Sort();
 
             ParentControlID = FocusedControl.ID;
             originalParentPosition = rect;
@@ -466,11 +470,11 @@ namespace Detox.Editor.GUI
                for (var i = 0; i < maxItems; i++)
                {
                   var content = List[i];
-                  var contentSize = Style.Item.CalcSize(uScriptGUIContent.Temp(content));
+                  var contentSize = Style.Item.CalcSize(uScriptGUIContent.Temp(content.Path));
                   var rowWidth = contentSize.x;
 
-                  int count;
-                  if (Duplicates.TryGetValue(content, out count))
+                  var count = content.ReferenceCount;
+                  if (count > 1)
                   {
                      var warningMessage = string.Format("[{0} {1}]", count, count == 1 ? "duplicate" : "duplicates");
                      contentSize = Style.Warning.CalcSize(uScriptGUIContent.Temp(warningMessage));
@@ -496,19 +500,15 @@ namespace Detox.Editor.GUI
                   if (selected == false)
                   {
                      // Get the marked up version of the text
-                     if (MarkupText.TryGetValue(List[i], out content) == false)
-                     {
-                        content = List[i].HighlightMatch(matchValue);
-                        MarkupText.Add(List[i], content);
-                     }
+                     content.Markup = content.Path.HighlightMatch(matchValue);
                   }
 
                   rowStyle.Draw(rect, false, false, selected, false);
 
-                  Style.Item.Draw(rect, content, false, false, selected, false);
+                  Style.Item.Draw(rect, selected ? content.Path : content.Markup, false, false, selected, false);
 
-                  int count;
-                  if (Duplicates.TryGetValue(List[i], out count))
+                  var count = content.ReferenceCount;
+                  if (count > 1)
                   {
                      var warningMessage = string.Format("[{0} {1}]", count, count == 1 ? "duplicate" : "duplicates");
                      if (selected == false)
