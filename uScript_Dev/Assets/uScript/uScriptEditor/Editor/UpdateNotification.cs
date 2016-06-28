@@ -225,7 +225,7 @@ public class UpdateNotification : EditorWindow
 
    private static void SilentlyCheckServerForUpdate()
    {
-#if (UNITY_3_5)
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7)
          if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer)
 #else
       if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)

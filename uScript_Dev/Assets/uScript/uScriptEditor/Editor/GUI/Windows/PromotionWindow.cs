@@ -58,7 +58,7 @@ namespace Detox.Editor.GUI.Windows
 
       public static void CheckServerForPromotion(uScriptBuild.EditionType target, string ignoredIDs, string dateOverride = "")
       {
-#if (UNITY_3_5)
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7)
          if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer)
 #else
          if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
