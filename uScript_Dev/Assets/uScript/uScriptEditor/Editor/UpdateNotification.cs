@@ -225,7 +225,26 @@ public class UpdateNotification : EditorWindow
 
    private static void SilentlyCheckServerForUpdate()
    {
+      if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
+      {
+         // Abort, because the web targets do not support WWW calls in the editor.
+         //
+         // Exception: Expected root element to be < cross - domain - policy >.found html instead
+         //    MonoForks.System.Windows.Browser.Net.FlashCrossDomainPolicy + Handler.OnStartElement(System.String name, IAttrList attrs)
+         //    MonoForks.Mono.Xml.MiniParser.Parse(IReader reader, IHandler handler)
+         //    MonoForks.System.Windows.Browser.Net.FlashCrossDomainPolicy.FromStream(System.IO.Stream originalStream)
+         //    MonoForks.System.Windows.Browser.Net.CrossDomainPolicyManager.BuildFlashPolicy(Boolean statuscodeOK, MonoForks.System.Uri uri, System.IO.Stream responsestream, System.Collections.Generic.Dictionary`2 responseheaders)
+         //    UnityEngine.WWW:get_isDone()
+         return;
+      }
+
       webRequest = CreateWebRequest();
+
+      if (webRequest == null)
+      {
+         Debug.Log("Webrequest is null.\n");
+         return;
+      }
 
       // Coroutines do not work in the editor, but we still need to handle the request in a non-blocking manner.
       JobManager.Add(

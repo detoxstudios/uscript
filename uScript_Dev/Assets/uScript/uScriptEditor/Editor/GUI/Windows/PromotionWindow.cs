@@ -58,9 +58,26 @@ namespace Detox.Editor.GUI.Windows
 
       public static void CheckServerForPromotion(uScriptBuild.EditionType target, string ignoredIDs, string dateOverride = "")
       {
+         if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
+         {
+            // Abort, because the web targets do not support WWW calls in the editor.
+            //
+            // Exception: Expected root element to be < cross - domain - policy >.found html instead
+            //    MonoForks.System.Windows.Browser.Net.FlashCrossDomainPolicy + Handler.OnStartElement(System.String name, IAttrList attrs)
+            //    MonoForks.Mono.Xml.MiniParser.Parse(IReader reader, IHandler handler)
+            //    MonoForks.System.Windows.Browser.Net.FlashCrossDomainPolicy.FromStream(System.IO.Stream originalStream)
+            //    MonoForks.System.Windows.Browser.Net.CrossDomainPolicyManager.BuildFlashPolicy(Boolean statuscodeOK, MonoForks.System.Uri uri, System.IO.Stream responsestream, System.Collections.Generic.Dictionary`2 responseheaders)
+            //    UnityEngine.WWW:get_isDone()
+            return;
+         }
+
          WebResponseText = "Checking server for promotion ...";
 
          webRequest = CreateWebRequest(target, ignoredIDs, dateOverride);
+         if (webRequest == null)
+         {
+            return;
+         }
 
          // Coroutines do not work in the editor, but we still need to handle the request in a non-blocking manner.
          // ReSharper disable once RedundantNameQualifier

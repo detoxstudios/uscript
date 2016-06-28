@@ -1,30 +1,27 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="JobManager.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="JobManager.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
-// <summary>
-//   Defines the JobManager type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-// REFERENCED:
-// ----------
-//    http://answers.unity3d.com/questions/221651/yielding-with-www-in-editor.html
-//
-// USAGE:
-// ~~~~~
-//    var www = new WWW("someURL");
-//    ContinuationManager.Add(() => www.isDone, () =>
-//    {
-//       if (!string.IsNullOrEmpty(www.error))
-//       {
-//          Debug.Log("WWW failed: " + www.error);
-//       }
-//       Debug.Log("WWW result : " + www.text);
-//    });
 
 namespace Detox.Editor
 {
+   // REFERENCED:
+   // ----------
+   //    http://answers.unity3d.com/questions/221651/yielding-with-www-in-editor.html
+   //
+   // USAGE:
+   // ~~~~~
+   //    var www = new WWW("someURL");
+   //    ContinuationManager.Add(() => www.isDone, () =>
+   //    {
+   //       if (!string.IsNullOrEmpty(www.error))
+   //       {
+   //          Debug.Log("WWW failed: " + www.error);
+   //       }
+   //       Debug.Log("WWW result : " + www.text);
+   //    });
+
    using System;
    using System.Collections.Generic;
    using System.Linq;
@@ -42,6 +39,11 @@ namespace Detox.Editor
       /// <param name="continueWith">The function that will be executed upon completion.</param>
       public static void Add(Func<bool> completed, Action continueWith)
       {
+         if (completed == null || continueWith == null)
+         {
+            return;
+         }
+
          if (Jobs.Any() == false)
          {
             EditorApplication.update += Update;
@@ -55,11 +57,17 @@ namespace Detox.Editor
          for (var i = 0; i >= 0; --i)
          {
             var job = Jobs[i];
-            if (job.Completed())
+            if (job.Completed != null && job.Completed() == false)
+            {
+               continue;
+            }
+
+            if (job.ContinueWith != null)
             {
                job.ContinueWith();
-               Jobs.RemoveAt(i);
             }
+
+            Jobs.RemoveAt(i);
          }
 
          if (Jobs.Any() == false)
