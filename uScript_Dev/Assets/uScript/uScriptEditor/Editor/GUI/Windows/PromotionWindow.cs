@@ -58,7 +58,11 @@ namespace Detox.Editor.GUI.Windows
 
       public static void CheckServerForPromotion(uScriptBuild.EditionType target, string ignoredIDs, string dateOverride = "")
       {
+#if (UNITY_3_5)
+         if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer)
+#else
          if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
+#endif
          {
             // Abort, because the web targets do not support WWW calls in the editor.
             //
