@@ -35,17 +35,29 @@ public class uScriptAct_Particles : uScriptLogic
       {
          if (currentTarget != null)
          {
-            Component comp = currentTarget.GetComponent(typeof(ParticleEmitter));
-            if (comp != null)
+            ParticleEmitter peComp = currentTarget.GetComponent<ParticleEmitter>();
+            if (peComp != null)
             {
-               ParticleEmitter pe = comp as ParticleEmitter;
-               if (pe != null)
+               if (peComp != null)
                {
                   if (ClearParticles)
                   {
-                     pe.ClearParticles();
+                     peComp.ClearParticles();
                   }
-                 pe.emit = true;
+                  peComp.emit = true;
+               }
+            }
+            else
+            {
+               ParticleSystem psComp = currentTarget.GetComponent<ParticleSystem>();
+               if (psComp != null)
+               {
+                  if (ClearParticles)
+                  {
+                     psComp.Stop();
+                  }
+
+                  psComp.Play();
                }
             }
          }
@@ -66,16 +78,30 @@ public class uScriptAct_Particles : uScriptLogic
       {
          if (currentTarget != null)
          {
-            Component comp = currentTarget.GetComponent(typeof(ParticleEmitter));
-            if (comp != null)
+            ParticleEmitter peComp = currentTarget.GetComponent<ParticleEmitter>();
+            if (peComp != null)
             {
-               ParticleEmitter pe = comp as ParticleEmitter;
-               if (pe != null)
+               if (peComp != null)
                {
-                  pe.emit = false;
+                  peComp.emit = false;
                   if (ClearParticles)
                   {
-                     pe.ClearParticles();
+                     peComp.ClearParticles();
+                  }
+               }
+            }
+            else
+            {
+               ParticleSystem psComp = currentTarget.GetComponent<ParticleSystem>();
+               if (psComp != null)
+               {
+                  if (ClearParticles)
+                  {
+                     psComp.Stop();
+                  }
+                  else
+                  {
+                     psComp.Pause();
                   }
                }
             }
