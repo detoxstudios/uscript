@@ -54,7 +54,7 @@ public class uScriptAct_Particles : uScriptLogic
                {
                   if (ClearParticles)
                   {
-                     psComp.Stop();
+                     psComp.Clear();
                   }
 
                   psComp.Play();
@@ -97,12 +97,10 @@ public class uScriptAct_Particles : uScriptLogic
                {
                   if (ClearParticles)
                   {
-                     psComp.Stop();
+                     psComp.Clear();
                   }
-                  else
-                  {
-                     psComp.Pause();
-                  }
+
+                  psComp.Stop();
                }
             }
          }
