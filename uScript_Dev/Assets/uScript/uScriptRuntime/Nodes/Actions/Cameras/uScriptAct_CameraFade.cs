@@ -91,22 +91,25 @@ public class uScriptAct_CameraFade : uScriptLogic
 			{
 				m_FadeMaterial.color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, 0F);
 			}
-			
-			// Create a primitive in front of the camera.
-			m_CameraPlane                         = GameObject.CreatePrimitive(PrimitiveType.Plane);
-         m_CameraPlane.name = "uScriptRuntimeGenerated_CameraFadePlane";
+
+         if (m_CameraPlane == null)
+         {
+            // Create a primitive in front of the camera.
+            m_CameraPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            m_CameraPlane.name = "uScriptRuntimeGenerated_CameraFadePlane";
 #if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
-         m_CameraPlane.collider.enabled = false;
-			m_CameraPlane.renderer.material       = m_FadeMaterial;
+            m_CameraPlane.collider.enabled = false;
+			   m_CameraPlane.renderer.material       = m_FadeMaterial;
 #else
-         m_CameraPlane.GetComponent<Collider>().enabled = false;
-         m_CameraPlane.GetComponent<Renderer>().material = m_FadeMaterial;
+            m_CameraPlane.GetComponent<Collider>().enabled = false;
+            m_CameraPlane.GetComponent<Renderer>().material = m_FadeMaterial;
 #endif
-			m_CameraPlane.transform.position      = m_TargetCamera.transform.position;
-			m_CameraPlane.transform.rotation      = m_TargetCamera.transform.rotation;
-			m_CameraPlane.transform.parent        = m_TargetCamera.transform;
-			m_CameraPlane.transform.localRotation = Quaternion.Euler(new Vector3(-90,0,0));
-			m_CameraPlane.transform.localPosition = new Vector3(0,0,0.5F);
+            m_CameraPlane.transform.position = m_TargetCamera.transform.position;
+            m_CameraPlane.transform.rotation = m_TargetCamera.transform.rotation;
+            m_CameraPlane.transform.parent = m_TargetCamera.transform;
+            m_CameraPlane.transform.localRotation = Quaternion.Euler(new Vector3(-90, 0, 0));
+            m_CameraPlane.transform.localPosition = new Vector3(0, 0, 0.5F);
+         }
 
          if (Scale > 1.0f)
          {
@@ -169,11 +172,11 @@ public class uScriptAct_CameraFade : uScriptLogic
 #else
          if (m_FadeTo)
 		 {
-          m_CameraPlane.GetComponent<Renderer>().GetComponent<Material>().color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(0F, 1F, t));
+          m_CameraPlane.GetComponent<Renderer>().material.color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(0F, 1F, t));
 		 }
 		 else
 		 {
-          m_CameraPlane.GetComponent<Renderer>().GetComponent<Material>().color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(1F, 0F, t));
+          m_CameraPlane.GetComponent<Renderer>().material.color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(1F, 0F, t));
 		 }
 #endif
       
