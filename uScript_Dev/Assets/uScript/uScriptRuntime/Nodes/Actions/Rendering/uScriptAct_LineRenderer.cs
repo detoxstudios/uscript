@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if UNITY_5
+
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -123,3 +125,5 @@ public class uScriptAct_LineRenderer : uScriptLogic
       GameObject.Destroy(this.lineRenderer.gameObject);
    }
 }
+
+#endif
