@@ -18,7 +18,7 @@ namespace Detox.Editor
       // Application.dataPath:
       //    C:/full/file/system/path/Assets
 
-      // uScript.Preferences.UserScripts:
+      // Preferences.UserScripts:
       //    C:/full/file/system/path/Assets/uScriptProjectFiles/uScripts
 
       // FullPath:

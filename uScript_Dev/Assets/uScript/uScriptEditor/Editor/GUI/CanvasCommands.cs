@@ -288,47 +288,47 @@ namespace Detox.Editor.GUI
 
          public static void PlaceOnCanvasFavorite1()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode1, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode1, true);
          }
 
          public static void PlaceOnCanvasFavorite2()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode2, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode2, true);
          }
 
          public static void PlaceOnCanvasFavorite3()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode3, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode3, true);
          }
 
          public static void PlaceOnCanvasFavorite4()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode4, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode4, true);
          }
 
          public static void PlaceOnCanvasFavorite5()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode5, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode5, true);
          }
 
          public static void PlaceOnCanvasFavorite6()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode6, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode6, true);
          }
 
          public static void PlaceOnCanvasFavorite7()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode7, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode7, true);
          }
 
          public static void PlaceOnCanvasFavorite8()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode8, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode8, true);
          }
 
          public static void PlaceOnCanvasFavorite9()
          {
-            uScript.Instance.PlaceNodeOnCanvas(uScript.Preferences.FavoriteNode9, true);
+            uScript.Instance.PlaceNodeOnCanvas(Preferences.FavoriteNode9, true);
          }
 
          public static void PlaceOnCanvasFloat()

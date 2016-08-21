@@ -222,7 +222,7 @@ $opts = array(
             //            var clientVersion = clientBuild.ToString();
             //            var serverVersion = LatestVersion = serverBuild.ToString();
 
-            //            if (uScript.Preferences.IgnoreUpdateBuild == serverVersion)
+            //            if (Preferences.IgnoreUpdateBuild == serverVersion)
             //            {
             //               return;
             //            }

@@ -346,7 +346,7 @@ namespace Detox.Editor.GUI
 
                // Favorite button
                var favoriteNodeType = uScript.GetNodeSignature(entityNode);
-               var favoriteNodes = uScript.Preferences.FavoriteNodes;
+               var favoriteNodes = Preferences.FavoriteNodes;
                var favoriteIndex = Array.IndexOf(favoriteNodes, favoriteNodeType) + 1;
 
                var newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIPanelToolbox.Instance.FavoritePopupOptions, Style.ButtonMiddleFavorite, GUILayout.Width(30));
@@ -354,15 +354,15 @@ namespace Detox.Editor.GUI
                {
                   if (favoriteIndex == 0)
                   {
-                     uScript.Preferences.UpdateFavoriteNode(newIndex, favoriteNodeType);
+                     Preferences.UpdateFavoriteNode(newIndex, favoriteNodeType);
                   }
                   else if (newIndex == 0)
                   {
-                     uScript.Preferences.UpdateFavoriteNode(favoriteIndex, string.Empty);
+                     Preferences.UpdateFavoriteNode(favoriteIndex, string.Empty);
                   }
                   else
                   {
-                     uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
+                     Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
                   }
 
                   uScriptGUIPanelToolbox.Instance.BuildFavoritesMenu();

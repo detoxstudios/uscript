@@ -81,11 +81,11 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
    private void DrawProperties()
    {
-      if (uScript.Instance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
+      if (uScript.Instance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
       {
          this.DrawHiddenNotification();
       }
-      else if (this.selectedNodeCount > uScript.Preferences.PropertyPanelNodeLimit)
+      else if (this.selectedNodeCount > Preferences.PropertyPanelNodeLimit)
       {
          this.DrawExcessiveNodesNotification();
       }
@@ -121,7 +121,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
    private void DrawExcessiveNodesNotification()
    {
-      var limit = uScript.Preferences.PropertyPanelNodeLimit;
+      var limit = Preferences.PropertyPanelNodeLimit;
       var message =
          string.Format(
             "The {0} panel is configured to show the properties of {1}, but there are currently {2} nodes selected.\n\n"

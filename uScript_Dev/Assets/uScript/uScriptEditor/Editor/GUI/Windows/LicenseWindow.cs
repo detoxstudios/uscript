@@ -199,7 +199,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
          // Save the license acceptance
          _licenseVersionAccepted = _licenseVersion;
          uScript.SetSetting("EULA\\AgreedVersion", _licenseVersionAccepted);
-         uScript.Preferences.Save();
       }
       else
       {

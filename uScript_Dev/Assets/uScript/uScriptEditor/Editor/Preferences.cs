@@ -9,14 +9,12 @@
 
 namespace Detox.Editor
 {
-   using System.Collections;
    using System.Diagnostics.CodeAnalysis;
+   using UnityEditor;
 
    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1107:CodeMustNotContainMultipleStatementsOnOneLine", Justification = "Reviewed. Suppression is OK here.")]
-   public class Preferences
+   public static class Preferences
    {
-      private Hashtable preferences;
-
       public enum DoubleClickBehaviorType
       {
          PingSource,
@@ -47,314 +45,349 @@ namespace Detox.Editor
          Dynamic
       }
 
-      public string ProjectFiles
+      public static string ProjectFiles
       {
-         get { this.LoadIfRequired(); return UnityEngine.Application.dataPath + (this.preferences["RelativeProjectFiles"] as string); }
-         set { this.LoadIfRequired(); this.preferences["RelativeProjectFiles"] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }
+         get { return UnityEngine.Application.dataPath + EditorPrefs.GetString("DetoxStudios.uScript.RelativeProjectFiles"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.RelativeProjectFiles", uScriptConfig.ConstantPaths.RelativePathInAssets(value)); }
       }
 
-      public string UserScripts
+      public static string UserScripts
       {
-         get { this.LoadIfRequired(); return UnityEngine.Application.dataPath + (this.preferences["RelativeUserScripts"] as string); }
-         set { this.LoadIfRequired(); this.preferences["RelativeUserScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }
+         get { return UnityEngine.Application.dataPath + EditorPrefs.GetString("DetoxStudios.uScript.RelativeUserScripts"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.RelativeUserScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(value)); }
       }
 
-      public string UserNodes
+      public static string UserNodes
       {
-         get { this.LoadIfRequired(); return UnityEngine.Application.dataPath + (this.preferences["RelativeUserNodes"] as string); }
-         set { this.LoadIfRequired(); this.preferences["RelativeUserNodes"] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }
+         get { return UnityEngine.Application.dataPath + EditorPrefs.GetString("DetoxStudios.uScript.RelativeUserNodes"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.RelativeUserNodes", uScriptConfig.ConstantPaths.RelativePathInAssets(value)); }
       }
 
-      public string GeneratedScripts
+      public static string GeneratedScripts
       {
-         get { this.LoadIfRequired(); return UnityEngine.Application.dataPath + (this.preferences["RelativeGeneratedScripts"] as string); }
-         set { this.LoadIfRequired(); this.preferences["RelativeGeneratedScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }
+         get { return UnityEngine.Application.dataPath + EditorPrefs.GetString("DetoxStudios.uScript.RelativeGeneratedScripts"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.RelativeGeneratedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(value)); }
       }
 
-      public string NestedScripts
+      public static string NestedScripts
       {
-         get { this.LoadIfRequired(); return UnityEngine.Application.dataPath + (this.preferences["RelativeNestedScripts"] as string); }
-         set { this.LoadIfRequired(); this.preferences["RelativeNestedScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }
+         get { return UnityEngine.Application.dataPath + EditorPrefs.GetString("DetoxStudios.uScript.RelativeNestedScripts"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.RelativeNestedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(value)); }
       }
 
-      public bool AutoExpandToolbox
+      public static bool AutoExpandToolbox
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["AutoExpandToolbox"]; }
-         set { this.LoadIfRequired(); this.preferences["AutoExpandToolbox"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.AutoExpandToolbox"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.AutoExpandToolbox", value); }
       }
 
-      public bool AutoUpdateReflection
+      public static bool AutoUpdateReflection
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["AutoUpdateReflection"]; }
-         set { this.LoadIfRequired(); this.preferences["AutoUpdateReflection"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.AutoUpdateReflection"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.AutoUpdateReflection", value); }
       }
 
-      public bool DrawPanelsOnUpdate
+      public static bool DrawPanelsOnUpdate
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["DrawPanelsOnUpdate"]; }
-         set { this.LoadIfRequired(); this.preferences["DrawPanelsOnUpdate"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.DrawPanelsOnUpdate"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.DrawPanelsOnUpdate", value); }
       }
 
-      public int MaximumNodeRecursionCount
+      public static int MaximumNodeRecursionCount
       {
-         get { this.LoadIfRequired(); return (int)this.preferences["MaximumNodeRecursionCount"]; }
-         set { this.LoadIfRequired(); this.preferences["MaximumNodeRecursionCount"] = value; }
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.MaximumNodeRecursionCount"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.MaximumNodeRecursionCount", value); }
       }
 
-      public int MultilineHeight
+      public static int MultilineHeight
       {
-         get { this.LoadIfRequired(); return (int)this.preferences["MultilineHeight"]; }
-         set { this.LoadIfRequired(); this.preferences["MultilineHeight"] = value; }
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.MultilineHeight"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.MultilineHeight", value); }
       }
 
-      public SaveMethodType SaveMethod
+      public static SaveMethodType SaveMethod
       {
-         get { this.LoadIfRequired(); return (SaveMethodType)this.preferences["SaveMethod"]; }
-         set { this.LoadIfRequired(); this.preferences["SaveMethod"] = value; }
+         get { return (SaveMethodType)System.Enum.Parse(typeof(SaveMethodType), EditorPrefs.GetString("DetoxStudios.uScript.SaveMethod")); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.SaveMethod", value.ToString()); }
       }
 
-      public MenuLocationType MenuLocation
+      public static MenuLocationType MenuLocation
       {
-         get { this.LoadIfRequired(); return (MenuLocationType)this.preferences["MenuLocation"]; }
-         set { this.LoadIfRequired(); this.preferences["MenuLocation"] = value; }
+         get { return (MenuLocationType)System.Enum.Parse(typeof(MenuLocationType), EditorPrefs.GetString("DetoxStudios.uScript.MenuLocation")); }
+         set
+         {
+            if (value != Preferences.MenuLocation)
+            {
+               GUI.MenuLocation.Change(value);
+            }
+            EditorPrefs.SetString("DetoxStudios.uScript.MenuLocation", value.ToString());
+         }
       }
 
-      public bool ShowGrid
+      public static bool ShowGrid
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["ShowGrid"]; }
-         set { this.LoadIfRequired(); this.preferences["ShowGrid"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.ShowGrid"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.ShowGrid", value); }
       }
 
-      public bool Profiling
+      public static bool Profiling
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["Profiling"]; }
-         set { this.LoadIfRequired(); this.preferences["Profiling"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.Profiling"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.Profiling", value); }
       }
 
-      public float ProfileMin
+      public static float ProfileMin
       {
-         get { this.LoadIfRequired(); return (float)this.preferences["ProfileMin"]; }
-         set { this.LoadIfRequired(); this.preferences["ProfileMin"] = value; }
+         get { return EditorPrefs.GetFloat("DetoxStudios.uScript.ProfileMin"); }
+         set { EditorPrefs.SetFloat("DetoxStudios.uScript.ProfileMin", value); }
       }
 
-      public int GridSize
+      public static int GridSize
       {
-         get { this.LoadIfRequired(); return (int)this.preferences["GridSize"]; }
-         set { this.LoadIfRequired(); this.preferences["GridSize"] = value; }
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.GridSize"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.GridSize", value); }
       }
 
-      public int GridSubdivisions
+      public static int GridSubdivisions
       {
-         get { this.LoadIfRequired(); return (int)this.preferences["GridSubdivisions"]; }
-         set { this.LoadIfRequired(); this.preferences["GridSubdivisions"] = value; }
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.GridSubdivisions"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.GridSubdivisions", value); }
       }
 
-      public UnityEngine.Color GridColorMajor
+      public static UnityEngine.Color GridColorMajor
       {
-         get { this.LoadIfRequired(); return (UnityEngine.Color)this.preferences["GridColorMajor"]; }
-         set { this.LoadIfRequired(); this.preferences["GridColorMajor"] = value; }
+         get
+         {
+            UnityEngine.Color c;
+            c.r = EditorPrefs.GetFloat("DetoxStudios.uScript.GridColorMajor.r");
+            c.g = EditorPrefs.GetFloat("DetoxStudios.uScript.GridColorMajor.g");
+            c.b = EditorPrefs.GetFloat("DetoxStudios.uScript.GridColorMajor.b");
+            c.a = EditorPrefs.GetFloat("DetoxStudios.uScript.GridColorMajor.a");
+            return c;
+         }
+         set
+         {
+            EditorPrefs.SetFloat("DetoxStudios.uScript.GridColorMajor.r", value.r);
+            EditorPrefs.SetFloat("DetoxStudios.uScript.GridColorMajor.g", value.g);
+            EditorPrefs.SetFloat("DetoxStudios.uScript.GridColorMajor.b", value.b);
+            EditorPrefs.SetFloat("DetoxStudios.uScript.GridColorMajor.a", value.a);
+         }
       }
 
-      public UnityEngine.Color GridColorMinor
+      public static UnityEngine.Color GridColorMinor
       {
-         get { this.LoadIfRequired(); return (UnityEngine.Color)this.preferences["GridColorMinor"]; }
-         set { this.LoadIfRequired(); this.preferences["GridColorMinor"] = value; }
+         get
+         {
+            UnityEngine.Color c;
+            c.r = EditorPrefs.GetFloat("DetoxStudios.uScript.GridColorMinor.r");
+            c.g = EditorPrefs.GetFloat("DetoxStudios.uScript.GridColorMinor.g");
+            c.b = EditorPrefs.GetFloat("DetoxStudios.uScript.GridColorMinor.b");
+            c.a = EditorPrefs.GetFloat("DetoxStudios.uScript.GridColorMinor.a");
+            return c;
+         }
+         set
+         {
+            EditorPrefs.SetFloat("DetoxStudios.uScript.GridColorMinor.r", value.r);
+            EditorPrefs.SetFloat("DetoxStudios.uScript.GridColorMinor.g", value.g);
+            EditorPrefs.SetFloat("DetoxStudios.uScript.GridColorMinor.b", value.b);
+            EditorPrefs.SetFloat("DetoxStudios.uScript.GridColorMinor.a", value.a);
+         }
       }
 
-      public DoubleClickBehaviorType DoubleClickBehavior
+      public static DoubleClickBehaviorType DoubleClickBehavior
       {
-         get { this.LoadIfRequired(); return (DoubleClickBehaviorType)this.preferences["DoubleClickBehavior"]; }
-         set { this.LoadIfRequired(); this.preferences["DoubleClickBehavior"] = value; }
+         get { return (DoubleClickBehaviorType)System.Enum.Parse(typeof(DoubleClickBehaviorType), EditorPrefs.GetString("DetoxStudios.uScript.DoubleClickBehavior")); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.DoubleClickBehavior", value.ToString()); }
       }
 
-      public VariableExpansionType VariableExpansion
+      public static VariableExpansionType VariableExpansion
       {
-         get { this.LoadIfRequired(); return (VariableExpansionType)this.preferences["VariableExpansion"]; }
-         set { this.LoadIfRequired(); this.preferences["VariableExpansion"] = value; }
+         get { return (VariableExpansionType)System.Enum.Parse(typeof(VariableExpansionType), EditorPrefs.GetString("DetoxStudios.uScript.VariableExpansion")); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.VariableExpansion", value.ToString()); }
       }
 
-      public bool GridSnap
+      public static bool GridSnap
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["GridSnap"]; }
-         set { this.LoadIfRequired(); this.preferences["GridSnap"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.GridSnap"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.GridSnap", value); }
       }
 
-      public bool ShowAtStartup
+      public static bool ShowAtStartup
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["ShowAtStartup"]; }
-         set { this.LoadIfRequired(); this.preferences["ShowAtStartup"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.ShowAtStartup"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.ShowAtStartup", value); }
       }
 
-      public bool ShowAllHotkeys
+      public static bool ShowAllHotkeys
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["ShowAllHotkeys"]; }
-         set { this.LoadIfRequired(); this.preferences["ShowAllHotkeys"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.ShowAllHotkeys"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.ShowAllHotkeys", value); }
       }
 
-      public bool LeftMouseButtonPrimary
+      public static bool LeftMouseButtonPrimary
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["LeftMouseButtonPrimary"]; }
-         set { this.LoadIfRequired(); this.preferences["LeftMouseButtonPrimary"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.LeftMouseButtonPrimary"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.LeftMouseButtonPrimary", value); }
       }
 
-      public bool CheckForUpdate
+      public static bool CheckForUpdate
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["CheckForUpdate"]; }
-         set { this.LoadIfRequired(); this.preferences["CheckForUpdate"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.CheckForUpdate"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.CheckForUpdate", value); }
       }
 
-      public int LastPromotionCheck
+      public static int LastPromotionCheck
       {
-         get { this.LoadIfRequired(); return (int)this.preferences["LastPromotionCheck"]; }
-         set { this.LoadIfRequired(); this.preferences["LastPromotionCheck"] = value; }
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.LastPromotionCheck"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.LastPromotionCheck", value); }
       }
 
-      public string IgnorePromotions
+      public static string IgnorePromotions
       {
-         get { this.LoadIfRequired(); return this.preferences["IgnorePromotions"] as string; }
-         set { this.LoadIfRequired(); this.preferences["IgnorePromotions"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.IgnorePromotions"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.IgnorePromotions", value); }
       }
 
-      public int LastUpdateCheck
+      public static int LastUpdateCheck
       {
-         get { this.LoadIfRequired(); return (int)this.preferences["LastUpdateCheck"]; }
-         set { this.LoadIfRequired(); this.preferences["LastUpdateCheck"] = value; }
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.LastUpdateCheck"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.LastUpdateCheck", value); }
       }
 
-      public string IgnoreUpdateBuild
+      public static string IgnoreUpdateBuild
       {
-         get { this.LoadIfRequired(); return this.preferences["IgnoreUpdateBuild"] as string; }
-         set { this.LoadIfRequired(); this.preferences["IgnoreUpdateBuild"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.IgnoreUpdateBuild"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.IgnoreUpdateBuild", value); }
       }
 
-      public int PropertyPanelNodeLimit
+      public static int PropertyPanelNodeLimit
       {
-         get { this.LoadIfRequired(); return (int)this.preferences["PropertyPanelNodeLimit"]; }
-         set { this.LoadIfRequired(); this.preferences["PropertyPanelNodeLimit"] = value; }
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.PropertyPanelNodeLimit"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.PropertyPanelNodeLimit", value); }
       }
 
-      public float LineWidthMultiplier
+      public static float LineWidthMultiplier
       {
-         get { this.LoadIfRequired(); return (float)this.preferences["LineWidthMultiplier"]; }
-         set { this.LoadIfRequired(); this.preferences["LineWidthMultiplier"] = value; }
+         get { return EditorPrefs.GetFloat("DetoxStudios.uScript.LineWidthMultiplier"); }
+         set { EditorPrefs.SetFloat("DetoxStudios.uScript.LineWidthMultiplier", value); }
       }
 
-      public bool EnableSceneWarning
+      public static bool EnableSceneWarning
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["EnableSceneWarning"]; }
-         set { this.LoadIfRequired(); this.preferences["EnableSceneWarning"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.EnableSceneWarning"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.EnableSceneWarning", value); }
       }
 
-      public bool ExpandFavoritePanel
+      public static bool ExpandFavoritePanel
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["ExpandFavoritePanel"]; }
-         set { this.LoadIfRequired(); this.preferences["ExpandFavoritePanel"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.ExpandFavoritePanel"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.ExpandFavoritePanel", value); }
       }
 
-      public string ProjectGraphListFilter
+      public static string ProjectGraphListFilter
       {
-         get { this.LoadIfRequired(); return this.preferences["ProjectGraphListFilter"] as string; }
-         set { this.LoadIfRequired(); this.preferences["ProjectGraphListFilter"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.ProjectGraphListFilter"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.ProjectGraphListFilter", value); }
       }
 
-      public int ProjectGraphListOffset
+      public static int ProjectGraphListOffset
       {
-         get { this.LoadIfRequired(); return (int)this.preferences["ProjectGraphListOffset"]; }
-         set { this.LoadIfRequired(); this.preferences["ProjectGraphListOffset"] = value; }
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.ProjectGraphListOffset"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.ProjectGraphListOffset", value); }
       }
 
-      public string FavoriteNode1
+      public static string FavoriteNode1
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode1"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode1"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode1"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode1", value); }
       }
 
-      public string FavoriteNode2
+      public static string FavoriteNode2
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode2"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode2"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode2"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode2", value); }
       }
 
-      public string FavoriteNode3
+      public static string FavoriteNode3
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode3"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode3"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode3"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode3", value); }
       }
 
-      public string FavoriteNode4
+      public static string FavoriteNode4
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode4"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode4"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode4"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode4", value); }
       }
 
-      public string FavoriteNode5
+      public static string FavoriteNode5
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode5"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode5"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode5"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode5", value); }
       }
 
-      public string FavoriteNode6
+      public static string FavoriteNode6
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode6"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode6"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode6"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode6", value); }
       }
 
-      public string FavoriteNode7
+      public static string FavoriteNode7
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode7"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode7"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode7"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode7", value); }
       }
 
-      public string FavoriteNode8
+      public static string FavoriteNode8
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode8"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode8"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode8"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode8", value); }
       }
 
-      public string FavoriteNode9
+      public static string FavoriteNode9
       {
-         get { this.LoadIfRequired(); return this.preferences["FavoriteNode9"] as string; }
-         set { this.LoadIfRequired(); this.preferences["FavoriteNode9"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode9"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode9", value); }
       }
 
-      public string[] FavoriteNodes
+      public static string[] FavoriteNodes
       {
          get
          {
             return new[]
                       {
-                         this.FavoriteNode1, this.FavoriteNode2, this.FavoriteNode3, this.FavoriteNode4, this.FavoriteNode5,
-                         this.FavoriteNode6, this.FavoriteNode7, this.FavoriteNode8, this.FavoriteNode9
+                         FavoriteNode1, FavoriteNode2, FavoriteNode3, FavoriteNode4, FavoriteNode5,
+                         FavoriteNode6, FavoriteNode7, FavoriteNode8, FavoriteNode9
                       };
          }
       }
 
-      public string GraphListFolderStates
+      public static string GraphListFolderStates
       {
-         get { this.LoadIfRequired(); return this.preferences["GraphListFolderStates"] as string; }
-         set { this.LoadIfRequired(); this.preferences["GraphListFolderStates"] = value; }
+         get { return EditorPrefs.GetString("DetoxStudios.uScript.GraphListFolderStates"); }
+         set { EditorPrefs.SetString("DetoxStudios.uScript.GraphListFolderStates", value); }
       }
 
-      public bool RefreshOnHierarchyChange
+      public static bool RefreshOnHierarchyChange
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["RefreshOnHierarchyChange"]; }
-         set { this.LoadIfRequired(); this.preferences["RefreshOnHierarchyChange"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.RefreshOnHierarchyChange"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.RefreshOnHierarchyChange", value); }
       }
 
-      public bool ShowHierarchyIcon
+      public static bool ShowHierarchyIcon
       {
-         get { this.LoadIfRequired(); return (bool)this.preferences["ShowHierarchyIcon"]; }
-         set { this.LoadIfRequired(); this.preferences["ShowHierarchyIcon"] = value; }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.ShowHierarchyIcon"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.ShowHierarchyIcon", value); }
       }
 
       public static bool ShouldDrawCollapsedVariable(bool selected)
       {
-         return uScript.Preferences.VariableExpansion != VariableExpansionType.AlwaysExpanded
-                && (uScript.Preferences.VariableExpansion == VariableExpansionType.AlwaysCollapsed
+         return VariableExpansion != VariableExpansionType.AlwaysExpanded
+                && (VariableExpansion == VariableExpansionType.AlwaysCollapsed
                     || selected == false);
       }
 
-      public string GetFavoriteNode(int number)
+      public static string GetFavoriteNode(int number)
       {
          if (number < 1 || number > 9)
          {
@@ -362,10 +395,10 @@ namespace Detox.Editor
             return string.Empty;
          }
 
-         return this.preferences["FavoriteNode" + number] as string;
+         return EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode" + number);
       }
 
-      public void UpdateFavoriteNode(int number, string value)
+      public static void UpdateFavoriteNode(int number, string value)
       {
          if (number < 1 || number > 9)
          {
@@ -373,11 +406,10 @@ namespace Detox.Editor
             return;
          }
 
-         this.preferences["FavoriteNode" + number] = value;
-         this.Save();
+         EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode" + number, value);
       }
 
-      public void SwapFavoriteNodes(int number1, int number2)
+      public static void SwapFavoriteNodes(int number1, int number2)
       {
          if (number1 < 1 || number1 > 9)
          {
@@ -391,111 +423,182 @@ namespace Detox.Editor
             return;
          }
 
-         var original = this.preferences["FavoriteNode" + number1] as string;
-         this.preferences["FavoriteNode" + number1] = this.preferences["FavoriteNode" + number2];
-         this.preferences["FavoriteNode" + number2] = original;
-         this.Save();
+         var original = EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode" + number1);
+         EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode" + number1, EditorPrefs.GetString("DetoxStudios.uScript.FavoriteNode" + number2));
+         EditorPrefs.SetString("DetoxStudios.uScript.FavoriteNode" + number2, original);
       }
 
-      public void Revert()
+      public static bool GetBool(string key, bool defaultValue)
       {
-         //clear out the hash table
-         //to force the defaults to load
-         this.preferences.Clear();
-
-         this.LoadDefaultsIfRequired();
+         if (!EditorPrefs.HasKey(key)) return defaultValue;
+         return EditorPrefs.GetBool(GetNewKey(key));
       }
 
-      public void Load()
+      public static float GetFloat(string key, float defaultValue)
       {
-         var hashtable = uScript.GetSetting("Preferences") as Hashtable ?? new Hashtable();
-
-         this.preferences = new Hashtable(hashtable);
-
-         this.LoadDefaultsIfRequired();
+         if (!EditorPrefs.HasKey(key)) return defaultValue;
+         return EditorPrefs.GetFloat(GetNewKey(key));
       }
 
-      public void Save()
+      public static int GetInt(string key, int defaultValue)
       {
-         this.LoadIfRequired();
+         if (!EditorPrefs.HasKey(key)) return defaultValue;
+         return EditorPrefs.GetInt(GetNewKey(key));
+      }
 
-         uScript.SetSetting("Preferences", new Hashtable(this.preferences));
+      public static string GetString(string key, string defaultValue)
+      {
+         if (!EditorPrefs.HasKey(key)) return defaultValue;
+         return EditorPrefs.GetString(GetNewKey(key));
+      }
+
+      public static void SetBool(string key, bool value)
+      {
+         EditorPrefs.SetBool(GetNewKey(key), value);
+      }
+
+      public static void SetFloat(string key, float value)
+      {
+         EditorPrefs.SetFloat(GetNewKey(key), value);
+      }
+
+      public static void SetInt(string key, int value)
+      {
+         EditorPrefs.SetInt(GetNewKey(key), value);
+      }
+
+      public static void SetString(string key, string value)
+      {
+         EditorPrefs.SetString(GetNewKey(key), value);
+      }
+
+      public static void Revert()
+      {
+         // force save defaults
+         LoadDefaultsIfRequired(true);
+      }
+
+      private static string GetNewKey(string key)
+      {
+         if (!key.Contains("DetoxStudios.uScript."))
+         {
+            string newKey = "DetoxStudios.";
+
+            if (key.Contains("uScript\\"))
+            {
+               newKey += key.Replace("uScript\\", "uScript.");
+            }
+            else
+            {
+               newKey += "uScript." + key;
+            }
+
+            return newKey;
+         }
+
+         return key;
+      }
+
+      public static void SavePreference(string key, object value)
+      {
+         string newKey = GetNewKey(key);
+
+         if (value.GetType() == typeof(float))
+         {
+            EditorPrefs.SetFloat(newKey, (float)value);
+         }
+         else if (value.GetType() == typeof(int))
+         {
+            EditorPrefs.SetInt(newKey, (int)value);
+         }
+         else if (value.GetType() == typeof(bool))
+         {
+            EditorPrefs.SetBool(newKey, (bool)value);
+         }
+         else if (value.GetType() == typeof(string))
+         {
+            EditorPrefs.SetString(newKey, (string)value);
+         }
+         else if (value.GetType() == typeof(UnityEngine.Color))
+         {
+            UnityEngine.Color c = (UnityEngine.Color)value;
+            EditorPrefs.SetFloat(newKey + ".r", c.r);
+            EditorPrefs.SetFloat(newKey + ".g", c.g);
+            EditorPrefs.SetFloat(newKey + ".b", c.b);
+            EditorPrefs.SetFloat(newKey + ".a", c.a);
+         }
+         else
+         {
+            EditorPrefs.SetString(newKey, value.ToString());
+         }
       }
 
       [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed. Suppression is OK here.")]
       [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:CurlyBracketsMustNotBeOmitted", Justification = "Reviewed. Suppression is OK here.")]
-      private void LoadDefaultsIfRequired()
+      public static void LoadDefaultsIfRequired(bool force = false)
       {
-         this.SetDefault("AutoExpandToolbox", true);
-         this.SetDefault("AutoUpdateReflection", false);
-         this.SetDefault("DrawPanelsOnUpdate", false);
-         this.SetDefault("ShowGrid", uScriptConfig.Style.ShowGrid);
-         this.SetDefault("GridSize", uScriptConfig.Style.GridSize);
-         this.SetDefault("GridSubdivisions", uScriptConfig.Style.GridSubdivisions);
-         this.SetDefault("GridColorMajor", uScriptConfig.Style.GridColorMajor);
-         this.SetDefault("GridColorMinor", uScriptConfig.Style.GridColorMinor);
-         this.SetDefault("DoubleClickBehavior", DoubleClickBehaviorType.PingSource);
-         this.SetDefault("VariableExpansion", VariableExpansionType.Dynamic);
-         this.SetDefault("GridSnap", false);
-         this.SetDefault("ShowAtStartup", true);
-         this.SetDefault("ShowAllHotkeys", false);
-         this.SetDefault("LeftMouseButtonPrimary", true);
-         this.SetDefault("CheckForUpdate", true);
-         this.SetDefault("LastPromotionCheck", 0);
-         this.SetDefault("IgnorePromotions", string.Empty);
-         this.SetDefault("LastUpdateCheck", 0);
-         this.SetDefault("IgnoreUpdateBuild", string.Empty);
+         SetDefault("AutoExpandToolbox", true, force);
+         SetDefault("AutoUpdateReflection", false, force);
+         SetDefault("DrawPanelsOnUpdate", false, force);
+         SetDefault("ShowGrid", uScriptConfig.Style.ShowGrid, force);
+         SetDefault("GridSize", uScriptConfig.Style.GridSize, force);
+         SetDefault("GridSubdivisions", uScriptConfig.Style.GridSubdivisions, force);
+         SetDefault("GridColorMajor", uScriptConfig.Style.GridColorMajor, force);
+         SetDefault("GridColorMinor", uScriptConfig.Style.GridColorMinor, force);
+         SetDefault("DoubleClickBehavior", DoubleClickBehaviorType.PingSource, force);
+         SetDefault("VariableExpansion", VariableExpansionType.Dynamic, force);
+         SetDefault("GridSnap", false, force);
+         SetDefault("ShowAtStartup", true, force);
+         SetDefault("ShowAllHotkeys", false, force);
+         SetDefault("LeftMouseButtonPrimary", true, force);
+         SetDefault("CheckForUpdate", true, force);
+         SetDefault("LastPromotionCheck", 0, force);
+         SetDefault("IgnorePromotions", string.Empty, force);
+         SetDefault("LastUpdateCheck", 0, force);  
+         SetDefault("IgnoreUpdateBuild", string.Empty, force);
 
-         this.SetDefault("RelativeProjectFiles", uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles"));
-         this.SetDefault("RelativeUserScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/uScripts"));
-         this.SetDefault("RelativeUserNodes", uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/Nodes"));
-         this.SetDefault("RelativeNestedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode"));
-         this.SetDefault("RelativeGeneratedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode"));
-         this.SetDefault("MaximumNodeRecursionCount", 1000);
-         this.SetDefault("MultilineHeight", 3);
-         this.SetDefault("SaveMethod", 1); // 0:Quick, 1:Debug, 2:Release
-         this.SetDefault("MenuLocation", 1); // 0:Default, 1:Tools, 2:Window  // TODO: Default to 0 in a new project
-         this.SetDefault("ProfileMin", 1f);
-         this.SetDefault("Profiling", false);
-         this.SetDefault("PropertyPanelNodeLimit", 1);
+         SetDefault("RelativeProjectFiles", uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles"), force);
+         SetDefault("RelativeUserScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/uScripts"), force);
+         SetDefault("RelativeUserNodes", uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/Nodes"), force);
+         SetDefault("RelativeNestedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode"), force);
+         SetDefault("RelativeGeneratedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode"), force);
+         SetDefault("MaximumNodeRecursionCount", 1000, force);
+         SetDefault("MultilineHeight", 3, force);
+         SetDefault("SaveMethod", SaveMethodType.Debug, force);
+         SetDefault("MenuLocation", MenuLocationType.Tools, force);
+         SetDefault("ProfileMin", 1f, force);
+         SetDefault("Profiling", false, force);
+         SetDefault("PropertyPanelNodeLimit", 1, force);
 
-         this.SetDefault("ExpandFavoritePanel", true);
+         SetDefault("ExpandFavoritePanel", true, force);
 
-         this.SetDefault("ProjectGraphListFilter", string.Empty);
-         this.SetDefault("ProjectGraphListOffset", 0);
+         SetDefault("ProjectGraphListFilter", string.Empty, force);
+         SetDefault("ProjectGraphListOffset", 0, force);
 
-         this.SetDefault("FavoriteNode1", string.Empty);
-         this.SetDefault("FavoriteNode2", string.Empty);
-         this.SetDefault("FavoriteNode3", string.Empty);
-         this.SetDefault("FavoriteNode4", string.Empty);
-         this.SetDefault("FavoriteNode5", string.Empty);
-         this.SetDefault("FavoriteNode6", string.Empty);
-         this.SetDefault("FavoriteNode7", string.Empty);
-         this.SetDefault("FavoriteNode8", string.Empty);
-         this.SetDefault("FavoriteNode9", string.Empty);
+         SetDefault("FavoriteNode1", string.Empty, force);
+         SetDefault("FavoriteNode2", string.Empty, force);
+         SetDefault("FavoriteNode3", string.Empty, force);
+         SetDefault("FavoriteNode4", string.Empty, force);
+         SetDefault("FavoriteNode5", string.Empty, force);
+         SetDefault("FavoriteNode6", string.Empty, force);
+         SetDefault("FavoriteNode7", string.Empty, force);
+         SetDefault("FavoriteNode8", string.Empty, force);
+         SetDefault("FavoriteNode9", string.Empty, force);
 
-         this.SetDefault("GraphListFolderStates", string.Empty);
+         SetDefault("GraphListFolderStates", string.Empty, force);
 
-         this.SetDefault("RefreshOnHierarchyChange", true);
+         SetDefault("RefreshOnHierarchyChange", true, force);
 
-         this.SetDefault("ShowHierarchyIcon", true);
-         this.SetDefault("LineWidthMultiplier", 1.0f);
-         this.SetDefault("EnableSceneWarning", true);
+         SetDefault("ShowHierarchyIcon", true, force);
+         SetDefault("LineWidthMultiplier", 1.0f, force);
+         SetDefault("EnableSceneWarning", true, force);
       }
 
-      private void LoadIfRequired()
+      private static void SetDefault(string key, object value, bool force)
       {
-         if (null == this.preferences)
+         if (force || EditorPrefs.HasKey(GetNewKey(key)) == false)
          {
-            this.Load();
-         }
-      }
-
-      private void SetDefault(string key, object value)
-      {
-         if (this.preferences.ContainsKey(key) == false)
-         {
-            this.preferences.Add(key, value);
+            SavePreference(key, value);
          }
       }
    }

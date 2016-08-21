@@ -761,7 +761,7 @@ namespace Detox.Editor.GUI
          //                              // Load button
          //                              if (GUI.Button(rectLoadButton, uScriptGUIContent.buttonScriptLoad, this.styleMiniButtonRight))
          //                              {
-         //                                 if ( null == path ) path = _uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
+         //                                 if ( null == path ) path = _uScriptInstance.FindFile(Preferences.UserScripts, scriptFileName);
          //   
          //                                 if (false == string.IsNullOrEmpty(path))
          //                                 {
@@ -772,7 +772,7 @@ namespace Detox.Editor.GUI
          //                              // Script Label buton
          //                              if (GUI.Button(rectLabelButton, scriptName + (scriptSceneName == "None" ? string.Empty : " (" + scriptSceneName + ")"), (wasClicked ? this.styleScriptListBold : this.styleScriptListNormal)))
          //                              {
-         //                                 path = _uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
+         //                                 path = _uScriptInstance.FindFile(Preferences.UserScripts, scriptFileName);
          //   
          //                                 if (wasClicked)
          //                                 {
@@ -1232,13 +1232,12 @@ namespace Detox.Editor.GUI
          var expandedFolders = (from item in this.folderItems where item.Value.Expanded select item.Key).ToList();
          var serialized = string.Join("\n", expandedFolders.ToArray());
 
-         uScript.Preferences.GraphListFolderStates = serialized;
-         uScript.Preferences.Save();
+         Preferences.GraphListFolderStates = serialized;
       }
 
       private void RestoreFolderStates()
       {
-         var serialized = uScript.Preferences.GraphListFolderStates;
+         var serialized = Preferences.GraphListFolderStates;
          var expandedFolders = serialized.Split('\n');
 
          foreach (var folder in expandedFolders.Where(key => this.folderItems.ContainsKey(key)))

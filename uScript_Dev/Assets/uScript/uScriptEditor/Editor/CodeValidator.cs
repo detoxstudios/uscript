@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 
 using UnityEditor;
+using Detox.Editor;
 
 public class CodeValidator
 {
@@ -100,7 +101,7 @@ public class CodeValidator
 
       if ( numErrors > 0 && false == m_UserOverrideErrors )
       {
-         string generatedScripts = uScriptConfig.ConstantPaths.RelativePath(uScript.Preferences.GeneratedScripts);
+         string generatedScripts = uScriptConfig.ConstantPaths.RelativePath(Preferences.GeneratedScripts);
 
          Type logEntryType = asm.GetType("UnityEditorInternal.LogEntry");
    		if ( null == logEntryType ) return true;

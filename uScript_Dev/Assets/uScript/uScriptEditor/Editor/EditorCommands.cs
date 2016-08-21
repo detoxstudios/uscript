@@ -28,11 +28,6 @@ namespace Detox.Editor
          HotkeyWindow.Open();
       }
 
-      public static void OpenPreferenceWindow()
-      {
-         PreferenceWindow.Open();
-      }
-
       public static void OpenWelcomeWindow()
       {
          WelcomeWindow.Open();

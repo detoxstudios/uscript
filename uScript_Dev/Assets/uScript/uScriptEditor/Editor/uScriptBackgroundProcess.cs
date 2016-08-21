@@ -134,10 +134,10 @@ public class uScriptBackgroundProcess
             // the following code is used to update existing uscripts and their generated code
             // so that .uscript files have a "uScript" and "uScriptSource" label and the
             // generated files have a "uScript" and "uScriptCode" label
-            if (Directory.Exists(uScript.Preferences.UserScripts))
+            if (Directory.Exists(Preferences.UserScripts))
             {
                // check for asset labels
-               UnityEngine.Object[] objs = GetAtPath(uScript.Preferences.UserScripts, "*.uscript");
+               UnityEngine.Object[] objs = GetAtPath(Preferences.UserScripts, "*.uscript");
                foreach (UnityEngine.Object obj in objs)
                {
                   string[] labels = AssetDatabase.GetLabels(obj);
@@ -158,7 +158,7 @@ public class uScriptBackgroundProcess
                   AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
                }
 
-               objs = GetAtPath(uScript.Preferences.UserScripts + "/_GeneratedCode", "*.cs");
+               objs = GetAtPath(Preferences.UserScripts + "/_GeneratedCode", "*.cs");
                foreach (UnityEngine.Object obj in objs)
                {
                   AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });

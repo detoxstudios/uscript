@@ -81,11 +81,9 @@ public class UpdateNotification : EditorWindow
    {
       shouldRunSilent = true;
 
-      var preferences = uScript.Preferences;
-
       // Introduce the user to the update system on the first launch
       // LastUpdateCheck will be 0 when uScript it first run, or when the uScriptSettings file is removed
-      if (preferences.LastUpdateCheck <= 0)
+      if (Preferences.LastUpdateCheck <= 0)
       {
          const string Message =
             "This update check will send basic, anonymous Unity and uScript version details to our update server."
@@ -98,21 +96,19 @@ public class UpdateNotification : EditorWindow
             "Enable",
             "Disable");
 
-         preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"));
-         preferences.CheckForUpdate = enable;
-         preferences.Save();
+         Preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"));
+         Preferences.CheckForUpdate = enable;
       }
 
       // If the update system is enabled, we *might* check for update availability
-      if (preferences.CheckForUpdate)
+      if (Preferences.CheckForUpdate)
       {
          // Only check once per day
          var today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-         if (preferences.LastUpdateCheck < today)
+         if (Preferences.LastUpdateCheck < today)
          {
             // Update the date so we won't check again until tomorrow
-            preferences.LastUpdateCheck = today;
-            preferences.Save();
+            Preferences.LastUpdateCheck = today;
 
             SilentlyCheckServerForUpdate();
          }
@@ -384,7 +380,7 @@ public class UpdateNotification : EditorWindow
          var clientVersion = clientBuild.ToString();
          var serverVersion = LatestVersion = serverBuild.ToString();
 
-         if (uScript.Preferences.IgnoreUpdateBuild == serverVersion)
+         if (Preferences.IgnoreUpdateBuild == serverVersion)
          {
             return;
          }
@@ -500,16 +496,12 @@ public class UpdateNotification : EditorWindow
 
    private static void CommandRemindLater()
    {
-      var preferences = uScript.Preferences;
-      preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(7).ToString("yyyyMMdd"));
-      preferences.Save();
+      Preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(7).ToString("yyyyMMdd"));
    }
 
    private static void CommandSkipUpdate()
    {
-      var preferences = uScript.Preferences;
-      preferences.IgnoreUpdateBuild = LatestVersion;
-      preferences.Save();
+      Preferences.IgnoreUpdateBuild = LatestVersion;
    }
 
    private void LayoutGUI()

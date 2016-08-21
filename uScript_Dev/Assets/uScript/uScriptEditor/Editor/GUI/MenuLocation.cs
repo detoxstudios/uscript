@@ -24,11 +24,11 @@ namespace Detox.Editor.GUI
       static MenuLocation()
       {
          uScript.LoadSettings();
-         ScriptPath = uScript.Preferences.ProjectFiles + "/Editor/";
+         ScriptPath = Preferences.ProjectFiles + "/Editor/";
 
          if (FileDoesNotExist() || VersionIsObsolete())
          {
-            Change(uScript.Preferences.MenuLocation);
+            Change(Preferences.MenuLocation);
          }
       }
 
@@ -114,12 +114,6 @@ namespace Detox.Editor
       internal static void OpenHotkeysWindow()
       {
          EditorCommands.OpenHotkeyWindow();
-      }
-
-      [MenuItem(MenuRoot + ""uScript/Preferences"", false, 901)]
-      internal static void OpenPreferenceWindow()
-      {
-         EditorCommands.OpenPreferenceWindow();
       }
 
       [MenuItem(MenuRoot + ""uScript/About uScript"", false, 1001)]
