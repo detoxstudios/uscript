@@ -980,23 +980,17 @@ public sealed partial class uScript : EditorWindow
                   object htObj = hashtable[htKey];
                   if (htKey.Contains ("SaveMethod")) 
                   {
-                     Debug.Log(string.Format("Saving SaveMethod: {0}", htObj.ToString()));
                      htObj = ((Preferences.SaveMethodType)htObj).ToString ();
-                     Debug.Log(string.Format("Saving SaveMethod: {0}", htObj.ToString()));
                   }
                   else if (htKey.Contains ("MenuLocation")) 
                   {
-                     Debug.Log(string.Format("Saving MenuLocation: {0}", htObj.ToString()));
                      htObj = ((Preferences.MenuLocationType)htObj).ToString ();
-                     Debug.Log(string.Format("Saving MenuLocation: {0}", htObj.ToString()));
                   }
-                  Debug.Log(string.Format("Saving {0}: {1}", htKey, htObj.ToString()));
                   Preferences.SavePreference(htKey, htObj);
                }
             }
             else
             {
-               Debug.Log(string.Format("Saving {0}: {1}", key, obj.ToString()));
                Preferences.SavePreference(key, obj);
             }
          }
