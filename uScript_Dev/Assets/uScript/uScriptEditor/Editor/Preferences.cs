@@ -542,10 +542,10 @@ namespace Detox.Editor
          SetDefault("DrawPanelsOnUpdate", false, force);
          SetDefault("ShowGrid", uScriptConfig.Style.ShowGrid, force);
          SetDefault("GridSize", uScriptConfig.Style.GridSize, force);
-         SetDefault("GridSubdivisions", uScriptConfig.Style.GridSubdivisions, force);
+         SetDefault("GridSubdivisions", uScriptConfig.Style.GridSubdivisions.ToString(), force);
          SetDefault("GridColorMajor", uScriptConfig.Style.GridColorMajor, force);
          SetDefault("GridColorMinor", uScriptConfig.Style.GridColorMinor, force);
-         SetDefault("DoubleClickBehavior", DoubleClickBehaviorType.PingSource, force);
+         SetDefault("DoubleClickBehavior", DoubleClickBehaviorType.PingSource.ToString(), force);
          SetDefault("VariableExpansion", VariableExpansionType.Dynamic, force);
          SetDefault("GridSnap", false, force);
          SetDefault("ShowAtStartup", true, force);
@@ -564,8 +564,8 @@ namespace Detox.Editor
          SetDefault("RelativeGeneratedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode"), force);
          SetDefault("MaximumNodeRecursionCount", 1000, force);
          SetDefault("MultilineHeight", 3, force);
-         SetDefault("SaveMethod", SaveMethodType.Debug, force);
-         SetDefault("MenuLocation", MenuLocationType.Tools, force);
+         SetDefault("SaveMethod", SaveMethodType.Debug.ToString(), force);
+         SetDefault("MenuLocation", MenuLocationType.Tools.ToString(), force);
          SetDefault("ProfileMin", 1f, force);
          SetDefault("Profiling", false, force);
          SetDefault("PropertyPanelNodeLimit", 1, force);

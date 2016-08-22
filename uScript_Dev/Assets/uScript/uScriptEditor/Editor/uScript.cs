@@ -963,9 +963,9 @@ public sealed partial class uScript : EditorWindow
 
    public static void LoadSettings()
    {
-      if (File.Exists(uScriptConfig.ConstantPaths.Editor + "/" + uScriptConfig.Files.SettingsFile))
+      if (File.Exists(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile))
       {
-         AppData.Load(uScriptConfig.ConstantPaths.Editor + "/" + uScriptConfig.Files.SettingsFile);
+         AppData.Load(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile);
 
          // user is upgrading from .settings file to EditorPrefs, transfer everything over
          ICollection keys = AppData.GetAllKeys();
@@ -978,16 +978,32 @@ public sealed partial class uScript : EditorWindow
                foreach (string htKey in hashtable.Keys)
                {
                   object htObj = hashtable[htKey];
+                  if (htKey.Contains ("SaveMethod")) 
+                  {
+                     Debug.Log(string.Format("Saving SaveMethod: {0}", htObj.ToString()));
+                     htObj = ((Preferences.SaveMethodType)htObj).ToString ();
+                     Debug.Log(string.Format("Saving SaveMethod: {0}", htObj.ToString()));
+                  }
+                  else if (htKey.Contains ("MenuLocation")) 
+                  {
+                     Debug.Log(string.Format("Saving MenuLocation: {0}", htObj.ToString()));
+                     htObj = ((Preferences.MenuLocationType)htObj).ToString ();
+                     Debug.Log(string.Format("Saving MenuLocation: {0}", htObj.ToString()));
+                  }
+                  Debug.Log(string.Format("Saving {0}: {1}", htKey, htObj.ToString()));
                   Preferences.SavePreference(htKey, htObj);
                }
             }
             else
             {
+               Debug.Log(string.Format("Saving {0}: {1}", key, obj.ToString()));
                Preferences.SavePreference(key, obj);
             }
          }
-
-         File.Delete(uScriptConfig.ConstantPaths.Editor + "/" + uScriptConfig.Files.SettingsFile);
+   
+         // delete settings and meta file
+         File.Delete(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile);
+         File.Delete(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile + ".meta");
       }
    }
 
