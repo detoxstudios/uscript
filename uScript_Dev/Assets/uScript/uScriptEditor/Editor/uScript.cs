@@ -999,6 +999,10 @@ public sealed partial class uScript : EditorWindow
          File.Delete(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile);
          File.Delete(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile + ".meta");
       }
+      else
+      {
+         Preferences.LoadDefaultsIfRequired();
+      }
    }
 
    private static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
