@@ -1698,6 +1698,8 @@ public sealed partial class uScript : EditorWindow
          this.position = minimum;
       }
 
+      LoadSettings();
+
       uScriptGUI.PanelPropertiesWidth = (int)(Instance.position.width / 3);
       uScriptGUI.PanelScriptsWidth = (int)(Instance.position.width / 3);
 

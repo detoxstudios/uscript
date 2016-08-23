@@ -542,11 +542,11 @@ namespace Detox.Editor
          SetDefault("DrawPanelsOnUpdate", false, force);
          SetDefault("ShowGrid", uScriptConfig.Style.ShowGrid, force);
          SetDefault("GridSize", uScriptConfig.Style.GridSize, force);
-         SetDefault("GridSubdivisions", uScriptConfig.Style.GridSubdivisions.ToString(), force);
+         SetDefault("GridSubdivisions", uScriptConfig.Style.GridSubdivisions, force);
          SetDefault("GridColorMajor", uScriptConfig.Style.GridColorMajor, force);
          SetDefault("GridColorMinor", uScriptConfig.Style.GridColorMinor, force);
          SetDefault("DoubleClickBehavior", DoubleClickBehaviorType.PingSource.ToString(), force);
-         SetDefault("VariableExpansion", VariableExpansionType.Dynamic, force);
+         SetDefault("VariableExpansion", VariableExpansionType.Dynamic.ToString(), force);
          SetDefault("GridSnap", false, force);
          SetDefault("ShowAtStartup", true, force);
          SetDefault("ShowAllHotkeys", false, force);
