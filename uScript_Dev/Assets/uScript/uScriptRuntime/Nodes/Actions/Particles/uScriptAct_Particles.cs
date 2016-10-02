@@ -35,6 +35,7 @@ public class uScriptAct_Particles : uScriptLogic
       {
          if (currentTarget != null)
          {
+#if !UNITY_5_4
             ParticleEmitter peComp = currentTarget.GetComponent<ParticleEmitter>();
             if (peComp != null)
             {
@@ -49,6 +50,7 @@ public class uScriptAct_Particles : uScriptLogic
             }
             else
             {
+#endif
                ParticleSystem psComp = currentTarget.GetComponent<ParticleSystem>();
                if (psComp != null)
                {
@@ -59,7 +61,9 @@ public class uScriptAct_Particles : uScriptLogic
 
                   psComp.Play();
                }
+#if !UNITY_5_4
             }
+#endif
          }
       }
    }
@@ -78,6 +82,7 @@ public class uScriptAct_Particles : uScriptLogic
       {
          if (currentTarget != null)
          {
+#if !UNITY_5_4
             ParticleEmitter peComp = currentTarget.GetComponent<ParticleEmitter>();
             if (peComp != null)
             {
@@ -92,6 +97,7 @@ public class uScriptAct_Particles : uScriptLogic
             }
             else
             {
+#endif
                ParticleSystem psComp = currentTarget.GetComponent<ParticleSystem>();
                if (psComp != null)
                {
@@ -102,7 +108,9 @@ public class uScriptAct_Particles : uScriptLogic
 
                   psComp.Stop();
                }
+#if !UNITY_5_4
             }
+#endif
          }
       }
    }
