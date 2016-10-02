@@ -20,8 +20,8 @@ namespace Detox.Editor.GUI.Windows
    [SuppressMessage("ReSharper", "RedundantNameQualifier")]
    public class PreferenceWindow : MonoBehaviour
    {
-      private const int LabelWidth = 245;
-      private const int ValueWidth = 105;
+      private const int LabelWidth = 225;
+      private const int ValueWidth = 100;
 
       private const int MinGridSize = 8;
       private const int MaxGridSize = 100;
@@ -137,7 +137,7 @@ namespace Detox.Editor.GUI.Windows
             Preferences.GridColorMajor = EditorGUILayout.ColorField(
                "Line Color (major, minor)",
                Preferences.GridColorMajor,
-               GUILayout.Width(Style.Window.fixedWidth - 67));
+               GUILayout.Width(Style.Window.fixedWidth - 45));
             GUILayout.Space(3);
 
             EditorGUI.indentLevel--;
@@ -284,7 +284,7 @@ namespace Detox.Editor.GUI.Windows
             MaxPropertyPanelNodes,
             Mathf.Max(MinPropertyPanelNodes, intValue));
 
-         boolValue = EditorGUILayout.Toggle("Refresh on Hierarchy or Scene Change", Preferences.RefreshOnHierarchyChange);
+         boolValue = EditorGUILayout.Toggle("Refresh on Hierarchy/Scene Change", Preferences.RefreshOnHierarchyChange);
          Preferences.RefreshOnHierarchyChange = boolValue;
 
          EditorGUILayout.Separator();

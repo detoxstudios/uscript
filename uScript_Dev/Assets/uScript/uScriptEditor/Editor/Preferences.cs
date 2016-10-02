@@ -430,25 +430,25 @@ namespace Detox.Editor
 
       public static bool GetBool(string key, bool defaultValue)
       {
-         if (!EditorPrefs.HasKey(key)) return defaultValue;
+         if (!EditorPrefs.HasKey(key) && !EditorPrefs.HasKey(GetNewKey(key))) return defaultValue;
          return EditorPrefs.GetBool(GetNewKey(key));
       }
 
       public static float GetFloat(string key, float defaultValue)
       {
-         if (!EditorPrefs.HasKey(key)) return defaultValue;
+         if (!EditorPrefs.HasKey(key) && !EditorPrefs.HasKey(GetNewKey(key))) return defaultValue;
          return EditorPrefs.GetFloat(GetNewKey(key));
       }
 
       public static int GetInt(string key, int defaultValue)
       {
-         if (!EditorPrefs.HasKey(key)) return defaultValue;
+         if (!EditorPrefs.HasKey(key) && !EditorPrefs.HasKey(GetNewKey(key))) return defaultValue;
          return EditorPrefs.GetInt(GetNewKey(key));
       }
 
       public static string GetString(string key, string defaultValue)
       {
-         if (!EditorPrefs.HasKey(key)) return defaultValue;
+         if (!EditorPrefs.HasKey(key) && !EditorPrefs.HasKey(GetNewKey(key))) return defaultValue;
          return EditorPrefs.GetString(GetNewKey(key));
       }
 
