@@ -59,7 +59,7 @@ namespace Detox.Editor.GUI.Windows
 
             EditorGUILayout.BeginVertical();//Style.Window);
             {
-               EditorGUI.indentLevel = 1;
+//               EditorGUI.indentLevel = 1;
 
                DrawProjectSettings();
                DrawCodeGenerationSettings();
@@ -69,7 +69,7 @@ namespace Detox.Editor.GUI.Windows
                DrawMiscellaneousSettings();
                DrawDevDebugSettings();
 
-               EditorGUI.indentLevel = 0;
+//               EditorGUI.indentLevel = 0;
             
                EditorGUILayout.Space();
 
@@ -140,7 +140,7 @@ namespace Detox.Editor.GUI.Windows
                GUILayout.Width(Style.Window.fixedWidth - 45));
             GUILayout.Space(3);
 
-            EditorGUI.indentLevel--;
+//            EditorGUI.indentLevel--;
 
 #if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.fieldWidth = 30;
@@ -156,7 +156,7 @@ namespace Detox.Editor.GUI.Windows
 #else
             EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
 #endif
-            EditorGUI.indentLevel++;
+//            EditorGUI.indentLevel++;
          }
 
          EditorGUILayout.EndHorizontal();
@@ -253,7 +253,7 @@ namespace Detox.Editor.GUI.Windows
             boolValue = EditorGUILayout.Toggle("Profiling [time threshold]", boolValue, GUILayout.Width(LabelWidth + 20));
             Preferences.Profiling = boolValue;
 
-            EditorGUI.indentLevel--;
+//            EditorGUI.indentLevel--;
 
             UnityEngine.GUI.enabled = Preferences.Profiling;
 
@@ -274,7 +274,7 @@ namespace Detox.Editor.GUI.Windows
 #endif
 
             UnityEngine.GUI.enabled = true;
-            EditorGUI.indentLevel++;
+//            EditorGUI.indentLevel++;
          }
 
          EditorGUILayout.EndHorizontal();
