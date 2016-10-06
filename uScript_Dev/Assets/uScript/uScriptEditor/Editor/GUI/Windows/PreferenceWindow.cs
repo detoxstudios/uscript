@@ -306,6 +306,9 @@ namespace Detox.Editor.GUI.Windows
                {
                   Preferences.UserScripts = path;
                   Preferences.ProjectFiles = path.Substring(0, path.LastIndexOf("/"));
+                  Preferences.UserNodes = Preferences.ProjectFiles + "/Nodes";
+                  Preferences.NestedScripts = Preferences.UserScripts + "/_GeneratedCode";
+                  Preferences.GeneratedScripts = Preferences.UserScripts + "/_GeneratedCode";
                }
             }
          }
