@@ -63,18 +63,17 @@ namespace Detox.Editor.GUI.Windows
       {
          get
          {
-            return uScript.Preferences.LeftMouseButtonPrimary;
+            return Preferences.LeftMouseButtonPrimary;
          }
 
          set
          {
-            if (uScript.Preferences.LeftMouseButtonPrimary == value)
+            if (Preferences.LeftMouseButtonPrimary == value)
             {
                return;
             }
 
-            uScript.Preferences.LeftMouseButtonPrimary = value;
-            uScript.Preferences.Save();
+            Preferences.LeftMouseButtonPrimary = value;
          }
       }
 
@@ -82,18 +81,17 @@ namespace Detox.Editor.GUI.Windows
       {
          get
          {
-            return uScript.Preferences.ShowAllHotkeys;
+            return Preferences.ShowAllHotkeys;
          }
 
          set
          {
-            if (uScript.Preferences.ShowAllHotkeys == value)
+            if (Preferences.ShowAllHotkeys == value)
             {
                return;
             }
 
-            uScript.Preferences.ShowAllHotkeys = value;
-            uScript.Preferences.Save();
+            Preferences.ShowAllHotkeys = value;
          }
       }
 
@@ -107,7 +105,7 @@ namespace Detox.Editor.GUI.Windows
       {
          uScript.HotkeyWindow = this;
 
-         ShouldShowAllHotkeys = uScript.Preferences.ShowAllHotkeys;
+         ShouldShowAllHotkeys = Preferences.ShowAllHotkeys;
       }
 
       internal void OnDisable()

@@ -76,7 +76,7 @@ namespace Detox.Editor
 
             this.DrawToolbar();
 
-            if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
+            if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
             {
                this.DrawHiddenNotification();
             }

@@ -31,7 +31,7 @@ namespace Detox.Editor.GUI
             return;
          }
 
-         if (uScript.Preferences.ShowHierarchyIcon && HasValidComponent(instanceID))
+         if (Preferences.ShowHierarchyIcon && HasValidComponent(instanceID))
          {
             DrawIcon(selectionRect);
          }

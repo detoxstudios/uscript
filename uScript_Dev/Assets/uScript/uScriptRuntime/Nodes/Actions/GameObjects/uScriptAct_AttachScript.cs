@@ -19,7 +19,7 @@ public class uScriptAct_AttachScript : uScriptLogic
       [FriendlyName("Target", "The GameObject(s) to attach the script to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
-      [FriendlyName("Component Name", "Requires the component or script assembly fully qualified name.")]
+      [FriendlyName("Component Name", "Requires the component or script assembly-qualified name. For example, to attach a LineRenderer component, you must use its assembly-qualified name: \"UnityEngine.LineRenderer, UnityEngine\".")]
       string[] ScriptName
       )
    {
@@ -47,13 +47,19 @@ public class uScriptAct_AttachScript : uScriptLogic
                // http://blogs.unity3d.com/2015/01/21/addcomponentstring-api-removal-in-unity-5-0/
                // We used to create this automatically but that caused compatibility issues with Windows 8 Store Compatibility
                System.Type type = System.Type.GetType(tempScript);
-               foreach ( GameObject currentGameObject in Target )
+               if (type != null)
                {
-                  if (currentGameObject != null)
+                  foreach (GameObject currentGameObject in Target)
                   {
-                     currentGameObject.AddComponent(type);
+                     if (currentGameObject != null)
+                     {
+                        currentGameObject.AddComponent(type);
+                     }
                   }
-                  
+               }
+               else
+               {
+                  uScriptDebug.Log("[Attach Component] The specified component type could not be found: \"" + tempScript + "\". Use an assembly-qualified name.", uScriptDebug.Type.Error);
                }
             }
             catch (System.Exception e)

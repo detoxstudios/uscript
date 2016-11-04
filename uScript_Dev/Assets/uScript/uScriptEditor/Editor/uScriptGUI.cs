@@ -196,7 +196,7 @@ namespace Detox.Editor
 #endif
          var assetPathRelativeToProject = string.Format(
             "{0}/{1}",
-            uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6),
+            Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6),
             scriptName);
          var result = uScript.GetAssetInstanceID(assetPathRelativeToProject, typeof(TextAsset));
          return result == -1;
@@ -216,7 +216,7 @@ namespace Detox.Editor
 
       public static bool PingGeneratedScript(string scriptName)
       {
-         var assetPath = uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + scriptName + ".cs";
+         var assetPath = Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + scriptName + ".cs";
          if (PingObject(assetPath, typeof(TextAsset)) == false)
          {
             // Whenever the user presses the "Source" button for a given script in the uScripts Panel,

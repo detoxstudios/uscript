@@ -46,7 +46,7 @@ namespace Detox.Editor.GUI
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
             return uScript.GetGraphPath(this.ItemName + ".uscript");
 #else
-            return uScript.Preferences.UserScripts + "/" + this.ItemPath;
+            return Preferences.UserScripts + "/" + this.ItemPath;
 #endif
          }
       }
@@ -217,7 +217,7 @@ namespace Detox.Editor.GUI
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
          uScriptGUI.PingProjectGraph(this.GraphPath);
 #else
-         var directoryPath = uScript.Preferences.UserScripts + "/";
+         var directoryPath = Preferences.UserScripts + "/";
 
          // Foldout paths duplicate the folder name at the end, so remove it (e.g., "foo/bar/bar" -> "foo/bar")
          directoryPath += this.ItemPath.Substring(0, this.ItemPath.LastIndexOf("/", StringComparison.Ordinal));

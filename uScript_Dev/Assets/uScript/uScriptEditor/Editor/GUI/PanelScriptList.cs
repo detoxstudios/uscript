@@ -96,7 +96,7 @@ namespace Detox.Editor.GUI
 
                this.DrawDirectoryPanelToolbar();
 
-               if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
+               if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
                {
                   Instance.DrawHiddenNotification();
                }
@@ -152,9 +152,8 @@ namespace Detox.Editor.GUI
 
          public void SaveState()
          {
-            uScript.Preferences.ProjectGraphListFilter = this.filterText;
-            uScript.Preferences.ProjectGraphListOffset = (int)this.listView.ListOffset.y;
-            uScript.Preferences.Save();
+            Preferences.ProjectGraphListFilter = this.filterText;
+            Preferences.ProjectGraphListOffset = (int)this.listView.ListOffset.y;
          }
 
          /// <summary>
@@ -184,7 +183,7 @@ namespace Detox.Editor.GUI
             var commonPath = uScriptUtility.FindCommonPath(initialPaths).Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             initialPaths = initialPaths.Select(path => path.Replace(commonPath, string.Empty)).ToList();
 #else
-            var initialPaths = uScript.GetGraphPaths().Select(path => path.Replace(uScript.Preferences.UserScripts + "/", string.Empty)).ToList();
+            var initialPaths = uScript.GetGraphPaths().Select(path => path.Replace(Preferences.UserScripts + "/", string.Empty)).ToList();
 #endif
 
             // Send final (filtered and sorted) list to the ListView control
@@ -288,8 +287,8 @@ namespace Detox.Editor.GUI
 
          private void RestoreState()
          {
-            this.filterText = uScript.Preferences.ProjectGraphListFilter;
-            this.listView.ListOffset = new Vector2(0, uScript.Preferences.ProjectGraphListOffset);
+            this.filterText = Preferences.ProjectGraphListFilter;
+            this.listView.ListOffset = new Vector2(0, Preferences.ProjectGraphListOffset);
          }
 
          private List<string> SortPaths(List<string> paths)

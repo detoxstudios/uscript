@@ -148,7 +148,7 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
             }
             EditorGUILayout.EndHorizontal();
 
-            if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
+            if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
             {
                this.DrawHiddenNotification();
             }
@@ -241,20 +241,19 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
 #else
          EditorGUILayout.BeginHorizontal();
          {
-            var toggleState = GUILayout.Toggle(uScript.Preferences.AutoUpdateReflection, "Auto", EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false));
-            if (uScript.Preferences.AutoUpdateReflection != toggleState)
+            var toggleState = GUILayout.Toggle(Preferences.AutoUpdateReflection, "Auto", EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false));
+            if (Preferences.AutoUpdateReflection != toggleState)
             {
-               uScript.Preferences.AutoUpdateReflection = toggleState;
-               uScript.Preferences.Save();
+               Preferences.AutoUpdateReflection = toggleState;
 
-               if (uScript.Preferences.AutoUpdateReflection)
+               if (Preferences.AutoUpdateReflection)
                {
                   uScript.Instance.UpdateReflectedTypes();
                }
             }
 
             uScript.GuiState.StoreState();
-            uScript.GuiState.Enabled = uScript.GuiState.Enabled && !uScript.Preferences.AutoUpdateReflection;
+            uScript.GuiState.Enabled = uScript.GuiState.Enabled && !Preferences.AutoUpdateReflection;
 
             if (GUILayout.Button("Refresh", EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
             {
@@ -291,7 +290,7 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
          item.Hidden = this.FilterToolboxMenuItem(item, false);
       }
 
-      if (uScript.Preferences.AutoExpandToolbox || forceExpandToolbox)
+      if (Preferences.AutoExpandToolbox || forceExpandToolbox)
       {
          this.paletteFoldoutToggle = this.panelFilterText != string.Empty;
          ExpandPaletteMenuItemFoldouts(this.paletteFoldoutToggle);
@@ -347,7 +346,7 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
 
       for (var i = 0; i < MaxNumFavorites; i++)
       {
-         var nodeSignature = uScript.Preferences.GetFavoriteNode(i + 1);
+         var nodeSignature = Preferences.GetFavoriteNode(i + 1);
 
          if (string.IsNullOrEmpty(nodeSignature))
          {
@@ -548,7 +547,7 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
 
       GUILayout.Space(uScriptGUI.PanelDividerThickness);
 
-      var isPanelExpanded = uScript.Preferences.ExpandFavoritePanel;
+      var isPanelExpanded = Preferences.ExpandFavoritePanel;
 
       EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
       {
@@ -561,8 +560,7 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
             if (isPanelExpanded != toggle)
             {
                isPanelExpanded = toggle;
-               uScript.Preferences.ExpandFavoritePanel = isPanelExpanded;
-               uScript.Preferences.Save();
+               Preferences.ExpandFavoritePanel = isPanelExpanded;
             }
          }
          EditorGUILayout.EndHorizontal();
@@ -599,11 +597,11 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
                         {
                            if (newIndex == 0)
                            {
-                              uScript.Preferences.UpdateFavoriteNode(favoriteIndex, string.Empty);
+                              Preferences.UpdateFavoriteNode(favoriteIndex, string.Empty);
                            }
                            else
                            {
-                              uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
+                              Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
                            }
 
                            Instance.BuildFavoritesMenu();

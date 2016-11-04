@@ -14,6 +14,8 @@ namespace Detox.Editor.GUI.Windows
    using System;
    using System.Collections.Generic;
 
+   using Detox.Editor;
+
    using UnityEditor;
 
    using UnityEngine;
@@ -42,18 +44,16 @@ namespace Detox.Editor.GUI.Windows
       public static void StartupCheck()
       {
          const string DateFormat = "yyyyMMdd";
-         var preferences = uScript.Preferences;
 
          // Only check once per day
          var today = int.Parse(DateTime.Now.ToString(DateFormat));
-         if (preferences.LastPromotionCheck > 0 && preferences.LastPromotionCheck < today)
+         if (Preferences.LastPromotionCheck > 0 && Preferences.LastPromotionCheck < today)
          {
-            CheckServerForPromotion(uScriptBuild.Edition, preferences.IgnorePromotions);
+            CheckServerForPromotion(uScriptBuild.Edition, Preferences.IgnorePromotions);
          }
 
          // Update the date so we won't check again until tomorrow
-         preferences.LastPromotionCheck = today;
-         preferences.Save();
+         Preferences.LastPromotionCheck = today;
       }
 
       public static void CheckServerForPromotion(uScriptBuild.EditionType target, string ignoredIDs, string dateOverride = "")
@@ -203,9 +203,7 @@ namespace Detox.Editor.GUI.Windows
          Open();
 
          // Store the promotion ID so that it can be ignored in the future
-         var preferences = uScript.Preferences;
-         preferences.IgnorePromotions = string.Format("{0},{1}", promotionID, preferences.IgnorePromotions).TrimEnd(',');
-         preferences.Save();
+         Preferences.IgnorePromotions = string.Format("{0},{1}", promotionID, Preferences.IgnorePromotions).TrimEnd(',');
 
          window.Repaint();
       }

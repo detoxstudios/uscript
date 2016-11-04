@@ -162,7 +162,7 @@ namespace Detox.DetoxDevTools.Editor
          // Build the flat list of scripts
          foreach (var filename in fileNames)
          {
-            initialPathList.Add(filename.Replace(uScript.Preferences.UserScripts + "/", string.Empty));
+            initialPathList.Add(filename.Replace(Preferences.UserScripts + "/", string.Empty));
          }
 
          // Mark the hierarchy dirty so that the hierarchy can be rebuilt and filtering and sorting can be applied

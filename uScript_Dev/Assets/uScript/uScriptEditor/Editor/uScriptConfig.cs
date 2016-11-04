@@ -215,7 +215,6 @@ public static class uScriptConfig
          Templates = string.Format("{0}/Editor/_Templates", Editor);
 
          Screenshots = string.Format("{0}/Screenshots", assets);
-
          Settings = string.Format("{0}/uScriptProjectFiles", assets);
       }
 

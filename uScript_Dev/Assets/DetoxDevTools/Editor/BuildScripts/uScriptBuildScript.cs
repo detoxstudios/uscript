@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using Detox.Editor;
 using System.Collections.Generic;
 
 public class uScriptBuildScript : MonoBehaviour
@@ -10,7 +11,7 @@ public class uScriptBuildScript : MonoBehaviour
       Debug.Log("Start Rebuild All Graphs...");
       // first stub out all uscripts
       AssetDatabase.StartAssetEditing();
-      uScript.Instance.StubGeneratedCode(uScript.Preferences.UserScripts);
+      uScript.Instance.StubGeneratedCode(Preferences.UserScripts);
       AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
 
@@ -21,7 +22,7 @@ public class uScriptBuildScript : MonoBehaviour
       // when these are done we will then build any scripts which references these
       AssetDatabase.StartAssetEditing();
       {
-         uScript.Instance.RebuildScripts(uScript.Preferences.UserScripts, false);
+         uScript.Instance.RebuildScripts(Preferences.UserScripts, false);
       }
       AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
@@ -132,7 +133,7 @@ public class uScriptBuildScript : MonoBehaviour
    public static void StubUScriptCode()
    {
       AssetDatabase.StartAssetEditing();
-      uScript.Instance.StubGeneratedCode(uScript.Preferences.UserScripts);
+      uScript.Instance.StubGeneratedCode(Preferences.UserScripts);
       AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
    }
@@ -141,7 +142,7 @@ public class uScriptBuildScript : MonoBehaviour
    public static void RegenerateUScriptCode()
    {
       AssetDatabase.StartAssetEditing();
-      uScript.Instance.RebuildScripts(uScript.Preferences.UserScripts, false);
+      uScript.Instance.RebuildScripts(Preferences.UserScripts, false);
       AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
    }

@@ -727,7 +727,7 @@ namespace Detox.FlowChart
                   {
                      selectedNode.NodeMove( );
 
-                     if (uScript.Preferences.GridSnap)
+                     if (Preferences.GridSnap)
                      {
                         selectedNode.GridSnap( );
                      }
@@ -1293,16 +1293,16 @@ namespace Detox.FlowChart
          //Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
          Rectangle visibleRect = new Rectangle(0,0, (int)(uScript.Instance.NodeWindowRect.width / Zoom), (int)(uScript.Instance.NodeWindowRect.height / Zoom));
 
-         //if ( 1.0f == Zoom && uScript.Preferences.ShowGrid == true )
-         if ( uScript.Preferences.ShowGrid == true )
+         //if ( 1.0f == Zoom && Preferences.ShowGrid == true )
+         if ( Preferences.ShowGrid == true )
          {
             float g;
 
-            int gridSize = uScript.Preferences.GridSize;
+            int gridSize = Preferences.GridSize;
 
             float offsetX = Location.X % gridSize;
             float offsetY = Location.Y % gridSize;
-            int gridSubdivisions = (int)uScript.Preferences.GridSubdivisions;
+            int gridSubdivisions = (int)Preferences.GridSubdivisions;
 
             int majorGridPixelOffset = Location.Y % (gridSize * gridSubdivisions);
             int majorGridSpacing = majorGridPixelOffset / gridSize;
@@ -1317,12 +1317,12 @@ namespace Detox.FlowChart
             {
                if ( gridSubdivisionCount == gridSubdivisions )
                {
-                  Handles.color = uScript.Preferences.GridColorMajor;
+                  Handles.color = Preferences.GridColorMajor;
                   gridSubdivisionCount = 0;
                }
                else
                {
-                  Handles.color = uScript.Preferences.GridColorMinor;
+                  Handles.color = Preferences.GridColorMinor;
                }
 
                Handles.DrawLine( startGrid, endGrid );
@@ -1342,16 +1342,16 @@ namespace Detox.FlowChart
             // Finally flip it because our location we modded with will be negative
             gridSubdivisionCount = - majorGridSpacing;
 
-            for ( g = 0; g < uScript.Instance.NodeWindowRect.width / Zoom; g += uScript.Preferences.GridSize )
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.width / Zoom; g += Preferences.GridSize )
             {
                if ( gridSubdivisionCount == gridSubdivisions )
                {
-                  Handles.color = uScript.Preferences.GridColorMajor;
+                  Handles.color = Preferences.GridColorMajor;
                   gridSubdivisionCount = 0;
                }
                else
                {
-                  Handles.color = uScript.Preferences.GridColorMinor;
+                  Handles.color = Preferences.GridColorMinor;
                }
 
                Handles.DrawLine( startGrid, endGrid );
@@ -1363,8 +1363,8 @@ namespace Detox.FlowChart
             }
          }
 
-         Pen pen = new Pen( Detox.Drawing.Color.Black, uScriptConfig.BezierPenWidth * uScript.Preferences.LineWidthMultiplier );
-         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, uScriptConfig.BezierPenWidthSelected * uScript.Preferences.LineWidthMultiplier );
+         Pen pen = new Pen( Detox.Drawing.Color.Black, uScriptConfig.BezierPenWidth * Preferences.LineWidthMultiplier );
+         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, uScriptConfig.BezierPenWidthSelected * Preferences.LineWidthMultiplier );
 
          if (null != m_StartLinkNode)
          {
@@ -1512,7 +1512,7 @@ namespace Detox.FlowChart
                   int index = (int) value;
 
                   Handles.color = uScriptConfig.LineColors[index];
-                  lineWidth = uScriptConfig.LineWidths[index] * uScript.Preferences.LineWidthMultiplier;
+                  lineWidth = uScriptConfig.LineWidths[index] * Preferences.LineWidthMultiplier;
                }
                else
                {
@@ -1524,7 +1524,7 @@ namespace Detox.FlowChart
                   if ( true == oneNodeIsVariable )
                   {
                      Handles.color = uScriptConfig.LineColors[0];
-                     lineWidth = uScriptConfig.LineWidths[0] * uScript.Preferences.LineWidthMultiplier;
+                     lineWidth = uScriptConfig.LineWidths[0] * Preferences.LineWidthMultiplier;
                   }
                }
 
@@ -1949,8 +1949,8 @@ namespace Detox.FlowChart
       public bool GridSnap( )
       {
          bool result = false;
-         int x = uScriptUtility.RoundToMultiple(Location.X, uScript.Preferences.GridSize);
-         int y = uScriptUtility.RoundToMultiple(Location.Y, uScript.Preferences.GridSize);
+         int x = uScriptUtility.RoundToMultiple(Location.X, Preferences.GridSize);
+         int y = uScriptUtility.RoundToMultiple(Location.Y, Preferences.GridSize);
          Point location = Location;
 
          if (location.X != x)

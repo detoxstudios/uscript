@@ -10,6 +10,7 @@ namespace Detox.Editor.GUI.Windows
 #endif
    using System.Diagnostics.CodeAnalysis;
 
+   using Detox.Editor;
    using Detox.Editor.GUI;
 
    using UnityEditor;
@@ -17,10 +18,10 @@ namespace Detox.Editor.GUI.Windows
    using UnityEngine;
 
    [SuppressMessage("ReSharper", "RedundantNameQualifier")]
-   public class PreferenceWindow : EditorWindow
+   public class PreferenceWindow : MonoBehaviour
    {
-      private const int LabelWidth = 250;
-      private const int ValueWidth = 120;
+      private const int LabelWidth = 225;
+      private const int ValueWidth = 100;
 
       private const int MinGridSize = 8;
       private const int MaxGridSize = 100;
@@ -39,134 +40,66 @@ namespace Detox.Editor.GUI.Windows
       private const int MultilineMinHeight = 1;
       private const int MultilineMaxHeight = 10;
 
-      private readonly RectOffset padding = new RectOffset(16, 16, 8, 16);
+      private static Vector2 scrollPos = new Vector2(0.0f, 0.0f);
 
-      private bool saveOnClose;
-      private Rect windowPosition;
-
-      private Detox.Editor.Preferences.MenuLocationType originalLocation;
-
-      private Detox.Editor.Preferences preferences;
-
-      public static void Open()
+      [PreferenceItem("uScript")]
+      public static void PreferencesGUI()
       {
-         EditorWindow.GetWindow<PreferenceWindow>(true, "uScript Preferences", true);
-      }
-
-      internal void OnEnable()
-      {
-         uScript.PreferenceWindow = this;
-
          // Get the Preferences
-         this.preferences = uScript.Preferences;
-         uScript.LoadSettings();
+         Preferences.LoadDefaultsIfRequired();
 
-         this.originalLocation = this.preferences.MenuLocation;
-      }
-
-      internal void OnDisable()
-      {
-         uScript.PreferenceWindow = null;
-
-         if (this.saveOnClose)
+         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, false, true);
          {
-            // Save the changes and close the window
-            this.preferences.Save();
-
-            if (this.originalLocation != this.preferences.MenuLocation)
-            {
-               MenuLocation.Change(this.preferences.MenuLocation);
-            }
-         }
-         else
-         {
-            // Revert to the saved version and close the window
-            this.preferences.Load();
-         }
-      }
-
-      internal void OnGUI()
-      {
-         if (this.windowPosition != new Rect())
-         {
-            // Set the min and max window dimensions to prevent resizing
-            this.minSize = new Vector2(this.windowPosition.width + this.padding.left + this.padding.right, this.windowPosition.height + this.padding.top + this.padding.bottom);
-            this.maxSize = this.minSize;
-         }
-
 #if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
-         EditorGUIUtility.labelWidth = LabelWidth;
-         EditorGUIUtility.fieldWidth = ValueWidth;
+            EditorGUIUtility.labelWidth = LabelWidth;
+            EditorGUIUtility.fieldWidth = ValueWidth;
 #else
-         EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
+            EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
 #endif
 
-         EditorGUILayout.BeginVertical(Style.Window);
-         {
-            EditorGUI.indentLevel = 1;
+            EditorGUILayout.BeginVertical();//Style.Window);
+            {
+//               EditorGUI.indentLevel = 1;
 
-            this.DrawProjectSettings();
-            this.DrawCodeGenerationSettings();
-            this.DrawGridSettings();
-            this.DrawNodeSettings();
-            this.DrawPerformanceSettings();
-            this.DrawMiscellaneousSettings();
-            this.DrawDevDebugSettings();
+               DrawProjectSettings();
+               DrawCodeGenerationSettings();
+               DrawGridSettings();
+               DrawNodeSettings();
+               DrawPerformanceSettings();
+               DrawMiscellaneousSettings();
+               DrawDevDebugSettings();
 
-            EditorGUI.indentLevel = 0;
+//               EditorGUI.indentLevel = 0;
             
-            EditorGUILayout.Space();
+               EditorGUILayout.Space();
 
-            this.DrawButtons();
+               DrawButtons();
+            }
+
+            EditorGUILayout.EndVertical();
          }
-
-         EditorGUILayout.EndVertical();
-
-         if (Event.current.type == EventType.Repaint)
-         {
-            this.windowPosition = GUILayoutUtility.GetLastRect();
-         }
+         EditorGUILayout.EndScrollView();
       }
 
-      private void DrawButtons()
+      private static void DrawButtons()
       {
          EditorGUILayout.Separator();
 
          if (GUILayout.Button("Revert All Settings to Default Values"))
          {
-            this.preferences.Revert();
+            Preferences.Revert();
          }
-
-         EditorGUILayout.Separator();
-
-         EditorGUILayout.BeginHorizontal();
-         {
-            if (GUILayout.Button("Cancel", Style.CloseButton, GUILayout.ExpandWidth(true)))
-            {
-               this.Close();
-            }
-
-            GUILayout.FlexibleSpace();
-
-            if (GUILayout.Button("Save", Style.CloseButton, GUILayout.ExpandWidth(true)))
-            {
-               this.saveOnClose = true;
-               this.Close();
-            }
-         }
-
-         EditorGUILayout.EndHorizontal();
       }
 
-      private void DrawCodeGenerationSettings()
+      private static void DrawCodeGenerationSettings()
       {
          GUILayout.Label("Code Generation Settings", EditorStyles.boldLabel);
 
-         var maxValue = EditorGUILayout.IntField("Maximum Node Recursion", this.preferences.MaximumNodeRecursionCount);
-         this.preferences.MaximumNodeRecursionCount = Mathf.Min(MaxRecursion, Mathf.Max(MinRecursion, maxValue));
+         var maxValue = EditorGUILayout.IntField("Maximum Node Recursion", Preferences.MaximumNodeRecursionCount);
+         Preferences.MaximumNodeRecursionCount = Mathf.Min(MaxRecursion, Mathf.Max(MinRecursion, maxValue));
 
-         var method = (Detox.Editor.Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", this.preferences.SaveMethod);
-         this.preferences.SaveMethod = method;
+         var method = (Detox.Editor.Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", Preferences.SaveMethod);
+         Preferences.SaveMethod = method;
 
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          var fieldWidth = EditorGUIUtility.fieldWidth;
@@ -174,10 +107,10 @@ namespace Detox.Editor.GUI.Windows
 #endif
          var multilineHeight = EditorGUILayout.IntSlider(
             "Inspector MultiLine Height",
-            this.preferences.MultilineHeight,
+            Preferences.MultilineHeight,
             MultilineMinHeight,
             MultilineMaxHeight);
-         this.preferences.MultilineHeight = Mathf.Min(
+            Preferences.MultilineHeight = Mathf.Min(
             MultilineMaxHeight,
             Mathf.Max(MultilineMinHeight, multilineHeight));
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
@@ -187,27 +120,27 @@ namespace Detox.Editor.GUI.Windows
          EditorGUILayout.Separator();
       }
 
-      private void DrawGridSettings()
+      private static void DrawGridSettings()
       {
          GUILayout.Label("Grid Settings", EditorStyles.boldLabel);
 
-         this.preferences.ShowGrid = EditorGUILayout.Toggle("Show Grid", this.preferences.ShowGrid);
+         Preferences.ShowGrid = EditorGUILayout.Toggle("Show Grid", Preferences.ShowGrid);
 
-         var intValue = EditorGUILayout.IntField("Grid Size", this.preferences.GridSize);
-         this.preferences.GridSize = Mathf.Min(MaxGridSize, Mathf.Max(MinGridSize, intValue));
+         var intValue = EditorGUILayout.IntField("Grid Size", Preferences.GridSize);
+         Preferences.GridSize = Mathf.Min(MaxGridSize, Mathf.Max(MinGridSize, intValue));
 
-         intValue = EditorGUILayout.IntField("Subdivisions", this.preferences.GridSubdivisions);
-         this.preferences.GridSubdivisions = Mathf.Min(MaxGridSubdivisions, Mathf.Max(MinGridSubdivisions, intValue));
+         intValue = EditorGUILayout.IntField("Subdivisions", Preferences.GridSubdivisions);
+         Preferences.GridSubdivisions = Mathf.Min(MaxGridSubdivisions, Mathf.Max(MinGridSubdivisions, intValue));
 
          EditorGUILayout.BeginHorizontal();
          {
-            this.preferences.GridColorMajor = EditorGUILayout.ColorField(
+            Preferences.GridColorMajor = EditorGUILayout.ColorField(
                "Line Color (major, minor)",
-               this.preferences.GridColorMajor,
-               GUILayout.Width(Style.Window.fixedWidth - 67));
+               Preferences.GridColorMajor,
+               GUILayout.Width(Style.Window.fixedWidth - 45));
             GUILayout.Space(3);
 
-            EditorGUI.indentLevel--;
+//            EditorGUI.indentLevel--;
 
 #if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.fieldWidth = 30;
@@ -215,7 +148,7 @@ namespace Detox.Editor.GUI.Windows
             EditorGUIUtility.LookLikeControls(0, 30);
 #endif
 
-            this.preferences.GridColorMinor = EditorGUILayout.ColorField(this.preferences.GridColorMinor);
+            Preferences.GridColorMinor = EditorGUILayout.ColorField(Preferences.GridColorMinor);
 
 #if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.labelWidth = LabelWidth;
@@ -223,7 +156,7 @@ namespace Detox.Editor.GUI.Windows
 #else
             EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
 #endif
-            EditorGUI.indentLevel++;
+//            EditorGUI.indentLevel++;
          }
 
          EditorGUILayout.EndHorizontal();
@@ -231,26 +164,26 @@ namespace Detox.Editor.GUI.Windows
          EditorGUILayout.Separator();
       }
 
-      private void DrawMiscellaneousSettings()
+      private static void DrawMiscellaneousSettings()
       {
          GUILayout.Label("Miscellaneous Settings", EditorStyles.boldLabel);
 
-         var location = (Detox.Editor.Preferences.MenuLocationType)EditorGUILayout.EnumPopup("Menu Location", this.preferences.MenuLocation);
-         this.preferences.MenuLocation = location;
+         var location = (Detox.Editor.Preferences.MenuLocationType)EditorGUILayout.EnumPopup("Menu Location", Preferences.MenuLocation);
+         Preferences.MenuLocation = location;
 
-         var boolValue = EditorGUILayout.Toggle("Show Welcome Window on Start", this.preferences.ShowAtStartup);
-         this.preferences.ShowAtStartup = boolValue;
+         var boolValue = EditorGUILayout.Toggle("Show Welcome Window on Start", Preferences.ShowAtStartup);
+         Preferences.ShowAtStartup = boolValue;
 
-         boolValue = EditorGUILayout.Toggle("Show uScript Icon in Hierarchy", this.preferences.ShowHierarchyIcon);
-         this.preferences.ShowHierarchyIcon = boolValue;
+         boolValue = EditorGUILayout.Toggle("Show uScript Icon in Hierarchy", Preferences.ShowHierarchyIcon);
+         Preferences.ShowHierarchyIcon = boolValue;
 
-         boolValue = EditorGUILayout.Toggle("Enable uScript Scene Warning", this.preferences.EnableSceneWarning);
-         this.preferences.EnableSceneWarning = boolValue;
+         boolValue = EditorGUILayout.Toggle("Enable uScript Scene Warning", Preferences.EnableSceneWarning);
+         Preferences.EnableSceneWarning = boolValue;
 
          EditorGUILayout.BeginHorizontal();
          {
-            boolValue = EditorGUILayout.Toggle("Check for Updates on Start", this.preferences.CheckForUpdate);
-            this.preferences.CheckForUpdate = boolValue;
+            boolValue = EditorGUILayout.Toggle("Check for Updates on Start", Preferences.CheckForUpdate);
+            Preferences.CheckForUpdate = boolValue;
 
             if (GUILayout.Button("Check Now", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
             {
@@ -263,7 +196,7 @@ namespace Detox.Editor.GUI.Windows
          EditorGUILayout.Separator();
       }
 
-      private void DrawDevDebugSettings()
+      private static void DrawDevDebugSettings()
       {
          if (uScript.IsDevelopmentBuild == false)
          {
@@ -273,56 +206,56 @@ namespace Detox.Editor.GUI.Windows
          GUILayout.Label("Development Debug Settings", EditorStyles.boldLabel);
 
          // Add some development fields for debugging and testing
-         var promotionLastCheck = EditorGUILayout.IntField("Last Promotion Check", this.preferences.LastPromotionCheck);
-         this.preferences.LastPromotionCheck = promotionLastCheck;
+         var promotionLastCheck = EditorGUILayout.IntField("Last Promotion Check", Preferences.LastPromotionCheck);
+         Preferences.LastPromotionCheck = promotionLastCheck;
 
-         var promotionIgnoreList = EditorGUILayout.TextField("Promotion Ignore List", this.preferences.IgnorePromotions);
-         this.preferences.IgnorePromotions = promotionIgnoreList;
+         var promotionIgnoreList = EditorGUILayout.TextField("Promotion Ignore List", Preferences.IgnorePromotions);
+         Preferences.IgnorePromotions = promotionIgnoreList;
 
-         var updateLastCheck = EditorGUILayout.IntField("Last Update Check", this.preferences.LastUpdateCheck);
-         this.preferences.LastUpdateCheck = updateLastCheck;
+         var updateLastCheck = EditorGUILayout.IntField("Last Update Check", Preferences.LastUpdateCheck);
+         Preferences.LastUpdateCheck = updateLastCheck;
 
-         var updateIgnoreBuild = EditorGUILayout.TextField("Update Check Build Ignore ID", this.preferences.IgnoreUpdateBuild);
-         this.preferences.IgnoreUpdateBuild = updateIgnoreBuild;
+         var updateIgnoreBuild = EditorGUILayout.TextField("Update Check Build Ignore ID", Preferences.IgnoreUpdateBuild);
+         Preferences.IgnoreUpdateBuild = updateIgnoreBuild;
 
          EditorGUILayout.Separator();
       }
 
-      private void DrawNodeSettings()
+      private static void DrawNodeSettings()
       {
          GUILayout.Label("Node Settings", EditorStyles.boldLabel);
 
-         this.preferences.DoubleClickBehavior =
+         Preferences.DoubleClickBehavior =
             (Detox.Editor.Preferences.DoubleClickBehaviorType)
-            EditorGUILayout.EnumPopup("Double-Click Behavior", this.preferences.DoubleClickBehavior);
-         this.preferences.VariableExpansion =
+            EditorGUILayout.EnumPopup("Double-Click Behavior", Preferences.DoubleClickBehavior);
+         Preferences.VariableExpansion =
             (Detox.Editor.Preferences.VariableExpansionType)
-            EditorGUILayout.EnumPopup("Variable Expansion Mode", this.preferences.VariableExpansion);
-         this.preferences.GridSnap = EditorGUILayout.Toggle("Snap to Grid", this.preferences.GridSnap);
-         this.preferences.LineWidthMultiplier = EditorGUILayout.FloatField("Connector Line Width", this.preferences.LineWidthMultiplier);
+            EditorGUILayout.EnumPopup("Variable Expansion Mode", Preferences.VariableExpansion);
+         Preferences.GridSnap = EditorGUILayout.Toggle("Snap to Grid", Preferences.GridSnap);
+         Preferences.LineWidthMultiplier = EditorGUILayout.FloatField("Connector Line Width", Preferences.LineWidthMultiplier);
 
          EditorGUILayout.Separator();
       }
 
-      private void DrawPerformanceSettings()
+      private static void DrawPerformanceSettings()
       {
          GUILayout.Label("Performance Settings", EditorStyles.boldLabel);
 
-         var boolValue = EditorGUILayout.Toggle("Auto-Expand Toolbox on Search", this.preferences.AutoExpandToolbox);
-         this.preferences.AutoExpandToolbox = boolValue;
+         var boolValue = EditorGUILayout.Toggle("Auto-Expand Toolbox on Search", Preferences.AutoExpandToolbox);
+         Preferences.AutoExpandToolbox = boolValue;
 
-         boolValue = EditorGUILayout.Toggle("Draw Panels During Update", this.preferences.DrawPanelsOnUpdate);
-         this.preferences.DrawPanelsOnUpdate = boolValue;
+         boolValue = EditorGUILayout.Toggle("Draw Panels During Update", Preferences.DrawPanelsOnUpdate);
+         Preferences.DrawPanelsOnUpdate = boolValue;
 
          EditorGUILayout.BeginHorizontal();
          {
-            boolValue = this.preferences.Profiling;
+            boolValue = Preferences.Profiling;
             boolValue = EditorGUILayout.Toggle("Profiling [time threshold]", boolValue, GUILayout.Width(LabelWidth + 20));
-            this.preferences.Profiling = boolValue;
+            Preferences.Profiling = boolValue;
 
-            EditorGUI.indentLevel--;
+//            EditorGUI.indentLevel--;
 
-            UnityEngine.GUI.enabled = this.preferences.Profiling;
+            UnityEngine.GUI.enabled = Preferences.Profiling;
 
 #if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.fieldWidth = 30;
@@ -330,8 +263,8 @@ namespace Detox.Editor.GUI.Windows
             EditorGUIUtility.LookLikeControls(0, 30);
 #endif
 
-            var floatValue = EditorGUILayout.FloatField(this.preferences.ProfileMin);
-            this.preferences.ProfileMin = Mathf.Min(MaxProfileTime, Mathf.Max(MinProfileTime, floatValue));
+            var floatValue = EditorGUILayout.FloatField(Preferences.ProfileMin);
+            Preferences.ProfileMin = Mathf.Min(MaxProfileTime, Mathf.Max(MinProfileTime, floatValue));
 
 #if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.labelWidth = LabelWidth;
@@ -341,37 +274,41 @@ namespace Detox.Editor.GUI.Windows
 #endif
 
             UnityEngine.GUI.enabled = true;
-            EditorGUI.indentLevel++;
+//            EditorGUI.indentLevel++;
          }
 
          EditorGUILayout.EndHorizontal();
 
-         var intValue = EditorGUILayout.IntField("Property Panel Node Limit", this.preferences.PropertyPanelNodeLimit);
-         this.preferences.PropertyPanelNodeLimit = Mathf.Min(
+         var intValue = EditorGUILayout.IntField("Property Panel Node Limit", Preferences.PropertyPanelNodeLimit);
+         Preferences.PropertyPanelNodeLimit = Mathf.Min(
             MaxPropertyPanelNodes,
             Mathf.Max(MinPropertyPanelNodes, intValue));
 
-         boolValue = EditorGUILayout.Toggle("Refresh on Hierarchy or Scene Change", this.preferences.RefreshOnHierarchyChange);
-         this.preferences.RefreshOnHierarchyChange = boolValue;
+         boolValue = EditorGUILayout.Toggle("Refresh on Hierarchy/Scene Change", Preferences.RefreshOnHierarchyChange);
+         Preferences.RefreshOnHierarchyChange = boolValue;
 
          EditorGUILayout.Separator();
       }
 
-      private void DrawProjectSettings()
+      private static void DrawProjectSettings()
       {
          GUILayout.Label("Project Graphs Location", EditorStyles.boldLabel);
 
          EditorGUILayout.BeginHorizontal();
          {
-            var path = uScriptConfig.ConstantPaths.RelativePath(this.preferences.UserScripts);
+            var path = uScriptConfig.ConstantPaths.RelativePath(Preferences.UserScripts);
             EditorGUILayout.SelectableLabel(path, EditorStyles.textField, GUILayout.Height(16));
 
             if (GUILayout.Button("Browse", EditorStyles.miniButton, GUILayout.Width(50)))
             {
-               path = EditorUtility.OpenFolderPanel("uScript Project Files", this.preferences.UserScripts, string.Empty);
+               path = EditorUtility.OpenFolderPanel("uScript Project Files", Preferences.UserScripts, string.Empty);
                if (string.Empty != path)
                {
-                  this.preferences.UserScripts = path;
+                  Preferences.UserScripts = path;
+                  Preferences.ProjectFiles = path.Substring(0, path.LastIndexOf("/"));
+                  Preferences.UserNodes = Preferences.ProjectFiles + "/Nodes";
+                  Preferences.NestedScripts = Preferences.UserScripts + "/_GeneratedCode";
+                  Preferences.GeneratedScripts = Preferences.UserScripts + "/_GeneratedCode";
                }
             }
          }

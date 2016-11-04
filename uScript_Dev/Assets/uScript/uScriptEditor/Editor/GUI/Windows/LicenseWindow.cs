@@ -5,6 +5,7 @@
 
 #if !(UNITY_STORE_PRO || UNITY_STORE_BASIC || UNITY_STORE_PLE)
 
+using Detox.Editor;
 using Detox.Editor.GUI;
 
 using UnityEditor;
@@ -199,7 +200,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
          // Save the license acceptance
          _licenseVersionAccepted = _licenseVersion;
          uScript.SetSetting("EULA\\AgreedVersion", _licenseVersionAccepted);
-         uScript.Preferences.Save();
       }
       else
       {
@@ -308,7 +308,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
    public static bool HasUserAcceptedLicense()
    {
       // Get the current accepted version and compare to the latest
-      _licenseVersionAccepted = (int)uScript.GetSetting("EULA\\AgreedVersion", -1);
+      _licenseVersionAccepted = Preferences.GetInt("EULA\\AgreedVersion", -1);
       return _licenseVersionAccepted == _licenseVersion;
    }
 

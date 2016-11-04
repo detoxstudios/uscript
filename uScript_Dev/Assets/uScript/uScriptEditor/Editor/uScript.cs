@@ -44,8 +44,6 @@ using Control = Detox.Windows.Forms.Control;
 [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1516:ElementsMustBeSeparatedByBlankLine", Justification = "Reviewed. Suppression is OK here.")]
 public sealed partial class uScript : EditorWindow
 {
-   public static readonly Preferences Preferences = new Preferences();
-
    public static EditorApplication.CallbackFunction GraphSaved;
 
    public static int _paletteMode;  // TEMP variable for testing the new property grid methods
@@ -211,22 +209,10 @@ public sealed partial class uScript : EditorWindow
 
 #if !UNITY_3_5
    public static Detox.Editor.GUI.Windows.HotkeyWindow HotkeyWindow { get; set; }
-
-   public static Detox.Editor.GUI.Windows.PreferenceWindow PreferenceWindow { get; set; }
 #else
    public static HotkeyWindow HotkeyWindow { get; set; }
-
-   public static PreferenceWindow PreferenceWindow { get; set; }
 #endif
 
-   public static bool IsPreferenceWindowOpen
-   {
-      get
-      {
-         return PreferenceWindow != null;
-      }
-   }
-   
    public static bool IsOpen
    {
       get
@@ -354,7 +340,7 @@ public sealed partial class uScript : EditorWindow
    /// <returns>Returns True if it can be enabled, otherwise False.</returns>
    private static bool GuiStateEnableCondition()
    {
-      return Instance.IsLicenseAccepted && IsPreferenceWindowOpen == false && Instance.isContextMenuOpen == false;
+      return Instance.IsLicenseAccepted && Instance.isContextMenuOpen == false;
    }
 
    public Type GetType(string typeName)
@@ -731,7 +717,7 @@ public sealed partial class uScript : EditorWindow
 
       // Move the uScriptUserTypes.cs.template file into the uScriptProjectFiles folder if one doesn't already exist.
       string userTypesFileTemplate = uScriptConfig.ConstantPaths.Templates + "/uScriptUserTypes.cs.template";
-      string userTypesFile = uScriptConfig.ConstantPaths.Settings + "/uScriptUserTypes.cs";
+      string userTypesFile = Preferences.ProjectFiles + "/uScriptUserTypes.cs";
       if (File.Exists(userTypesFileTemplate) && !File.Exists(userTypesFile))
       {
          File.Copy(userTypesFileTemplate, userTypesFile, false);
@@ -745,19 +731,22 @@ public sealed partial class uScript : EditorWindow
          Directory.CreateDirectory(gizmos);
       }
 
-      //copy gizmos into root
-      DirectoryInfo directory = new DirectoryInfo(uScriptConfig.ConstantPaths.Gizmos);
-
-      foreach (FileInfo file in directory.GetFiles())
+      if (Directory.Exists(uScriptConfig.ConstantPaths.Gizmos))
       {
-         if (!file.Name.Contains(".meta"))
-         {
-            // Remove the leading underscore from the backup file's name.
-            string finalName = file.Name.Substring(1);
+         //copy gizmos into root
+         DirectoryInfo directory = new DirectoryInfo(uScriptConfig.ConstantPaths.Gizmos);
 
-            if (!File.Exists(gizmos + "/" + finalName))
+         foreach (FileInfo file in directory.GetFiles())
+         {
+            if (!file.Name.Contains(".meta"))
             {
-               File.Copy(file.FullName, gizmos + "/" + finalName, false);
+               // Remove the leading underscore from the backup file's name.
+               string finalName = file.Name.Substring(1);
+
+               if (!File.Exists(gizmos + "/" + finalName))
+               {
+                  File.Copy(file.FullName, gizmos + "/" + finalName, false);
+               }
             }
          }
       }
@@ -776,7 +765,7 @@ public sealed partial class uScript : EditorWindow
          uScript.Instance.AddType(b.Type);
       }
 
-      String lastOpened = (String)GetSetting("uScript\\LastOpened", string.Empty);
+      String lastOpened = Preferences.GetString("uScript\\LastOpened", string.Empty);
       //Debug.Log("last = " + lastOpened + ");
       if (!String.IsNullOrEmpty(lastOpened))
       {
@@ -967,21 +956,9 @@ public sealed partial class uScript : EditorWindow
       this.currentScriptName = m_ScriptEditorCtrl.Name;
    }
 
-   public static object GetSetting(string key)
-   {
-      return AppData.Get(key);
-   }
-
-   public static object GetSetting(string key, object defaultValue)
-   {
-      object value = AppData.Get(key);
-      return null != value ? value : defaultValue;
-   }
-
    public static void SetSetting(string key, object value)
    {
-      AppData.Set(key, value);
-      AppData.Save(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile);
+      Preferences.SavePreference(key, value);
    }
 
    public static void LoadSettings()
@@ -989,9 +966,43 @@ public sealed partial class uScript : EditorWindow
       if (File.Exists(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile))
       {
          AppData.Load(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile);
-      }
 
-      Preferences.Load();
+         // user is upgrading from .settings file to EditorPrefs, transfer everything over
+         ICollection keys = AppData.GetAllKeys();
+         foreach(string key in keys)
+         {
+            object obj = AppData.Get(key);
+            if (key == "Preferences")
+            {
+               var hashtable = obj as Hashtable ?? new Hashtable();
+               foreach (string htKey in hashtable.Keys)
+               {
+                  object htObj = hashtable[htKey];
+                  if (htKey.Contains ("SaveMethod")) 
+                  {
+                     htObj = ((Preferences.SaveMethodType)htObj).ToString ();
+                  }
+                  else if (htKey.Contains ("MenuLocation")) 
+                  {
+                     htObj = ((Preferences.MenuLocationType)htObj).ToString ();
+                  }
+                  Preferences.SavePreference(htKey, htObj);
+               }
+            }
+            else
+            {
+               Preferences.SavePreference(key, obj);
+            }
+         }
+   
+         // delete settings and meta file
+         File.Delete(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile);
+         File.Delete(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile + ".meta");
+      }
+      else
+      {
+         Preferences.LoadDefaultsIfRequired();
+      }
    }
 
    private static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
@@ -1535,31 +1546,13 @@ public sealed partial class uScript : EditorWindow
       var lastMouseDown = this.mouseDown;
 
       this.isContextMenuOpen = 0 != this.m_ContextX || 0 != this.m_ContextY;
-      if (false == IsPreferenceWindowOpen)
+      if (this.isContextMenuOpen)
       {
-         if (this.isContextMenuOpen)
-         {
-            this.OnGUIHandleContextMenuInput();
-         }
-         else
-         {
-            this.OnGUIHandleCanvasInput();
-         }
+         this.OnGUIHandleContextMenuInput();
       }
       else
       {
-         if (this.mouseDown)
-         {
-            this.m_MouseDownArgs = null;
-            this.mouseDown = false;
-
-            this.m_MouseUpArgs = new MouseEventArgs
-            {
-               Button = MouseButtons.Left,
-               X = (int)e.mousePosition.x,
-               Y = (int)(e.mousePosition.y - this._canvasRect.yMin)
-            };
-         }
+         this.OnGUIHandleCanvasInput();
       }
 
       // All the GUI drawing code
@@ -1704,6 +1697,8 @@ public sealed partial class uScript : EditorWindow
       {
          this.position = minimum;
       }
+
+      LoadSettings();
 
       uScriptGUI.PanelPropertiesWidth = (int)(Instance.position.width / 3);
       uScriptGUI.PanelScriptsWidth = (int)(Instance.position.width / 3);
@@ -2596,13 +2591,11 @@ public sealed partial class uScript : EditorWindow
    public static void CommandViewMenuGrid()
    {
       Preferences.ShowGrid = !Preferences.ShowGrid;
-      Preferences.Save();
    }
 
    public static void CommandViewMenuSnap()
    {
       Preferences.GridSnap = !Preferences.GridSnap;
-      Preferences.Save();
    }
 
    public void CommandCanvasZoomIn()
@@ -2647,11 +2640,6 @@ public sealed partial class uScript : EditorWindow
    public void CommandCanvasZoomReset()
    {
       this.mapScale = 1.0f;
-   }
-
-   private static void CommandViewMenuPreferences()
-   {
-      EditorCommands.OpenPreferenceWindow();
    }
 
    public static void FileMenuItem_New()
@@ -2857,7 +2845,6 @@ public sealed partial class uScript : EditorWindow
             if (newMethod != oldMethod)
             {
                Preferences.SaveMethod = (Preferences.SaveMethodType)newMethod;
-               Preferences.Save();
             }
 
             GUILayout.FlexibleSpace();
@@ -2997,10 +2984,6 @@ public sealed partial class uScript : EditorWindow
       {
          menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemZoomReset);
       }
-
-      menu.AddSeparator(string.Empty);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemPreferences, false, CommandViewMenuPreferences);
-      //menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemPreferences);
 
       menu.DropDown(rect);
 
@@ -3392,7 +3375,7 @@ public sealed partial class uScript : EditorWindow
             string sceneName = scene.name;
          #endif
          
-         if (uScript.Preferences.EnableSceneWarning && scriptEditor.SceneName != string.Empty && scriptEditor.SceneName != sceneName)
+         if (Preferences.EnableSceneWarning && scriptEditor.SceneName != string.Empty && scriptEditor.SceneName != sceneName)
          {
             var message =
                string.Format(
@@ -3416,7 +3399,7 @@ public sealed partial class uScript : EditorWindow
 
          SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
 
-         this.currentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(this.fullPath) + "\\CanvasPosition", string.Empty);
+         this.currentCanvasPosition = Preferences.GetString("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(this.fullPath) + "\\CanvasPosition", string.Empty);
 
          this.currentScriptDirty = false;
          this.currentScript = scriptEditor.ToBase64(null);

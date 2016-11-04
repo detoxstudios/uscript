@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +10,11 @@ namespace Detox.Data.Tools
    public class AppFrameworkData : ISerializable
    {
       private Hashtable m_Hashtable = new Hashtable( );
+
+      public ICollection GetAllKeys()
+      {
+         return m_Hashtable.Keys;
+      }
 
       public object Get(string key)
       {

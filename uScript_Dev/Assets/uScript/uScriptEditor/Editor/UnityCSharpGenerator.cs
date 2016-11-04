@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEditor;
+using Detox.Editor;
 
 namespace Detox.ScriptEditor
 {
@@ -31,7 +32,7 @@ namespace Detox.ScriptEditor
 
          --m_Tab;
 
-         if (uScript.Preferences.Profiling && seconds > uScript.Preferences.ProfileMin)
+         if (Preferences.Profiling && seconds > Preferences.ProfileMin)
          {
             string tab = "PROFILE TIMING: ";
             for (int i = 0; i < m_Tab; i++)
@@ -2098,7 +2099,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine("ContinueExecution m_ContinueExecution;");
             AddCSharpLine("bool m_Breakpoint = false;");
 
-            AddCSharpLine("const int MaxRelayCallCount = " + uScript.Preferences.MaximumNodeRecursionCount + ";");
+            AddCSharpLine("const int MaxRelayCallCount = " + Preferences.MaximumNodeRecursionCount + ";");
             AddCSharpLine("int relayCallCount = 0;");
          }
 
@@ -2168,7 +2169,7 @@ namespace Detox.ScriptEditor
 
             #if (!UNITY_3_5)
                if (prefix != "" && (local.Value.Type == typeof(String).ToString() || local.Value.Type == typeof(String[]).ToString()))
-                  AddCSharpLine("[Multiline(" + uScript.Preferences.MultilineHeight + ")]");
+                  AddCSharpLine("[Multiline(" + Preferences.MultilineHeight + ")]");
             #endif
 
             AddCSharpLine(prefix + FormatType(local.Value.Type) + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";");

@@ -79,16 +79,16 @@ namespace Detox.Editor.GUI
          private void CommandGraphSave()
          {
             uScriptInstance.RequestSave(
-               uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
-               uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+               Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+               Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
                false);
          }
 
          private void CommandGraphSaveAs()
          {
             uScriptInstance.RequestSave(
-               uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
-               uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+               Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+               Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
                true);
          }
 
@@ -121,9 +121,9 @@ namespace Detox.Editor.GUI
          {
             var menu = new GenericMenu();
 
-            //var saveLabel = uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick
+            //var saveLabel = Preferences.SaveMethod == Preferences.SaveMethodType.Quick
             //                   ? "Quick Save"
-            //                   : (uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug
+            //                   : (Preferences.SaveMethod == Preferences.SaveMethodType.Debug
             //                         ? "Debug Save"
             //                         : "Release Save");
 
@@ -313,17 +313,17 @@ namespace Detox.Editor.GUI
             var rect = EditorGUILayout.BeginHorizontal();
 
             // Save button
-            var saveButtonContent = uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick
+            var saveButtonContent = Preferences.SaveMethod == Preferences.SaveMethodType.Quick
                                        ? uScriptGUIContent.buttonScriptSaveQuick
-                                       : (uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug
+                                       : (Preferences.SaveMethod == Preferences.SaveMethodType.Debug
                                           ? uScriptGUIContent.buttonScriptSaveDebug
                                           : uScriptGUIContent.buttonScriptSaveRelease);
 
             if (GUILayout.Button(saveButtonContent, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.buttonScriptSaveRelease).x)))
             {
                uScriptInstance.RequestSave(
-                  uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
-                  uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+                  Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+                  Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
                   false);
             }
 

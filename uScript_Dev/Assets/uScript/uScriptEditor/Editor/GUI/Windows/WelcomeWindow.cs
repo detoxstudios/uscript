@@ -87,13 +87,12 @@ namespace Detox.Editor.GUI.Windows
 
       private static void DrawToggle()
       {
-         var toggle = uScript.Preferences.ShowAtStartup;
+         var toggle = Preferences.ShowAtStartup;
          EditorGUI.BeginChangeCheck();
          toggle = GUI.Toggle(Content.Toggle.Rect, toggle, Content.Toggle.GUIContent);
          if (EditorGUI.EndChangeCheck())
          {
-            uScript.Preferences.ShowAtStartup = toggle;
-            uScript.Preferences.Save();
+            Preferences.ShowAtStartup = toggle;
          }
       }
 
