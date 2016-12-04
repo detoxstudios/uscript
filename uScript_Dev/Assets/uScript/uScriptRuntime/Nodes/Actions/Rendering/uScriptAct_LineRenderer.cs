@@ -76,11 +76,21 @@ public class uScriptAct_LineRenderer : uScriptLogic
 
       this.lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
 
-      this.lineRenderer.SetVertexCount(positions.Length);
+#if UNITY_5_5
+      this.lineRenderer.numPositions = positions.Length;
+#else
       this.lineRenderer.SetPositions(positions);
+#endif
 
+#if UNITY_5_5
+      this.lineRenderer.startColor = startColor;
+      this.lineRenderer.endColor = endColor;
+      this.lineRenderer.startWidth = startWidth;
+      this.lineRenderer.endWidth = endWidth;
+#else
       this.lineRenderer.SetColors(startColor, endColor);
       this.lineRenderer.SetWidth(startWidth, endWidth);
+#endif
 
       this.lineRenderer.shadowCastingMode = shadowCastingMode;
       this.lineRenderer.receiveShadows = receiveShadows;

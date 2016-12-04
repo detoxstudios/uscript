@@ -1,7 +1,7 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
 
-#if (UNIY_3_5 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4)
+#if (UNIY_3_5 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5)
 
 using UnityEngine;
 using System.Collections;
@@ -35,7 +35,7 @@ public class uScriptAct_Particles : uScriptLogic
       {
          if (currentTarget != null)
          {
-#if !UNITY_5_4
+#if !(UNITY_5_4 || UNITY_5_5)
             ParticleEmitter peComp = currentTarget.GetComponent<ParticleEmitter>();
             if (peComp != null)
             {
@@ -61,7 +61,7 @@ public class uScriptAct_Particles : uScriptLogic
 
                   psComp.Play();
                }
-#if !UNITY_5_4
+#if !(UNITY_5_4 || UNITY_5_5)
             }
 #endif
          }
@@ -82,7 +82,7 @@ public class uScriptAct_Particles : uScriptLogic
       {
          if (currentTarget != null)
          {
-#if !UNITY_5_4
+#if !(UNITY_5_4 || UNITY_5_5)
             ParticleEmitter peComp = currentTarget.GetComponent<ParticleEmitter>();
             if (peComp != null)
             {
@@ -108,7 +108,7 @@ public class uScriptAct_Particles : uScriptLogic
 
                   psComp.Stop();
                }
-#if !UNITY_5_4
+#if !(UNITY_5_4 || UNITY_5_5)
             }
 #endif
          }

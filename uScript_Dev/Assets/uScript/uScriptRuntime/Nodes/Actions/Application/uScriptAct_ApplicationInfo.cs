@@ -148,8 +148,13 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
 
       internetReachability = Application.internetReachability;
 
+#if !UNITY_5_5
       webSecurityEnabled = Application.webSecurityEnabled;
       webSecurityHostUrl = Application.webSecurityHostUrl;
+#else
+      webSecurityEnabled = false;
+      webSecurityHostUrl = "";
+#endif
 
       backgroundLoadingPriority = Application.backgroundLoadingPriority;
       runInBackground = Application.runInBackground;

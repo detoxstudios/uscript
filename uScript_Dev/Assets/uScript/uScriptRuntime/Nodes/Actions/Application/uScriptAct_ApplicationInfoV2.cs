@@ -144,8 +144,13 @@ UnityEngine.SceneManagement.Scene[] scenes = UnityEngine.SceneManagement.SceneMa
 
       internetReachability = Application.internetReachability;
 
+#if !UNITY_5_5
       webSecurityEnabled = Application.webSecurityEnabled;
       webSecurityHostUrl = Application.webSecurityHostUrl;
+#else
+      webSecurityEnabled = false;
+      webSecurityHostUrl = "";
+#endif
 
       backgroundLoadingPriority = Application.backgroundLoadingPriority;
       runInBackground = Application.runInBackground;
