@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
@@ -15,7 +15,11 @@ public class uScriptAct_GetNavMeshHitProperties : uScriptLogic
 
    public void In(
       [FriendlyName("NavMeshHit", "The input NavMeshHit to get the properties of.")]
+#if UNITY_5_5
       UnityEngine.AI.NavMeshHit navMeshHit,
+#else
+      NavMeshHit navMeshHit
+#endif
       [FriendlyName("Distance", "Distance to the point of hit.")]
       out float distance,
       [FriendlyName("Hit", "Flag set when hit.")]
