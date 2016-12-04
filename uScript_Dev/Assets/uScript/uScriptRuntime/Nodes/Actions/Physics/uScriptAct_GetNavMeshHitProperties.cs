@@ -18,7 +18,7 @@ public class uScriptAct_GetNavMeshHitProperties : uScriptLogic
 #if UNITY_5_5
       UnityEngine.AI.NavMeshHit navMeshHit,
 #else
-      NavMeshHit navMeshHit
+      NavMeshHit navMeshHit,
 #endif
       [FriendlyName("Distance", "Distance to the point of hit.")]
       out float distance,
