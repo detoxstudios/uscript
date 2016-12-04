@@ -24,9 +24,13 @@ internal class ImportGUITextures : AssetPostprocessor
       var textureImporter = (TextureImporter)this.assetImporter;
       var textureSettings = new TextureImporterSettings();
 
+#if UNITY_5_5
+      textureImporter.textureType = TextureImporterType.Default;
+#else
       textureImporter.textureType = TextureImporterType.Advanced;
+#endif
 #if UNITY_3_5
-         textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor, 100);
+      textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor, 100);
 #else
       textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor);
 #endif
@@ -34,7 +38,7 @@ internal class ImportGUITextures : AssetPostprocessor
       textureImporter.ReadTextureSettings(textureSettings);
       textureSettings.mipmapEnabled = false;
 #if UNITY_3_5
-         textureSettings.linearTexture = true;
+      textureSettings.linearTexture = true;
 #endif
 
       textureSettings.aniso = 0;
