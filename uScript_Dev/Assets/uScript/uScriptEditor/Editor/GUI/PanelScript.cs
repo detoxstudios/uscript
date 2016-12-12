@@ -100,7 +100,7 @@ namespace Detox.Editor.GUI
       public void SaveState()
       {
          // TODO: Move this internally, by checking (EditorApplication.isCompiling) in Draw().
-         this.panelScriptList.SaveState();
+         if (this.panelScriptList != null) this.panelScriptList.SaveState();
       }
 
       public static class SourceStateContent
