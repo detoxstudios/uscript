@@ -214,7 +214,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
 #if  !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2_0
          m_Target.transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime, Space.Self);
 #else
-         m_Target.transform.RotateAroundLocal(Vector3.up, -rotateSpeed * Time.deltaTime);
+         m_Target.transform.RotateAroundLocal(Vector3.up, -rotateSpeed * Mathf.PI / 180.0f * Time.deltaTime);
 #endif
       }
       else if (Direction.Right == m_Rotate)
@@ -222,7 +222,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
 #if  !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2_0	
          m_Target.transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime, Space.Self);
 #else
-         m_Target.transform.RotateAroundLocal(Vector3.up, rotateSpeed * Time.deltaTime);
+         m_Target.transform.RotateAroundLocal(Vector3.up, rotateSpeed * Mathf.PI / 180.0f * Time.deltaTime);
 #endif
       }
 
