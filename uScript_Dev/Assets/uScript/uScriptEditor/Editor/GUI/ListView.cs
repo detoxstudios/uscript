@@ -50,7 +50,15 @@ namespace Detox.Editor.GUI
       public ListView(EditorWindow window, Type typeListViewItem)
       {
          this.EditorWindow = window;
-         this.controlID = GUIUtility.GetControlID(FocusType.Keyboard);
+         
+         try
+         {
+            this.controlID = GUIUtility.GetControlID(FocusType.Keyboard);
+         }
+         catch (Exception e)
+         {
+            Debug.Log("Exception getting control ID: " + e.Message);
+         }
          
          if (typeof(ListViewItem).IsAssignableFrom(typeListViewItem))
          {
