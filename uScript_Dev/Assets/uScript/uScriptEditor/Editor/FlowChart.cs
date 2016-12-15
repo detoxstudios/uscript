@@ -1996,35 +1996,46 @@ namespace Detox.FlowChart
 
       public override void OnPaint(PaintEventArgs e)
       {
+         Debug.Log("OnPaint - 1");
          base.OnPaint(e);
 
+         Debug.Log("OnPaint - 2");
          Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
 
+         Debug.Log("OnPaint - 3");
          Rectangle nodeRect = new Rectangle( );
          //nodeRect.X      = (int) (location.X * ZoomScale);
          //nodeRect.Y      = (int) (location.Y * ZoomScale);
          //nodeRect.Width  = (int) (ZoomSize.Width);
          //nodeRect.Height = (int) (ZoomSize.Height);
 
+         Debug.Log("OnPaint - 4");
          nodeRect.X      = (int) (location.X);
          nodeRect.Y      = (int) (location.Y);
          nodeRect.Width  = (int) (Size.Width);
          nodeRect.Height = (int) (Size.Height);
 
+         Debug.Log("OnPaint - 5");
          // Draw the node
          {
             e.Graphics.FillRectangle(StyleName, nodeRect, Name, this);
 
+         Debug.Log("OnPaint - 6");
             FlowChartCtrl flowChart = Parent as FlowChartCtrl;
 
+         Debug.Log("OnPaint - 7");
             Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
+         Debug.Log("OnPaint - 8");
             position = PointToClient( position );
 
 
+         Debug.Log("OnPaint - 9");
             for ( int i = 0; i < AnchorPoints.Length; i++ )
             {
+         Debug.Log("OnPaint - 10");
                AnchorPoint point = m_AnchorPoints[ i ];
 
+         Debug.Log("OnPaint - 11");
                bool connecting = false;
 
                //float x = point.X / 100.0f * ZoomSize.Width;
@@ -2032,13 +2043,16 @@ namespace Detox.FlowChart
                float x = point.X / 100.0f * Size.Width;
                float y = point.Y / 100.0f * Size.Height;
 
+         Debug.Log("OnPaint - 12");
                //float diameter = (point.Width / 100.0f * ZoomSize.Width);
                float diameter = (point.Width / 100.0f * Size.Width);
                float radius   = (diameter / 2.0f + 0.5f);
 
+         Debug.Log("OnPaint - 13");
                if ( true == flowChart.LinkStartAnchor.Output && true == point.Input ||
                     true == flowChart.LinkStartAnchor.Input  && true == point.Output )
                {
+         Debug.Log("OnPaint - 14");
                   if ( position.X >= x - radius && position.X <= x + radius &&
                        position.Y >= y - radius && position.Y <= y + radius )
                   {
@@ -2046,32 +2060,42 @@ namespace Detox.FlowChart
                   }
                }
 
+         Debug.Log("OnPaint - 15");
                if ( false == connecting )
                {
+         Debug.Log("OnPaint - 16");
                   if ( null != flowChart.LinkStartNode )
                   {
+         Debug.Log("OnPaint - 17");
                      connecting = flowChart.LinkStartNode == this &&
                                   flowChart.LinkStartAnchor.Name == point.Name;
                   }
                }
 
+         Debug.Log("OnPaint - 18");
                //save original style in case it'll be modified for rendering
                AnchorPoint originalPoint = point;
 
+         Debug.Log("OnPaint - 19");
                flowChart.OnPointRender( this, i, point, connecting );
 
+         Debug.Log("OnPaint - 20");
                //reget point incase the point render modified it
                point = m_AnchorPoints[ i ];
 
+         Debug.Log("OnPaint - 21");
                // Sockets
                GUI.Box(new Rect(x + location.X - radius, y + location.Y - radius, diameter, diameter), "", uScriptConfig.Style.Get(point.StyleName));
 
+         Debug.Log("OnPaint - 22");
                //return original style in case it was modified for rendering
                m_AnchorPoints[ i ] = originalPoint;
             }
 
+         Debug.Log("OnPaint - 23");
             for (int i = 0; i < TextPoints.Count(); i++)
             {
+         Debug.Log("OnPaint - 24");
                //float x = TextPoints[i].X / 100.0f * ZoomSize.Width;
                //float y = TextPoints[i].Y / 100.0f * ZoomSize.Height;
                float x = TextPoints[i].X / 100.0f * Size.Width;
@@ -2081,23 +2105,31 @@ namespace Detox.FlowChart
                //we do Size.Height + 14 because we want some text to be able to hang off of the
                //bottom of the node.  In a perfect world we would require a rect in the TextPoint struct
                //but I think that is too big of a chance for Retail Beta
+         Debug.Log("OnPaint - 25");
                if ( ((Detox.ScriptEditor.DisplayNode)this).EntityNode is Detox.ScriptEditor.CommentNode )
                {
+         Debug.Log("OnPaint - 26");
                   Detox.ScriptEditor.CommentNode comment = (Detox.ScriptEditor.CommentNode) ((Detox.ScriptEditor.DisplayNode)this).EntityNode;
 
+         Debug.Log("OnPaint - 27");
                   GUIStyle commentStyle = uScriptConfig.Style.Get(TextPoints[i].StyleName);
+         Debug.Log("OnPaint - 28");
                   commentStyle.normal.textColor = (UnityEngine.Color) comment.BodyTextColor.DefaultAsObject;
                }
 
+         Debug.Log("OnPaint - 29");
                // Socket labels
                //GUI.Label( new Rect(x + location.X, y + location.Y, ZoomSize.Width - x, (ZoomSize.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
                GUI.Label( new Rect(x + location.X, y + location.Y, Size.Width - x, (Size.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
             }
 
+         Debug.Log("OnPaint - 30");
             if ( CanResize )
             {
+         Debug.Log("OnPaint - 31");
                //Rect rect = new Rect( location.X + ZoomSize.Width - uScriptConfig.ResizeTexture.width, location.Y + ZoomSize.Height - uScriptConfig.ResizeTexture.height, uScriptConfig.ResizeTexture.width, uScriptConfig.ResizeTexture.height );
                Rect rect = new Rect( location.X + Size.Width - uScriptConfig.ResizeTexture.width, location.Y + Size.Height - uScriptConfig.ResizeTexture.height, uScriptConfig.ResizeTexture.width, uScriptConfig.ResizeTexture.height );
+         Debug.Log("OnPaint - 32");
                GUI.DrawTexture( rect, uScriptConfig.ResizeTexture );
             }
          }
