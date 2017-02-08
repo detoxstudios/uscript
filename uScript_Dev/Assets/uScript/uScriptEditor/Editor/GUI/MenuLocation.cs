@@ -116,6 +116,12 @@ namespace Detox.Editor
          EditorCommands.OpenHotkeyWindow();
       }
 
+      [MenuItem(MenuRoot + ""uScript/Rebuild All Graphs"", false, 53)]
+      internal static void RebuildAllGraphs()
+      {
+         uScript.Instance.RebuildAllScripts();
+      }
+
       [MenuItem(MenuRoot + ""uScript/About uScript"", false, 1001)]
       internal static void OpenAboutWindow()
       {
