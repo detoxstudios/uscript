@@ -139,6 +139,8 @@ public sealed partial class uScript : EditorWindow
 
    private bool hasFocus;
 
+   private bool hierarchyRefreshCallbackAdded = false;
+
    private Rect helpButtonRect;
    private Rect fileButtonRect;
    private Rect viewButtonRect;
@@ -1456,18 +1458,24 @@ public sealed partial class uScript : EditorWindow
       if (Application.isPlaying)
       {
          EditorApplication.delayCall += this.RefreshOnHierarchyChange;
+         this.hierarchyRefreshCallbackAdded = true;
       }
       else
       {
-         uScriptGUIPanelToolbox.Instance.ClearSearchFilter();
+         if (this.hierarchyRefreshCallbackAdded)
+         {
+            uScriptGUIPanelToolbox.Instance.ClearSearchFilter();
 
 #if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
-         if (Preferences.AutoUpdateReflection)
-         {
-            this.UpdateReflectedTypes();
-         }
+            if (Preferences.AutoUpdateReflection)
+            {
+               this.UpdateReflectedTypes();
+            }
 #endif
-         this.OpenFromCache();
+            this.OpenFromCache();
+         }
+
+         this.hierarchyRefreshCallbackAdded = false;
       }
    }
 
@@ -1476,6 +1484,7 @@ public sealed partial class uScript : EditorWindow
       if (Preferences.RefreshOnHierarchyChange)
       {
          EditorApplication.delayCall += this.RefreshOnHierarchyChange;
+         this.hierarchyRefreshCallbackAdded = true;
       }
    }
 

@@ -223,6 +223,8 @@ public class UpdateNotification : EditorWindow
    {
 #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7)
          if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer)
+#elif (UNITY_5_4_OR_NEWER)
+      if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
 #else
       if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
 #endif
