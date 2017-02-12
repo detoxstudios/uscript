@@ -96,7 +96,6 @@ public class uScriptAct_Toggle : uScriptLogic
       GameObject[] Target,
 
       [FriendlyName("Ignore Children", "If True, the state change will not affect the Target's children. However, the children will still not render if their parent has been disabled.")]
-      [SocketState(false, false)]
       bool IgnoreChildren
       )
    {
