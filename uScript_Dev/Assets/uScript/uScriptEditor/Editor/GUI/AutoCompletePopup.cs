@@ -383,16 +383,17 @@ namespace Detox.Editor.GUI
             }
 
             matchValue = matchPattern;
+            currentIndex = -1;
 
             for (var i = 0; i < List.Count; i++)
             {
                var item = List[i];
                if (item.Path == matchPattern)
                {
-                  return;
+                  currentIndex = i;
+                  break;
                }
             }
-
             //List.Sort();
 
             ParentControlID = FocusedControl.ID;
@@ -400,7 +401,6 @@ namespace Detox.Editor.GUI
 
             drawOffset = new Vector2();
 
-            currentIndex = -1;
             IsVisible = true;
          }
 
