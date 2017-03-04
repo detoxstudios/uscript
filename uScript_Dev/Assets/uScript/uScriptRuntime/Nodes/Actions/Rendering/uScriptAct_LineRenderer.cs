@@ -77,9 +77,12 @@ public class uScriptAct_LineRenderer : uScriptLogic
       this.lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
 
 #if UNITY_5_5
-      this.lineRenderer.numPositions = positions.Length;
-#else
       this.lineRenderer.SetPositions(positions);
+#else
+      for (int i = 0; i < positions.Length; i++)
+      {
+         this.lineRenderer.SetPosition(i, positions[i]);
+      }
 #endif
 
 #if UNITY_5_5
