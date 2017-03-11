@@ -114,14 +114,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Annotations.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_BroadcastCustomEvent.cs" />
-    <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Lerper.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_MasterComponent.cs" />
-    <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Runtime.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_StateMachineBehaviour.cs" />
-    <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_UndoObject.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\uScriptUnityVersion.cs" />
+    <Compile Include="Assets\uScript\uScriptRuntime\uScript_Lerper.cs" />
+    <Compile Include="Assets\uScript\uScriptRuntime\uScript_Runtime.cs" />
+    <Compile Include="Assets\uScript\uScriptRuntime\uScript_UndoObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
