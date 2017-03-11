@@ -2619,7 +2619,7 @@ namespace Detox.ScriptEditor
          m_Instance.Name         = "Instance";
          m_Instance.ReferenceGuid = "";
          m_Instance.FriendlyName = "Instance";
-         m_Instance.State  = Parameter.VisibleState.Hidden;
+         m_Instance.State  = Parameter.VisibleState.Visible;
          m_Instance.Type   = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input  = true;
          m_Instance.Output = false;
