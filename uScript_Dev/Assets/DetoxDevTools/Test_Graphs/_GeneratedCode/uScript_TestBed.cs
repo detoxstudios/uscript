@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2609
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -38,19 +38,20 @@ public class uScript_TestBed : uScriptLogic
    System.Object logic_uScriptAct_Log_Postfix_1 = "";
    bool logic_uScriptAct_Log_Out_1 = true;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateFloatLinear logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4 = new uScriptAct_InterpolateFloatLinear( );
-   System.Single logic_uScriptAct_InterpolateFloatLinear_startValue_4 = (float) 0;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_endValue_4 = (float) 0;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_time_4 = (float) 0;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateFloatLinear_loopType_4 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_loopDelay_4 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateFloatLinear_loopCount_4 = (int) 0;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
-   bool logic_uScriptAct_InterpolateFloatLinear_Started_4 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Stopped_4 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Interpolating_4 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Finished_4 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Driven_4 = false;
+   uScriptAct_InterpolateFloatLinearSmooth logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4 = new uScriptAct_InterpolateFloatLinearSmooth( );
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_4 = (float) 0;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_4 = (float) 0;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_time_4 = (float) 0;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_4 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_4 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_4 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_4 = (int) 0;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Started_4 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Stopped_4 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Interpolating_4 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Finished_4 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_4 = false;
    //pointer to script instanced logic node
    uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_6 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_6 = "";
@@ -97,8 +98,10 @@ public class uScript_TestBed : uScriptLogic
    //property nodes
    System.Single property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = (float) 0;
    UnityEngine.GameObject property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0_previous = null;
    System.Single property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5 = (float) 0;
    UnityEngine.GameObject property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5_previous = null;
    
    //method nodes
    #pragma warning restore 414
@@ -106,7 +109,11 @@ public class uScript_TestBed : uScriptLogic
    //functions to refresh properties from entities
    System.Single property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh( )
    {
-      UnityEngine.Camera component = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0.GetComponent<UnityEngine.Camera>();
+      UnityEngine.Camera component = null;
+      if (property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 != null)
+      {
+         component = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0.GetComponent<UnityEngine.Camera>();
+      }
       if ( null != component )
       {
          return component.fieldOfView;
@@ -119,7 +126,11 @@ public class uScript_TestBed : uScriptLogic
    
    void property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( )
    {
-      UnityEngine.Camera component = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0.GetComponent<UnityEngine.Camera>();
+      UnityEngine.Camera component = null;
+      if (property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 != null)
+      {
+         component = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0.GetComponent<UnityEngine.Camera>();
+      }
       if ( null != component )
       {
          component.fieldOfView = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0;
@@ -128,7 +139,11 @@ public class uScript_TestBed : uScriptLogic
    
    System.Single property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( )
    {
-      UnityEngine.Camera component = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5.GetComponent<UnityEngine.Camera>();
+      UnityEngine.Camera component = null;
+      if (property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 != null)
+      {
+         component = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5.GetComponent<UnityEngine.Camera>();
+      }
       if ( null != component )
       {
          return component.fieldOfView;
@@ -141,7 +156,11 @@ public class uScript_TestBed : uScriptLogic
    
    void property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Set_Refresh( )
    {
-      UnityEngine.Camera component = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5.GetComponent<UnityEngine.Camera>();
+      UnityEngine.Camera component = null;
+      if (property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 != null)
+      {
+         component = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5.GetComponent<UnityEngine.Camera>();
+      }
       if ( null != component )
       {
          component.fieldOfView = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5;
@@ -151,24 +170,90 @@ public class uScript_TestBed : uScriptLogic
    
    void SyncUnityHooks( )
    {
-      SyncEventListeners( );
       if ( null == property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 || false == m_RegisteredForEvents )
       {
          property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 = GameObject.Find( "Main Camera" ) as UnityEngine.GameObject;
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0_previous != property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0_previous = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0;
+         
+         //setup new listeners
       }
       if ( null == property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 || false == m_RegisteredForEvents )
       {
          property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 = GameObject.Find( "Main Camera" ) as UnityEngine.GameObject;
       }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5_previous != property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5_previous = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5;
+         
+         //setup new listeners
+      }
+      SyncEventListeners( );
    }
    
    void RegisterForUnityHooks( )
    {
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0_previous != property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0_previous = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5_previous != property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5_previous = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5;
+         
+         //setup new listeners
+      }
       SyncEventListeners( );
    }
    
    void SyncEventListeners( )
    {
+      {
+         {
+            {
+               //if our game object reference was changed then we need to reset event listeners
+               if ( property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0_previous != property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 || false == m_RegisteredForEvents )
+               {
+                  //tear down old listeners
+                  
+                  property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0_previous = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0;
+                  
+                  //setup new listeners
+               }
+            }
+         }
+      }
+      {
+         {
+            {
+               //if our game object reference was changed then we need to reset event listeners
+               if ( property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5_previous != property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 || false == m_RegisteredForEvents )
+               {
+                  //tear down old listeners
+                  
+                  property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5_previous = property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5;
+                  
+                  //setup new listeners
+               }
+            }
+         }
+      }
       if ( null == event_UnityEngine_GameObject_Instance_3 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_3 = uScript_MasterComponent.LatestMaster;
@@ -236,7 +321,7 @@ public class uScript_TestBed : uScriptLogic
       parentGameObject = g;
       
       logic_uScriptAct_Log_uScriptAct_Log_1.SetParent(g);
-      logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.SetParent(g);
+      logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_6.SetParent(g);
       logic_uScriptAct_Delay_uScriptAct_Delay_7.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8.SetParent(g);
@@ -288,7 +373,7 @@ public class uScript_TestBed : uScriptLogic
       //so we need to verify all our event listeners are registered
       SyncEventListeners( );
       
-      if (true == logic_uScriptAct_InterpolateFloatLinear_Driven_4)
+      if (true == logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_4)
       {
          Relay_Driven_4();
       }
@@ -352,7 +437,7 @@ public class uScript_TestBed : uScriptLogic
    
    void Relay_KeyEvent_3()
    {
-      if (true == CheckDebugBreak("5ffc5651-88ba-4e7b-9774-8b14a1fa4d49", "Input Events", Relay_KeyEvent_3)) return; 
+      if (true == CheckDebugBreak("5ffc5651-88ba-4e7b-9774-8b14a1fa4d49", "Input_Events", Relay_KeyEvent_3)) return; 
       Relay_In_8();
    }
    
@@ -360,19 +445,20 @@ public class uScript_TestBed : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate Float Linear", Relay_Begin_4)) return; 
+         if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate_Float_Linear__Smooth_", Relay_Begin_4)) return; 
          {
             {
-               logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+               logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_4 = local_2_System_Single;
                
             }
             {
-               logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+               logic_uScriptAct_InterpolateFloatLinearSmooth_time_4 = local_12_System_Single;
                
             }
             {
-               logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-               
             }
             {
             }
@@ -383,14 +469,14 @@ public class uScript_TestBed : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Begin(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Begin(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_4, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_4, logic_uScriptAct_InterpolateFloatLinearSmooth_time_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_4, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_4, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_4 = true;
+         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Interpolating;
+         bool test_1 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Finished;
          
          if ( test_0 == true )
          {
@@ -403,7 +489,7 @@ public class uScript_TestBed : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -411,19 +497,20 @@ public class uScript_TestBed : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate Float Linear", Relay_Stop_4)) return; 
+         if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate_Float_Linear__Smooth_", Relay_Stop_4)) return; 
          {
             {
-               logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+               logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_4 = local_2_System_Single;
                
             }
             {
-               logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+               logic_uScriptAct_InterpolateFloatLinearSmooth_time_4 = local_12_System_Single;
                
             }
             {
-               logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-               
             }
             {
             }
@@ -434,14 +521,14 @@ public class uScript_TestBed : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Stop(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Stop(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_4, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_4, logic_uScriptAct_InterpolateFloatLinearSmooth_time_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_4, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_4, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_4 = true;
+         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Interpolating;
+         bool test_1 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Finished;
          
          if ( test_0 == true )
          {
@@ -454,7 +541,7 @@ public class uScript_TestBed : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -462,19 +549,20 @@ public class uScript_TestBed : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate Float Linear", Relay_Resume_4)) return; 
+         if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate_Float_Linear__Smooth_", Relay_Resume_4)) return; 
          {
             {
-               logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+               logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_4 = local_2_System_Single;
                
             }
             {
-               logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+               logic_uScriptAct_InterpolateFloatLinearSmooth_time_4 = local_12_System_Single;
                
             }
             {
-               logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-               
             }
             {
             }
@@ -485,14 +573,14 @@ public class uScript_TestBed : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Resume(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Resume(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_4, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_4, logic_uScriptAct_InterpolateFloatLinearSmooth_time_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_4, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_4, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_4, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_4 = true;
+         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Interpolating;
+         bool test_1 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Finished;
          
          if ( test_0 == true )
          {
@@ -505,7 +593,7 @@ public class uScript_TestBed : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -515,16 +603,17 @@ public class uScript_TestBed : uScriptLogic
       {
          {
             {
-               logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+               logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_4 = local_2_System_Single;
                
             }
             {
-               logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+               logic_uScriptAct_InterpolateFloatLinearSmooth_time_4 = local_12_System_Single;
                
             }
             {
-               logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-               
             }
             {
             }
@@ -535,16 +624,16 @@ public class uScript_TestBed : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Driven(out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
-         if ( true == logic_uScriptAct_InterpolateFloatLinear_Driven_4 )
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_4 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Driven(out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4);
+         if ( true == logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_4 )
          {
-            property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
+            property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_4;
             property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating == true )
+            if ( logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Interpolating == true )
             {
                Relay_In_9();
             }
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished == true )
+            if ( logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_4.Finished == true )
             {
                Relay_In_13();
             }
@@ -552,7 +641,7 @@ public class uScript_TestBed : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_In_6()
@@ -666,7 +755,7 @@ public class uScript_TestBed : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("edf9632f-802e-4615-bf97-d6ad68f799a4", "Input Events Filter", Relay_In_8)) return; 
+         if (true == CheckDebugBreak("edf9632f-802e-4615-bf97-d6ad68f799a4", "Input_Events_Filter", Relay_In_8)) return; 
          {
             {
             }
@@ -701,9 +790,13 @@ public class uScript_TestBed : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh());
-               logic_uScriptAct_Log_Target_9 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_9.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_9, index + 1);
+               }
+               logic_uScriptAct_Log_Target_9[ index++ ] = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh( );
+               
             }
             {
             }
@@ -745,7 +838,7 @@ public class uScript_TestBed : uScriptLogic
    
    void Relay_uScriptStart_11()
    {
-      if (true == CheckDebugBreak("b518a835-c24a-4218-bc24-df191ebfe2df", "uScript Events", Relay_uScriptStart_11)) return; 
+      if (true == CheckDebugBreak("b518a835-c24a-4218-bc24-df191ebfe2df", "uScript_Events", Relay_uScriptStart_11)) return; 
       Relay_In_7();
    }
    
@@ -779,14 +872,14 @@ public class uScript_TestBed : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "3245563f-53a1-46b6-81e8-f2ce8026e5a6", local_2_System_Single);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "uScript_TestBed.uscript:12", local_12_System_Single);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "9d0051de-11eb-4e86-a717-ccf2c1f5962e", local_12_System_Single);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "f79cd612-cc48-43e7-90e8-deed62ac4af2", property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "364507bc-6ec8-4495-a2de-b87555729475", property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "f79cd612-cc48-43e7-90e8-deed62ac4af2", property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh());
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "364507bc-6ec8-4495-a2de-b87555729475", property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh());
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

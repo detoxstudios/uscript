@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2439
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -37,59 +37,59 @@ public class All_Event_Nodes : uScriptLogic
    System.String local_126_System_String = "Event fired - Network Server Initialized";
    System.String local_127_System_String = "Event fired - Network Server Player";
    System.String local_129_System_String = "Event fired - Network Master Server";
+   System.String local_132_System_String = "Event fired - Particle Collision";
+   System.String local_137_System_String = "Event fired - On Collision";
+   System.String local_139_System_String = "Event fired - Joint Break";
+   System.String local_141_System_String = "Event fired - Controller Collision";
+   System.String local_145_System_String = "Event fired - Render Events";
+   System.String local_147_System_String = "Event fired - Post Effect Events";
+   UnityEngine.GameObject local_149_UnityEngine_GameObject = default(UnityEngine.GameObject);
+   UnityEngine.GameObject local_149_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_150_UnityEngine_GameObject = default(UnityEngine.GameObject);
+   UnityEngine.GameObject local_150_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_151_UnityEngine_GameObject = default(UnityEngine.GameObject);
+   UnityEngine.GameObject local_151_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_152_UnityEngine_GameObject = default(UnityEngine.GameObject);
+   UnityEngine.GameObject local_152_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_153_UnityEngine_GameObject = default(UnityEngine.GameObject);
+   UnityEngine.GameObject local_153_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_154_UnityEngine_GameObject = default(UnityEngine.GameObject);
+   UnityEngine.GameObject local_154_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_156_UnityEngine_GameObject = default(UnityEngine.GameObject);
+   UnityEngine.GameObject local_156_UnityEngine_GameObject_previous = null;
+   System.String local_157_System_String = "Event fired - Trigger Events";
    System.String local_18_System_String = "Event fired - Application Quit";
    System.String local_20_System_String = "Event fired - Application Focus";
    System.String local_21_System_String = "Event fired - Custom Event";
    System.String local_24_System_String = "Event fired - Custom Event (Bool)";
    System.String local_26_System_String = "Event fired - Custom Event (Color)";
-   System.String local_262_System_String = "Event fired - Particle Collision";
-   System.String local_269_System_String = "Event fired - On Collision";
-   System.String local_272_System_String = "Event fired - Joint Break";
-   System.String local_275_System_String = "Event fired - Controller Collision";
    System.String local_28_System_String = "Event fired - Custom Event (Float)";
-   System.String local_285_System_String = "Event fired - Render Events";
-   System.String local_288_System_String = "Event fired - Post Effect Events";
-   UnityEngine.GameObject local_297_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_297_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_299_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_299_UnityEngine_GameObject_previous = null;
    System.String local_30_System_String = "Event fired - Custom Event (GameObject)";
-   UnityEngine.GameObject local_301_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_301_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_303_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_303_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_305_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_305_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_307_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_307_UnityEngine_GameObject_previous = null;
    System.String local_31_System_String = "Event fired - Custom Event (Int)";
-   UnityEngine.GameObject local_310_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_310_UnityEngine_GameObject_previous = null;
-   System.String local_312_System_String = "Event fired - Trigger Events";
    System.String local_34_System_String = "Event fired - Custom Event (Object)";
-   UnityEngine.GameObject local_35_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_35_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_35_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_36_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_36_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_36_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_37_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_37_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_37_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_38_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_38_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_38_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_39_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_39_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_39_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_40_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_40_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_40_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_41_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_41_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_41_UnityEngine_GameObject_previous = null;
    System.String local_43_System_String = "Event fired - Custom Event (String)";
-   UnityEngine.GameObject local_44_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_44_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_44_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_45_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_45_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_45_UnityEngine_GameObject_previous = null;
    System.String local_47_System_String = "Event fired - Custom Event (Vector2)";
-   UnityEngine.GameObject local_48_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_48_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_48_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_49_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_49_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_49_UnityEngine_GameObject_previous = null;
    System.String local_51_System_String = "Event fired - Custom Event (Vector3)";
    System.String local_53_System_String = "Event fired - Custom Event (Vector4)";
@@ -101,9 +101,9 @@ public class All_Event_Nodes : uScriptLogic
    System.String local_66_System_String = "Event fired - uScript Events";
    System.String local_70_System_String = "Event fired - GameObject Events";
    System.String local_73_System_String = "Event fired - Visibility Events";
-   UnityEngine.GameObject local_74_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_74_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_74_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_75_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_75_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_75_UnityEngine_GameObject_previous = null;
    System.String local_85_System_String = "Event fired - Accelerometer Events";
    System.String local_87_System_String = "Event fired - Device Orientation Events";
@@ -211,19 +211,19 @@ public class All_Event_Nodes : uScriptLogic
    bool logic_uScriptCon_IntCounter_LessThanOrEqualTo_56 = true;
    bool logic_uScriptCon_IntCounter_LessThan_56 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_58 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_58 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_58 = new System.Int32[] {1};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_58;
-   System.Single logic_uScriptAct_AddInt_FloatResult_58;
-   bool logic_uScriptAct_AddInt_Out_58 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_58 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_58 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_58 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_58;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_58;
+   bool logic_uScriptAct_AddInt_v2_Out_58 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_60 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_60 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_60 = new System.Int32[] {1};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_60;
-   System.Single logic_uScriptAct_AddInt_FloatResult_60;
-   bool logic_uScriptAct_AddInt_Out_60 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_60 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_60 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_60 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_60;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_60;
+   bool logic_uScriptAct_AddInt_v2_Out_60 = true;
    //pointer to script instanced logic node
    uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_61 = new uScriptCon_IntCounter( );
    System.Int32 logic_uScriptCon_IntCounter_A_61 = (int) 1;
@@ -277,12 +277,12 @@ public class All_Event_Nodes : uScriptLogic
    System.Object logic_uScriptAct_Log_Postfix_86 = "";
    bool logic_uScriptAct_Log_Out_86 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_88 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_88 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_88 = new System.Int32[] {1};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_88;
-   System.Single logic_uScriptAct_AddInt_FloatResult_88;
-   bool logic_uScriptAct_AddInt_Out_88 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_88 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_88 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_88 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_88;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_88;
+   bool logic_uScriptAct_AddInt_v2_Out_88 = true;
    //pointer to script instanced logic node
    uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_89 = new uScriptCon_IntCounter( );
    System.Int32 logic_uScriptCon_IntCounter_A_89 = (int) 1;
@@ -300,12 +300,12 @@ public class All_Event_Nodes : uScriptLogic
    System.Object logic_uScriptAct_Log_Postfix_90 = "";
    bool logic_uScriptAct_Log_Out_90 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_93 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_93 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_93 = new System.Int32[] {1};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_93;
-   System.Single logic_uScriptAct_AddInt_FloatResult_93;
-   bool logic_uScriptAct_AddInt_Out_93 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_93 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_93 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_93 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_93;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_93;
+   bool logic_uScriptAct_AddInt_v2_Out_93 = true;
    //pointer to script instanced logic node
    uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_94 = new uScriptCon_IntCounter( );
    System.Int32 logic_uScriptCon_IntCounter_A_94 = (int) 1;
@@ -401,96 +401,96 @@ public class All_Event_Nodes : uScriptLogic
    System.Object logic_uScriptAct_Log_Postfix_130 = "";
    bool logic_uScriptAct_Log_Out_130 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_263 = new uScriptAct_Log( );
-   System.Object logic_uScriptAct_Log_Prefix_263 = "";
-   System.Object[] logic_uScriptAct_Log_Target_263 = new System.Object[] {};
-   System.Object logic_uScriptAct_Log_Postfix_263 = "";
-   bool logic_uScriptAct_Log_Out_263 = true;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_133 = new uScriptAct_Log( );
+   System.Object logic_uScriptAct_Log_Prefix_133 = "";
+   System.Object[] logic_uScriptAct_Log_Target_133 = new System.Object[] {};
+   System.Object logic_uScriptAct_Log_Postfix_133 = "";
+   bool logic_uScriptAct_Log_Out_133 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_270 = new uScriptAct_Log( );
-   System.Object logic_uScriptAct_Log_Prefix_270 = "";
-   System.Object[] logic_uScriptAct_Log_Target_270 = new System.Object[] {};
-   System.Object logic_uScriptAct_Log_Postfix_270 = "";
-   bool logic_uScriptAct_Log_Out_270 = true;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_138 = new uScriptAct_Log( );
+   System.Object logic_uScriptAct_Log_Prefix_138 = "";
+   System.Object[] logic_uScriptAct_Log_Target_138 = new System.Object[] {};
+   System.Object logic_uScriptAct_Log_Postfix_138 = "";
+   bool logic_uScriptAct_Log_Out_138 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_273 = new uScriptAct_Log( );
-   System.Object logic_uScriptAct_Log_Prefix_273 = "";
-   System.Object[] logic_uScriptAct_Log_Target_273 = new System.Object[] {};
-   System.Object logic_uScriptAct_Log_Postfix_273 = "";
-   bool logic_uScriptAct_Log_Out_273 = true;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_140 = new uScriptAct_Log( );
+   System.Object logic_uScriptAct_Log_Prefix_140 = "";
+   System.Object[] logic_uScriptAct_Log_Target_140 = new System.Object[] {};
+   System.Object logic_uScriptAct_Log_Postfix_140 = "";
+   bool logic_uScriptAct_Log_Out_140 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_276 = new uScriptAct_Log( );
-   System.Object logic_uScriptAct_Log_Prefix_276 = "";
-   System.Object[] logic_uScriptAct_Log_Target_276 = new System.Object[] {};
-   System.Object logic_uScriptAct_Log_Postfix_276 = "";
-   bool logic_uScriptAct_Log_Out_276 = true;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_142 = new uScriptAct_Log( );
+   System.Object logic_uScriptAct_Log_Prefix_142 = "";
+   System.Object[] logic_uScriptAct_Log_Target_142 = new System.Object[] {};
+   System.Object logic_uScriptAct_Log_Postfix_142 = "";
+   bool logic_uScriptAct_Log_Out_142 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_286 = new uScriptAct_Log( );
-   System.Object logic_uScriptAct_Log_Prefix_286 = "";
-   System.Object[] logic_uScriptAct_Log_Target_286 = new System.Object[] {};
-   System.Object logic_uScriptAct_Log_Postfix_286 = "";
-   bool logic_uScriptAct_Log_Out_286 = true;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_146 = new uScriptAct_Log( );
+   System.Object logic_uScriptAct_Log_Prefix_146 = "";
+   System.Object[] logic_uScriptAct_Log_Target_146 = new System.Object[] {};
+   System.Object logic_uScriptAct_Log_Postfix_146 = "";
+   bool logic_uScriptAct_Log_Out_146 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_289 = new uScriptAct_Log( );
-   System.Object logic_uScriptAct_Log_Prefix_289 = "";
-   System.Object[] logic_uScriptAct_Log_Target_289 = new System.Object[] {};
-   System.Object logic_uScriptAct_Log_Postfix_289 = "";
-   bool logic_uScriptAct_Log_Out_289 = true;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_148 = new uScriptAct_Log( );
+   System.Object logic_uScriptAct_Log_Prefix_148 = "";
+   System.Object[] logic_uScriptAct_Log_Target_148 = new System.Object[] {};
+   System.Object logic_uScriptAct_Log_Postfix_148 = "";
+   bool logic_uScriptAct_Log_Out_148 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_313 = new uScriptAct_Log( );
-   System.Object logic_uScriptAct_Log_Prefix_313 = "";
-   System.Object[] logic_uScriptAct_Log_Target_313 = new System.Object[] {};
-   System.Object logic_uScriptAct_Log_Postfix_313 = "";
-   bool logic_uScriptAct_Log_Out_313 = true;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_158 = new uScriptAct_Log( );
+   System.Object logic_uScriptAct_Log_Prefix_158 = "";
+   System.Object[] logic_uScriptAct_Log_Target_158 = new System.Object[] {};
+   System.Object logic_uScriptAct_Log_Postfix_158 = "";
+   bool logic_uScriptAct_Log_Out_158 = true;
    
    //event nodes
    System.Boolean event_UnityEngine_GameObject_HasFocus_0 = (bool) false;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_1 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_2 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_1 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_2 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_2 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_3 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_3 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_3 = "";
    System.Boolean event_UnityEngine_GameObject_EventData_3 = (bool) false;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_4 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_4 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_4 = "";
    UnityEngine.Color event_UnityEngine_GameObject_EventData_4 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_5 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_5 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_5 = "";
    System.Single event_UnityEngine_GameObject_EventData_5 = (float) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_6 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_6 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_6 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_EventData_6 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_7 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_EventData_6 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_7 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_7 = "";
    System.Int32 event_UnityEngine_GameObject_EventData_7 = (int) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_8 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_8 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_8 = "";
-   UnityEngine.Object event_UnityEngine_GameObject_EventData_8 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_9 = null;
+   UnityEngine.Object event_UnityEngine_GameObject_EventData_8 = default(UnityEngine.Object);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_9 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_9 = "";
    System.String event_UnityEngine_GameObject_EventData_9 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_10 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_10 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_10 = "";
    UnityEngine.Vector2 event_UnityEngine_GameObject_EventData_10 = new Vector2( (float)0, (float)0 );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_11 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_11 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_11 = "";
    UnityEngine.Vector3 event_UnityEngine_GameObject_EventData_11 = new Vector3( (float)0, (float)0, (float)0 );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_12 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Sender_12 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_EventName_12 = "";
    UnityEngine.Vector4 event_UnityEngine_GameObject_EventData_12 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_13 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_13 = default(UnityEngine.GameObject);
    System.Boolean event_UnityEngine_GameObject_GUIChanged_14 = (bool) false;
    System.String event_UnityEngine_GameObject_FocusedControl_14 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_14 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_14 = default(UnityEngine.GameObject);
    System.Int32 event_UnityEngine_GameObject_Level_15 = (int) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_15 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_16 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_15 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_16 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 event_UnityEngine_GameObject_Acceleration_76 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single event_UnityEngine_GameObject_DeltaTime_76 = (float) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_76 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_77 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_78 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_76 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_77 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_78 = default(UnityEngine.GameObject);
    System.Single event_UnityEngine_GameObject_Horizontal_79 = (float) 0;
    System.Single event_UnityEngine_GameObject_Vertical_79 = (float) 0;
    System.Boolean event_UnityEngine_GameObject_Fire1_79 = (bool) false;
@@ -502,54 +502,53 @@ public class All_Event_Nodes : uScriptLogic
    System.Single event_UnityEngine_GameObject_MouseScrollWheel_79 = (float) 0;
    System.Single event_UnityEngine_GameObject_WindowShakeX_79 = (float) 0;
    System.Single event_UnityEngine_GameObject_WindowShakeY_79 = (float) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_79 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_79 = default(UnityEngine.GameObject);
    System.Single event_UnityEngine_GameObject_MouseX_80 = (float) 0;
    System.Single event_UnityEngine_GameObject_MouseY_80 = (float) 0;
    System.Single event_UnityEngine_GameObject_Wheel_80 = (float) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_80 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_81 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_82 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_80 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_81 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_82 = default(UnityEngine.GameObject);
    System.Int32 event_UnityEngine_GameObject_FingerId_83 = (int) 0;
    UnityEngine.Vector2 event_UnityEngine_GameObject_Position_83 = new Vector2( (float)0, (float)0 );
    UnityEngine.Vector2 event_UnityEngine_GameObject_DeltaPosition_83 = new Vector2( (float)0, (float)0 );
    System.Single event_UnityEngine_GameObject_DeltaTime_83 = (float) 0;
    System.Int32 event_UnityEngine_GameObject_TapCount_83 = (int) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_83 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_83 = default(UnityEngine.GameObject);
    System.String event_UnityEngine_GameObject_Failure_110 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_110 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_110 = default(UnityEngine.GameObject);
    UnityEngine.NetworkConnectionError event_UnityEngine_GameObject_Error_111 = UnityEngine.NetworkConnectionError.NoError;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_111 = null;
-   UnityEngine.NetworkMessageInfo event_UnityEngine_GameObject_MessageInfo_112 = new UnityEngine.NetworkMessageInfo( );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_112 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_111 = default(UnityEngine.GameObject);
+   UnityEngine.NetworkMessageInfo event_UnityEngine_GameObject_MessageInfo_112 = default(UnityEngine.NetworkMessageInfo);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_112 = default(UnityEngine.GameObject);
    UnityEngine.MasterServerEvent event_UnityEngine_GameObject_MasterServerEvent_113 = UnityEngine.MasterServerEvent.RegistrationFailedGameName;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_113 = null;
-   UnityEngine.BitStream event_UnityEngine_GameObject_BitStream_114 = null;
-   UnityEngine.NetworkMessageInfo event_UnityEngine_GameObject_MessageInfo_114 = new UnityEngine.NetworkMessageInfo( );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_114 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_115 = null;
-   UnityEngine.NetworkPlayer event_UnityEngine_GameObject_NetworkPlayer_116 = new UnityEngine.NetworkPlayer( );
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_116 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_261 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_266 = null;
-   UnityEngine.CharacterController event_UnityEngine_GameObject_Controller_266 = null;
-   UnityEngine.Collider event_UnityEngine_GameObject_Collider_266 = null;
-   UnityEngine.Rigidbody event_UnityEngine_GameObject_RigidBody_266 = null;
-   UnityEngine.Transform event_UnityEngine_GameObject_Transform_266 = null;
-   UnityEngine.Vector3 event_UnityEngine_GameObject_Point_266 = new Vector3( (float)0, (float)0, (float)0 );
-   UnityEngine.Vector3 event_UnityEngine_GameObject_Normal_266 = new Vector3( (float)0, (float)0, (float)0 );
-   UnityEngine.Vector3 event_UnityEngine_GameObject_MoveDirection_266 = new Vector3( (float)0, (float)0, (float)0 );
-   System.Single event_UnityEngine_GameObject_MoveLength_266 = (float) 0;
-   System.Single event_UnityEngine_GameObject_BreakForce_267 = (float) 0;
-   UnityEngine.Vector3 event_UnityEngine_GameObject_RelativeVelocity_268 = new Vector3( (float)0, (float)0, (float)0 );
-   UnityEngine.Rigidbody event_UnityEngine_GameObject_RigidBody_268 = null;
-   UnityEngine.Collider event_UnityEngine_GameObject_Collider_268 = null;
-   UnityEngine.Transform event_UnityEngine_GameObject_Transform_268 = null;
-   UnityEngine.ContactPoint[] event_UnityEngine_GameObject_Contacts_268 = new UnityEngine.ContactPoint[ 0 ];
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_268 = null;
-   UnityEngine.RenderTexture event_UnityEngine_GameObject_SourceTexture_283 = null;
-   UnityEngine.RenderTexture event_UnityEngine_GameObject_DestinationTexture_283 = null;
-   System.Int32 event_UnityEngine_GameObject_TimesToTrigger_309 = (int) 0;
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_309 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_113 = default(UnityEngine.GameObject);
+   UnityEngine.BitStream event_UnityEngine_GameObject_BitStream_114 = default(UnityEngine.BitStream);
+   UnityEngine.NetworkMessageInfo event_UnityEngine_GameObject_MessageInfo_114 = default(UnityEngine.NetworkMessageInfo);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_114 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_115 = default(UnityEngine.GameObject);
+   UnityEngine.NetworkPlayer event_UnityEngine_GameObject_NetworkPlayer_116 = default(UnityEngine.NetworkPlayer);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_116 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_131 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_134 = default(UnityEngine.GameObject);
+   UnityEngine.CharacterController event_UnityEngine_GameObject_Controller_134 = default(UnityEngine.CharacterController);
+   UnityEngine.Collider event_UnityEngine_GameObject_Collider_134 = default(UnityEngine.Collider);
+   UnityEngine.Rigidbody event_UnityEngine_GameObject_RigidBody_134 = default(UnityEngine.Rigidbody);
+   UnityEngine.Transform event_UnityEngine_GameObject_Transform_134 = default(UnityEngine.Transform);
+   UnityEngine.Vector3 event_UnityEngine_GameObject_Point_134 = new Vector3( (float)0, (float)0, (float)0 );
+   UnityEngine.Vector3 event_UnityEngine_GameObject_Normal_134 = new Vector3( (float)0, (float)0, (float)0 );
+   UnityEngine.Vector3 event_UnityEngine_GameObject_MoveDirection_134 = new Vector3( (float)0, (float)0, (float)0 );
+   System.Single event_UnityEngine_GameObject_MoveLength_134 = (float) 0;
+   System.Single event_UnityEngine_GameObject_BreakForce_135 = (float) 0;
+   UnityEngine.Vector3 event_UnityEngine_GameObject_RelativeVelocity_136 = new Vector3( (float)0, (float)0, (float)0 );
+   UnityEngine.Rigidbody event_UnityEngine_GameObject_RigidBody_136 = default(UnityEngine.Rigidbody);
+   UnityEngine.Collider event_UnityEngine_GameObject_Collider_136 = default(UnityEngine.Collider);
+   UnityEngine.Transform event_UnityEngine_GameObject_Transform_136 = default(UnityEngine.Transform);
+   UnityEngine.ContactPoint[] event_UnityEngine_GameObject_Contacts_136 = new UnityEngine.ContactPoint[ 0 ];
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_136 = default(UnityEngine.GameObject);
+   UnityEngine.RenderTexture event_UnityEngine_GameObject_SourceTexture_143 = default(UnityEngine.RenderTexture);
+   UnityEngine.RenderTexture event_UnityEngine_GameObject_DestinationTexture_143 = default(UnityEngine.RenderTexture);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_155 = default(UnityEngine.GameObject);
    
    //property nodes
    
@@ -1048,288 +1047,277 @@ public class All_Event_Nodes : uScriptLogic
             }
          }
       }
-      if ( null == local_297_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( null == local_149_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
-         local_297_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
+         local_149_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_297_UnityEngine_GameObject_previous != local_297_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_149_UnityEngine_GameObject_previous != local_149_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_297_UnityEngine_GameObject_previous )
+         if ( null != local_149_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Particle component = local_297_UnityEngine_GameObject_previous.GetComponent<uScript_Particle>();
+               uScript_Particle component = local_149_UnityEngine_GameObject_previous.GetComponent<uScript_Particle>();
                if ( null != component )
                {
-                  component.Collision -= Instance_Collision_261;
+                  component.Collision -= Instance_Collision_131;
                }
             }
          }
          
-         local_297_UnityEngine_GameObject_previous = local_297_UnityEngine_GameObject;
+         local_149_UnityEngine_GameObject_previous = local_149_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_297_UnityEngine_GameObject )
+         if ( null != local_149_UnityEngine_GameObject )
          {
             {
-               uScript_Particle component = local_297_UnityEngine_GameObject.GetComponent<uScript_Particle>();
+               uScript_Particle component = local_149_UnityEngine_GameObject.GetComponent<uScript_Particle>();
                if ( null == component )
                {
-                  component = local_297_UnityEngine_GameObject.AddComponent<uScript_Particle>();
+                  component = local_149_UnityEngine_GameObject.AddComponent<uScript_Particle>();
                }
                if ( null != component )
                {
-                  component.Collision += Instance_Collision_261;
+                  component.Collision += Instance_Collision_131;
                }
             }
          }
       }
-      if ( null == local_299_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( null == local_150_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
-         local_299_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
+         local_150_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_299_UnityEngine_GameObject_previous != local_299_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_150_UnityEngine_GameObject_previous != local_150_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_299_UnityEngine_GameObject_previous )
+         if ( null != local_150_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Collision component = local_299_UnityEngine_GameObject_previous.GetComponent<uScript_Collision>();
+               uScript_Collision component = local_150_UnityEngine_GameObject_previous.GetComponent<uScript_Collision>();
                if ( null != component )
                {
-                  component.OnEnterCollision -= Instance_OnEnterCollision_268;
-                  component.OnExitCollision -= Instance_OnExitCollision_268;
-                  component.WhileInsideCollision -= Instance_WhileInsideCollision_268;
+                  component.OnEnterCollision -= Instance_OnEnterCollision_136;
+                  component.OnExitCollision -= Instance_OnExitCollision_136;
+                  component.WhileInsideCollision -= Instance_WhileInsideCollision_136;
                }
             }
          }
          
-         local_299_UnityEngine_GameObject_previous = local_299_UnityEngine_GameObject;
+         local_150_UnityEngine_GameObject_previous = local_150_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_299_UnityEngine_GameObject )
+         if ( null != local_150_UnityEngine_GameObject )
          {
             {
-               uScript_Collision component = local_299_UnityEngine_GameObject.GetComponent<uScript_Collision>();
+               uScript_Collision component = local_150_UnityEngine_GameObject.GetComponent<uScript_Collision>();
                if ( null == component )
                {
-                  component = local_299_UnityEngine_GameObject.AddComponent<uScript_Collision>();
+                  component = local_150_UnityEngine_GameObject.AddComponent<uScript_Collision>();
                }
                if ( null != component )
                {
-                  component.OnEnterCollision += Instance_OnEnterCollision_268;
-                  component.OnExitCollision += Instance_OnExitCollision_268;
-                  component.WhileInsideCollision += Instance_WhileInsideCollision_268;
+                  component.OnEnterCollision += Instance_OnEnterCollision_136;
+                  component.OnExitCollision += Instance_OnExitCollision_136;
+                  component.WhileInsideCollision += Instance_WhileInsideCollision_136;
                }
             }
          }
       }
-      if ( null == local_301_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( null == local_151_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
-         local_301_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
+         local_151_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_301_UnityEngine_GameObject_previous != local_301_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_151_UnityEngine_GameObject_previous != local_151_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_301_UnityEngine_GameObject_previous )
+         if ( null != local_151_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Joint component = local_301_UnityEngine_GameObject_previous.GetComponent<uScript_Joint>();
+               uScript_Joint component = local_151_UnityEngine_GameObject_previous.GetComponent<uScript_Joint>();
                if ( null != component )
                {
-                  component.JointBreak -= Instance_JointBreak_267;
+                  component.JointBreak -= Instance_JointBreak_135;
                }
             }
          }
          
-         local_301_UnityEngine_GameObject_previous = local_301_UnityEngine_GameObject;
+         local_151_UnityEngine_GameObject_previous = local_151_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_301_UnityEngine_GameObject )
+         if ( null != local_151_UnityEngine_GameObject )
          {
             {
-               uScript_Joint component = local_301_UnityEngine_GameObject.GetComponent<uScript_Joint>();
+               uScript_Joint component = local_151_UnityEngine_GameObject.GetComponent<uScript_Joint>();
                if ( null == component )
                {
-                  component = local_301_UnityEngine_GameObject.AddComponent<uScript_Joint>();
+                  component = local_151_UnityEngine_GameObject.AddComponent<uScript_Joint>();
                }
                if ( null != component )
                {
-                  component.JointBreak += Instance_JointBreak_267;
+                  component.JointBreak += Instance_JointBreak_135;
                }
             }
          }
       }
-      if ( null == local_303_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( null == local_152_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
-         local_303_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
+         local_152_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_303_UnityEngine_GameObject_previous != local_303_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_152_UnityEngine_GameObject_previous != local_152_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_303_UnityEngine_GameObject_previous )
+         if ( null != local_152_UnityEngine_GameObject_previous )
          {
             {
-               uScript_ProxyController component = local_303_UnityEngine_GameObject_previous.GetComponent<uScript_ProxyController>();
+               uScript_ProxyController component = local_152_UnityEngine_GameObject_previous.GetComponent<uScript_ProxyController>();
                if ( null != component )
                {
-                  component.OnHit -= Instance_OnHit_266;
+                  component.OnHit -= Instance_OnHit_134;
                }
             }
          }
          
-         local_303_UnityEngine_GameObject_previous = local_303_UnityEngine_GameObject;
+         local_152_UnityEngine_GameObject_previous = local_152_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_303_UnityEngine_GameObject )
+         if ( null != local_152_UnityEngine_GameObject )
          {
             {
-               uScript_ProxyController component = local_303_UnityEngine_GameObject.GetComponent<uScript_ProxyController>();
+               uScript_ProxyController component = local_152_UnityEngine_GameObject.GetComponent<uScript_ProxyController>();
                if ( null == component )
                {
-                  component = local_303_UnityEngine_GameObject.AddComponent<uScript_ProxyController>();
+                  component = local_152_UnityEngine_GameObject.AddComponent<uScript_ProxyController>();
                }
                if ( null != component )
                {
-                  component.OnHit += Instance_OnHit_266;
+                  component.OnHit += Instance_OnHit_134;
                }
             }
          }
       }
-      if ( null == local_305_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( null == local_153_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
-         local_305_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
+         local_153_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_305_UnityEngine_GameObject_previous != local_305_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_153_UnityEngine_GameObject_previous != local_153_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_305_UnityEngine_GameObject_previous )
+         if ( null != local_153_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Render component = local_305_UnityEngine_GameObject_previous.GetComponent<uScript_Render>();
+               uScript_Render component = local_153_UnityEngine_GameObject_previous.GetComponent<uScript_Render>();
                if ( null != component )
                {
-                  component.PreCull -= Instance_PreCull_284;
-                  component.PreRender -= Instance_PreRender_284;
-                  component.PostRender -= Instance_PostRender_284;
-                  component.RenderObject -= Instance_RenderObject_284;
-                  component.WillRenderObject -= Instance_WillRenderObject_284;
+                  component.PreCull -= Instance_PreCull_144;
+                  component.PreRender -= Instance_PreRender_144;
+                  component.PostRender -= Instance_PostRender_144;
+                  component.RenderObject -= Instance_RenderObject_144;
+                  component.WillRenderObject -= Instance_WillRenderObject_144;
                }
             }
          }
          
-         local_305_UnityEngine_GameObject_previous = local_305_UnityEngine_GameObject;
+         local_153_UnityEngine_GameObject_previous = local_153_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_305_UnityEngine_GameObject )
+         if ( null != local_153_UnityEngine_GameObject )
          {
             {
-               uScript_Render component = local_305_UnityEngine_GameObject.GetComponent<uScript_Render>();
+               uScript_Render component = local_153_UnityEngine_GameObject.GetComponent<uScript_Render>();
                if ( null == component )
                {
-                  component = local_305_UnityEngine_GameObject.AddComponent<uScript_Render>();
+                  component = local_153_UnityEngine_GameObject.AddComponent<uScript_Render>();
                }
                if ( null != component )
                {
-                  component.PreCull += Instance_PreCull_284;
-                  component.PreRender += Instance_PreRender_284;
-                  component.PostRender += Instance_PostRender_284;
-                  component.RenderObject += Instance_RenderObject_284;
-                  component.WillRenderObject += Instance_WillRenderObject_284;
+                  component.PreCull += Instance_PreCull_144;
+                  component.PreRender += Instance_PreRender_144;
+                  component.PostRender += Instance_PostRender_144;
+                  component.RenderObject += Instance_RenderObject_144;
+                  component.WillRenderObject += Instance_WillRenderObject_144;
                }
             }
          }
       }
-      if ( null == local_307_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( null == local_154_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
-         local_307_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
+         local_154_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_307_UnityEngine_GameObject_previous != local_307_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_154_UnityEngine_GameObject_previous != local_154_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_307_UnityEngine_GameObject_previous )
+         if ( null != local_154_UnityEngine_GameObject_previous )
          {
             {
-               uScript_PostEffect component = local_307_UnityEngine_GameObject_previous.GetComponent<uScript_PostEffect>();
+               uScript_PostEffect component = local_154_UnityEngine_GameObject_previous.GetComponent<uScript_PostEffect>();
                if ( null != component )
                {
-                  component.RenderImage -= Instance_RenderImage_283;
+                  component.RenderImage -= Instance_RenderImage_143;
                }
             }
          }
          
-         local_307_UnityEngine_GameObject_previous = local_307_UnityEngine_GameObject;
+         local_154_UnityEngine_GameObject_previous = local_154_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_307_UnityEngine_GameObject )
+         if ( null != local_154_UnityEngine_GameObject )
          {
             {
-               uScript_PostEffect component = local_307_UnityEngine_GameObject.GetComponent<uScript_PostEffect>();
+               uScript_PostEffect component = local_154_UnityEngine_GameObject.GetComponent<uScript_PostEffect>();
                if ( null == component )
                {
-                  component = local_307_UnityEngine_GameObject.AddComponent<uScript_PostEffect>();
+                  component = local_154_UnityEngine_GameObject.AddComponent<uScript_PostEffect>();
                }
                if ( null != component )
                {
-                  component.RenderImage += Instance_RenderImage_283;
+                  component.RenderImage += Instance_RenderImage_143;
                }
             }
          }
       }
-      if ( null == local_310_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( null == local_156_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
-         local_310_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
+         local_156_UnityEngine_GameObject = uScript_MasterComponent.LatestMaster;
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_310_UnityEngine_GameObject_previous != local_310_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_156_UnityEngine_GameObject_previous != local_156_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_310_UnityEngine_GameObject_previous )
+         if ( null != local_156_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Triggers component = local_310_UnityEngine_GameObject_previous.GetComponent<uScript_Triggers>();
+               uScript_Triggers component = local_156_UnityEngine_GameObject_previous.GetComponent<uScript_Triggers>();
                if ( null != component )
                {
-                  component.OnEnterTrigger -= Instance_OnEnterTrigger_309;
-                  component.OnExitTrigger -= Instance_OnExitTrigger_309;
-                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_309;
+                  component.OnEnterTrigger -= Instance_OnEnterTrigger_155;
+                  component.OnExitTrigger -= Instance_OnExitTrigger_155;
+                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_155;
                }
             }
          }
          
-         local_310_UnityEngine_GameObject_previous = local_310_UnityEngine_GameObject;
+         local_156_UnityEngine_GameObject_previous = local_156_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_310_UnityEngine_GameObject )
+         if ( null != local_156_UnityEngine_GameObject )
          {
             {
-               uScript_Triggers component = local_310_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
+               uScript_Triggers component = local_156_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
                if ( null == component )
                {
-                  component = local_310_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
+                  component = local_156_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
                }
                if ( null != component )
                {
-                  component.TimesToTrigger = event_UnityEngine_GameObject_TimesToTrigger_309;
-               }
-            }
-            {
-               uScript_Triggers component = local_310_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
-               if ( null == component )
-               {
-                  component = local_310_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
-               }
-               if ( null != component )
-               {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_309;
-                  component.OnExitTrigger += Instance_OnExitTrigger_309;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_309;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_155;
+                  component.OnExitTrigger += Instance_OnExitTrigger_155;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_155;
                }
             }
          }
@@ -1775,259 +1763,248 @@ public class All_Event_Nodes : uScriptLogic
          }
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_297_UnityEngine_GameObject_previous != local_297_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_149_UnityEngine_GameObject_previous != local_149_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_297_UnityEngine_GameObject_previous )
+         if ( null != local_149_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Particle component = local_297_UnityEngine_GameObject_previous.GetComponent<uScript_Particle>();
+               uScript_Particle component = local_149_UnityEngine_GameObject_previous.GetComponent<uScript_Particle>();
                if ( null != component )
                {
-                  component.Collision -= Instance_Collision_261;
+                  component.Collision -= Instance_Collision_131;
                }
             }
          }
          
-         local_297_UnityEngine_GameObject_previous = local_297_UnityEngine_GameObject;
+         local_149_UnityEngine_GameObject_previous = local_149_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_297_UnityEngine_GameObject )
+         if ( null != local_149_UnityEngine_GameObject )
          {
             {
-               uScript_Particle component = local_297_UnityEngine_GameObject.GetComponent<uScript_Particle>();
+               uScript_Particle component = local_149_UnityEngine_GameObject.GetComponent<uScript_Particle>();
                if ( null == component )
                {
-                  component = local_297_UnityEngine_GameObject.AddComponent<uScript_Particle>();
+                  component = local_149_UnityEngine_GameObject.AddComponent<uScript_Particle>();
                }
                if ( null != component )
                {
-                  component.Collision += Instance_Collision_261;
+                  component.Collision += Instance_Collision_131;
                }
             }
          }
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_299_UnityEngine_GameObject_previous != local_299_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_150_UnityEngine_GameObject_previous != local_150_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_299_UnityEngine_GameObject_previous )
+         if ( null != local_150_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Collision component = local_299_UnityEngine_GameObject_previous.GetComponent<uScript_Collision>();
+               uScript_Collision component = local_150_UnityEngine_GameObject_previous.GetComponent<uScript_Collision>();
                if ( null != component )
                {
-                  component.OnEnterCollision -= Instance_OnEnterCollision_268;
-                  component.OnExitCollision -= Instance_OnExitCollision_268;
-                  component.WhileInsideCollision -= Instance_WhileInsideCollision_268;
+                  component.OnEnterCollision -= Instance_OnEnterCollision_136;
+                  component.OnExitCollision -= Instance_OnExitCollision_136;
+                  component.WhileInsideCollision -= Instance_WhileInsideCollision_136;
                }
             }
          }
          
-         local_299_UnityEngine_GameObject_previous = local_299_UnityEngine_GameObject;
+         local_150_UnityEngine_GameObject_previous = local_150_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_299_UnityEngine_GameObject )
+         if ( null != local_150_UnityEngine_GameObject )
          {
             {
-               uScript_Collision component = local_299_UnityEngine_GameObject.GetComponent<uScript_Collision>();
+               uScript_Collision component = local_150_UnityEngine_GameObject.GetComponent<uScript_Collision>();
                if ( null == component )
                {
-                  component = local_299_UnityEngine_GameObject.AddComponent<uScript_Collision>();
+                  component = local_150_UnityEngine_GameObject.AddComponent<uScript_Collision>();
                }
                if ( null != component )
                {
-                  component.OnEnterCollision += Instance_OnEnterCollision_268;
-                  component.OnExitCollision += Instance_OnExitCollision_268;
-                  component.WhileInsideCollision += Instance_WhileInsideCollision_268;
+                  component.OnEnterCollision += Instance_OnEnterCollision_136;
+                  component.OnExitCollision += Instance_OnExitCollision_136;
+                  component.WhileInsideCollision += Instance_WhileInsideCollision_136;
                }
             }
          }
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_301_UnityEngine_GameObject_previous != local_301_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_151_UnityEngine_GameObject_previous != local_151_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_301_UnityEngine_GameObject_previous )
+         if ( null != local_151_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Joint component = local_301_UnityEngine_GameObject_previous.GetComponent<uScript_Joint>();
+               uScript_Joint component = local_151_UnityEngine_GameObject_previous.GetComponent<uScript_Joint>();
                if ( null != component )
                {
-                  component.JointBreak -= Instance_JointBreak_267;
+                  component.JointBreak -= Instance_JointBreak_135;
                }
             }
          }
          
-         local_301_UnityEngine_GameObject_previous = local_301_UnityEngine_GameObject;
+         local_151_UnityEngine_GameObject_previous = local_151_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_301_UnityEngine_GameObject )
+         if ( null != local_151_UnityEngine_GameObject )
          {
             {
-               uScript_Joint component = local_301_UnityEngine_GameObject.GetComponent<uScript_Joint>();
+               uScript_Joint component = local_151_UnityEngine_GameObject.GetComponent<uScript_Joint>();
                if ( null == component )
                {
-                  component = local_301_UnityEngine_GameObject.AddComponent<uScript_Joint>();
+                  component = local_151_UnityEngine_GameObject.AddComponent<uScript_Joint>();
                }
                if ( null != component )
                {
-                  component.JointBreak += Instance_JointBreak_267;
+                  component.JointBreak += Instance_JointBreak_135;
                }
             }
          }
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_303_UnityEngine_GameObject_previous != local_303_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_152_UnityEngine_GameObject_previous != local_152_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_303_UnityEngine_GameObject_previous )
+         if ( null != local_152_UnityEngine_GameObject_previous )
          {
             {
-               uScript_ProxyController component = local_303_UnityEngine_GameObject_previous.GetComponent<uScript_ProxyController>();
+               uScript_ProxyController component = local_152_UnityEngine_GameObject_previous.GetComponent<uScript_ProxyController>();
                if ( null != component )
                {
-                  component.OnHit -= Instance_OnHit_266;
+                  component.OnHit -= Instance_OnHit_134;
                }
             }
          }
          
-         local_303_UnityEngine_GameObject_previous = local_303_UnityEngine_GameObject;
+         local_152_UnityEngine_GameObject_previous = local_152_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_303_UnityEngine_GameObject )
+         if ( null != local_152_UnityEngine_GameObject )
          {
             {
-               uScript_ProxyController component = local_303_UnityEngine_GameObject.GetComponent<uScript_ProxyController>();
+               uScript_ProxyController component = local_152_UnityEngine_GameObject.GetComponent<uScript_ProxyController>();
                if ( null == component )
                {
-                  component = local_303_UnityEngine_GameObject.AddComponent<uScript_ProxyController>();
+                  component = local_152_UnityEngine_GameObject.AddComponent<uScript_ProxyController>();
                }
                if ( null != component )
                {
-                  component.OnHit += Instance_OnHit_266;
+                  component.OnHit += Instance_OnHit_134;
                }
             }
          }
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_305_UnityEngine_GameObject_previous != local_305_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_153_UnityEngine_GameObject_previous != local_153_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_305_UnityEngine_GameObject_previous )
+         if ( null != local_153_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Render component = local_305_UnityEngine_GameObject_previous.GetComponent<uScript_Render>();
+               uScript_Render component = local_153_UnityEngine_GameObject_previous.GetComponent<uScript_Render>();
                if ( null != component )
                {
-                  component.PreCull -= Instance_PreCull_284;
-                  component.PreRender -= Instance_PreRender_284;
-                  component.PostRender -= Instance_PostRender_284;
-                  component.RenderObject -= Instance_RenderObject_284;
-                  component.WillRenderObject -= Instance_WillRenderObject_284;
+                  component.PreCull -= Instance_PreCull_144;
+                  component.PreRender -= Instance_PreRender_144;
+                  component.PostRender -= Instance_PostRender_144;
+                  component.RenderObject -= Instance_RenderObject_144;
+                  component.WillRenderObject -= Instance_WillRenderObject_144;
                }
             }
          }
          
-         local_305_UnityEngine_GameObject_previous = local_305_UnityEngine_GameObject;
+         local_153_UnityEngine_GameObject_previous = local_153_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_305_UnityEngine_GameObject )
+         if ( null != local_153_UnityEngine_GameObject )
          {
             {
-               uScript_Render component = local_305_UnityEngine_GameObject.GetComponent<uScript_Render>();
+               uScript_Render component = local_153_UnityEngine_GameObject.GetComponent<uScript_Render>();
                if ( null == component )
                {
-                  component = local_305_UnityEngine_GameObject.AddComponent<uScript_Render>();
+                  component = local_153_UnityEngine_GameObject.AddComponent<uScript_Render>();
                }
                if ( null != component )
                {
-                  component.PreCull += Instance_PreCull_284;
-                  component.PreRender += Instance_PreRender_284;
-                  component.PostRender += Instance_PostRender_284;
-                  component.RenderObject += Instance_RenderObject_284;
-                  component.WillRenderObject += Instance_WillRenderObject_284;
+                  component.PreCull += Instance_PreCull_144;
+                  component.PreRender += Instance_PreRender_144;
+                  component.PostRender += Instance_PostRender_144;
+                  component.RenderObject += Instance_RenderObject_144;
+                  component.WillRenderObject += Instance_WillRenderObject_144;
                }
             }
          }
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_307_UnityEngine_GameObject_previous != local_307_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_154_UnityEngine_GameObject_previous != local_154_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_307_UnityEngine_GameObject_previous )
+         if ( null != local_154_UnityEngine_GameObject_previous )
          {
             {
-               uScript_PostEffect component = local_307_UnityEngine_GameObject_previous.GetComponent<uScript_PostEffect>();
+               uScript_PostEffect component = local_154_UnityEngine_GameObject_previous.GetComponent<uScript_PostEffect>();
                if ( null != component )
                {
-                  component.RenderImage -= Instance_RenderImage_283;
+                  component.RenderImage -= Instance_RenderImage_143;
                }
             }
          }
          
-         local_307_UnityEngine_GameObject_previous = local_307_UnityEngine_GameObject;
+         local_154_UnityEngine_GameObject_previous = local_154_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_307_UnityEngine_GameObject )
+         if ( null != local_154_UnityEngine_GameObject )
          {
             {
-               uScript_PostEffect component = local_307_UnityEngine_GameObject.GetComponent<uScript_PostEffect>();
+               uScript_PostEffect component = local_154_UnityEngine_GameObject.GetComponent<uScript_PostEffect>();
                if ( null == component )
                {
-                  component = local_307_UnityEngine_GameObject.AddComponent<uScript_PostEffect>();
+                  component = local_154_UnityEngine_GameObject.AddComponent<uScript_PostEffect>();
                }
                if ( null != component )
                {
-                  component.RenderImage += Instance_RenderImage_283;
+                  component.RenderImage += Instance_RenderImage_143;
                }
             }
          }
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_310_UnityEngine_GameObject_previous != local_310_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      if ( local_156_UnityEngine_GameObject_previous != local_156_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
-         if ( null != local_310_UnityEngine_GameObject_previous )
+         if ( null != local_156_UnityEngine_GameObject_previous )
          {
             {
-               uScript_Triggers component = local_310_UnityEngine_GameObject_previous.GetComponent<uScript_Triggers>();
+               uScript_Triggers component = local_156_UnityEngine_GameObject_previous.GetComponent<uScript_Triggers>();
                if ( null != component )
                {
-                  component.OnEnterTrigger -= Instance_OnEnterTrigger_309;
-                  component.OnExitTrigger -= Instance_OnExitTrigger_309;
-                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_309;
+                  component.OnEnterTrigger -= Instance_OnEnterTrigger_155;
+                  component.OnExitTrigger -= Instance_OnExitTrigger_155;
+                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_155;
                }
             }
          }
          
-         local_310_UnityEngine_GameObject_previous = local_310_UnityEngine_GameObject;
+         local_156_UnityEngine_GameObject_previous = local_156_UnityEngine_GameObject;
          
          //setup new listeners
-         if ( null != local_310_UnityEngine_GameObject )
+         if ( null != local_156_UnityEngine_GameObject )
          {
             {
-               uScript_Triggers component = local_310_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
+               uScript_Triggers component = local_156_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
                if ( null == component )
                {
-                  component = local_310_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
+                  component = local_156_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
                }
                if ( null != component )
                {
-                  component.TimesToTrigger = event_UnityEngine_GameObject_TimesToTrigger_309;
-               }
-            }
-            {
-               uScript_Triggers component = local_310_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
-               if ( null == component )
-               {
-                  component = local_310_UnityEngine_GameObject.AddComponent<uScript_Triggers>();
-               }
-               if ( null != component )
-               {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_309;
-                  component.OnExitTrigger += Instance_OnExitTrigger_309;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_309;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_155;
+                  component.OnExitTrigger += Instance_OnExitTrigger_155;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_155;
                }
             }
          }
@@ -2572,81 +2549,81 @@ public class All_Event_Nodes : uScriptLogic
             }
          }
       }
-      if ( null != local_297_UnityEngine_GameObject )
+      if ( null != local_149_UnityEngine_GameObject )
       {
          {
-            uScript_Particle component = local_297_UnityEngine_GameObject.GetComponent<uScript_Particle>();
+            uScript_Particle component = local_149_UnityEngine_GameObject.GetComponent<uScript_Particle>();
             if ( null != component )
             {
-               component.Collision -= Instance_Collision_261;
+               component.Collision -= Instance_Collision_131;
             }
          }
       }
-      if ( null != local_299_UnityEngine_GameObject )
+      if ( null != local_150_UnityEngine_GameObject )
       {
          {
-            uScript_Collision component = local_299_UnityEngine_GameObject.GetComponent<uScript_Collision>();
+            uScript_Collision component = local_150_UnityEngine_GameObject.GetComponent<uScript_Collision>();
             if ( null != component )
             {
-               component.OnEnterCollision -= Instance_OnEnterCollision_268;
-               component.OnExitCollision -= Instance_OnExitCollision_268;
-               component.WhileInsideCollision -= Instance_WhileInsideCollision_268;
+               component.OnEnterCollision -= Instance_OnEnterCollision_136;
+               component.OnExitCollision -= Instance_OnExitCollision_136;
+               component.WhileInsideCollision -= Instance_WhileInsideCollision_136;
             }
          }
       }
-      if ( null != local_301_UnityEngine_GameObject )
+      if ( null != local_151_UnityEngine_GameObject )
       {
          {
-            uScript_Joint component = local_301_UnityEngine_GameObject.GetComponent<uScript_Joint>();
+            uScript_Joint component = local_151_UnityEngine_GameObject.GetComponent<uScript_Joint>();
             if ( null != component )
             {
-               component.JointBreak -= Instance_JointBreak_267;
+               component.JointBreak -= Instance_JointBreak_135;
             }
          }
       }
-      if ( null != local_303_UnityEngine_GameObject )
+      if ( null != local_152_UnityEngine_GameObject )
       {
          {
-            uScript_ProxyController component = local_303_UnityEngine_GameObject.GetComponent<uScript_ProxyController>();
+            uScript_ProxyController component = local_152_UnityEngine_GameObject.GetComponent<uScript_ProxyController>();
             if ( null != component )
             {
-               component.OnHit -= Instance_OnHit_266;
+               component.OnHit -= Instance_OnHit_134;
             }
          }
       }
-      if ( null != local_305_UnityEngine_GameObject )
+      if ( null != local_153_UnityEngine_GameObject )
       {
          {
-            uScript_Render component = local_305_UnityEngine_GameObject.GetComponent<uScript_Render>();
+            uScript_Render component = local_153_UnityEngine_GameObject.GetComponent<uScript_Render>();
             if ( null != component )
             {
-               component.PreCull -= Instance_PreCull_284;
-               component.PreRender -= Instance_PreRender_284;
-               component.PostRender -= Instance_PostRender_284;
-               component.RenderObject -= Instance_RenderObject_284;
-               component.WillRenderObject -= Instance_WillRenderObject_284;
+               component.PreCull -= Instance_PreCull_144;
+               component.PreRender -= Instance_PreRender_144;
+               component.PostRender -= Instance_PostRender_144;
+               component.RenderObject -= Instance_RenderObject_144;
+               component.WillRenderObject -= Instance_WillRenderObject_144;
             }
          }
       }
-      if ( null != local_307_UnityEngine_GameObject )
+      if ( null != local_154_UnityEngine_GameObject )
       {
          {
-            uScript_PostEffect component = local_307_UnityEngine_GameObject.GetComponent<uScript_PostEffect>();
+            uScript_PostEffect component = local_154_UnityEngine_GameObject.GetComponent<uScript_PostEffect>();
             if ( null != component )
             {
-               component.RenderImage -= Instance_RenderImage_283;
+               component.RenderImage -= Instance_RenderImage_143;
             }
          }
       }
-      if ( null != local_310_UnityEngine_GameObject )
+      if ( null != local_156_UnityEngine_GameObject )
       {
          {
-            uScript_Triggers component = local_310_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
+            uScript_Triggers component = local_156_UnityEngine_GameObject.GetComponent<uScript_Triggers>();
             if ( null != component )
             {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_309;
-               component.OnExitTrigger -= Instance_OnExitTrigger_309;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_309;
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_155;
+               component.OnExitTrigger -= Instance_OnExitTrigger_155;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_155;
             }
          }
       }
@@ -2906,8 +2883,8 @@ public class All_Event_Nodes : uScriptLogic
       logic_uScriptAct_Log_uScriptAct_Log_52.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_54.SetParent(g);
       logic_uScriptCon_IntCounter_uScriptCon_IntCounter_56.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_58.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_60.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_58.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_60.SetParent(g);
       logic_uScriptCon_IntCounter_uScriptCon_IntCounter_61.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_63.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_65.SetParent(g);
@@ -2916,10 +2893,10 @@ public class All_Event_Nodes : uScriptLogic
       logic_uScriptAct_Log_uScriptAct_Log_72.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_84.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_86.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_88.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_88.SetParent(g);
       logic_uScriptCon_IntCounter_uScriptCon_IntCounter_89.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_90.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_93.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_93.SetParent(g);
       logic_uScriptCon_IntCounter_uScriptCon_IntCounter_94.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_95.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_98.SetParent(g);
@@ -2935,13 +2912,13 @@ public class All_Event_Nodes : uScriptLogic
       logic_uScriptAct_Log_uScriptAct_Log_125.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_128.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_130.SetParent(g);
-      logic_uScriptAct_Log_uScriptAct_Log_263.SetParent(g);
-      logic_uScriptAct_Log_uScriptAct_Log_270.SetParent(g);
-      logic_uScriptAct_Log_uScriptAct_Log_273.SetParent(g);
-      logic_uScriptAct_Log_uScriptAct_Log_276.SetParent(g);
-      logic_uScriptAct_Log_uScriptAct_Log_286.SetParent(g);
-      logic_uScriptAct_Log_uScriptAct_Log_289.SetParent(g);
-      logic_uScriptAct_Log_uScriptAct_Log_313.SetParent(g);
+      logic_uScriptAct_Log_uScriptAct_Log_133.SetParent(g);
+      logic_uScriptAct_Log_uScriptAct_Log_138.SetParent(g);
+      logic_uScriptAct_Log_uScriptAct_Log_140.SetParent(g);
+      logic_uScriptAct_Log_uScriptAct_Log_142.SetParent(g);
+      logic_uScriptAct_Log_uScriptAct_Log_146.SetParent(g);
+      logic_uScriptAct_Log_uScriptAct_Log_148.SetParent(g);
+      logic_uScriptAct_Log_uScriptAct_Log_158.SetParent(g);
    }
    public void Awake()
    {
@@ -3764,7 +3741,7 @@ public class All_Event_Nodes : uScriptLogic
       Relay_PlayerDisconnected_116( );
    }
    
-   void Instance_Collision_261(object o, uScript_Particle.ParticleCollisionEventArgs e)
+   void Instance_Collision_131(object o, uScript_Particle.ParticleCollisionEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3772,12 +3749,12 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_261 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_131 = e.GameObject;
       //relay event to nodes
-      Relay_Collision_261( );
+      Relay_Collision_131( );
    }
    
-   void Instance_OnHit_266(object o, uScript_ProxyController.ProxyControllerCollisionEventArgs e)
+   void Instance_OnHit_134(object o, uScript_ProxyController.ProxyControllerCollisionEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3785,20 +3762,20 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_266 = e.GameObject;
-      event_UnityEngine_GameObject_Controller_266 = e.Controller;
-      event_UnityEngine_GameObject_Collider_266 = e.Collider;
-      event_UnityEngine_GameObject_RigidBody_266 = e.RigidBody;
-      event_UnityEngine_GameObject_Transform_266 = e.Transform;
-      event_UnityEngine_GameObject_Point_266 = e.Point;
-      event_UnityEngine_GameObject_Normal_266 = e.Normal;
-      event_UnityEngine_GameObject_MoveDirection_266 = e.MoveDirection;
-      event_UnityEngine_GameObject_MoveLength_266 = e.MoveLength;
+      event_UnityEngine_GameObject_GameObject_134 = e.GameObject;
+      event_UnityEngine_GameObject_Controller_134 = e.Controller;
+      event_UnityEngine_GameObject_Collider_134 = e.Collider;
+      event_UnityEngine_GameObject_RigidBody_134 = e.RigidBody;
+      event_UnityEngine_GameObject_Transform_134 = e.Transform;
+      event_UnityEngine_GameObject_Point_134 = e.Point;
+      event_UnityEngine_GameObject_Normal_134 = e.Normal;
+      event_UnityEngine_GameObject_MoveDirection_134 = e.MoveDirection;
+      event_UnityEngine_GameObject_MoveLength_134 = e.MoveLength;
       //relay event to nodes
-      Relay_OnHit_266( );
+      Relay_OnHit_134( );
    }
    
-   void Instance_JointBreak_267(object o, uScript_Joint.JointBreakEventArgs e)
+   void Instance_JointBreak_135(object o, uScript_Joint.JointBreakEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3806,12 +3783,12 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_BreakForce_267 = e.BreakForce;
+      event_UnityEngine_GameObject_BreakForce_135 = e.BreakForce;
       //relay event to nodes
-      Relay_JointBreak_267( );
+      Relay_JointBreak_135( );
    }
    
-   void Instance_OnEnterCollision_268(object o, uScript_Collision.CollisionEventArgs e)
+   void Instance_OnEnterCollision_136(object o, uScript_Collision.CollisionEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3819,17 +3796,17 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_RelativeVelocity_268 = e.RelativeVelocity;
-      event_UnityEngine_GameObject_RigidBody_268 = e.RigidBody;
-      event_UnityEngine_GameObject_Collider_268 = e.Collider;
-      event_UnityEngine_GameObject_Transform_268 = e.Transform;
-      event_UnityEngine_GameObject_Contacts_268 = e.Contacts;
-      event_UnityEngine_GameObject_GameObject_268 = e.GameObject;
+      event_UnityEngine_GameObject_RelativeVelocity_136 = e.RelativeVelocity;
+      event_UnityEngine_GameObject_RigidBody_136 = e.RigidBody;
+      event_UnityEngine_GameObject_Collider_136 = e.Collider;
+      event_UnityEngine_GameObject_Transform_136 = e.Transform;
+      event_UnityEngine_GameObject_Contacts_136 = e.Contacts;
+      event_UnityEngine_GameObject_GameObject_136 = e.GameObject;
       //relay event to nodes
-      Relay_OnEnterCollision_268( );
+      Relay_OnEnterCollision_136( );
    }
    
-   void Instance_OnExitCollision_268(object o, uScript_Collision.CollisionEventArgs e)
+   void Instance_OnExitCollision_136(object o, uScript_Collision.CollisionEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3837,17 +3814,17 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_RelativeVelocity_268 = e.RelativeVelocity;
-      event_UnityEngine_GameObject_RigidBody_268 = e.RigidBody;
-      event_UnityEngine_GameObject_Collider_268 = e.Collider;
-      event_UnityEngine_GameObject_Transform_268 = e.Transform;
-      event_UnityEngine_GameObject_Contacts_268 = e.Contacts;
-      event_UnityEngine_GameObject_GameObject_268 = e.GameObject;
+      event_UnityEngine_GameObject_RelativeVelocity_136 = e.RelativeVelocity;
+      event_UnityEngine_GameObject_RigidBody_136 = e.RigidBody;
+      event_UnityEngine_GameObject_Collider_136 = e.Collider;
+      event_UnityEngine_GameObject_Transform_136 = e.Transform;
+      event_UnityEngine_GameObject_Contacts_136 = e.Contacts;
+      event_UnityEngine_GameObject_GameObject_136 = e.GameObject;
       //relay event to nodes
-      Relay_OnExitCollision_268( );
+      Relay_OnExitCollision_136( );
    }
    
-   void Instance_WhileInsideCollision_268(object o, uScript_Collision.CollisionEventArgs e)
+   void Instance_WhileInsideCollision_136(object o, uScript_Collision.CollisionEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3855,17 +3832,17 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_RelativeVelocity_268 = e.RelativeVelocity;
-      event_UnityEngine_GameObject_RigidBody_268 = e.RigidBody;
-      event_UnityEngine_GameObject_Collider_268 = e.Collider;
-      event_UnityEngine_GameObject_Transform_268 = e.Transform;
-      event_UnityEngine_GameObject_Contacts_268 = e.Contacts;
-      event_UnityEngine_GameObject_GameObject_268 = e.GameObject;
+      event_UnityEngine_GameObject_RelativeVelocity_136 = e.RelativeVelocity;
+      event_UnityEngine_GameObject_RigidBody_136 = e.RigidBody;
+      event_UnityEngine_GameObject_Collider_136 = e.Collider;
+      event_UnityEngine_GameObject_Transform_136 = e.Transform;
+      event_UnityEngine_GameObject_Contacts_136 = e.Contacts;
+      event_UnityEngine_GameObject_GameObject_136 = e.GameObject;
       //relay event to nodes
-      Relay_WhileInsideCollision_268( );
+      Relay_WhileInsideCollision_136( );
    }
    
-   void Instance_RenderImage_283(object o, uScript_PostEffect.PostEffectEventArgs e)
+   void Instance_RenderImage_143(object o, uScript_PostEffect.PostEffectEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3873,13 +3850,13 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_SourceTexture_283 = e.SourceTexture;
-      event_UnityEngine_GameObject_DestinationTexture_283 = e.DestinationTexture;
+      event_UnityEngine_GameObject_SourceTexture_143 = e.SourceTexture;
+      event_UnityEngine_GameObject_DestinationTexture_143 = e.DestinationTexture;
       //relay event to nodes
-      Relay_RenderImage_283( );
+      Relay_RenderImage_143( );
    }
    
-   void Instance_PreCull_284(object o, System.EventArgs e)
+   void Instance_PreCull_144(object o, System.EventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3888,10 +3865,10 @@ public class All_Event_Nodes : uScriptLogic
       
       //fill globals
       //relay event to nodes
-      Relay_PreCull_284( );
+      Relay_PreCull_144( );
    }
    
-   void Instance_PreRender_284(object o, System.EventArgs e)
+   void Instance_PreRender_144(object o, System.EventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3900,10 +3877,10 @@ public class All_Event_Nodes : uScriptLogic
       
       //fill globals
       //relay event to nodes
-      Relay_PreRender_284( );
+      Relay_PreRender_144( );
    }
    
-   void Instance_PostRender_284(object o, System.EventArgs e)
+   void Instance_PostRender_144(object o, System.EventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3912,10 +3889,10 @@ public class All_Event_Nodes : uScriptLogic
       
       //fill globals
       //relay event to nodes
-      Relay_PostRender_284( );
+      Relay_PostRender_144( );
    }
    
-   void Instance_RenderObject_284(object o, System.EventArgs e)
+   void Instance_RenderObject_144(object o, System.EventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3924,10 +3901,10 @@ public class All_Event_Nodes : uScriptLogic
       
       //fill globals
       //relay event to nodes
-      Relay_RenderObject_284( );
+      Relay_RenderObject_144( );
    }
    
-   void Instance_WillRenderObject_284(object o, System.EventArgs e)
+   void Instance_WillRenderObject_144(object o, System.EventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3936,10 +3913,10 @@ public class All_Event_Nodes : uScriptLogic
       
       //fill globals
       //relay event to nodes
-      Relay_WillRenderObject_284( );
+      Relay_WillRenderObject_144( );
    }
    
-   void Instance_OnEnterTrigger_309(object o, uScript_Triggers.TriggerEventArgs e)
+   void Instance_OnEnterTrigger_155(object o, uScript_Triggers.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3947,12 +3924,12 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_309 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_155 = e.GameObject;
       //relay event to nodes
-      Relay_OnEnterTrigger_309( );
+      Relay_OnEnterTrigger_155( );
    }
    
-   void Instance_OnExitTrigger_309(object o, uScript_Triggers.TriggerEventArgs e)
+   void Instance_OnExitTrigger_155(object o, uScript_Triggers.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3960,12 +3937,12 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_309 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_155 = e.GameObject;
       //relay event to nodes
-      Relay_OnExitTrigger_309( );
+      Relay_OnExitTrigger_155( );
    }
    
-   void Instance_WhileInsideTrigger_309(object o, uScript_Triggers.TriggerEventArgs e)
+   void Instance_WhileInsideTrigger_155(object o, uScript_Triggers.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -3973,128 +3950,128 @@ public class All_Event_Nodes : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_309 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_155 = e.GameObject;
       //relay event to nodes
-      Relay_WhileInsideTrigger_309( );
+      Relay_WhileInsideTrigger_155( );
    }
    
    void Relay_FocusEvent_0()
    {
-      if (true == CheckDebugBreak("17b36543-4319-4571-9fea-20775272b21f", "Application Focus", Relay_FocusEvent_0)) return; 
+      if (true == CheckDebugBreak("17b36543-4319-4571-9fea-20775272b21f", "Application_Focus", Relay_FocusEvent_0)) return; 
       Relay_In_19();
    }
    
    void Relay_QuitEvent_1()
    {
-      if (true == CheckDebugBreak("590aba8e-9959-4b4f-89e0-e00b6d99e314", "Application Quit", Relay_QuitEvent_1)) return; 
+      if (true == CheckDebugBreak("590aba8e-9959-4b4f-89e0-e00b6d99e314", "Application_Quit", Relay_QuitEvent_1)) return; 
       Relay_In_17();
    }
    
    void Relay_OnCustomEvent_2()
    {
-      if (true == CheckDebugBreak("049f55c3-bfe0-4b2d-8121-f234c3f59449", "Custom Event", Relay_OnCustomEvent_2)) return; 
+      if (true == CheckDebugBreak("049f55c3-bfe0-4b2d-8121-f234c3f59449", "Custom_Event", Relay_OnCustomEvent_2)) return; 
       Relay_In_22();
    }
    
    void Relay_OnCustomEventBool_3()
    {
-      if (true == CheckDebugBreak("b27d3864-ae6e-4405-80d0-47d0644fe6ec", "Custom Event (Bool)", Relay_OnCustomEventBool_3)) return; 
+      if (true == CheckDebugBreak("b27d3864-ae6e-4405-80d0-47d0644fe6ec", "Custom_Event__Bool_", Relay_OnCustomEventBool_3)) return; 
       Relay_In_23();
    }
    
    void Relay_OnCustomEventColor_4()
    {
-      if (true == CheckDebugBreak("26c0b04d-7de1-4df8-a8e9-de3e348f7f32", "Custom Event (Color)", Relay_OnCustomEventColor_4)) return; 
+      if (true == CheckDebugBreak("26c0b04d-7de1-4df8-a8e9-de3e348f7f32", "Custom_Event__Color_", Relay_OnCustomEventColor_4)) return; 
       Relay_In_25();
    }
    
    void Relay_OnCustomEventFloat_5()
    {
-      if (true == CheckDebugBreak("f376b8d6-3ca8-464f-80ce-e995b6acaa5a", "Custom Event (Float)", Relay_OnCustomEventFloat_5)) return; 
+      if (true == CheckDebugBreak("f376b8d6-3ca8-464f-80ce-e995b6acaa5a", "Custom_Event__Float_", Relay_OnCustomEventFloat_5)) return; 
       Relay_In_27();
    }
    
    void Relay_OnCustomEventGameObject_6()
    {
-      if (true == CheckDebugBreak("973a889f-991c-4b1d-9d1e-fb510b93cc6c", "Custom Event (GameObject)", Relay_OnCustomEventGameObject_6)) return; 
+      if (true == CheckDebugBreak("973a889f-991c-4b1d-9d1e-fb510b93cc6c", "Custom_Event__GameObject_", Relay_OnCustomEventGameObject_6)) return; 
       Relay_In_29();
    }
    
    void Relay_OnCustomEventInt_7()
    {
-      if (true == CheckDebugBreak("3a0a5a31-0477-483c-a04d-a70e2bd88761", "Custom Event (Int)", Relay_OnCustomEventInt_7)) return; 
+      if (true == CheckDebugBreak("3a0a5a31-0477-483c-a04d-a70e2bd88761", "Custom_Event__Int_", Relay_OnCustomEventInt_7)) return; 
       Relay_In_32();
    }
    
    void Relay_OnCustomEventObject_8()
    {
-      if (true == CheckDebugBreak("4112da2a-f93f-4b9e-8a9e-2048ea294369", "Custom Event (Object)", Relay_OnCustomEventObject_8)) return; 
+      if (true == CheckDebugBreak("4112da2a-f93f-4b9e-8a9e-2048ea294369", "Custom_Event__Object_", Relay_OnCustomEventObject_8)) return; 
       Relay_In_33();
    }
    
    void Relay_OnCustomEventString_9()
    {
-      if (true == CheckDebugBreak("6208efba-ac45-4084-af85-78b514b32772", "Custom Event (String)", Relay_OnCustomEventString_9)) return; 
+      if (true == CheckDebugBreak("6208efba-ac45-4084-af85-78b514b32772", "Custom_Event__String_", Relay_OnCustomEventString_9)) return; 
       Relay_In_42();
    }
    
    void Relay_OnCustomEventVector2_10()
    {
-      if (true == CheckDebugBreak("e8fe91a0-683f-4701-bd1d-a035ac2e0d5d", "Custom Event (Vector2)", Relay_OnCustomEventVector2_10)) return; 
+      if (true == CheckDebugBreak("e8fe91a0-683f-4701-bd1d-a035ac2e0d5d", "Custom_Event__Vector2_", Relay_OnCustomEventVector2_10)) return; 
       Relay_In_46();
    }
    
    void Relay_OnCustomEventVector3_11()
    {
-      if (true == CheckDebugBreak("f3acce0e-1464-4e97-8012-b4da52ec2967", "Custom Event (Vector3)", Relay_OnCustomEventVector3_11)) return; 
+      if (true == CheckDebugBreak("f3acce0e-1464-4e97-8012-b4da52ec2967", "Custom_Event__Vector3_", Relay_OnCustomEventVector3_11)) return; 
       Relay_In_50();
    }
    
    void Relay_OnCustomEventVector4_12()
    {
-      if (true == CheckDebugBreak("c863f386-5d5c-4b31-b076-81b08f22e0de", "Custom Event (Vector4)", Relay_OnCustomEventVector4_12)) return; 
+      if (true == CheckDebugBreak("c863f386-5d5c-4b31-b076-81b08f22e0de", "Custom_Event__Vector4_", Relay_OnCustomEventVector4_12)) return; 
       Relay_In_52();
    }
    
    void Relay_OnUpdate_13()
    {
-      if (true == CheckDebugBreak("f899854a-8cb7-4586-8ad9-adf1d9397a85", "Global Update", Relay_OnUpdate_13)) return; 
+      if (true == CheckDebugBreak("f899854a-8cb7-4586-8ad9-adf1d9397a85", "Global_Update", Relay_OnUpdate_13)) return; 
       Relay_In_56();
    }
    
    void Relay_OnLateUpdate_13()
    {
-      if (true == CheckDebugBreak("f899854a-8cb7-4586-8ad9-adf1d9397a85", "Global Update", Relay_OnLateUpdate_13)) return; 
+      if (true == CheckDebugBreak("f899854a-8cb7-4586-8ad9-adf1d9397a85", "Global_Update", Relay_OnLateUpdate_13)) return; 
       Relay_In_89();
    }
    
    void Relay_OnFixedUpdate_13()
    {
-      if (true == CheckDebugBreak("f899854a-8cb7-4586-8ad9-adf1d9397a85", "Global Update", Relay_OnFixedUpdate_13)) return; 
+      if (true == CheckDebugBreak("f899854a-8cb7-4586-8ad9-adf1d9397a85", "Global_Update", Relay_OnFixedUpdate_13)) return; 
       Relay_In_94();
    }
    
    void Relay_OnGui_14()
    {
-      if (true == CheckDebugBreak("3b100514-2e87-435f-b7ed-09b5c037eedc", "GUI Events", Relay_OnGui_14)) return; 
+      if (true == CheckDebugBreak("3b100514-2e87-435f-b7ed-09b5c037eedc", "GUI_Events", Relay_OnGui_14)) return; 
       Relay_In_61();
    }
    
    void Relay_LevelWasLoaded_15()
    {
-      if (true == CheckDebugBreak("63ecc4d6-d3b8-485e-bc88-a94bcf6dc0a1", "Level Load", Relay_LevelWasLoaded_15)) return; 
+      if (true == CheckDebugBreak("63ecc4d6-d3b8-485e-bc88-a94bcf6dc0a1", "Level_Load", Relay_LevelWasLoaded_15)) return; 
       Relay_In_65();
    }
    
    void Relay_uScriptStart_16()
    {
-      if (true == CheckDebugBreak("873ec68b-4713-4af2-ad88-882235402ac6", "uScript Events", Relay_uScriptStart_16)) return; 
+      if (true == CheckDebugBreak("873ec68b-4713-4af2-ad88-882235402ac6", "uScript_Events", Relay_uScriptStart_16)) return; 
       Relay_In_67();
    }
    
    void Relay_uScriptLateStart_16()
    {
-      if (true == CheckDebugBreak("873ec68b-4713-4af2-ad88-882235402ac6", "uScript Events", Relay_uScriptLateStart_16)) return; 
+      if (true == CheckDebugBreak("873ec68b-4713-4af2-ad88-882235402ac6", "uScript_Events", Relay_uScriptLateStart_16)) return; 
       Relay_In_67();
    }
    
@@ -4107,9 +4084,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_18_System_String);
-               logic_uScriptAct_Log_Target_17 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_17.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_17, index + 1);
+               }
+               logic_uScriptAct_Log_Target_17[ index++ ] = local_18_System_String;
+               
             }
             {
             }
@@ -4134,9 +4115,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_20_System_String);
-               logic_uScriptAct_Log_Target_19 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_19.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_19, index + 1);
+               }
+               logic_uScriptAct_Log_Target_19[ index++ ] = local_20_System_String;
+               
             }
             {
             }
@@ -4161,9 +4146,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_21_System_String);
-               logic_uScriptAct_Log_Target_22 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_22.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_22, index + 1);
+               }
+               logic_uScriptAct_Log_Target_22[ index++ ] = local_21_System_String;
+               
             }
             {
             }
@@ -4188,9 +4177,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_24_System_String);
-               logic_uScriptAct_Log_Target_23 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_23.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_23, index + 1);
+               }
+               logic_uScriptAct_Log_Target_23[ index++ ] = local_24_System_String;
+               
             }
             {
             }
@@ -4215,9 +4208,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_26_System_String);
-               logic_uScriptAct_Log_Target_25 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_25.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_25, index + 1);
+               }
+               logic_uScriptAct_Log_Target_25[ index++ ] = local_26_System_String;
+               
             }
             {
             }
@@ -4242,9 +4239,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_28_System_String);
-               logic_uScriptAct_Log_Target_27 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_27.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_27, index + 1);
+               }
+               logic_uScriptAct_Log_Target_27[ index++ ] = local_28_System_String;
+               
             }
             {
             }
@@ -4269,9 +4270,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_30_System_String);
-               logic_uScriptAct_Log_Target_29 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_29.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_29, index + 1);
+               }
+               logic_uScriptAct_Log_Target_29[ index++ ] = local_30_System_String;
+               
             }
             {
             }
@@ -4296,9 +4301,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_31_System_String);
-               logic_uScriptAct_Log_Target_32 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_32.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_32, index + 1);
+               }
+               logic_uScriptAct_Log_Target_32[ index++ ] = local_31_System_String;
+               
             }
             {
             }
@@ -4323,9 +4332,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_34_System_String);
-               logic_uScriptAct_Log_Target_33 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_33.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_33, index + 1);
+               }
+               logic_uScriptAct_Log_Target_33[ index++ ] = local_34_System_String;
+               
             }
             {
             }
@@ -4350,9 +4363,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_43_System_String);
-               logic_uScriptAct_Log_Target_42 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_42.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_42, index + 1);
+               }
+               logic_uScriptAct_Log_Target_42[ index++ ] = local_43_System_String;
+               
             }
             {
             }
@@ -4377,9 +4394,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_47_System_String);
-               logic_uScriptAct_Log_Target_46 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_46.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_46, index + 1);
+               }
+               logic_uScriptAct_Log_Target_46[ index++ ] = local_47_System_String;
+               
             }
             {
             }
@@ -4404,9 +4425,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_51_System_String);
-               logic_uScriptAct_Log_Target_50 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_50.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_50, index + 1);
+               }
+               logic_uScriptAct_Log_Target_50[ index++ ] = local_51_System_String;
+               
             }
             {
             }
@@ -4431,9 +4456,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_53_System_String);
-               logic_uScriptAct_Log_Target_52 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_52.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_52, index + 1);
+               }
+               logic_uScriptAct_Log_Target_52[ index++ ] = local_53_System_String;
+               
             }
             {
             }
@@ -4458,9 +4487,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_55_System_String);
-               logic_uScriptAct_Log_Target_54 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_54.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_54, index + 1);
+               }
+               logic_uScriptAct_Log_Target_54[ index++ ] = local_55_System_String;
+               
             }
             {
             }
@@ -4480,7 +4513,7 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d86caf4a-9c66-4dd6-a42c-dd2e8096c859", "Int Counter", Relay_In_56)) return; 
+         if (true == CheckDebugBreak("d86caf4a-9c66-4dd6-a42c-dd2e8096c859", "Int_Counter", Relay_In_56)) return; 
          {
             {
             }
@@ -4512,7 +4545,7 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d86caf4a-9c66-4dd6-a42c-dd2e8096c859", "Int Counter", Relay_Reset_56)) return; 
+         if (true == CheckDebugBreak("d86caf4a-9c66-4dd6-a42c-dd2e8096c859", "Int_Counter", Relay_Reset_56)) return; 
          {
             {
             }
@@ -4544,12 +4577,11 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8c10099a-8a00-4f3e-a3fe-30ae2d3145d4", "Add Int", Relay_In_58)) return; 
+         if (true == CheckDebugBreak("8c10099a-8a00-4f3e-a3fe-30ae2d3145d4", "Add_Int", Relay_In_58)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_57_System_Int32);
-               logic_uScriptAct_AddInt_A_58 = properties.ToArray();
+               logic_uScriptAct_AddInt_v2_A_58 = local_57_System_Int32;
+               
             }
             {
             }
@@ -4558,11 +4590,11 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_58.In(logic_uScriptAct_AddInt_A_58, logic_uScriptAct_AddInt_B_58, out logic_uScriptAct_AddInt_IntResult_58, out logic_uScriptAct_AddInt_FloatResult_58);
-         local_57_System_Int32 = logic_uScriptAct_AddInt_IntResult_58;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_58.In(logic_uScriptAct_AddInt_v2_A_58, logic_uScriptAct_AddInt_v2_B_58, out logic_uScriptAct_AddInt_v2_IntResult_58, out logic_uScriptAct_AddInt_v2_FloatResult_58);
+         local_57_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_58;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddInt_uScriptAct_AddInt_58.Out;
+         bool test_0 = logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_58.Out;
          
          if ( test_0 == true )
          {
@@ -4579,12 +4611,11 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("64e92474-a133-437f-8fd2-5abd8a3787f6", "Add Int", Relay_In_60)) return; 
+         if (true == CheckDebugBreak("64e92474-a133-437f-8fd2-5abd8a3787f6", "Add_Int", Relay_In_60)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_62_System_Int32);
-               logic_uScriptAct_AddInt_A_60 = properties.ToArray();
+               logic_uScriptAct_AddInt_v2_A_60 = local_62_System_Int32;
+               
             }
             {
             }
@@ -4593,11 +4624,11 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_60.In(logic_uScriptAct_AddInt_A_60, logic_uScriptAct_AddInt_B_60, out logic_uScriptAct_AddInt_IntResult_60, out logic_uScriptAct_AddInt_FloatResult_60);
-         local_62_System_Int32 = logic_uScriptAct_AddInt_IntResult_60;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_60.In(logic_uScriptAct_AddInt_v2_A_60, logic_uScriptAct_AddInt_v2_B_60, out logic_uScriptAct_AddInt_v2_IntResult_60, out logic_uScriptAct_AddInt_v2_FloatResult_60);
+         local_62_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_60;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddInt_uScriptAct_AddInt_60.Out;
+         bool test_0 = logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_60.Out;
          
          if ( test_0 == true )
          {
@@ -4614,7 +4645,7 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2c9845b5-70d0-4bb5-bde5-bce425d07bbc", "Int Counter", Relay_In_61)) return; 
+         if (true == CheckDebugBreak("2c9845b5-70d0-4bb5-bde5-bce425d07bbc", "Int_Counter", Relay_In_61)) return; 
          {
             {
             }
@@ -4646,7 +4677,7 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2c9845b5-70d0-4bb5-bde5-bce425d07bbc", "Int Counter", Relay_Reset_61)) return; 
+         if (true == CheckDebugBreak("2c9845b5-70d0-4bb5-bde5-bce425d07bbc", "Int_Counter", Relay_Reset_61)) return; 
          {
             {
             }
@@ -4683,9 +4714,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_59_System_String);
-               logic_uScriptAct_Log_Target_63 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_63.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_63, index + 1);
+               }
+               logic_uScriptAct_Log_Target_63[ index++ ] = local_59_System_String;
+               
             }
             {
             }
@@ -4710,9 +4745,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_64_System_String);
-               logic_uScriptAct_Log_Target_65 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_65.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_65, index + 1);
+               }
+               logic_uScriptAct_Log_Target_65[ index++ ] = local_64_System_String;
+               
             }
             {
             }
@@ -4737,9 +4776,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_66_System_String);
-               logic_uScriptAct_Log_Target_67 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_67.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_67, index + 1);
+               }
+               logic_uScriptAct_Log_Target_67[ index++ ] = local_66_System_String;
+               
             }
             {
             }
@@ -4757,31 +4800,31 @@ public class All_Event_Nodes : uScriptLogic
    
    void Relay_EnableEvent_68()
    {
-      if (true == CheckDebugBreak("64976a28-a5f5-4066-9d2f-f15b2fcc3907", "GameObject Events", Relay_EnableEvent_68)) return; 
+      if (true == CheckDebugBreak("64976a28-a5f5-4066-9d2f-f15b2fcc3907", "GameObject_Events", Relay_EnableEvent_68)) return; 
       Relay_In_71();
    }
    
    void Relay_DisableEvent_68()
    {
-      if (true == CheckDebugBreak("64976a28-a5f5-4066-9d2f-f15b2fcc3907", "GameObject Events", Relay_DisableEvent_68)) return; 
+      if (true == CheckDebugBreak("64976a28-a5f5-4066-9d2f-f15b2fcc3907", "GameObject_Events", Relay_DisableEvent_68)) return; 
       Relay_In_71();
    }
    
    void Relay_DestroyEvent_68()
    {
-      if (true == CheckDebugBreak("64976a28-a5f5-4066-9d2f-f15b2fcc3907", "GameObject Events", Relay_DestroyEvent_68)) return; 
+      if (true == CheckDebugBreak("64976a28-a5f5-4066-9d2f-f15b2fcc3907", "GameObject_Events", Relay_DestroyEvent_68)) return; 
       Relay_In_71();
    }
    
    void Relay_BecameVisible_69()
    {
-      if (true == CheckDebugBreak("e8def8d0-6b74-4dbf-9269-c5f58300b091", "Visibility Events", Relay_BecameVisible_69)) return; 
+      if (true == CheckDebugBreak("e8def8d0-6b74-4dbf-9269-c5f58300b091", "Visibility_Events", Relay_BecameVisible_69)) return; 
       Relay_In_72();
    }
    
    void Relay_BecameInvisible_69()
    {
-      if (true == CheckDebugBreak("e8def8d0-6b74-4dbf-9269-c5f58300b091", "Visibility Events", Relay_BecameInvisible_69)) return; 
+      if (true == CheckDebugBreak("e8def8d0-6b74-4dbf-9269-c5f58300b091", "Visibility_Events", Relay_BecameInvisible_69)) return; 
       Relay_In_72();
    }
    
@@ -4794,9 +4837,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_70_System_String);
-               logic_uScriptAct_Log_Target_71 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_71.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_71, index + 1);
+               }
+               logic_uScriptAct_Log_Target_71[ index++ ] = local_70_System_String;
+               
             }
             {
             }
@@ -4821,9 +4868,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_73_System_String);
-               logic_uScriptAct_Log_Target_72 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_72.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_72, index + 1);
+               }
+               logic_uScriptAct_Log_Target_72[ index++ ] = local_73_System_String;
+               
             }
             {
             }
@@ -4841,133 +4892,133 @@ public class All_Event_Nodes : uScriptLogic
    
    void Relay_OnAccelerationEvent_76()
    {
-      if (true == CheckDebugBreak("1b3813c1-efde-4c26-aa6f-0e4e5bc2ac82", "Accelerometer Events", Relay_OnAccelerationEvent_76)) return; 
+      if (true == CheckDebugBreak("1b3813c1-efde-4c26-aa6f-0e4e5bc2ac82", "Accelerometer_Events", Relay_OnAccelerationEvent_76)) return; 
       Relay_In_84();
    }
    
    void Relay_OnDevicePortrait_77()
    {
-      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device Orientation Events", Relay_OnDevicePortrait_77)) return; 
+      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device_Orientation_Events", Relay_OnDevicePortrait_77)) return; 
       Relay_In_86();
    }
    
    void Relay_OnDevicePortraitUpsideDown_77()
    {
-      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device Orientation Events", Relay_OnDevicePortraitUpsideDown_77)) return; 
+      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device_Orientation_Events", Relay_OnDevicePortraitUpsideDown_77)) return; 
       Relay_In_86();
    }
    
    void Relay_OnDeviceLandscapeLeft_77()
    {
-      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device Orientation Events", Relay_OnDeviceLandscapeLeft_77)) return; 
+      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device_Orientation_Events", Relay_OnDeviceLandscapeLeft_77)) return; 
       Relay_In_86();
    }
    
    void Relay_OnDeviceLandscapeRight_77()
    {
-      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device Orientation Events", Relay_OnDeviceLandscapeRight_77)) return; 
+      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device_Orientation_Events", Relay_OnDeviceLandscapeRight_77)) return; 
       Relay_In_86();
    }
    
    void Relay_OnDeviceFaceUp_77()
    {
-      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device Orientation Events", Relay_OnDeviceFaceUp_77)) return; 
+      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device_Orientation_Events", Relay_OnDeviceFaceUp_77)) return; 
       Relay_In_86();
    }
    
    void Relay_OnDeviceFaceDown_77()
    {
-      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device Orientation Events", Relay_OnDeviceFaceDown_77)) return; 
+      if (true == CheckDebugBreak("b9ab46d6-efb1-49ab-b17d-92643d9b0ed8", "Device_Orientation_Events", Relay_OnDeviceFaceDown_77)) return; 
       Relay_In_86();
    }
    
    void Relay_KeyEvent_78()
    {
-      if (true == CheckDebugBreak("5c2a22bf-b59b-4eec-a2ad-f457c0d0de4d", "Input Events", Relay_KeyEvent_78)) return; 
+      if (true == CheckDebugBreak("5c2a22bf-b59b-4eec-a2ad-f457c0d0de4d", "Input_Events", Relay_KeyEvent_78)) return; 
       Relay_In_98();
    }
    
    void Relay_OnInputEvent_79()
    {
-      if (true == CheckDebugBreak("2ada240a-7309-4f3e-9904-62ef5d8cd256", "Managed Input Events", Relay_OnInputEvent_79)) return; 
+      if (true == CheckDebugBreak("2ada240a-7309-4f3e-9904-62ef5d8cd256", "Managed_Input_Events", Relay_OnInputEvent_79)) return; 
       Relay_In_101();
    }
    
    void Relay_AxisEvent_80()
    {
-      if (true == CheckDebugBreak("13489f7e-25c6-49d0-a8fa-27745b5299d9", "Mouse Axis", Relay_AxisEvent_80)) return; 
+      if (true == CheckDebugBreak("13489f7e-25c6-49d0-a8fa-27745b5299d9", "Mouse_Axis", Relay_AxisEvent_80)) return; 
       Relay_In_103();
    }
    
    void Relay_OnEnter_81()
    {
-      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse Cursor Events", Relay_OnEnter_81)) return; 
+      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse_Cursor_Events", Relay_OnEnter_81)) return; 
       Relay_In_104();
    }
    
    void Relay_OnOver_81()
    {
-      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse Cursor Events", Relay_OnOver_81)) return; 
+      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse_Cursor_Events", Relay_OnOver_81)) return; 
       Relay_In_104();
    }
    
    void Relay_OnExit_81()
    {
-      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse Cursor Events", Relay_OnExit_81)) return; 
+      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse_Cursor_Events", Relay_OnExit_81)) return; 
       Relay_In_104();
    }
    
    void Relay_OnDown_81()
    {
-      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse Cursor Events", Relay_OnDown_81)) return; 
+      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse_Cursor_Events", Relay_OnDown_81)) return; 
       Relay_In_104();
    }
    
    void Relay_OnUp_81()
    {
-      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse Cursor Events", Relay_OnUp_81)) return; 
+      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse_Cursor_Events", Relay_OnUp_81)) return; 
       Relay_In_104();
    }
    
    void Relay_OnDrag_81()
    {
-      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse Cursor Events", Relay_OnDrag_81)) return; 
+      if (true == CheckDebugBreak("50bba20f-349a-4e5a-8445-83129d9a3405", "Mouse_Cursor_Events", Relay_OnDrag_81)) return; 
       Relay_In_104();
    }
    
    void Relay_OnKeyboardSlidOut_82()
    {
-      if (true == CheckDebugBreak("21acdb57-678c-4b06-b10f-0243b875d558", "On-Screen Keyboard Events", Relay_OnKeyboardSlidOut_82)) return; 
+      if (true == CheckDebugBreak("21acdb57-678c-4b06-b10f-0243b875d558", "On_Screen_Keyboard_Events", Relay_OnKeyboardSlidOut_82)) return; 
       Relay_In_107();
    }
    
    void Relay_OnTouchBegan_83()
    {
-      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch Events", Relay_OnTouchBegan_83)) return; 
+      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch_Events", Relay_OnTouchBegan_83)) return; 
       Relay_In_109();
    }
    
    void Relay_OnTouchMoved_83()
    {
-      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch Events", Relay_OnTouchMoved_83)) return; 
+      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch_Events", Relay_OnTouchMoved_83)) return; 
       Relay_In_109();
    }
    
    void Relay_OnTouchStationary_83()
    {
-      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch Events", Relay_OnTouchStationary_83)) return; 
+      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch_Events", Relay_OnTouchStationary_83)) return; 
       Relay_In_109();
    }
    
    void Relay_OnTouchEnded_83()
    {
-      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch Events", Relay_OnTouchEnded_83)) return; 
+      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch_Events", Relay_OnTouchEnded_83)) return; 
       Relay_In_109();
    }
    
    void Relay_OnTouchCanceled_83()
    {
-      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch Events", Relay_OnTouchCanceled_83)) return; 
+      if (true == CheckDebugBreak("4020f18a-f2e1-4317-8e4b-fb99a46ea9f7", "Touch_Events", Relay_OnTouchCanceled_83)) return; 
       Relay_In_109();
    }
    
@@ -4980,9 +5031,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_85_System_String);
-               logic_uScriptAct_Log_Target_84 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_84.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_84, index + 1);
+               }
+               logic_uScriptAct_Log_Target_84[ index++ ] = local_85_System_String;
+               
             }
             {
             }
@@ -5007,9 +5062,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_87_System_String);
-               logic_uScriptAct_Log_Target_86 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_86.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_86, index + 1);
+               }
+               logic_uScriptAct_Log_Target_86[ index++ ] = local_87_System_String;
+               
             }
             {
             }
@@ -5029,12 +5088,11 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d00b6de7-6aa3-4773-861f-73f3f77054cb", "Add Int", Relay_In_88)) return; 
+         if (true == CheckDebugBreak("d00b6de7-6aa3-4773-861f-73f3f77054cb", "Add_Int", Relay_In_88)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_91_System_Int32);
-               logic_uScriptAct_AddInt_A_88 = properties.ToArray();
+               logic_uScriptAct_AddInt_v2_A_88 = local_91_System_Int32;
+               
             }
             {
             }
@@ -5043,11 +5101,11 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_88.In(logic_uScriptAct_AddInt_A_88, logic_uScriptAct_AddInt_B_88, out logic_uScriptAct_AddInt_IntResult_88, out logic_uScriptAct_AddInt_FloatResult_88);
-         local_91_System_Int32 = logic_uScriptAct_AddInt_IntResult_88;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_88.In(logic_uScriptAct_AddInt_v2_A_88, logic_uScriptAct_AddInt_v2_B_88, out logic_uScriptAct_AddInt_v2_IntResult_88, out logic_uScriptAct_AddInt_v2_FloatResult_88);
+         local_91_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_88;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddInt_uScriptAct_AddInt_88.Out;
+         bool test_0 = logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_88.Out;
          
          if ( test_0 == true )
          {
@@ -5064,7 +5122,7 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("407304e3-1d92-4258-a811-6ffdd0123fa9", "Int Counter", Relay_In_89)) return; 
+         if (true == CheckDebugBreak("407304e3-1d92-4258-a811-6ffdd0123fa9", "Int_Counter", Relay_In_89)) return; 
          {
             {
             }
@@ -5096,7 +5154,7 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("407304e3-1d92-4258-a811-6ffdd0123fa9", "Int Counter", Relay_Reset_89)) return; 
+         if (true == CheckDebugBreak("407304e3-1d92-4258-a811-6ffdd0123fa9", "Int_Counter", Relay_Reset_89)) return; 
          {
             {
             }
@@ -5133,9 +5191,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_92_System_String);
-               logic_uScriptAct_Log_Target_90 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_90.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_90, index + 1);
+               }
+               logic_uScriptAct_Log_Target_90[ index++ ] = local_92_System_String;
+               
             }
             {
             }
@@ -5155,12 +5217,11 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("94f9f654-093a-4ec4-8e56-aeb3e2e0de07", "Add Int", Relay_In_93)) return; 
+         if (true == CheckDebugBreak("94f9f654-093a-4ec4-8e56-aeb3e2e0de07", "Add_Int", Relay_In_93)) return; 
          {
             {
-               List<System.Int32> properties = new List<System.Int32>();
-               properties.Add((System.Int32)local_96_System_Int32);
-               logic_uScriptAct_AddInt_A_93 = properties.ToArray();
+               logic_uScriptAct_AddInt_v2_A_93 = local_96_System_Int32;
+               
             }
             {
             }
@@ -5169,11 +5230,11 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_93.In(logic_uScriptAct_AddInt_A_93, logic_uScriptAct_AddInt_B_93, out logic_uScriptAct_AddInt_IntResult_93, out logic_uScriptAct_AddInt_FloatResult_93);
-         local_96_System_Int32 = logic_uScriptAct_AddInt_IntResult_93;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_93.In(logic_uScriptAct_AddInt_v2_A_93, logic_uScriptAct_AddInt_v2_B_93, out logic_uScriptAct_AddInt_v2_IntResult_93, out logic_uScriptAct_AddInt_v2_FloatResult_93);
+         local_96_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_93;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddInt_uScriptAct_AddInt_93.Out;
+         bool test_0 = logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_93.Out;
          
          if ( test_0 == true )
          {
@@ -5190,7 +5251,7 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("75bb8334-1dc3-41e5-8423-8a5ce0083894", "Int Counter", Relay_In_94)) return; 
+         if (true == CheckDebugBreak("75bb8334-1dc3-41e5-8423-8a5ce0083894", "Int_Counter", Relay_In_94)) return; 
          {
             {
             }
@@ -5222,7 +5283,7 @@ public class All_Event_Nodes : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("75bb8334-1dc3-41e5-8423-8a5ce0083894", "Int Counter", Relay_Reset_94)) return; 
+         if (true == CheckDebugBreak("75bb8334-1dc3-41e5-8423-8a5ce0083894", "Int_Counter", Relay_Reset_94)) return; 
          {
             {
             }
@@ -5259,9 +5320,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_97_System_String);
-               logic_uScriptAct_Log_Target_95 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_95.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_95, index + 1);
+               }
+               logic_uScriptAct_Log_Target_95[ index++ ] = local_97_System_String;
+               
             }
             {
             }
@@ -5286,9 +5351,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_99_System_String);
-               logic_uScriptAct_Log_Target_98 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_98.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_98, index + 1);
+               }
+               logic_uScriptAct_Log_Target_98[ index++ ] = local_99_System_String;
+               
             }
             {
             }
@@ -5313,9 +5382,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_100_System_String);
-               logic_uScriptAct_Log_Target_101 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_101.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_101, index + 1);
+               }
+               logic_uScriptAct_Log_Target_101[ index++ ] = local_100_System_String;
+               
             }
             {
             }
@@ -5340,9 +5413,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_102_System_String);
-               logic_uScriptAct_Log_Target_103 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_103.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_103, index + 1);
+               }
+               logic_uScriptAct_Log_Target_103[ index++ ] = local_102_System_String;
+               
             }
             {
             }
@@ -5367,9 +5444,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_105_System_String);
-               logic_uScriptAct_Log_Target_104 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_104.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_104, index + 1);
+               }
+               logic_uScriptAct_Log_Target_104[ index++ ] = local_105_System_String;
+               
             }
             {
             }
@@ -5394,9 +5475,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_106_System_String);
-               logic_uScriptAct_Log_Target_107 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_107.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_107, index + 1);
+               }
+               logic_uScriptAct_Log_Target_107[ index++ ] = local_106_System_String;
+               
             }
             {
             }
@@ -5421,9 +5506,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_108_System_String);
-               logic_uScriptAct_Log_Target_109 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_109.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_109, index + 1);
+               }
+               logic_uScriptAct_Log_Target_109[ index++ ] = local_108_System_String;
+               
             }
             {
             }
@@ -5441,61 +5530,61 @@ public class All_Event_Nodes : uScriptLogic
    
    void Relay_ConnectedToServer_110()
    {
-      if (true == CheckDebugBreak("6c201bf4-92e3-4182-afe0-896d5587248c", "Network Client Connection", Relay_ConnectedToServer_110)) return; 
+      if (true == CheckDebugBreak("6c201bf4-92e3-4182-afe0-896d5587248c", "Network_Client_Connection", Relay_ConnectedToServer_110)) return; 
       Relay_In_117();
    }
    
    void Relay_DisconnectedFromServer_110()
    {
-      if (true == CheckDebugBreak("6c201bf4-92e3-4182-afe0-896d5587248c", "Network Client Connection", Relay_DisconnectedFromServer_110)) return; 
+      if (true == CheckDebugBreak("6c201bf4-92e3-4182-afe0-896d5587248c", "Network_Client_Connection", Relay_DisconnectedFromServer_110)) return; 
       Relay_In_117();
    }
    
    void Relay_FailedToConnect_111()
    {
-      if (true == CheckDebugBreak("62d19113-5170-4455-b488-80e7bb58552e", "Network Failed Connection", Relay_FailedToConnect_111)) return; 
+      if (true == CheckDebugBreak("62d19113-5170-4455-b488-80e7bb58552e", "Network_Failed_Connection", Relay_FailedToConnect_111)) return; 
       Relay_In_120();
    }
    
    void Relay_FailedToConnectToMaster_111()
    {
-      if (true == CheckDebugBreak("62d19113-5170-4455-b488-80e7bb58552e", "Network Failed Connection", Relay_FailedToConnectToMaster_111)) return; 
+      if (true == CheckDebugBreak("62d19113-5170-4455-b488-80e7bb58552e", "Network_Failed_Connection", Relay_FailedToConnectToMaster_111)) return; 
       Relay_In_120();
    }
    
    void Relay_OnInstantiate_112()
    {
-      if (true == CheckDebugBreak("2088f375-a24a-4cde-b2fd-72f52296d4b3", "Network Instantiate", Relay_OnInstantiate_112)) return; 
+      if (true == CheckDebugBreak("2088f375-a24a-4cde-b2fd-72f52296d4b3", "Network_Instantiate", Relay_OnInstantiate_112)) return; 
       Relay_In_122();
    }
    
    void Relay_OnEvent_113()
    {
-      if (true == CheckDebugBreak("c7e16c8b-49ba-405d-bc4e-ded09b56bbe9", "Network Master Server", Relay_OnEvent_113)) return; 
+      if (true == CheckDebugBreak("c7e16c8b-49ba-405d-bc4e-ded09b56bbe9", "Network_Master_Server", Relay_OnEvent_113)) return; 
       Relay_In_130();
    }
    
    void Relay_OnSerialize_114()
    {
-      if (true == CheckDebugBreak("ad780df2-991c-4971-a5ae-32ea27d0cc4d", "Network Serialization", Relay_OnSerialize_114)) return; 
+      if (true == CheckDebugBreak("ad780df2-991c-4971-a5ae-32ea27d0cc4d", "Network_Serialization", Relay_OnSerialize_114)) return; 
       Relay_In_124();
    }
    
    void Relay_OnInitialized_115()
    {
-      if (true == CheckDebugBreak("50e6a64f-105e-4734-a819-9faa3ab507ae", "Network Server Initialized", Relay_OnInitialized_115)) return; 
+      if (true == CheckDebugBreak("50e6a64f-105e-4734-a819-9faa3ab507ae", "Network_Server_Initialized", Relay_OnInitialized_115)) return; 
       Relay_In_125();
    }
    
    void Relay_PlayerConnected_116()
    {
-      if (true == CheckDebugBreak("326996a4-97af-46cf-a04b-0809d0bee471", "Network Server Player", Relay_PlayerConnected_116)) return; 
+      if (true == CheckDebugBreak("326996a4-97af-46cf-a04b-0809d0bee471", "Network_Server_Player", Relay_PlayerConnected_116)) return; 
       Relay_In_128();
    }
    
    void Relay_PlayerDisconnected_116()
    {
-      if (true == CheckDebugBreak("326996a4-97af-46cf-a04b-0809d0bee471", "Network Server Player", Relay_PlayerDisconnected_116)) return; 
+      if (true == CheckDebugBreak("326996a4-97af-46cf-a04b-0809d0bee471", "Network_Server_Player", Relay_PlayerDisconnected_116)) return; 
       Relay_In_128();
    }
    
@@ -5508,9 +5597,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_118_System_String);
-               logic_uScriptAct_Log_Target_117 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_117.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_117, index + 1);
+               }
+               logic_uScriptAct_Log_Target_117[ index++ ] = local_118_System_String;
+               
             }
             {
             }
@@ -5535,9 +5628,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_119_System_String);
-               logic_uScriptAct_Log_Target_120 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_120.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_120, index + 1);
+               }
+               logic_uScriptAct_Log_Target_120[ index++ ] = local_119_System_String;
+               
             }
             {
             }
@@ -5562,9 +5659,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_121_System_String);
-               logic_uScriptAct_Log_Target_122 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_122.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_122, index + 1);
+               }
+               logic_uScriptAct_Log_Target_122[ index++ ] = local_121_System_String;
+               
             }
             {
             }
@@ -5589,9 +5690,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_123_System_String);
-               logic_uScriptAct_Log_Target_124 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_124.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_124, index + 1);
+               }
+               logic_uScriptAct_Log_Target_124[ index++ ] = local_123_System_String;
+               
             }
             {
             }
@@ -5616,9 +5721,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_126_System_String);
-               logic_uScriptAct_Log_Target_125 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_125.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_125, index + 1);
+               }
+               logic_uScriptAct_Log_Target_125[ index++ ] = local_126_System_String;
+               
             }
             {
             }
@@ -5643,9 +5752,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_127_System_String);
-               logic_uScriptAct_Log_Target_128 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_128.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_128, index + 1);
+               }
+               logic_uScriptAct_Log_Target_128[ index++ ] = local_127_System_String;
+               
             }
             {
             }
@@ -5670,9 +5783,13 @@ public class All_Event_Nodes : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_129_System_String);
-               logic_uScriptAct_Log_Target_130 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_130.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_130, index + 1);
+               }
+               logic_uScriptAct_Log_Target_130[ index++ ] = local_129_System_String;
+               
             }
             {
             }
@@ -5688,29 +5805,33 @@ public class All_Event_Nodes : uScriptLogic
       }
    }
    
-   void Relay_Collision_261()
+   void Relay_Collision_131()
    {
-      if (true == CheckDebugBreak("3ba5da65-a130-4503-9a3c-d55a66184f90", "Particle Collision", Relay_Collision_261)) return; 
-      Relay_In_263();
+      if (true == CheckDebugBreak("3ba5da65-a130-4503-9a3c-d55a66184f90", "Particle_Collision", Relay_Collision_131)) return; 
+      Relay_In_133();
    }
    
-   void Relay_In_263()
+   void Relay_In_133()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6543aefd-5e12-41d6-8bb3-4a75cf1a83d9", "Log", Relay_In_263)) return; 
+         if (true == CheckDebugBreak("6543aefd-5e12-41d6-8bb3-4a75cf1a83d9", "Log", Relay_In_133)) return; 
          {
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_262_System_String);
-               logic_uScriptAct_Log_Target_263 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_133.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_133, index + 1);
+               }
+               logic_uScriptAct_Log_Target_133[ index++ ] = local_132_System_String;
+               
             }
             {
             }
          }
-         logic_uScriptAct_Log_uScriptAct_Log_263.In(logic_uScriptAct_Log_Prefix_263, logic_uScriptAct_Log_Target_263, logic_uScriptAct_Log_Postfix_263);
+         logic_uScriptAct_Log_uScriptAct_Log_133.In(logic_uScriptAct_Log_Prefix_133, logic_uScriptAct_Log_Target_133, logic_uScriptAct_Log_Postfix_133);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -5721,53 +5842,57 @@ public class All_Event_Nodes : uScriptLogic
       }
    }
    
-   void Relay_OnHit_266()
+   void Relay_OnHit_134()
    {
-      if (true == CheckDebugBreak("fde66a2c-c803-4004-8fec-b0f3eb92683d", "Controller Collision", Relay_OnHit_266)) return; 
-      Relay_In_276();
+      if (true == CheckDebugBreak("fde66a2c-c803-4004-8fec-b0f3eb92683d", "Controller_Collision", Relay_OnHit_134)) return; 
+      Relay_In_142();
    }
    
-   void Relay_JointBreak_267()
+   void Relay_JointBreak_135()
    {
-      if (true == CheckDebugBreak("b26dfa1f-9735-4295-b21b-92870cfae38b", "Joint Break", Relay_JointBreak_267)) return; 
-      Relay_In_273();
+      if (true == CheckDebugBreak("b26dfa1f-9735-4295-b21b-92870cfae38b", "Joint_Break", Relay_JointBreak_135)) return; 
+      Relay_In_140();
    }
    
-   void Relay_OnEnterCollision_268()
+   void Relay_OnEnterCollision_136()
    {
-      if (true == CheckDebugBreak("da725f57-319b-4889-bbf9-89ad78ca0674", "On Collision", Relay_OnEnterCollision_268)) return; 
-      Relay_In_270();
+      if (true == CheckDebugBreak("da725f57-319b-4889-bbf9-89ad78ca0674", "On_Collision", Relay_OnEnterCollision_136)) return; 
+      Relay_In_138();
    }
    
-   void Relay_OnExitCollision_268()
+   void Relay_OnExitCollision_136()
    {
-      if (true == CheckDebugBreak("da725f57-319b-4889-bbf9-89ad78ca0674", "On Collision", Relay_OnExitCollision_268)) return; 
-      Relay_In_270();
+      if (true == CheckDebugBreak("da725f57-319b-4889-bbf9-89ad78ca0674", "On_Collision", Relay_OnExitCollision_136)) return; 
+      Relay_In_138();
    }
    
-   void Relay_WhileInsideCollision_268()
+   void Relay_WhileInsideCollision_136()
    {
-      if (true == CheckDebugBreak("da725f57-319b-4889-bbf9-89ad78ca0674", "On Collision", Relay_WhileInsideCollision_268)) return; 
-      Relay_In_270();
+      if (true == CheckDebugBreak("da725f57-319b-4889-bbf9-89ad78ca0674", "On_Collision", Relay_WhileInsideCollision_136)) return; 
+      Relay_In_138();
    }
    
-   void Relay_In_270()
+   void Relay_In_138()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("43159f45-3b50-4a8d-b45d-c1b67637bedb", "Log", Relay_In_270)) return; 
+         if (true == CheckDebugBreak("43159f45-3b50-4a8d-b45d-c1b67637bedb", "Log", Relay_In_138)) return; 
          {
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_269_System_String);
-               logic_uScriptAct_Log_Target_270 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_138.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_138, index + 1);
+               }
+               logic_uScriptAct_Log_Target_138[ index++ ] = local_137_System_String;
+               
             }
             {
             }
          }
-         logic_uScriptAct_Log_uScriptAct_Log_270.In(logic_uScriptAct_Log_Prefix_270, logic_uScriptAct_Log_Target_270, logic_uScriptAct_Log_Postfix_270);
+         logic_uScriptAct_Log_uScriptAct_Log_138.In(logic_uScriptAct_Log_Prefix_138, logic_uScriptAct_Log_Target_138, logic_uScriptAct_Log_Postfix_138);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -5778,23 +5903,27 @@ public class All_Event_Nodes : uScriptLogic
       }
    }
    
-   void Relay_In_273()
+   void Relay_In_140()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("bc30ea07-1a2c-4417-a252-9786b4d503b3", "Log", Relay_In_273)) return; 
+         if (true == CheckDebugBreak("bc30ea07-1a2c-4417-a252-9786b4d503b3", "Log", Relay_In_140)) return; 
          {
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_272_System_String);
-               logic_uScriptAct_Log_Target_273 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_140.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_140, index + 1);
+               }
+               logic_uScriptAct_Log_Target_140[ index++ ] = local_139_System_String;
+               
             }
             {
             }
          }
-         logic_uScriptAct_Log_uScriptAct_Log_273.In(logic_uScriptAct_Log_Prefix_273, logic_uScriptAct_Log_Target_273, logic_uScriptAct_Log_Postfix_273);
+         logic_uScriptAct_Log_uScriptAct_Log_140.In(logic_uScriptAct_Log_Prefix_140, logic_uScriptAct_Log_Target_140, logic_uScriptAct_Log_Postfix_140);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -5805,23 +5934,27 @@ public class All_Event_Nodes : uScriptLogic
       }
    }
    
-   void Relay_In_276()
+   void Relay_In_142()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("748487b4-e680-40a3-96a0-55599029104b", "Log", Relay_In_276)) return; 
+         if (true == CheckDebugBreak("748487b4-e680-40a3-96a0-55599029104b", "Log", Relay_In_142)) return; 
          {
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_275_System_String);
-               logic_uScriptAct_Log_Target_276 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_142.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_142, index + 1);
+               }
+               logic_uScriptAct_Log_Target_142[ index++ ] = local_141_System_String;
+               
             }
             {
             }
          }
-         logic_uScriptAct_Log_uScriptAct_Log_276.In(logic_uScriptAct_Log_Prefix_276, logic_uScriptAct_Log_Target_276, logic_uScriptAct_Log_Postfix_276);
+         logic_uScriptAct_Log_uScriptAct_Log_142.In(logic_uScriptAct_Log_Prefix_142, logic_uScriptAct_Log_Target_142, logic_uScriptAct_Log_Postfix_142);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -5832,59 +5965,63 @@ public class All_Event_Nodes : uScriptLogic
       }
    }
    
-   void Relay_RenderImage_283()
+   void Relay_RenderImage_143()
    {
-      if (true == CheckDebugBreak("153e2c88-2df2-443d-80b8-5530df5f25b1", "Post Effect Events", Relay_RenderImage_283)) return; 
-      Relay_In_289();
+      if (true == CheckDebugBreak("153e2c88-2df2-443d-80b8-5530df5f25b1", "Post_Effect_Events", Relay_RenderImage_143)) return; 
+      Relay_In_148();
    }
    
-   void Relay_PreCull_284()
+   void Relay_PreCull_144()
    {
-      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render Events", Relay_PreCull_284)) return; 
-      Relay_In_286();
+      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render_Events", Relay_PreCull_144)) return; 
+      Relay_In_146();
    }
    
-   void Relay_PreRender_284()
+   void Relay_PreRender_144()
    {
-      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render Events", Relay_PreRender_284)) return; 
-      Relay_In_286();
+      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render_Events", Relay_PreRender_144)) return; 
+      Relay_In_146();
    }
    
-   void Relay_PostRender_284()
+   void Relay_PostRender_144()
    {
-      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render Events", Relay_PostRender_284)) return; 
-      Relay_In_286();
+      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render_Events", Relay_PostRender_144)) return; 
+      Relay_In_146();
    }
    
-   void Relay_RenderObject_284()
+   void Relay_RenderObject_144()
    {
-      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render Events", Relay_RenderObject_284)) return; 
-      Relay_In_286();
+      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render_Events", Relay_RenderObject_144)) return; 
+      Relay_In_146();
    }
    
-   void Relay_WillRenderObject_284()
+   void Relay_WillRenderObject_144()
    {
-      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render Events", Relay_WillRenderObject_284)) return; 
-      Relay_In_286();
+      if (true == CheckDebugBreak("1ae5dc01-f455-4b34-9494-4b864a4deea5", "Render_Events", Relay_WillRenderObject_144)) return; 
+      Relay_In_146();
    }
    
-   void Relay_In_286()
+   void Relay_In_146()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9ef40ee2-33bb-4d1a-a7c9-eee89d953b28", "Log", Relay_In_286)) return; 
+         if (true == CheckDebugBreak("9ef40ee2-33bb-4d1a-a7c9-eee89d953b28", "Log", Relay_In_146)) return; 
          {
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_285_System_String);
-               logic_uScriptAct_Log_Target_286 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_146.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_146, index + 1);
+               }
+               logic_uScriptAct_Log_Target_146[ index++ ] = local_145_System_String;
+               
             }
             {
             }
          }
-         logic_uScriptAct_Log_uScriptAct_Log_286.In(logic_uScriptAct_Log_Prefix_286, logic_uScriptAct_Log_Target_286, logic_uScriptAct_Log_Postfix_286);
+         logic_uScriptAct_Log_uScriptAct_Log_146.In(logic_uScriptAct_Log_Prefix_146, logic_uScriptAct_Log_Target_146, logic_uScriptAct_Log_Postfix_146);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -5895,23 +6032,27 @@ public class All_Event_Nodes : uScriptLogic
       }
    }
    
-   void Relay_In_289()
+   void Relay_In_148()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c4e129c3-9a3b-4fbf-bbfa-defabfe48344", "Log", Relay_In_289)) return; 
+         if (true == CheckDebugBreak("c4e129c3-9a3b-4fbf-bbfa-defabfe48344", "Log", Relay_In_148)) return; 
          {
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_288_System_String);
-               logic_uScriptAct_Log_Target_289 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_148.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_148, index + 1);
+               }
+               logic_uScriptAct_Log_Target_148[ index++ ] = local_147_System_String;
+               
             }
             {
             }
          }
-         logic_uScriptAct_Log_uScriptAct_Log_289.In(logic_uScriptAct_Log_Prefix_289, logic_uScriptAct_Log_Target_289, logic_uScriptAct_Log_Postfix_289);
+         logic_uScriptAct_Log_uScriptAct_Log_148.In(logic_uScriptAct_Log_Prefix_148, logic_uScriptAct_Log_Target_148, logic_uScriptAct_Log_Postfix_148);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -5922,41 +6063,45 @@ public class All_Event_Nodes : uScriptLogic
       }
    }
    
-   void Relay_OnEnterTrigger_309()
+   void Relay_OnEnterTrigger_155()
    {
-      if (true == CheckDebugBreak("4d6e30d5-6123-46c8-8638-2fd9b7b12206", "Trigger Events", Relay_OnEnterTrigger_309)) return; 
-      Relay_In_313();
+      if (true == CheckDebugBreak("4d6e30d5-6123-46c8-8638-2fd9b7b12206", "Trigger_Events__Use_Trigger_Event_", Relay_OnEnterTrigger_155)) return; 
+      Relay_In_158();
    }
    
-   void Relay_OnExitTrigger_309()
+   void Relay_OnExitTrigger_155()
    {
-      if (true == CheckDebugBreak("4d6e30d5-6123-46c8-8638-2fd9b7b12206", "Trigger Events", Relay_OnExitTrigger_309)) return; 
-      Relay_In_313();
+      if (true == CheckDebugBreak("4d6e30d5-6123-46c8-8638-2fd9b7b12206", "Trigger_Events__Use_Trigger_Event_", Relay_OnExitTrigger_155)) return; 
+      Relay_In_158();
    }
    
-   void Relay_WhileInsideTrigger_309()
+   void Relay_WhileInsideTrigger_155()
    {
-      if (true == CheckDebugBreak("4d6e30d5-6123-46c8-8638-2fd9b7b12206", "Trigger Events", Relay_WhileInsideTrigger_309)) return; 
-      Relay_In_313();
+      if (true == CheckDebugBreak("4d6e30d5-6123-46c8-8638-2fd9b7b12206", "Trigger_Events__Use_Trigger_Event_", Relay_WhileInsideTrigger_155)) return; 
+      Relay_In_158();
    }
    
-   void Relay_In_313()
+   void Relay_In_158()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("18e193dc-b0d1-447f-8225-81a71924e69c", "Log", Relay_In_313)) return; 
+         if (true == CheckDebugBreak("18e193dc-b0d1-447f-8225-81a71924e69c", "Log", Relay_In_158)) return; 
          {
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_312_System_String);
-               logic_uScriptAct_Log_Target_313 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Log_Target_158.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_158, index + 1);
+               }
+               logic_uScriptAct_Log_Target_158[ index++ ] = local_157_System_String;
+               
             }
             {
             }
          }
-         logic_uScriptAct_Log_uScriptAct_Log_313.In(logic_uScriptAct_Log_Prefix_313, logic_uScriptAct_Log_Target_313, logic_uScriptAct_Log_Postfix_313);
+         logic_uScriptAct_Log_uScriptAct_Log_158.In(logic_uScriptAct_Log_Prefix_158, logic_uScriptAct_Log_Target_158, logic_uScriptAct_Log_Postfix_158);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -6075,40 +6220,40 @@ public class All_Event_Nodes : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "ddd39768-e999-4a8b-b734-f1c04a537d90", local_127_System_String);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:129", local_129_System_String);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "029c44eb-8e18-423c-a8fa-9c2bedfc2f59", local_129_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:262", local_262_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "ad80b1dc-7ab7-416b-b787-709d94e57bd8", local_262_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:269", local_269_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "0013c3fd-3fdd-492a-a4d5-b42f67d19d5f", local_269_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:272", local_272_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "7eaf4cfd-fb88-4007-b716-150a9ecfe2e6", local_272_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:275", local_275_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "c30d4a04-bef6-44c6-aa10-0a5f19ee7fe6", local_275_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:285", local_285_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "12aa2675-b63d-40cc-bb8b-abf23b70deed", local_285_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:288", local_288_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "2793e51d-cf76-4bfa-b81d-a2ebcd7fc625", local_288_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:297", local_297_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "c679e835-d091-4f57-ab41-e9ccd55cc3b9", local_297_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:299", local_299_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "cd140708-0929-4a38-958e-cc5f033145ec", local_299_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:301", local_301_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "abf67e23-6496-4989-9bf0-f226d7784e0f", local_301_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:303", local_303_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "7c063130-96ca-4b48-8f96-9c1120f8912d", local_303_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:305", local_305_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "63dda243-49eb-490c-b584-b5843a205c26", local_305_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:307", local_307_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "bd023f78-355b-4d4e-add0-93712ee8877a", local_307_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:310", local_310_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "fd21d60c-9889-46a3-ba18-6a51747ac60b", local_310_UnityEngine_GameObject);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:312", local_312_System_String);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "673d92ae-b657-4fcc-b4f2-b60db240ec42", local_312_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:132", local_132_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "ad80b1dc-7ab7-416b-b787-709d94e57bd8", local_132_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:137", local_137_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "0013c3fd-3fdd-492a-a4d5-b42f67d19d5f", local_137_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:139", local_139_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "7eaf4cfd-fb88-4007-b716-150a9ecfe2e6", local_139_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:141", local_141_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "c30d4a04-bef6-44c6-aa10-0a5f19ee7fe6", local_141_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:145", local_145_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "12aa2675-b63d-40cc-bb8b-abf23b70deed", local_145_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:147", local_147_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "2793e51d-cf76-4bfa-b81d-a2ebcd7fc625", local_147_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:149", local_149_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "c679e835-d091-4f57-ab41-e9ccd55cc3b9", local_149_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:150", local_150_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "cd140708-0929-4a38-958e-cc5f033145ec", local_150_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:151", local_151_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "abf67e23-6496-4989-9bf0-f226d7784e0f", local_151_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:152", local_152_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "7c063130-96ca-4b48-8f96-9c1120f8912d", local_152_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:153", local_153_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "63dda243-49eb-490c-b584-b5843a205c26", local_153_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:154", local_154_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "bd023f78-355b-4d4e-add0-93712ee8877a", local_154_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:156", local_156_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "fd21d60c-9889-46a3-ba18-6a51747ac60b", local_156_UnityEngine_GameObject);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "All_Event_Nodes.uscript:157", local_157_System_String);
+      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "673d92ae-b657-4fcc-b4f2-b60db240ec42", local_157_System_String);
    }
    bool CheckDebugBreak(string guid, string name, ContinueExecution method)
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

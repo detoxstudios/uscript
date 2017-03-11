@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -83,17 +83,17 @@ public class FollowCamera : uScriptLogic
    UnityEngine.Vector3 logic_uScriptAct_SetComponentsVector3_OutputVector3_3;
    bool logic_uScriptAct_SetComponentsVector3_Out_3 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_4 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_4 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_4 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_4;
-   bool logic_uScriptAct_AddVector3_Out_4 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_4 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_4 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_4 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_4;
+   bool logic_uScriptAct_AddVector3_v2_Out_4 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_5 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_5 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_5 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_5;
-   bool logic_uScriptAct_AddVector3_Out_5 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_5 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_5 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_5 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_5;
+   bool logic_uScriptAct_AddVector3_v2_Out_5 = true;
    //pointer to script instanced logic node
    uScriptAct_ScaleVector3 logic_uScriptAct_ScaleVector3_uScriptAct_ScaleVector3_14 = new uScriptAct_ScaleVector3( );
    UnityEngine.Vector3 logic_uScriptAct_ScaleVector3_v_14 = new Vector3( );
@@ -101,17 +101,17 @@ public class FollowCamera : uScriptLogic
    UnityEngine.Vector3 logic_uScriptAct_ScaleVector3_result_14;
    bool logic_uScriptAct_ScaleVector3_Out_14 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_16 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_16 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_16 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_16;
-   bool logic_uScriptAct_AddVector3_Out_16 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_16 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_16 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_16 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_16;
+   bool logic_uScriptAct_AddVector3_v2_Out_16 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_17 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_17 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_17 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_17;
-   bool logic_uScriptAct_AddVector3_Out_17 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_17 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_17 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_17 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_17;
+   bool logic_uScriptAct_AddVector3_v2_Out_17 = true;
    //pointer to script instanced logic node
    uScriptAct_GetPositionAndRotation logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_20 = new uScriptAct_GetPositionAndRotation( );
    UnityEngine.GameObject logic_uScriptAct_GetPositionAndRotation_Target_20 = default(UnityEngine.GameObject);
@@ -199,11 +199,11 @@ public class FollowCamera : uScriptLogic
       logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_1.SetParent(g);
       logic_uScriptAct_ScaleVector3_uScriptAct_ScaleVector3_2.SetParent(g);
       logic_uScriptAct_SetComponentsVector3_uScriptAct_SetComponentsVector3_3.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_4.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_5.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_4.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_5.SetParent(g);
       logic_uScriptAct_ScaleVector3_uScriptAct_ScaleVector3_14.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_16.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_17.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_16.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_17.SetParent(g);
       logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_20.SetParent(g);
       logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_21.SetParent(g);
       logic_uScriptAct_SetComponentsVector3_uScriptAct_SetComponentsVector3_22.SetParent(g);
@@ -446,34 +446,24 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("71056900-ddea-4f42-960c-75687ef9bbae", "Add_Vector3__OLD_", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("71056900-ddea-4f42-960c-75687ef9bbae", "Add_Vector3", Relay_In_4)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_4.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_4, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_4[ index++ ] = local_11_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_4 = local_11_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_4.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_4, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_4[ index++ ] = local_9_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_4 = local_9_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_4.In(logic_uScriptAct_AddVector3_A_4, logic_uScriptAct_AddVector3_B_4, out logic_uScriptAct_AddVector3_Result_4);
-         local_7_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_4;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_4.In(logic_uScriptAct_AddVector3_v2_A_4, logic_uScriptAct_AddVector3_v2_B_4, out logic_uScriptAct_AddVector3_v2_Result_4);
+         local_7_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_4;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_4.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_4.Out;
          
          if ( test_0 == true )
          {
@@ -482,7 +472,7 @@ public class FollowCamera : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -490,34 +480,24 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3e30a62d-ea61-4404-b987-21ac2329313d", "Add_Vector3__OLD_", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("3e30a62d-ea61-4404-b987-21ac2329313d", "Add_Vector3", Relay_In_5)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_5.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_5, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_5[ index++ ] = local_8_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_5 = local_8_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_5.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_5, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_5[ index++ ] = local_7_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_5 = local_7_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_5.In(logic_uScriptAct_AddVector3_A_5, logic_uScriptAct_AddVector3_B_5, out logic_uScriptAct_AddVector3_Result_5);
-         local_Raw_unfiltered_camera_position_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_5;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_5.In(logic_uScriptAct_AddVector3_v2_A_5, logic_uScriptAct_AddVector3_v2_B_5, out logic_uScriptAct_AddVector3_v2_Result_5);
+         local_Raw_unfiltered_camera_position_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_5;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_5.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_5.Out;
          
          if ( test_0 == true )
          {
@@ -526,7 +506,7 @@ public class FollowCamera : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -568,34 +548,24 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("83aa72fc-ce56-4700-8a72-a6b5391c35a8", "Add_Vector3__OLD_", Relay_In_16)) return; 
+         if (true == CheckDebugBreak("83aa72fc-ce56-4700-8a72-a6b5391c35a8", "Add_Vector3", Relay_In_16)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_16.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_16, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_16[ index++ ] = local_13_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_16 = local_13_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_16.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_16, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_16[ index++ ] = local_24_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_16 = local_24_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_16.In(logic_uScriptAct_AddVector3_A_16, logic_uScriptAct_AddVector3_B_16, out logic_uScriptAct_AddVector3_Result_16);
-         local_Raw_unfiltered_camera_position_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_16;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_16.In(logic_uScriptAct_AddVector3_v2_A_16, logic_uScriptAct_AddVector3_v2_B_16, out logic_uScriptAct_AddVector3_v2_Result_16);
+         local_Raw_unfiltered_camera_position_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_16;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_16.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_16.Out;
          
          if ( test_0 == true )
          {
@@ -604,7 +574,7 @@ public class FollowCamera : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -612,34 +582,24 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9121d6e0-1a0e-4927-92c1-6670a5153bb6", "Add_Vector3__OLD_", Relay_In_17)) return; 
+         if (true == CheckDebugBreak("9121d6e0-1a0e-4927-92c1-6670a5153bb6", "Add_Vector3", Relay_In_17)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_17.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_17, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_17[ index++ ] = local_23_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_17 = local_23_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_17.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_17, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_17[ index++ ] = local_15_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_17 = local_15_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_17.In(logic_uScriptAct_AddVector3_A_17, logic_uScriptAct_AddVector3_B_17, out logic_uScriptAct_AddVector3_Result_17);
-         local_24_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_17;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_17.In(logic_uScriptAct_AddVector3_v2_A_17, logic_uScriptAct_AddVector3_v2_B_17, out logic_uScriptAct_AddVector3_v2_Result_17);
+         local_24_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_17;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_17.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_17.Out;
          
          if ( test_0 == true )
          {
@@ -648,7 +608,7 @@ public class FollowCamera : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    

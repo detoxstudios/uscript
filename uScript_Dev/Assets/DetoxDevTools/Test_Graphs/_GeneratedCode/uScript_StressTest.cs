@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2439
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -25,47 +25,47 @@ public class uScript_StressTest : uScriptLogic
    //external parameters
    
    //local nodes
-   UnityEngine.GameObject local_0_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_0_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_0_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_105_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_105_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_105_UnityEngine_GameObject_previous = null;
    System.Int32 local_113_System_Int32 = (int) 0;
    System.String local_119_System_String = "Ogre";
    System.Boolean local_15_System_Boolean = (bool) false;
-   UnityEngine.GameObject local_17_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_17_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_17_UnityEngine_GameObject_previous = null;
    System.String local_2_System_String = "Area Damage";
    System.Boolean local_22_System_Boolean = (bool) false;
    System.Single local_25_System_Single = (float) 3;
-   UnityEngine.GameObject local_26_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_26_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_26_UnityEngine_GameObject_previous = null;
    System.String local_34_System_String = "Area Damage";
-   UnityEngine.GameObject local_35_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_35_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_35_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_45_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_45_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_45_UnityEngine_GameObject_previous = null;
    System.Int32 local_49_System_Int32 = (int) 0;
    System.Int32 local_5_System_Int32 = (int) 0;
    System.Int32 local_53_System_Int32 = (int) 0;
-   UnityEngine.GameObject local_54_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_54_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_54_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_6_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_6_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_6_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_69_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_69_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_69_UnityEngine_GameObject_previous = null;
    System.String local_86_System_String = "";
-   UnityEngine.GameObject local_88_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_88_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_88_UnityEngine_GameObject_previous = null;
    System.Int32 local_9_System_Int32 = (int) 0;
-   UnityEngine.GameObject local_94_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_94_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_94_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Cover1_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Cover1_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_Cover1_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Cover2_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Cover2_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_Cover2_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Cover3_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Cover3_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_Cover3_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Monster_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Monster_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_Monster_UnityEngine_GameObject_previous = null;
    
    //owner nodes
@@ -123,7 +123,7 @@ public class uScript_StressTest : uScriptLogic
    bool logic_uScriptAct_Log_Out_43 = true;
    //pointer to script instanced logic node
    uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55 = new uScriptAct_PlaySound( );
-   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_55 = null;
+   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_55 = default(UnityEngine.AudioClip);
    UnityEngine.GameObject[] logic_uScriptAct_PlaySound_target_55 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlaySound_volume_55 = (float) 0;
    System.Boolean logic_uScriptAct_PlaySound_loop_55 = (bool) false;
@@ -187,7 +187,7 @@ public class uScript_StressTest : uScriptLogic
    bool logic_uScriptAct_Log_Out_75 = true;
    //pointer to script instanced logic node
    uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76 = new uScriptAct_PlaySound( );
-   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_76 = null;
+   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_76 = default(UnityEngine.AudioClip);
    UnityEngine.GameObject[] logic_uScriptAct_PlaySound_target_76 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlaySound_volume_76 = (float) 0;
    System.Boolean logic_uScriptAct_PlaySound_loop_76 = (bool) false;
@@ -215,7 +215,7 @@ public class uScript_StressTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Teleport logic_uScriptAct_Teleport_uScriptAct_Teleport_96 = new uScriptAct_Teleport( );
    UnityEngine.GameObject[] logic_uScriptAct_Teleport_Target_96 = new UnityEngine.GameObject[] {};
-   UnityEngine.GameObject logic_uScriptAct_Teleport_Destination_96 = null;
+   UnityEngine.GameObject logic_uScriptAct_Teleport_Destination_96 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_Teleport_UpdateRotation_96 = (bool) false;
    bool logic_uScriptAct_Teleport_Out_96 = true;
    //pointer to script instanced logic node
@@ -259,15 +259,15 @@ public class uScript_StressTest : uScriptLogic
    bool logic_uScriptCon_CompareBool_False_115 = true;
    //pointer to script instanced logic node
    uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116 = new uScriptAct_PlaySound( );
-   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_116 = null;
+   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_116 = default(UnityEngine.AudioClip);
    UnityEngine.GameObject[] logic_uScriptAct_PlaySound_target_116 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlaySound_volume_116 = (float) 0;
    System.Boolean logic_uScriptAct_PlaySound_loop_116 = (bool) false;
    bool logic_uScriptAct_PlaySound_Out_116 = true;
    
    //event nodes
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_92 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_106 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_92 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_106 = default(UnityEngine.GameObject);
    
    //property nodes
    
@@ -841,7 +841,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a440fa9f-6a17-4c28-92dc-edacb1ace12b", "Int Counter", Relay_In_14)) return; 
+         if (true == CheckDebugBreak("a440fa9f-6a17-4c28-92dc-edacb1ace12b", "Int_Counter", Relay_In_14)) return; 
          {
             {
             }
@@ -892,7 +892,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a440fa9f-6a17-4c28-92dc-edacb1ace12b", "Int Counter", Relay_Reset_14)) return; 
+         if (true == CheckDebugBreak("a440fa9f-6a17-4c28-92dc-edacb1ace12b", "Int_Counter", Relay_Reset_14)) return; 
          {
             {
             }
@@ -996,7 +996,7 @@ public class uScript_StressTest : uScriptLogic
             {
             }
             {
-               List<System.Object> properties = new List<System.Object>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover3_UnityEngine_GameObject_previous != local_Cover3_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1008,8 +1008,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((System.Object)local_Cover3_UnityEngine_GameObject);
-               logic_uScriptAct_Log_Target_28 = properties.ToArray();
+               if ( logic_uScriptAct_Log_Target_28.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Log_Target_28, index + 1);
+               }
+               logic_uScriptAct_Log_Target_28[ index++ ] = local_Cover3_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1029,7 +1033,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4bd0cd79-1da7-4551-8c56-4f6e3a048b00", "Int Counter", Relay_In_36)) return; 
+         if (true == CheckDebugBreak("4bd0cd79-1da7-4551-8c56-4f6e3a048b00", "Int_Counter", Relay_In_36)) return; 
          {
             {
             }
@@ -1080,7 +1084,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4bd0cd79-1da7-4551-8c56-4f6e3a048b00", "Int Counter", Relay_Reset_36)) return; 
+         if (true == CheckDebugBreak("4bd0cd79-1da7-4551-8c56-4f6e3a048b00", "Int_Counter", Relay_Reset_36)) return; 
          {
             {
             }
@@ -1155,7 +1159,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cc3cbc31-f842-4dad-bc9e-4c1e88cb52e7", "Play Sound", Relay_Finished_55)) return; 
+         if (true == CheckDebugBreak("cc3cbc31-f842-4dad-bc9e-4c1e88cb52e7", "Play_Sound", Relay_Finished_55)) return; 
       }
       else
       {
@@ -1167,7 +1171,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cc3cbc31-f842-4dad-bc9e-4c1e88cb52e7", "Play Sound", Relay_Play_55)) return; 
+         if (true == CheckDebugBreak("cc3cbc31-f842-4dad-bc9e-4c1e88cb52e7", "Play_Sound", Relay_Play_55)) return; 
          {
             {
             }
@@ -1198,7 +1202,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cc3cbc31-f842-4dad-bc9e-4c1e88cb52e7", "Play Sound", Relay_UpdateVolume_55)) return; 
+         if (true == CheckDebugBreak("cc3cbc31-f842-4dad-bc9e-4c1e88cb52e7", "Play_Sound", Relay_UpdateVolume_55)) return; 
          {
             {
             }
@@ -1229,7 +1233,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cc3cbc31-f842-4dad-bc9e-4c1e88cb52e7", "Play Sound", Relay_Stop_55)) return; 
+         if (true == CheckDebugBreak("cc3cbc31-f842-4dad-bc9e-4c1e88cb52e7", "Play_Sound", Relay_Stop_55)) return; 
          {
             {
             }
@@ -1440,10 +1444,10 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2a8539ca-7852-4f46-a04b-a68d36b8c0c6", "Destroy Component", Relay_In_65)) return; 
+         if (true == CheckDebugBreak("2a8539ca-7852-4f46-a04b-a68d36b8c0c6", "Destroy_Component", Relay_In_65)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1455,13 +1459,21 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Monster_UnityEngine_GameObject);
-               logic_uScriptAct_DestroyComponent_Target_65 = properties.ToArray();
+               if ( logic_uScriptAct_DestroyComponent_Target_65.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_DestroyComponent_Target_65, index + 1);
+               }
+               logic_uScriptAct_DestroyComponent_Target_65[ index++ ] = local_Monster_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_2_System_String);
-               logic_uScriptAct_DestroyComponent_ComponentName_65 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_DestroyComponent_ComponentName_65.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_DestroyComponent_ComponentName_65, index + 1);
+               }
+               logic_uScriptAct_DestroyComponent_ComponentName_65[ index++ ] = local_2_System_String;
+               
             }
             {
             }
@@ -1510,10 +1522,10 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("946abbb0-d896-4a44-b703-8efc3745545f", "Destroy Component", Relay_In_68)) return; 
+         if (true == CheckDebugBreak("946abbb0-d896-4a44-b703-8efc3745545f", "Destroy_Component", Relay_In_68)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1525,13 +1537,21 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Monster_UnityEngine_GameObject);
-               logic_uScriptAct_DestroyComponent_Target_68 = properties.ToArray();
+               if ( logic_uScriptAct_DestroyComponent_Target_68.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_DestroyComponent_Target_68, index + 1);
+               }
+               logic_uScriptAct_DestroyComponent_Target_68[ index++ ] = local_Monster_UnityEngine_GameObject;
+               
             }
             {
-               List<System.String> properties = new List<System.String>();
-               properties.Add((System.String)local_34_System_String);
-               logic_uScriptAct_DestroyComponent_ComponentName_68 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_DestroyComponent_ComponentName_68.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_DestroyComponent_ComponentName_68, index + 1);
+               }
+               logic_uScriptAct_DestroyComponent_ComponentName_68[ index++ ] = local_34_System_String;
+               
             }
             {
             }
@@ -1595,7 +1615,7 @@ public class uScript_StressTest : uScriptLogic
          if (true == CheckDebugBreak("f1a5ab09-6a40-4d6d-8074-0c475f1d84b0", "Toggle", Relay_TurnOn_70)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1607,7 +1627,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Cover1_UnityEngine_GameObject);
+               if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+               }
+               logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1619,8 +1644,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Cover2_UnityEngine_GameObject);
-               logic_uScriptAct_Toggle_Target_70 = properties.ToArray();
+               if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+               }
+               logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1648,7 +1677,7 @@ public class uScript_StressTest : uScriptLogic
          if (true == CheckDebugBreak("f1a5ab09-6a40-4d6d-8074-0c475f1d84b0", "Toggle", Relay_TurnOff_70)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1660,7 +1689,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Cover1_UnityEngine_GameObject);
+               if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+               }
+               logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1672,8 +1706,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Cover2_UnityEngine_GameObject);
-               logic_uScriptAct_Toggle_Target_70 = properties.ToArray();
+               if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+               }
+               logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1701,7 +1739,7 @@ public class uScript_StressTest : uScriptLogic
          if (true == CheckDebugBreak("f1a5ab09-6a40-4d6d-8074-0c475f1d84b0", "Toggle", Relay_Toggle_70)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1713,7 +1751,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Cover1_UnityEngine_GameObject);
+               if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+               }
+               logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1725,8 +1768,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_Cover2_UnityEngine_GameObject);
-               logic_uScriptAct_Toggle_Target_70 = properties.ToArray();
+               if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+               }
+               logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -1823,7 +1870,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("df91d8ba-6284-4150-8d70-56c445509598", "Play Sound", Relay_Finished_76)) return; 
+         if (true == CheckDebugBreak("df91d8ba-6284-4150-8d70-56c445509598", "Play_Sound", Relay_Finished_76)) return; 
       }
       else
       {
@@ -1835,7 +1882,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("df91d8ba-6284-4150-8d70-56c445509598", "Play Sound", Relay_Play_76)) return; 
+         if (true == CheckDebugBreak("df91d8ba-6284-4150-8d70-56c445509598", "Play_Sound", Relay_Play_76)) return; 
          {
             {
             }
@@ -1866,7 +1913,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("df91d8ba-6284-4150-8d70-56c445509598", "Play Sound", Relay_UpdateVolume_76)) return; 
+         if (true == CheckDebugBreak("df91d8ba-6284-4150-8d70-56c445509598", "Play_Sound", Relay_UpdateVolume_76)) return; 
          {
             {
             }
@@ -1897,7 +1944,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("df91d8ba-6284-4150-8d70-56c445509598", "Play Sound", Relay_Stop_76)) return; 
+         if (true == CheckDebugBreak("df91d8ba-6284-4150-8d70-56c445509598", "Play_Sound", Relay_Stop_76)) return; 
          {
             {
             }
@@ -1928,7 +1975,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e304c37f-ccc5-4a1e-ac1a-1370efa9ccc4", "Input Events Filter", Relay_In_80)) return; 
+         if (true == CheckDebugBreak("e304c37f-ccc5-4a1e-ac1a-1370efa9ccc4", "Input_Events_Filter", Relay_In_80)) return; 
          {
             {
             }
@@ -1958,7 +2005,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eba3b3e6-e10f-42f8-bbab-6e6066e48a25", "Look At", Relay_Finished_83)) return; 
+         if (true == CheckDebugBreak("eba3b3e6-e10f-42f8-bbab-6e6066e48a25", "Look_At", Relay_Finished_83)) return; 
       }
       else
       {
@@ -1970,10 +2017,10 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("eba3b3e6-e10f-42f8-bbab-6e6066e48a25", "Look At", Relay_In_83)) return; 
+         if (true == CheckDebugBreak("eba3b3e6-e10f-42f8-bbab-6e6066e48a25", "Look_At", Relay_In_83)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_94_UnityEngine_GameObject_previous != local_94_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1985,7 +2032,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_94_UnityEngine_GameObject);
+               if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_83[ index++ ] = local_94_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1997,7 +2049,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_88_UnityEngine_GameObject);
+               if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_83[ index++ ] = local_88_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2009,7 +2066,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_45_UnityEngine_GameObject);
+               if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_83[ index++ ] = local_45_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2021,7 +2083,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_105_UnityEngine_GameObject);
+               if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_83[ index++ ] = local_105_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2033,8 +2100,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_26_UnityEngine_GameObject);
-               logic_uScriptAct_LookAt_Target_83 = properties.ToArray();
+               if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_83[ index++ ] = local_26_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2058,7 +2129,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("568ade37-79eb-46c7-ba19-259de6b0cf25", "Look At", Relay_Finished_89)) return; 
+         if (true == CheckDebugBreak("568ade37-79eb-46c7-ba19-259de6b0cf25", "Look_At", Relay_Finished_89)) return; 
       }
       else
       {
@@ -2070,10 +2141,10 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("568ade37-79eb-46c7-ba19-259de6b0cf25", "Look At", Relay_In_89)) return; 
+         if (true == CheckDebugBreak("568ade37-79eb-46c7-ba19-259de6b0cf25", "Look_At", Relay_In_89)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_35_UnityEngine_GameObject_previous != local_35_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2085,7 +2156,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_35_UnityEngine_GameObject);
+               if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_89[ index++ ] = local_35_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2097,7 +2173,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_69_UnityEngine_GameObject);
+               if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_89[ index++ ] = local_69_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2109,7 +2190,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_0_UnityEngine_GameObject);
+               if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_89[ index++ ] = local_0_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2121,7 +2207,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_17_UnityEngine_GameObject);
+               if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_89[ index++ ] = local_17_UnityEngine_GameObject;
+               
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2133,8 +2224,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
-               logic_uScriptAct_LookAt_Target_89 = properties.ToArray();
+               if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+               }
+               logic_uScriptAct_LookAt_Target_89[ index++ ] = local_6_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2156,7 +2251,7 @@ public class uScript_StressTest : uScriptLogic
    
    void Relay_KeyEvent_92()
    {
-      if (true == CheckDebugBreak("a856229d-2f54-4fdd-995a-1b95a676022c", "Input Events", Relay_KeyEvent_92)) return; 
+      if (true == CheckDebugBreak("a856229d-2f54-4fdd-995a-1b95a676022c", "Input_Events", Relay_KeyEvent_92)) return; 
       Relay_In_80();
    }
    
@@ -2167,7 +2262,7 @@ public class uScript_StressTest : uScriptLogic
          if (true == CheckDebugBreak("ce1fa72c-9798-4a0c-bd8b-b595cfd6613e", "Teleport", Relay_In_96)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_54_UnityEngine_GameObject_previous != local_54_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2179,8 +2274,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_54_UnityEngine_GameObject);
-               logic_uScriptAct_Teleport_Target_96 = properties.ToArray();
+               if ( logic_uScriptAct_Teleport_Target_96.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Teleport_Target_96, index + 1);
+               }
+               logic_uScriptAct_Teleport_Target_96[ index++ ] = local_54_UnityEngine_GameObject;
+               
             }
             {
             }
@@ -2207,7 +2306,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("15fa09ba-de02-40f9-ad6f-088b7e027c06", "Compare Bool", Relay_In_98)) return; 
+         if (true == CheckDebugBreak("15fa09ba-de02-40f9-ad6f-088b7e027c06", "Compare_Bool", Relay_In_98)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_98 = local_22_System_Boolean;
@@ -2256,7 +2355,7 @@ public class uScript_StressTest : uScriptLogic
    
    void Relay_KeyEvent_106()
    {
-      if (true == CheckDebugBreak("69e6e3a5-c588-4584-8451-0dd7e41814a5", "Input Events", Relay_KeyEvent_106)) return; 
+      if (true == CheckDebugBreak("69e6e3a5-c588-4584-8451-0dd7e41814a5", "Input_Events", Relay_KeyEvent_106)) return; 
       Relay_In_109();
    }
    
@@ -2267,14 +2366,22 @@ public class uScript_StressTest : uScriptLogic
          if (true == CheckDebugBreak("17c59a20-6765-4be5-a093-491c67a03a43", "Concatenate", Relay_In_107)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_119_System_String);
-               logic_uScriptAct_Concatenate_A_107 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_107.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_107, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_107[ index++ ] = local_119_System_String;
+               
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_9_System_Int32);
-               logic_uScriptAct_Concatenate_B_107 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_107.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_107, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_107[ index++ ] = local_9_System_Int32;
+               
             }
             {
             }
@@ -2303,7 +2410,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("892454ea-a6b0-413e-b725-8acac29dde32", "Input Events Filter", Relay_In_109)) return; 
+         if (true == CheckDebugBreak("892454ea-a6b0-413e-b725-8acac29dde32", "Input_Events_Filter", Relay_In_109)) return; 
          {
             {
             }
@@ -2333,7 +2440,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b003ab9f-f3bb-472a-bef5-23e4e22e35ca", "Int Counter", Relay_In_110)) return; 
+         if (true == CheckDebugBreak("b003ab9f-f3bb-472a-bef5-23e4e22e35ca", "Int_Counter", Relay_In_110)) return; 
          {
             {
                logic_uScriptCon_IntCounter_A_110 = local_113_System_Int32;
@@ -2367,7 +2474,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b003ab9f-f3bb-472a-bef5-23e4e22e35ca", "Int Counter", Relay_Reset_110)) return; 
+         if (true == CheckDebugBreak("b003ab9f-f3bb-472a-bef5-23e4e22e35ca", "Int_Counter", Relay_Reset_110)) return; 
          {
             {
                logic_uScriptCon_IntCounter_A_110 = local_113_System_Int32;
@@ -2401,7 +2508,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("68a827d6-5a77-4f56-b1c6-8194b5be3d26", "Compare Bool", Relay_In_115)) return; 
+         if (true == CheckDebugBreak("68a827d6-5a77-4f56-b1c6-8194b5be3d26", "Compare_Bool", Relay_In_115)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_115 = local_15_System_Boolean;
@@ -2428,7 +2535,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e3ce073-1c25-4fb6-9d0b-620a1e94ed6f", "Play Sound", Relay_Finished_116)) return; 
+         if (true == CheckDebugBreak("4e3ce073-1c25-4fb6-9d0b-620a1e94ed6f", "Play_Sound", Relay_Finished_116)) return; 
       }
       else
       {
@@ -2440,7 +2547,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e3ce073-1c25-4fb6-9d0b-620a1e94ed6f", "Play Sound", Relay_Play_116)) return; 
+         if (true == CheckDebugBreak("4e3ce073-1c25-4fb6-9d0b-620a1e94ed6f", "Play_Sound", Relay_Play_116)) return; 
          {
             {
             }
@@ -2466,7 +2573,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e3ce073-1c25-4fb6-9d0b-620a1e94ed6f", "Play Sound", Relay_UpdateVolume_116)) return; 
+         if (true == CheckDebugBreak("4e3ce073-1c25-4fb6-9d0b-620a1e94ed6f", "Play_Sound", Relay_UpdateVolume_116)) return; 
          {
             {
             }
@@ -2492,7 +2599,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e3ce073-1c25-4fb6-9d0b-620a1e94ed6f", "Play Sound", Relay_Stop_116)) return; 
+         if (true == CheckDebugBreak("4e3ce073-1c25-4fb6-9d0b-620a1e94ed6f", "Play_Sound", Relay_Stop_116)) return; 
          {
             {
             }
@@ -2575,7 +2682,7 @@ public class uScript_StressTest : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

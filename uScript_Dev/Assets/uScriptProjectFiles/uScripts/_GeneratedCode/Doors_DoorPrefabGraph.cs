@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -130,7 +130,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
    bool logic_uScriptAct_GetChildrenByName_ChildrenNotFound_19 = true;
    
    //event nodes
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_46 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_22 = default(UnityEngine.GameObject);
    
    //property nodes
    
@@ -181,9 +181,9 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_46;
-                  component.OnExitTrigger += Instance_OnExitTrigger_46;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_46;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_22;
+                  component.OnExitTrigger += Instance_OnExitTrigger_22;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_22;
                }
             }
          }
@@ -226,9 +226,9 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_46;
-                  component.OnExitTrigger += Instance_OnExitTrigger_46;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_46;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_22;
+                  component.OnExitTrigger += Instance_OnExitTrigger_22;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_22;
                }
             }
          }
@@ -247,9 +247,9 @@ public class Doors_DoorPrefabGraph : uScriptLogic
             uScript_Trigger component = owner_Connection_21.GetComponent<uScript_Trigger>();
             if ( null != component )
             {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_46;
-               component.OnExitTrigger -= Instance_OnExitTrigger_46;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_46;
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_22;
+               component.OnExitTrigger -= Instance_OnExitTrigger_22;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_22;
             }
          }
       }
@@ -344,7 +344,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
       logic_uScriptAct_PlayAnimation_uScriptAct_PlayAnimation_12.Finished -= uScriptAct_PlayAnimation_Finished_12;
    }
    
-   void Instance_OnEnterTrigger_46(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnEnterTrigger_22(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -352,12 +352,12 @@ public class Doors_DoorPrefabGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_46 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_22 = e.GameObject;
       //relay event to nodes
-      Relay_OnEnterTrigger_46( );
+      Relay_OnEnterTrigger_22( );
    }
    
-   void Instance_OnExitTrigger_46(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnExitTrigger_22(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -365,12 +365,12 @@ public class Doors_DoorPrefabGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_46 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_22 = e.GameObject;
       //relay event to nodes
-      Relay_OnExitTrigger_46( );
+      Relay_OnExitTrigger_22( );
    }
    
-   void Instance_WhileInsideTrigger_46(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_WhileInsideTrigger_22(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -378,9 +378,9 @@ public class Doors_DoorPrefabGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_46 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_22 = e.GameObject;
       //relay event to nodes
-      Relay_WhileInsideTrigger_46( );
+      Relay_WhileInsideTrigger_22( );
    }
    
    void uScriptAct_PlayAnimation_Finished_0(object o, System.EventArgs e)
@@ -1036,20 +1036,20 @@ public class Doors_DoorPrefabGraph : uScriptLogic
       }
    }
    
-   void Relay_OnEnterTrigger_46()
+   void Relay_OnEnterTrigger_22()
    {
-      if (true == CheckDebugBreak("f61f197e-2d7a-42ef-9d61-db3c5d5987d0", "Trigger_Event", Relay_OnEnterTrigger_46)) return; 
+      if (true == CheckDebugBreak("f61f197e-2d7a-42ef-9d61-db3c5d5987d0", "Trigger_Event", Relay_OnEnterTrigger_22)) return; 
       Relay_In_7();
    }
    
-   void Relay_OnExitTrigger_46()
+   void Relay_OnExitTrigger_22()
    {
-      if (true == CheckDebugBreak("f61f197e-2d7a-42ef-9d61-db3c5d5987d0", "Trigger_Event", Relay_OnExitTrigger_46)) return; 
+      if (true == CheckDebugBreak("f61f197e-2d7a-42ef-9d61-db3c5d5987d0", "Trigger_Event", Relay_OnExitTrigger_22)) return; 
    }
    
-   void Relay_WhileInsideTrigger_46()
+   void Relay_WhileInsideTrigger_22()
    {
-      if (true == CheckDebugBreak("f61f197e-2d7a-42ef-9d61-db3c5d5987d0", "Trigger_Event", Relay_WhileInsideTrigger_46)) return; 
+      if (true == CheckDebugBreak("f61f197e-2d7a-42ef-9d61-db3c5d5987d0", "Trigger_Event", Relay_WhileInsideTrigger_22)) return; 
    }
    
    private void UpdateEditorValues( )

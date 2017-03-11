@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2439
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -29,7 +29,7 @@ public class WebTexture : uScriptLogic
    System.String local_22_System_String = "Download";
    System.String local_URL_System_String = "";
    System.String local_WWW_Error_System_String = "";
-   UnityEngine.Texture2D local_WWW_Texture_UnityEngine_Texture2D = null;
+   UnityEngine.Texture2D local_WWW_Texture_UnityEngine_Texture2D = default(UnityEngine.Texture2D);
    System.String local_wwwStatus_System_String = "";
    
    //owner nodes
@@ -39,7 +39,7 @@ public class WebTexture : uScriptLogic
    uScriptAct_GUILabel logic_uScriptAct_GUILabel_uScriptAct_GUILabel_1 = new uScriptAct_GUILabel( );
    System.String logic_uScriptAct_GUILabel_Text_1 = "";
    UnityEngine.Rect logic_uScriptAct_GUILabel_Position_1 = new Rect( (float)15, (float)70, (float)700, (float)25 );
-   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_1 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_1 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILabel_ToolTip_1 = "";
    System.String logic_uScriptAct_GUILabel_guiStyle_1 = "";
    bool logic_uScriptAct_GUILabel_Out_1 = true;
@@ -48,7 +48,7 @@ public class WebTexture : uScriptLogic
    System.String logic_uScriptAct_GUIButton_Text_2 = "";
    System.Int32 logic_uScriptAct_GUIButton_identifier_2 = (int) 0;
    UnityEngine.Rect logic_uScriptAct_GUIButton_Position_2 = new Rect( (float)10, (float)40, (float)80, (float)20 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIButton_Texture_2 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIButton_Texture_2 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIButton_ToolTip_2 = "";
    System.String logic_uScriptAct_GUIButton_guiStyle_2 = "";
    bool logic_uScriptAct_GUIButton_Out_2 = true;
@@ -96,7 +96,7 @@ public class WebTexture : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_WebTexture logic_uScriptAct_WebTexture_uScriptAct_WebTexture_8 = new uScriptAct_WebTexture( );
    System.String logic_uScriptAct_WebTexture_URL_8 = "";
-   UnityEngine.WWWForm logic_uScriptAct_WebTexture_Form_8 = null;
+   UnityEngine.WWWForm logic_uScriptAct_WebTexture_Form_8 = default(UnityEngine.WWWForm);
    UnityEngine.Texture2D logic_uScriptAct_WebTexture_Result_8;
    System.String logic_uScriptAct_WebTexture_Error_8;
    bool logic_uScriptAct_WebTexture_Out_8 = true;
@@ -107,7 +107,7 @@ public class WebTexture : uScriptLogic
    uScriptAct_GUILabel logic_uScriptAct_GUILabel_uScriptAct_GUILabel_11 = new uScriptAct_GUILabel( );
    System.String logic_uScriptAct_GUILabel_Text_11 = "";
    UnityEngine.Rect logic_uScriptAct_GUILabel_Position_11 = new Rect( (float)10, (float)100, (float)700, (float)400 );
-   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_11 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_11 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILabel_ToolTip_11 = "";
    System.String logic_uScriptAct_GUILabel_guiStyle_11 = "";
    bool logic_uScriptAct_GUILabel_Out_11 = true;
@@ -115,8 +115,8 @@ public class WebTexture : uScriptLogic
    //event nodes
    System.Boolean event_UnityEngine_GameObject_GUIChanged_0 = (bool) false;
    System.String event_UnityEngine_GameObject_FocusedControl_0 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_14 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_14 = default(UnityEngine.GameObject);
    
    //property nodes
    
@@ -351,7 +351,7 @@ public class WebTexture : uScriptLogic
    
    void Relay_OnGui_0()
    {
-      if (true == CheckDebugBreak("41f92a5b-34c7-4b9d-bd60-46382eb9dd97", "GUI Events", Relay_OnGui_0)) return; 
+      if (true == CheckDebugBreak("41f92a5b-34c7-4b9d-bd60-46382eb9dd97", "GUI_Events", Relay_OnGui_0)) return; 
       Relay_In_2();
    }
    
@@ -359,7 +359,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("10249a6d-2195-4def-8862-67a9bd4564bb", "GUI Label", Relay_In_1)) return; 
+         if (true == CheckDebugBreak("10249a6d-2195-4def-8862-67a9bd4564bb", "GUI_Label", Relay_In_1)) return; 
          {
             {
                logic_uScriptAct_GUILabel_Text_1 = local_wwwStatus_System_String;
@@ -394,7 +394,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_OnButtonDown_2)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_OnButtonDown_2)) return; 
       }
       else
       {
@@ -406,7 +406,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_OnButtonHeld_2)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_OnButtonHeld_2)) return; 
       }
       else
       {
@@ -418,7 +418,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_OnButtonUp_2)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_OnButtonUp_2)) return; 
       }
       else
       {
@@ -430,7 +430,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_OnButtonClicked_2)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_OnButtonClicked_2)) return; 
          Relay_In_8();
       }
       else
@@ -443,7 +443,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_In_2)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_2 = local_22_System_String;
@@ -480,7 +480,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0848e806-0fd8-4212-8cec-9af2ef9b75c3", "Set String", Relay_In_3)) return; 
+         if (true == CheckDebugBreak("0848e806-0fd8-4212-8cec-9af2ef9b75c3", "Set_String", Relay_In_3)) return; 
          {
             {
             }
@@ -509,7 +509,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8e6e13a7-9a23-4bde-9699-778b4dc054a3", "GUI Text Field", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("8e6e13a7-9a23-4bde-9699-778b4dc054a3", "GUI_Text_Field", Relay_In_4)) return; 
          {
             {
                logic_uScriptAct_GUITextField_Value_4 = local_URL_System_String;
@@ -545,7 +545,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a879c713-af48-4cfc-b6b4-d3f6444412ee", "Set String", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("a879c713-af48-4cfc-b6b4-d3f6444412ee", "Set_String", Relay_In_5)) return; 
          {
             {
                logic_uScriptAct_SetString_Value_5 = local_21_System_String;
@@ -576,7 +576,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3578c7cb-ec1a-4d3f-aa14-4b4c56805b60", "Set String", Relay_In_6)) return; 
+         if (true == CheckDebugBreak("3578c7cb-ec1a-4d3f-aa14-4b4c56805b60", "Set_String", Relay_In_6)) return; 
          {
             {
             }
@@ -605,7 +605,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d4942041-725f-48b6-91cc-a4061343f559", "Set String", Relay_In_7)) return; 
+         if (true == CheckDebugBreak("d4942041-725f-48b6-91cc-a4061343f559", "Set_String", Relay_In_7)) return; 
          {
             {
                logic_uScriptAct_SetString_Value_7 = local_WWW_Error_System_String;
@@ -636,7 +636,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ba49a3b6-ed74-4e0e-a1a3-ae5e960fcfec", "Web Texture", Relay_In_8)) return; 
+         if (true == CheckDebugBreak("ba49a3b6-ed74-4e0e-a1a3-ae5e960fcfec", "Web_Texture", Relay_In_8)) return; 
          {
             {
                logic_uScriptAct_WebTexture_URL_8 = local_URL_System_String;
@@ -722,7 +722,7 @@ public class WebTexture : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cc884cf9-419a-47ee-b9a1-75b02df1b5f7", "GUI Label", Relay_In_11)) return; 
+         if (true == CheckDebugBreak("cc884cf9-419a-47ee-b9a1-75b02df1b5f7", "GUI_Label", Relay_In_11)) return; 
          {
             {
             }
@@ -750,13 +750,13 @@ public class WebTexture : uScriptLogic
    
    void Relay_uScriptStart_14()
    {
-      if (true == CheckDebugBreak("2e250385-7c29-421f-8b98-5e26b9da1276", "uScript Events", Relay_uScriptStart_14)) return; 
+      if (true == CheckDebugBreak("2e250385-7c29-421f-8b98-5e26b9da1276", "uScript_Events", Relay_uScriptStart_14)) return; 
       Relay_In_5();
    }
    
    void Relay_uScriptLateStart_14()
    {
-      if (true == CheckDebugBreak("2e250385-7c29-421f-8b98-5e26b9da1276", "uScript Events", Relay_uScriptLateStart_14)) return; 
+      if (true == CheckDebugBreak("2e250385-7c29-421f-8b98-5e26b9da1276", "uScript_Events", Relay_uScriptLateStart_14)) return; 
    }
    
    private void UpdateEditorValues( )
@@ -778,7 +778,7 @@ public class WebTexture : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

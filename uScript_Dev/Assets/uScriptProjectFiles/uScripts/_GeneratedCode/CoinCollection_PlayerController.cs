@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -59,11 +59,11 @@ public class CoinCollection_PlayerController : uScriptLogic
    bool logic_uScriptAct_OnInputEventFilter_KeyHeld_0 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_0 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_2 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_2 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_2 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_2;
-   bool logic_uScriptAct_AddVector3_Out_2 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_2 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_2 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_2 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_2;
+   bool logic_uScriptAct_AddVector3_v2_Out_2 = true;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_3 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_3 = UnityEngine.KeyCode.Space;
@@ -79,11 +79,11 @@ public class CoinCollection_PlayerController : uScriptLogic
    UnityEngine.ForceMode logic_uScriptAct_AddForce_ForceModeType_7 = UnityEngine.ForceMode.Force;
    bool logic_uScriptAct_AddForce_Out_7 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_12 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_12 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_12 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_12;
-   bool logic_uScriptAct_AddVector3_Out_12 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_12 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_12 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_12 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_12;
+   bool logic_uScriptAct_AddVector3_v2_Out_12 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareBool logic_uScriptCon_CompareBool_uScriptCon_CompareBool_13 = new uScriptCon_CompareBool( );
    System.Boolean logic_uScriptCon_CompareBool_Bool_13 = (bool) false;
@@ -105,11 +105,11 @@ public class CoinCollection_PlayerController : uScriptLogic
    UnityEngine.ForceMode logic_uScriptAct_AddForce_ForceModeType_16 = UnityEngine.ForceMode.Impulse;
    bool logic_uScriptAct_AddForce_Out_16 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_20 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_20 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_20 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_20;
-   bool logic_uScriptAct_AddVector3_Out_20 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_20 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_20 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_20 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_20;
+   bool logic_uScriptAct_AddVector3_v2_Out_20 = true;
    //pointer to script instanced logic node
    uScriptAct_AddForce logic_uScriptAct_AddForce_uScriptAct_AddForce_23 = new uScriptAct_AddForce( );
    UnityEngine.GameObject logic_uScriptAct_AddForce_Target_23 = default(UnityEngine.GameObject);
@@ -174,11 +174,11 @@ public class CoinCollection_PlayerController : uScriptLogic
    bool logic_uScriptAct_OnInputEventFilter_KeyHeld_37 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_37 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_40 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_40 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_40 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_40;
-   bool logic_uScriptAct_AddVector3_Out_40 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_40 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_40 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_40 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_40;
+   bool logic_uScriptAct_AddVector3_v2_Out_40 = true;
    
    //event nodes
    UnityEngine.GameObject event_UnityEngine_GameObject_Instance_4 = default(UnityEngine.GameObject);
@@ -629,14 +629,14 @@ public class CoinCollection_PlayerController : uScriptLogic
       parentGameObject = g;
       
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_0.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_2.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_2.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_3.SetParent(g);
       logic_uScriptAct_AddForce_uScriptAct_AddForce_7.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_12.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_12.SetParent(g);
       logic_uScriptCon_CompareBool_uScriptCon_CompareBool_13.SetParent(g);
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_15.SetParent(g);
       logic_uScriptAct_AddForce_uScriptAct_AddForce_16.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_20.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_20.SetParent(g);
       logic_uScriptAct_AddForce_uScriptAct_AddForce_23.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_25.SetParent(g);
       logic_uScriptAct_AddForce_uScriptAct_AddForce_27.SetParent(g);
@@ -646,7 +646,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       logic_uScriptAct_AddForce_uScriptAct_AddForce_34.SetParent(g);
       logic_uScriptAct_SetBool_uScriptAct_SetBool_35.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_37.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_40.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_40.SetParent(g);
       owner_Connection_41 = parentGameObject;
       owner_Connection_42 = parentGameObject;
       owner_Connection_43 = parentGameObject;
@@ -912,34 +912,24 @@ public class CoinCollection_PlayerController : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("967db53c-3733-4c11-93ce-a73b83a96add", "Add_Vector3__OLD_", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("967db53c-3733-4c11-93ce-a73b83a96add", "Add_Vector3", Relay_In_2)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_2.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_2, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_2[ index++ ] = local_14_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_2 = local_14_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_2.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_2, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_2[ index++ ] = local_24_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_2 = local_24_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_2.In(logic_uScriptAct_AddVector3_A_2, logic_uScriptAct_AddVector3_B_2, out logic_uScriptAct_AddVector3_Result_2);
-         local_14_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_2;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_2.In(logic_uScriptAct_AddVector3_v2_A_2, logic_uScriptAct_AddVector3_v2_B_2, out logic_uScriptAct_AddVector3_v2_Result_2);
+         local_14_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_2;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_2.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_2.Out;
          
          if ( test_0 == true )
          {
@@ -948,7 +938,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1041,34 +1031,24 @@ public class CoinCollection_PlayerController : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e976feed-4333-4068-90c0-9a79a374d832", "Add_Vector3__OLD_", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("e976feed-4333-4068-90c0-9a79a374d832", "Add_Vector3", Relay_In_12)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_12.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_12, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_12[ index++ ] = local_38_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_12 = local_38_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_12.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_12, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_12[ index++ ] = local_1_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_12 = local_1_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_12.In(logic_uScriptAct_AddVector3_A_12, logic_uScriptAct_AddVector3_B_12, out logic_uScriptAct_AddVector3_Result_12);
-         local_38_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_12;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_12.In(logic_uScriptAct_AddVector3_v2_A_12, logic_uScriptAct_AddVector3_v2_B_12, out logic_uScriptAct_AddVector3_v2_Result_12);
+         local_38_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_12;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_12.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_12.Out;
          
          if ( test_0 == true )
          {
@@ -1077,7 +1057,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1354,34 +1334,24 @@ public class CoinCollection_PlayerController : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("64321cec-2fd0-4ddb-b83e-ba1970d0e890", "Add_Vector3__OLD_", Relay_In_20)) return; 
+         if (true == CheckDebugBreak("64321cec-2fd0-4ddb-b83e-ba1970d0e890", "Add_Vector3", Relay_In_20)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_20.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_20, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_20[ index++ ] = local_33_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_20 = local_33_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_20.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_20, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_20[ index++ ] = local_9_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_20 = local_9_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_20.In(logic_uScriptAct_AddVector3_A_20, logic_uScriptAct_AddVector3_B_20, out logic_uScriptAct_AddVector3_Result_20);
-         local_33_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_20;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_20.In(logic_uScriptAct_AddVector3_v2_A_20, logic_uScriptAct_AddVector3_v2_B_20, out logic_uScriptAct_AddVector3_v2_Result_20);
+         local_33_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_20;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_20.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_20.Out;
          
          if ( test_0 == true )
          {
@@ -1390,7 +1360,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1724,34 +1694,24 @@ public class CoinCollection_PlayerController : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("06d1b029-d25f-4ced-a3ac-431bb671c3d2", "Add_Vector3__OLD_", Relay_In_40)) return; 
+         if (true == CheckDebugBreak("06d1b029-d25f-4ced-a3ac-431bb671c3d2", "Add_Vector3", Relay_In_40)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_40.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_40, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_40[ index++ ] = local_22_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_40 = local_22_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_40.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_40, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_40[ index++ ] = local_8_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_40 = local_8_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_40.In(logic_uScriptAct_AddVector3_A_40, logic_uScriptAct_AddVector3_B_40, out logic_uScriptAct_AddVector3_Result_40);
-         local_22_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_40;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_40.In(logic_uScriptAct_AddVector3_v2_A_40, logic_uScriptAct_AddVector3_v2_B_40, out logic_uScriptAct_AddVector3_v2_Result_40);
+         local_22_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_40;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_40.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_40.Out;
          
          if ( test_0 == true )
          {
@@ -1760,7 +1720,7 @@ public class CoinCollection_PlayerController : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_PlayerController.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    

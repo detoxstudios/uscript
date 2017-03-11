@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -156,12 +156,12 @@ public class GameWheel_Metagame : uScriptLogic
    bool logic_uScriptCon_CompareString_Same_30 = true;
    bool logic_uScriptCon_CompareString_Different_30 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_32 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_32 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_32 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_32;
-   System.Single logic_uScriptAct_AddInt_FloatResult_32;
-   bool logic_uScriptAct_AddInt_Out_32 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_32 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_32 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_32 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_32;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_32;
+   bool logic_uScriptAct_AddInt_v2_Out_32 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareString logic_uScriptCon_CompareString_uScriptCon_CompareString_37 = new uScriptCon_CompareString( );
    System.String logic_uScriptCon_CompareString_A_37 = "";
@@ -169,19 +169,19 @@ public class GameWheel_Metagame : uScriptLogic
    bool logic_uScriptCon_CompareString_Same_37 = true;
    bool logic_uScriptCon_CompareString_Different_37 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_38 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_38 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_38 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_38;
-   System.Single logic_uScriptAct_AddInt_FloatResult_38;
-   bool logic_uScriptAct_AddInt_Out_38 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_38 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_38 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_38 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_38;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_38;
+   bool logic_uScriptAct_AddInt_v2_Out_38 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_41 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_41 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_41 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_41;
-   System.Single logic_uScriptAct_AddInt_FloatResult_41;
-   bool logic_uScriptAct_AddInt_Out_41 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_41 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_41 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_41 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_41;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_41;
+   bool logic_uScriptAct_AddInt_v2_Out_41 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareString logic_uScriptCon_CompareString_uScriptCon_CompareString_42 = new uScriptCon_CompareString( );
    System.String logic_uScriptCon_CompareString_A_42 = "";
@@ -189,12 +189,12 @@ public class GameWheel_Metagame : uScriptLogic
    bool logic_uScriptCon_CompareString_Same_42 = true;
    bool logic_uScriptCon_CompareString_Different_42 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_47 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_47 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_47 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_47;
-   System.Single logic_uScriptAct_AddInt_FloatResult_47;
-   bool logic_uScriptAct_AddInt_Out_47 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_47 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_47 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_47 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_47;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_47;
+   bool logic_uScriptAct_AddInt_v2_Out_47 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareString logic_uScriptCon_CompareString_uScriptCon_CompareString_49 = new uScriptCon_CompareString( );
    System.String logic_uScriptCon_CompareString_A_49 = "";
@@ -234,8 +234,8 @@ public class GameWheel_Metagame : uScriptLogic
    System.String event_UnityEngine_GameObject_FocusedControl_0 = "";
    UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = default(UnityEngine.GameObject);
    UnityEngine.GameObject event_UnityEngine_GameObject_Instance_9 = default(UnityEngine.GameObject);
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_131 = default(UnityEngine.GameObject);
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_131 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_64 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_64 = default(UnityEngine.GameObject);
    
    //property nodes
    UnityEngine.Vector3 property_angularVelocity_Detox_ScriptEditor_Parameter_angularVelocity_22 = new Vector3( );
@@ -493,22 +493,22 @@ public class GameWheel_Metagame : uScriptLogic
             }
          }
       }
-      if ( null == event_UnityEngine_GameObject_Instance_131 || false == m_RegisteredForEvents )
+      if ( null == event_UnityEngine_GameObject_Instance_64 || false == m_RegisteredForEvents )
       {
-         event_UnityEngine_GameObject_Instance_131 = GameObject.Find( "Needle" ) as UnityEngine.GameObject;
-         if ( null != event_UnityEngine_GameObject_Instance_131 )
+         event_UnityEngine_GameObject_Instance_64 = GameObject.Find( "Needle" ) as UnityEngine.GameObject;
+         if ( null != event_UnityEngine_GameObject_Instance_64 )
          {
             {
-               uScript_Trigger component = event_UnityEngine_GameObject_Instance_131.GetComponent<uScript_Trigger>();
+               uScript_Trigger component = event_UnityEngine_GameObject_Instance_64.GetComponent<uScript_Trigger>();
                if ( null == component )
                {
-                  component = event_UnityEngine_GameObject_Instance_131.AddComponent<uScript_Trigger>();
+                  component = event_UnityEngine_GameObject_Instance_64.AddComponent<uScript_Trigger>();
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_131;
-                  component.OnExitTrigger += Instance_OnExitTrigger_131;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_131;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_64;
+                  component.OnExitTrigger += Instance_OnExitTrigger_64;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_64;
                }
             }
          }
@@ -544,15 +544,15 @@ public class GameWheel_Metagame : uScriptLogic
             }
          }
       }
-      if ( null != event_UnityEngine_GameObject_Instance_131 )
+      if ( null != event_UnityEngine_GameObject_Instance_64 )
       {
          {
-            uScript_Trigger component = event_UnityEngine_GameObject_Instance_131.GetComponent<uScript_Trigger>();
+            uScript_Trigger component = event_UnityEngine_GameObject_Instance_64.GetComponent<uScript_Trigger>();
             if ( null != component )
             {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_131;
-               component.OnExitTrigger -= Instance_OnExitTrigger_131;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_131;
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_64;
+               component.OnExitTrigger -= Instance_OnExitTrigger_64;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_64;
             }
          }
       }
@@ -577,12 +577,12 @@ public class GameWheel_Metagame : uScriptLogic
       logic_uScriptAct_SetGameObject_uScriptAct_SetGameObject_25.SetParent(g);
       logic_uScriptAct_GetGameObjectName_uScriptAct_GetGameObjectName_27.SetParent(g);
       logic_uScriptCon_CompareString_uScriptCon_CompareString_30.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_32.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_32.SetParent(g);
       logic_uScriptCon_CompareString_uScriptCon_CompareString_37.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_38.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_41.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_38.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_41.SetParent(g);
       logic_uScriptCon_CompareString_uScriptCon_CompareString_42.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_47.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_47.SetParent(g);
       logic_uScriptCon_CompareString_uScriptCon_CompareString_49.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_53.SetParent(g);
       logic_uScriptAct_GUILabel_uScriptAct_GUILabel_55.SetParent(g);
@@ -713,7 +713,7 @@ public class GameWheel_Metagame : uScriptLogic
       Relay_OnFixedUpdate_9( );
    }
    
-   void Instance_OnEnterTrigger_131(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnEnterTrigger_64(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -721,12 +721,12 @@ public class GameWheel_Metagame : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_131 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_64 = e.GameObject;
       //relay event to nodes
-      Relay_OnEnterTrigger_131( );
+      Relay_OnEnterTrigger_64( );
    }
    
-   void Instance_OnExitTrigger_131(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnExitTrigger_64(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -734,12 +734,12 @@ public class GameWheel_Metagame : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_131 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_64 = e.GameObject;
       //relay event to nodes
-      Relay_OnExitTrigger_131( );
+      Relay_OnExitTrigger_64( );
    }
    
-   void Instance_WhileInsideTrigger_131(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_WhileInsideTrigger_64(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -747,9 +747,9 @@ public class GameWheel_Metagame : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_131 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_64 = e.GameObject;
       //relay event to nodes
-      Relay_WhileInsideTrigger_131( );
+      Relay_WhileInsideTrigger_64( );
    }
    
    void uScriptAct_GUIButton_OnButtonDown_1(object o, System.EventArgs e)
@@ -1713,24 +1713,14 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("58972c6a-0935-4eb0-ac27-25225a8389c9", "Add_Int__OLD_", Relay_In_32)) return; 
+         if (true == CheckDebugBreak("58972c6a-0935-4eb0-ac27-25225a8389c9", "Add_Int", Relay_In_32)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_A_32.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_32, index + 1);
-               }
-               logic_uScriptAct_AddInt_A_32[ index++ ] = local_34_System_Int32;
+               logic_uScriptAct_AddInt_v2_A_32 = local_34_System_Int32;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_B_32.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_32, index + 1);
-               }
-               logic_uScriptAct_AddInt_B_32[ index++ ] = local_Score_System_Int32;
+               logic_uScriptAct_AddInt_v2_B_32 = local_Score_System_Int32;
                
             }
             {
@@ -1738,15 +1728,15 @@ public class GameWheel_Metagame : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_32.In(logic_uScriptAct_AddInt_A_32, logic_uScriptAct_AddInt_B_32, out logic_uScriptAct_AddInt_IntResult_32, out logic_uScriptAct_AddInt_FloatResult_32);
-         local_Score_System_Int32 = logic_uScriptAct_AddInt_IntResult_32;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_32.In(logic_uScriptAct_AddInt_v2_A_32, logic_uScriptAct_AddInt_v2_B_32, out logic_uScriptAct_AddInt_v2_IntResult_32, out logic_uScriptAct_AddInt_v2_FloatResult_32);
+         local_Score_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_32;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1790,24 +1780,14 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c704c62b-1ad4-4dba-8b5a-4ef4670add8d", "Add_Int__OLD_", Relay_In_38)) return; 
+         if (true == CheckDebugBreak("c704c62b-1ad4-4dba-8b5a-4ef4670add8d", "Add_Int", Relay_In_38)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_A_38.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_38, index + 1);
-               }
-               logic_uScriptAct_AddInt_A_38[ index++ ] = local_35_System_Int32;
+               logic_uScriptAct_AddInt_v2_A_38 = local_35_System_Int32;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_B_38.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_38, index + 1);
-               }
-               logic_uScriptAct_AddInt_B_38[ index++ ] = local_Score_System_Int32;
+               logic_uScriptAct_AddInt_v2_B_38 = local_Score_System_Int32;
                
             }
             {
@@ -1815,15 +1795,15 @@ public class GameWheel_Metagame : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_38.In(logic_uScriptAct_AddInt_A_38, logic_uScriptAct_AddInt_B_38, out logic_uScriptAct_AddInt_IntResult_38, out logic_uScriptAct_AddInt_FloatResult_38);
-         local_Score_System_Int32 = logic_uScriptAct_AddInt_IntResult_38;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_38.In(logic_uScriptAct_AddInt_v2_A_38, logic_uScriptAct_AddInt_v2_B_38, out logic_uScriptAct_AddInt_v2_IntResult_38, out logic_uScriptAct_AddInt_v2_FloatResult_38);
+         local_Score_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_38;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1831,24 +1811,14 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("94c2a7b4-7bde-41d6-a09a-25afc4a4673f", "Add_Int__OLD_", Relay_In_41)) return; 
+         if (true == CheckDebugBreak("94c2a7b4-7bde-41d6-a09a-25afc4a4673f", "Add_Int", Relay_In_41)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_A_41.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_41, index + 1);
-               }
-               logic_uScriptAct_AddInt_A_41[ index++ ] = local_44_System_Int32;
+               logic_uScriptAct_AddInt_v2_A_41 = local_44_System_Int32;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_B_41.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_41, index + 1);
-               }
-               logic_uScriptAct_AddInt_B_41[ index++ ] = local_Score_System_Int32;
+               logic_uScriptAct_AddInt_v2_B_41 = local_Score_System_Int32;
                
             }
             {
@@ -1856,15 +1826,15 @@ public class GameWheel_Metagame : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_41.In(logic_uScriptAct_AddInt_A_41, logic_uScriptAct_AddInt_B_41, out logic_uScriptAct_AddInt_IntResult_41, out logic_uScriptAct_AddInt_FloatResult_41);
-         local_Score_System_Int32 = logic_uScriptAct_AddInt_IntResult_41;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_41.In(logic_uScriptAct_AddInt_v2_A_41, logic_uScriptAct_AddInt_v2_B_41, out logic_uScriptAct_AddInt_v2_IntResult_41, out logic_uScriptAct_AddInt_v2_FloatResult_41);
+         local_Score_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_41;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1908,24 +1878,14 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a8757f5b-b3df-41a1-8982-b6c0d314d9ff", "Add_Int__OLD_", Relay_In_47)) return; 
+         if (true == CheckDebugBreak("a8757f5b-b3df-41a1-8982-b6c0d314d9ff", "Add_Int", Relay_In_47)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_A_47.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_47, index + 1);
-               }
-               logic_uScriptAct_AddInt_A_47[ index++ ] = local_48_System_Int32;
+               logic_uScriptAct_AddInt_v2_A_47 = local_48_System_Int32;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_B_47.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_47, index + 1);
-               }
-               logic_uScriptAct_AddInt_B_47[ index++ ] = local_Score_System_Int32;
+               logic_uScriptAct_AddInt_v2_B_47 = local_Score_System_Int32;
                
             }
             {
@@ -1933,15 +1893,15 @@ public class GameWheel_Metagame : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_47.In(logic_uScriptAct_AddInt_A_47, logic_uScriptAct_AddInt_B_47, out logic_uScriptAct_AddInt_IntResult_47, out logic_uScriptAct_AddInt_FloatResult_47);
-         local_Score_System_Int32 = logic_uScriptAct_AddInt_IntResult_47;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_47.In(logic_uScriptAct_AddInt_v2_A_47, logic_uScriptAct_AddInt_v2_B_47, out logic_uScriptAct_AddInt_v2_IntResult_47, out logic_uScriptAct_AddInt_v2_FloatResult_47);
+         local_Score_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_47;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -2118,10 +2078,10 @@ public class GameWheel_Metagame : uScriptLogic
       }
    }
    
-   void Relay_OnEnterTrigger_131()
+   void Relay_OnEnterTrigger_64()
    {
-      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_OnEnterTrigger_131)) return; 
-      local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_131;
+      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_OnEnterTrigger_64)) return; 
+      local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_64;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_24_UnityEngine_GameObject_previous != local_24_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2136,10 +2096,10 @@ public class GameWheel_Metagame : uScriptLogic
       Relay_In_25();
    }
    
-   void Relay_OnExitTrigger_131()
+   void Relay_OnExitTrigger_64()
    {
-      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_OnExitTrigger_131)) return; 
-      local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_131;
+      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_OnExitTrigger_64)) return; 
+      local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_64;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_24_UnityEngine_GameObject_previous != local_24_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2153,10 +2113,10 @@ public class GameWheel_Metagame : uScriptLogic
       }
    }
    
-   void Relay_WhileInsideTrigger_131()
+   void Relay_WhileInsideTrigger_64()
    {
-      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_WhileInsideTrigger_131)) return; 
-      local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_131;
+      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_WhileInsideTrigger_64)) return; 
+      local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_64;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_24_UnityEngine_GameObject_previous != local_24_UnityEngine_GameObject || false == m_RegisteredForEvents )

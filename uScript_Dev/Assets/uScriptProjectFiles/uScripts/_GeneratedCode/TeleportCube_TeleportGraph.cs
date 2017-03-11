@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -66,8 +66,8 @@ public class TeleportCube_TeleportGraph : uScriptLogic
    
    //event nodes
    UnityEngine.GameObject event_UnityEngine_GameObject_Instance_5 = default(UnityEngine.GameObject);
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_21 = default(UnityEngine.GameObject);
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_21 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_12 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_12 = default(UnityEngine.GameObject);
    
    //property nodes
    
@@ -195,22 +195,22 @@ public class TeleportCube_TeleportGraph : uScriptLogic
             }
          }
       }
-      if ( null == event_UnityEngine_GameObject_Instance_21 || false == m_RegisteredForEvents )
+      if ( null == event_UnityEngine_GameObject_Instance_12 || false == m_RegisteredForEvents )
       {
-         event_UnityEngine_GameObject_Instance_21 = GameObject.Find( "Teleport_Trigger" ) as UnityEngine.GameObject;
-         if ( null != event_UnityEngine_GameObject_Instance_21 )
+         event_UnityEngine_GameObject_Instance_12 = GameObject.Find( "Teleport_Trigger" ) as UnityEngine.GameObject;
+         if ( null != event_UnityEngine_GameObject_Instance_12 )
          {
             {
-               uScript_Trigger component = event_UnityEngine_GameObject_Instance_21.GetComponent<uScript_Trigger>();
+               uScript_Trigger component = event_UnityEngine_GameObject_Instance_12.GetComponent<uScript_Trigger>();
                if ( null == component )
                {
-                  component = event_UnityEngine_GameObject_Instance_21.AddComponent<uScript_Trigger>();
+                  component = event_UnityEngine_GameObject_Instance_12.AddComponent<uScript_Trigger>();
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_21;
-                  component.OnExitTrigger += Instance_OnExitTrigger_21;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_21;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_12;
+                  component.OnExitTrigger += Instance_OnExitTrigger_12;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_12;
                }
             }
          }
@@ -230,15 +230,15 @@ public class TeleportCube_TeleportGraph : uScriptLogic
             }
          }
       }
-      if ( null != event_UnityEngine_GameObject_Instance_21 )
+      if ( null != event_UnityEngine_GameObject_Instance_12 )
       {
          {
-            uScript_Trigger component = event_UnityEngine_GameObject_Instance_21.GetComponent<uScript_Trigger>();
+            uScript_Trigger component = event_UnityEngine_GameObject_Instance_12.GetComponent<uScript_Trigger>();
             if ( null != component )
             {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_21;
-               component.OnExitTrigger -= Instance_OnExitTrigger_21;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_21;
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_12;
+               component.OnExitTrigger -= Instance_OnExitTrigger_12;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_12;
             }
          }
       }
@@ -329,7 +329,7 @@ public class TeleportCube_TeleportGraph : uScriptLogic
       Relay_uScriptLateStart_5( );
    }
    
-   void Instance_OnEnterTrigger_21(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnEnterTrigger_12(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -337,12 +337,12 @@ public class TeleportCube_TeleportGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_21 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_12 = e.GameObject;
       //relay event to nodes
-      Relay_OnEnterTrigger_21( );
+      Relay_OnEnterTrigger_12( );
    }
    
-   void Instance_OnExitTrigger_21(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnExitTrigger_12(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -350,12 +350,12 @@ public class TeleportCube_TeleportGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_21 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_12 = e.GameObject;
       //relay event to nodes
-      Relay_OnExitTrigger_21( );
+      Relay_OnExitTrigger_12( );
    }
    
-   void Instance_WhileInsideTrigger_21(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_WhileInsideTrigger_12(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -363,9 +363,9 @@ public class TeleportCube_TeleportGraph : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_21 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_12 = e.GameObject;
       //relay event to nodes
-      Relay_WhileInsideTrigger_21( );
+      Relay_WhileInsideTrigger_12( );
    }
    
    void uScriptAct_MoveToLocation_Finished_3(object o, System.EventArgs e)
@@ -603,20 +603,20 @@ public class TeleportCube_TeleportGraph : uScriptLogic
       if (true == CheckDebugBreak("86791c12-a06f-4221-bfa8-cd3e7e1fc5bb", "uScript_Events", Relay_uScriptLateStart_5)) return; 
    }
    
-   void Relay_OnEnterTrigger_21()
+   void Relay_OnEnterTrigger_12()
    {
-      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_OnEnterTrigger_21)) return; 
+      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_OnEnterTrigger_12)) return; 
       Relay_In_0();
    }
    
-   void Relay_OnExitTrigger_21()
+   void Relay_OnExitTrigger_12()
    {
-      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_OnExitTrigger_21)) return; 
+      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_OnExitTrigger_12)) return; 
    }
    
-   void Relay_WhileInsideTrigger_21()
+   void Relay_WhileInsideTrigger_12()
    {
-      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_WhileInsideTrigger_21)) return; 
+      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_WhileInsideTrigger_12)) return; 
    }
    
    private void UpdateEditorValues( )

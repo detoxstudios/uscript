@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -82,11 +82,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    bool logic_uScriptCon_Switch_Output5_6 = true;
    bool logic_uScriptCon_Switch_Output6_6 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_7 = new uScriptAct_AddVector3( );
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_A_7 = new Vector3[] {};
-   UnityEngine.Vector3[] logic_uScriptAct_AddVector3_B_7 = new Vector3[] {};
-   UnityEngine.Vector3 logic_uScriptAct_AddVector3_Result_7;
-   bool logic_uScriptAct_AddVector3_Out_7 = true;
+   uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_7 = new uScriptAct_AddVector3_v2( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_7 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_B_7 = new Vector3( );
+   UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_Result_7;
+   bool logic_uScriptAct_AddVector3_v2_Out_7 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareBool logic_uScriptCon_CompareBool_uScriptCon_CompareBool_10 = new uScriptCon_CompareBool( );
    System.Boolean logic_uScriptCon_CompareBool_Bool_10 = (bool) false;
@@ -172,12 +172,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    System.String logic_uScriptAct_Concatenate_Result_29;
    bool logic_uScriptAct_Concatenate_Out_29 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_37 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_37 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_37 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_37;
-   System.Single logic_uScriptAct_AddInt_FloatResult_37;
-   bool logic_uScriptAct_AddInt_Out_37 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_37 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_37 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_37 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_37;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_37;
+   bool logic_uScriptAct_AddInt_v2_Out_37 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareInt logic_uScriptCon_CompareInt_uScriptCon_CompareInt_39 = new uScriptCon_CompareInt( );
    System.Int32 logic_uScriptCon_CompareInt_A_39 = (int) 0;
@@ -775,7 +775,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
       logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_4.SetParent(g);
       logic_uScriptAct_LookAt_uScriptAct_LookAt_5.SetParent(g);
       logic_uScriptCon_Switch_uScriptCon_Switch_6.SetParent(g);
-      logic_uScriptAct_AddVector3_uScriptAct_AddVector3_7.SetParent(g);
+      logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_7.SetParent(g);
       logic_uScriptCon_CompareBool_uScriptCon_CompareBool_10.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_15.SetParent(g);
       logic_uScriptAct_SetBool_uScriptAct_SetBool_16.SetParent(g);
@@ -787,7 +787,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
       logic_uScriptCon_CompareString_uScriptCon_CompareString_27.SetParent(g);
       logic_uScriptAct_PrintText_uScriptAct_PrintText_28.SetParent(g);
       logic_uScriptAct_Concatenate_uScriptAct_Concatenate_29.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_37.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_37.SetParent(g);
       logic_uScriptCon_CompareInt_uScriptCon_CompareInt_39.SetParent(g);
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_42.SetParent(g);
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_43.SetParent(g);
@@ -1247,34 +1247,24 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add_Vector3__OLD_", Relay_In_7)) return; 
+         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add_Vector3", Relay_In_7)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_A_7.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_A_7, index + 1);
-               }
-               logic_uScriptAct_AddVector3_A_7[ index++ ] = local_12_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_A_7 = local_12_UnityEngine_Vector3;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddVector3_B_7.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddVector3_B_7, index + 1);
-               }
-               logic_uScriptAct_AddVector3_B_7[ index++ ] = local_Camera_Offset_UnityEngine_Vector3;
+               logic_uScriptAct_AddVector3_v2_B_7 = local_Camera_Offset_UnityEngine_Vector3;
                
             }
             {
             }
          }
-         logic_uScriptAct_AddVector3_uScriptAct_AddVector3_7.In(logic_uScriptAct_AddVector3_A_7, logic_uScriptAct_AddVector3_B_7, out logic_uScriptAct_AddVector3_Result_7);
-         local_9_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_Result_7;
+         logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_7.In(logic_uScriptAct_AddVector3_v2_A_7, logic_uScriptAct_AddVector3_v2_B_7, out logic_uScriptAct_AddVector3_v2_Result_7);
+         local_9_UnityEngine_Vector3 = logic_uScriptAct_AddVector3_v2_Result_7;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddVector3_uScriptAct_AddVector3_7.Out;
+         bool test_0 = logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_7.Out;
          
          if ( test_0 == true )
          {
@@ -1283,7 +1273,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_MetagameLogic.uscript at Add Vector3 (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_MetagameLogic.uscript at Add Vector3.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -1852,24 +1842,14 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5889dc85-d6d7-4003-9136-877c419bd7c2", "Add_Int__OLD_", Relay_In_37)) return; 
+         if (true == CheckDebugBreak("5889dc85-d6d7-4003-9136-877c419bd7c2", "Add_Int", Relay_In_37)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_A_37.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_37, index + 1);
-               }
-               logic_uScriptAct_AddInt_A_37[ index++ ] = local_CoinValue_System_Int32;
+               logic_uScriptAct_AddInt_v2_A_37 = local_CoinValue_System_Int32;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_B_37.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_37, index + 1);
-               }
-               logic_uScriptAct_AddInt_B_37[ index++ ] = local_CoinTotal_System_Int32;
+               logic_uScriptAct_AddInt_v2_B_37 = local_CoinTotal_System_Int32;
                
             }
             {
@@ -1877,11 +1857,11 @@ public class CoinCollection_MetagameLogic : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_37.In(logic_uScriptAct_AddInt_A_37, logic_uScriptAct_AddInt_B_37, out logic_uScriptAct_AddInt_IntResult_37, out logic_uScriptAct_AddInt_FloatResult_37);
-         local_CoinTotal_System_Int32 = logic_uScriptAct_AddInt_IntResult_37;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_37.In(logic_uScriptAct_AddInt_v2_A_37, logic_uScriptAct_AddInt_v2_B_37, out logic_uScriptAct_AddInt_v2_IntResult_37, out logic_uScriptAct_AddInt_v2_FloatResult_37);
+         local_CoinTotal_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_37;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddInt_uScriptAct_AddInt_37.Out;
+         bool test_0 = logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_37.Out;
          
          if ( test_0 == true )
          {
@@ -1890,7 +1870,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_MetagameLogic.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CoinCollection_MetagameLogic.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    

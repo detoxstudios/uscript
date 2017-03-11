@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2609
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -77,19 +77,20 @@ public class FadeGraph : uScriptLogic
    System.Single logic_uScriptAct_GetComponentsColor_Alpha_7;
    bool logic_uScriptAct_GetComponentsColor_Out_7 = true;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateFloatLinear logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9 = new uScriptAct_InterpolateFloatLinear( );
-   System.Single logic_uScriptAct_InterpolateFloatLinear_startValue_9 = (float) 0;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_endValue_9 = (float) 0;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_time_9 = (float) 2;
-   uScript_Lerper.LoopType logic_uScriptAct_InterpolateFloatLinear_loopType_9 = uScript_Lerper.LoopType.None;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_loopDelay_9 = (float) 0;
-   System.Int32 logic_uScriptAct_InterpolateFloatLinear_loopCount_9 = (int) -1;
-   System.Single logic_uScriptAct_InterpolateFloatLinear_currentValue_9;
-   bool logic_uScriptAct_InterpolateFloatLinear_Started_9 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Stopped_9 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Interpolating_9 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Finished_9 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Driven_9 = false;
+   uScriptAct_InterpolateFloatLinearSmooth logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9 = new uScriptAct_InterpolateFloatLinearSmooth( );
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_9 = (float) 0;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_9 = (float) 0;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_time_9 = (float) 2;
+   uScript_Lerper.LoopType logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_9 = uScript_Lerper.LoopType.None;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_9 = (float) 0;
+   System.Boolean logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_9 = (bool) false;
+   System.Int32 logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_9 = (int) -1;
+   System.Single logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Started_9 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Stopped_9 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Interpolating_9 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Finished_9 = true;
+   bool logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_9 = false;
    //pointer to script instanced logic node
    uScriptAct_CameraFade logic_uScriptAct_CameraFade_uScriptAct_CameraFade_14 = new uScriptAct_CameraFade( );
    UnityEngine.Camera logic_uScriptAct_CameraFade_TargetCamera_14 = default(UnityEngine.Camera);
@@ -252,6 +253,7 @@ public class FadeGraph : uScriptLogic
                if ( null != component )
                {
                   component.uScriptStart += Instance_uScriptStart_0;
+                  component.uScriptLateStart += Instance_uScriptLateStart_0;
                }
             }
          }
@@ -287,6 +289,7 @@ public class FadeGraph : uScriptLogic
             if ( null != component )
             {
                component.uScriptStart -= Instance_uScriptStart_0;
+               component.uScriptLateStart -= Instance_uScriptLateStart_0;
             }
          }
       }
@@ -313,7 +316,7 @@ public class FadeGraph : uScriptLogic
       logic_uScriptAct_SetColorAlpha_uScriptAct_SetColorAlpha_4.SetParent(g);
       logic_uScriptAct_AssignMaterialColor_uScriptAct_AssignMaterialColor_5.SetParent(g);
       logic_uScriptAct_GetComponentsColor_uScriptAct_GetComponentsColor_7.SetParent(g);
-      logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.SetParent(g);
+      logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.SetParent(g);
       logic_uScriptAct_CameraFade_uScriptAct_CameraFade_14.SetParent(g);
       logic_uScriptAct_Concatenate_uScriptAct_Concatenate_17.SetParent(g);
       logic_uScriptAct_PrintText_uScriptAct_PrintText_18.SetParent(g);
@@ -373,7 +376,7 @@ public class FadeGraph : uScriptLogic
       {
          Relay_DrivenDelay_1();
       }
-      if (true == logic_uScriptAct_InterpolateFloatLinear_Driven_9)
+      if (true == logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_9)
       {
          Relay_Driven_9();
       }
@@ -416,6 +419,18 @@ public class FadeGraph : uScriptLogic
       Relay_uScriptStart_0( );
    }
    
+   void Instance_uScriptLateStart_0(object o, System.EventArgs e)
+   {
+      //reset event call
+      //if it ever goes above MaxRelayCallCount before being reset
+      //then we assume it is stuck in an infinite loop
+      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
+      
+      //fill globals
+      //relay event to nodes
+      Relay_uScriptLateStart_0( );
+   }
+   
    void Instance_OnUpdate_16(object o, System.EventArgs e)
    {
       //reset event call
@@ -454,8 +469,13 @@ public class FadeGraph : uScriptLogic
    
    void Relay_uScriptStart_0()
    {
-      if (true == CheckDebugBreak("40e7cd52-7626-48cc-baa0-1971dd6eb861", "uScript Events", Relay_uScriptStart_0)) return; 
+      if (true == CheckDebugBreak("40e7cd52-7626-48cc-baa0-1971dd6eb861", "uScript_Events", Relay_uScriptStart_0)) return; 
       Relay_In_14();
+   }
+   
+   void Relay_uScriptLateStart_0()
+   {
+      if (true == CheckDebugBreak("40e7cd52-7626-48cc-baa0-1971dd6eb861", "uScript_Events", Relay_uScriptLateStart_0)) return; 
    }
    
    void Relay_In_1()
@@ -542,7 +562,7 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6f2fb82a-2c88-420a-a5b2-8f3688ee83b2", "Get Material", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("6f2fb82a-2c88-420a-a5b2-8f3688ee83b2", "Get_Material", Relay_In_2)) return; 
          {
             {
                {
@@ -589,7 +609,7 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("86e8c8f8-f78e-4f22-8a0f-30b7c4bb6fb8", "Set Color Alpha", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("86e8c8f8-f78e-4f22-8a0f-30b7c4bb6fb8", "Set_Color_Alpha", Relay_In_4)) return; 
          {
             {
                logic_uScriptAct_SetColorAlpha_Value_4 = local_FadeColor_UnityEngine_Color;
@@ -625,10 +645,10 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f9e8a542-8cb9-49c0-af02-6fedaa3a6ec8", "Assign Material Color", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("f9e8a542-8cb9-49c0-af02-6fedaa3a6ec8", "Assign_Material_Color", Relay_In_5)) return; 
          {
             {
-               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
+               int index = 0;
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -640,8 +660,12 @@ public class FadeGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add((UnityEngine.GameObject)local_FadeGO_UnityEngine_GameObject);
-               logic_uScriptAct_AssignMaterialColor_Target_5 = properties.ToArray();
+               if ( logic_uScriptAct_AssignMaterialColor_Target_5.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_AssignMaterialColor_Target_5, index + 1);
+               }
+               logic_uScriptAct_AssignMaterialColor_Target_5[ index++ ] = local_FadeGO_UnityEngine_GameObject;
+               
             }
             {
                logic_uScriptAct_AssignMaterialColor_MatColor_5 = local_12_UnityEngine_Color;
@@ -665,7 +689,7 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("144af89c-f91c-4294-a390-686c53872f60", "Get Components (Color)", Relay_In_7)) return; 
+         if (true == CheckDebugBreak("144af89c-f91c-4294-a390-686c53872f60", "Get_Components__Color_", Relay_In_7)) return; 
          {
             {
                logic_uScriptAct_GetComponentsColor_InputColor_7 = local_FadeColor_UnityEngine_Color;
@@ -701,10 +725,10 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate Float Linear", Relay_Begin_9)) return; 
+         if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate_Float_Linear__Smooth_", Relay_Begin_9)) return; 
          {
             {
-               logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
+               logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_9 = local_8_System_Single;
                
             }
             {
@@ -719,13 +743,15 @@ public class FadeGraph : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Begin(logic_uScriptAct_InterpolateFloatLinear_startValue_9, logic_uScriptAct_InterpolateFloatLinear_endValue_9, logic_uScriptAct_InterpolateFloatLinear_time_9, logic_uScriptAct_InterpolateFloatLinear_loopType_9, logic_uScriptAct_InterpolateFloatLinear_loopDelay_9, logic_uScriptAct_InterpolateFloatLinear_loopCount_9, out logic_uScriptAct_InterpolateFloatLinear_currentValue_9);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_9 = true;
-         local_11_System_Single = logic_uScriptAct_InterpolateFloatLinear_currentValue_9;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.Begin(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_9, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_9, logic_uScriptAct_InterpolateFloatLinearSmooth_time_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_9, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_9, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_9 = true;
+         local_11_System_Single = logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Interpolating;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.Interpolating;
          
          if ( test_0 == true )
          {
@@ -734,7 +760,7 @@ public class FadeGraph : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -742,10 +768,10 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate Float Linear", Relay_Stop_9)) return; 
+         if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate_Float_Linear__Smooth_", Relay_Stop_9)) return; 
          {
             {
-               logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
+               logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_9 = local_8_System_Single;
                
             }
             {
@@ -760,13 +786,15 @@ public class FadeGraph : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Stop(logic_uScriptAct_InterpolateFloatLinear_startValue_9, logic_uScriptAct_InterpolateFloatLinear_endValue_9, logic_uScriptAct_InterpolateFloatLinear_time_9, logic_uScriptAct_InterpolateFloatLinear_loopType_9, logic_uScriptAct_InterpolateFloatLinear_loopDelay_9, logic_uScriptAct_InterpolateFloatLinear_loopCount_9, out logic_uScriptAct_InterpolateFloatLinear_currentValue_9);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_9 = true;
-         local_11_System_Single = logic_uScriptAct_InterpolateFloatLinear_currentValue_9;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.Stop(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_9, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_9, logic_uScriptAct_InterpolateFloatLinearSmooth_time_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_9, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_9, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_9 = true;
+         local_11_System_Single = logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Interpolating;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.Interpolating;
          
          if ( test_0 == true )
          {
@@ -775,7 +803,7 @@ public class FadeGraph : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -783,10 +811,10 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate Float Linear", Relay_Resume_9)) return; 
+         if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate_Float_Linear__Smooth_", Relay_Resume_9)) return; 
          {
             {
-               logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
+               logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_9 = local_8_System_Single;
                
             }
             {
@@ -801,13 +829,15 @@ public class FadeGraph : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Resume(logic_uScriptAct_InterpolateFloatLinear_startValue_9, logic_uScriptAct_InterpolateFloatLinear_endValue_9, logic_uScriptAct_InterpolateFloatLinear_time_9, logic_uScriptAct_InterpolateFloatLinear_loopType_9, logic_uScriptAct_InterpolateFloatLinear_loopDelay_9, logic_uScriptAct_InterpolateFloatLinear_loopCount_9, out logic_uScriptAct_InterpolateFloatLinear_currentValue_9);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_9 = true;
-         local_11_System_Single = logic_uScriptAct_InterpolateFloatLinear_currentValue_9;
+         logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.Resume(logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_9, logic_uScriptAct_InterpolateFloatLinearSmooth_endValue_9, logic_uScriptAct_InterpolateFloatLinearSmooth_time_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopType_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopDelay_9, logic_uScriptAct_InterpolateFloatLinearSmooth_smooth_9, logic_uScriptAct_InterpolateFloatLinearSmooth_loopCount_9, out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9);
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_9 = true;
+         local_11_System_Single = logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Interpolating;
+         bool test_0 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.Interpolating;
          
          if ( test_0 == true )
          {
@@ -816,7 +846,7 @@ public class FadeGraph : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -826,7 +856,7 @@ public class FadeGraph : uScriptLogic
       {
          {
             {
-               logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
+               logic_uScriptAct_InterpolateFloatLinearSmooth_startValue_9 = local_8_System_Single;
                
             }
             {
@@ -841,12 +871,14 @@ public class FadeGraph : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_InterpolateFloatLinear_Driven_9 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Driven(out logic_uScriptAct_InterpolateFloatLinear_currentValue_9);
-         if ( true == logic_uScriptAct_InterpolateFloatLinear_Driven_9 )
+         logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_9 = logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.Driven(out logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9);
+         if ( true == logic_uScriptAct_InterpolateFloatLinearSmooth_Driven_9 )
          {
-            local_11_System_Single = logic_uScriptAct_InterpolateFloatLinear_currentValue_9;
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Interpolating == true )
+            local_11_System_Single = logic_uScriptAct_InterpolateFloatLinearSmooth_currentValue_9;
+            if ( logic_uScriptAct_InterpolateFloatLinearSmooth_uScriptAct_InterpolateFloatLinearSmooth_9.Interpolating == true )
             {
                Relay_In_4();
             }
@@ -854,14 +886,14 @@ public class FadeGraph : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Interpolate Float Linear (Smooth).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    void Relay_In_14()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d29ba26d-00a2-4feb-8344-4705b1fdef21", "Camera Fade", Relay_In_14)) return; 
+         if (true == CheckDebugBreak("d29ba26d-00a2-4feb-8344-4705b1fdef21", "Camera_Fade", Relay_In_14)) return; 
          {
             {
             }
@@ -950,18 +982,18 @@ public class FadeGraph : uScriptLogic
    }
    void Relay_OnUpdate_16()
    {
-      if (true == CheckDebugBreak("9d8b6c65-289e-46c9-9956-e89b54eef397", "Global Update", Relay_OnUpdate_16)) return; 
+      if (true == CheckDebugBreak("9d8b6c65-289e-46c9-9956-e89b54eef397", "Global_Update", Relay_OnUpdate_16)) return; 
    }
    
    void Relay_OnLateUpdate_16()
    {
-      if (true == CheckDebugBreak("9d8b6c65-289e-46c9-9956-e89b54eef397", "Global Update", Relay_OnLateUpdate_16)) return; 
+      if (true == CheckDebugBreak("9d8b6c65-289e-46c9-9956-e89b54eef397", "Global_Update", Relay_OnLateUpdate_16)) return; 
       Relay_In_21();
    }
    
    void Relay_OnFixedUpdate_16()
    {
-      if (true == CheckDebugBreak("9d8b6c65-289e-46c9-9956-e89b54eef397", "Global Update", Relay_OnFixedUpdate_16)) return; 
+      if (true == CheckDebugBreak("9d8b6c65-289e-46c9-9956-e89b54eef397", "Global_Update", Relay_OnFixedUpdate_16)) return; 
    }
    
    void Relay_In_17()
@@ -971,14 +1003,22 @@ public class FadeGraph : uScriptLogic
          if (true == CheckDebugBreak("7aef1b47-5fd6-4317-9811-7d9756744c9f", "Concatenate", Relay_In_17)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_19_System_String);
-               logic_uScriptAct_Concatenate_A_17 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_17.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_17, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_17[ index++ ] = local_19_System_String;
+               
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_PlayerHealth_System_Single);
-               logic_uScriptAct_Concatenate_B_17 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_17.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_17, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_17[ index++ ] = local_PlayerHealth_System_Single;
+               
             }
             {
             }
@@ -1006,7 +1046,7 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7ad5f849-e329-4618-a824-d6878000c3c8", "Print Text", Relay_ShowLabel_18)) return; 
+         if (true == CheckDebugBreak("7ad5f849-e329-4618-a824-d6878000c3c8", "Print_Text", Relay_ShowLabel_18)) return; 
          {
             {
                logic_uScriptAct_PrintText_Text_18 = local_25_System_String;
@@ -1040,7 +1080,7 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7ad5f849-e329-4618-a824-d6878000c3c8", "Print Text", Relay_HideLabel_18)) return; 
+         if (true == CheckDebugBreak("7ad5f849-e329-4618-a824-d6878000c3c8", "Print_Text", Relay_HideLabel_18)) return; 
          {
             {
                logic_uScriptAct_PrintText_Text_18 = local_25_System_String;
@@ -1074,7 +1114,7 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("893b97c0-8bb5-4289-a2e2-4ec5590b17da", "Compare Float", Relay_In_21)) return; 
+         if (true == CheckDebugBreak("893b97c0-8bb5-4289-a2e2-4ec5590b17da", "Compare_Float", Relay_In_21)) return; 
          {
             {
                logic_uScriptCon_CompareFloat_A_21 = local_PlayerHealth_System_Single;
@@ -1108,7 +1148,7 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("62b02c6d-cf0e-48e4-bf82-380e15ee82f3", "Set Float", Relay_In_23)) return; 
+         if (true == CheckDebugBreak("62b02c6d-cf0e-48e4-bf82-380e15ee82f3", "Set_Float", Relay_In_23)) return; 
          {
             {
             }
@@ -1344,7 +1384,7 @@ public class FadeGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b2dbc02-fd07-4c1e-908f-5ac3c0eab76d", "Camera Fade", Relay_In_30)) return; 
+         if (true == CheckDebugBreak("3b2dbc02-fd07-4c1e-908f-5ac3c0eab76d", "Camera_Fade", Relay_In_30)) return; 
          {
             {
             }
@@ -1445,7 +1485,7 @@ public class FadeGraph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

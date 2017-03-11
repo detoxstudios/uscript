@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2439
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -34,7 +34,7 @@ public class WebText : uScriptLogic
    System.String local_URL_System_String = "";
    System.String local_usernameValue_System_String = "";
    System.String local_WWW_Error_System_String = "";
-   UnityEngine.WWWForm local_WWW_Form_UnityEngine_WWWForm = null;
+   UnityEngine.WWWForm local_WWW_Form_UnityEngine_WWWForm = default(UnityEngine.WWWForm);
    System.Int32 local_WWW_Method_System_Int32 = (int) 0;
    System.String local_WWW_Text_System_String = "";
    System.String local_wwwStatus_System_String = "";
@@ -55,7 +55,7 @@ public class WebText : uScriptLogic
    uScriptAct_GUILabel logic_uScriptAct_GUILabel_uScriptAct_GUILabel_2 = new uScriptAct_GUILabel( );
    System.String logic_uScriptAct_GUILabel_Text_2 = "";
    UnityEngine.Rect logic_uScriptAct_GUILabel_Position_2 = new Rect( (float)15, (float)70, (float)700, (float)25 );
-   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_2 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_2 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILabel_ToolTip_2 = "";
    System.String logic_uScriptAct_GUILabel_guiStyle_2 = "";
    bool logic_uScriptAct_GUILabel_Out_2 = true;
@@ -64,7 +64,7 @@ public class WebText : uScriptLogic
    System.String logic_uScriptAct_GUIButton_Text_3 = "";
    System.Int32 logic_uScriptAct_GUIButton_identifier_3 = (int) 0;
    UnityEngine.Rect logic_uScriptAct_GUIButton_Position_3 = new Rect( (float)10, (float)40, (float)80, (float)20 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIButton_Texture_3 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIButton_Texture_3 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIButton_ToolTip_3 = "";
    System.String logic_uScriptAct_GUIButton_guiStyle_3 = "";
    bool logic_uScriptAct_GUIButton_Out_3 = true;
@@ -120,7 +120,7 @@ public class WebText : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_WebText logic_uScriptAct_WebText_uScriptAct_WebText_12 = new uScriptAct_WebText( );
    System.String logic_uScriptAct_WebText_URL_12 = "";
-   UnityEngine.WWWForm logic_uScriptAct_WebText_Form_12 = null;
+   UnityEngine.WWWForm logic_uScriptAct_WebText_Form_12 = default(UnityEngine.WWWForm);
    System.String logic_uScriptAct_WebText_Result_12;
    System.String logic_uScriptAct_WebText_Error_12;
    bool logic_uScriptAct_WebText_Out_12 = true;
@@ -132,7 +132,7 @@ public class WebText : uScriptLogic
    System.Boolean logic_uScriptAct_GUIToggle_Value_17 = (bool) false;
    System.String logic_uScriptAct_GUIToggle_Text_17 = "  toggle";
    UnityEngine.Rect logic_uScriptAct_GUIToggle_Position_17 = new Rect( (float)650, (float)70, (float)60, (float)20 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIToggle_Texture_17 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIToggle_Texture_17 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIToggle_ToolTip_17 = "";
    System.String logic_uScriptAct_GUIToggle_guiStyle_17 = "";
    bool logic_uScriptAct_GUIToggle_Out_17 = true;
@@ -150,7 +150,7 @@ public class WebText : uScriptLogic
    uScriptAct_GUILabel logic_uScriptAct_GUILabel_uScriptAct_GUILabel_19 = new uScriptAct_GUILabel( );
    System.String logic_uScriptAct_GUILabel_Text_19 = "username";
    UnityEngine.Rect logic_uScriptAct_GUILabel_Position_19 = new Rect( (float)365, (float)70, (float)65, (float)20 );
-   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_19 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_19 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILabel_ToolTip_19 = "";
    System.String logic_uScriptAct_GUILabel_guiStyle_19 = "";
    bool logic_uScriptAct_GUILabel_Out_19 = true;
@@ -233,13 +233,13 @@ public class WebText : uScriptLogic
    bool logic_uScriptAct_SetString_Out_38 = true;
    //pointer to script instanced logic node
    uScriptAct_FormUpdateField logic_uScriptAct_FormUpdateField_uScriptAct_FormUpdateField_40 = new uScriptAct_FormUpdateField( );
-   UnityEngine.WWWForm logic_uScriptAct_FormUpdateField_Form_40 = null;
+   UnityEngine.WWWForm logic_uScriptAct_FormUpdateField_Form_40 = default(UnityEngine.WWWForm);
    System.String logic_uScriptAct_FormUpdateField_Field_40 = "username";
    System.Object logic_uScriptAct_FormUpdateField_Value_40 = "";
    bool logic_uScriptAct_FormUpdateField_Out_40 = true;
    //pointer to script instanced logic node
    uScriptAct_FormUpdateField logic_uScriptAct_FormUpdateField_uScriptAct_FormUpdateField_43 = new uScriptAct_FormUpdateField( );
-   UnityEngine.WWWForm logic_uScriptAct_FormUpdateField_Form_43 = null;
+   UnityEngine.WWWForm logic_uScriptAct_FormUpdateField_Form_43 = default(UnityEngine.WWWForm);
    System.String logic_uScriptAct_FormUpdateField_Field_43 = "toggle";
    System.Object logic_uScriptAct_FormUpdateField_Value_43 = "";
    bool logic_uScriptAct_FormUpdateField_Out_43 = true;
@@ -256,7 +256,7 @@ public class WebText : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_WebText logic_uScriptAct_WebText_uScriptAct_WebText_48 = new uScriptAct_WebText( );
    System.String logic_uScriptAct_WebText_URL_48 = "";
-   UnityEngine.WWWForm logic_uScriptAct_WebText_Form_48 = null;
+   UnityEngine.WWWForm logic_uScriptAct_WebText_Form_48 = default(UnityEngine.WWWForm);
    System.String logic_uScriptAct_WebText_Result_48;
    System.String logic_uScriptAct_WebText_Error_48;
    bool logic_uScriptAct_WebText_Out_48 = true;
@@ -293,8 +293,8 @@ public class WebText : uScriptLogic
    //event nodes
    System.Boolean event_UnityEngine_GameObject_GUIChanged_1 = (bool) false;
    System.String event_UnityEngine_GameObject_FocusedControl_1 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_1 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_13 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_1 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_13 = default(UnityEngine.GameObject);
    
    //property nodes
    
@@ -556,7 +556,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8ec1d1ea-72db-4b70-a7a9-35757e9f9e6a", "GUI Text Area", Relay_In_0)) return; 
+         if (true == CheckDebugBreak("8ec1d1ea-72db-4b70-a7a9-35757e9f9e6a", "GUI_Text_Area", Relay_In_0)) return; 
          {
             {
                logic_uScriptAct_GUITextArea_Value_0 = local_WWW_Text_System_String;
@@ -585,7 +585,7 @@ public class WebText : uScriptLogic
    
    void Relay_OnGui_1()
    {
-      if (true == CheckDebugBreak("41f92a5b-34c7-4b9d-bd60-46382eb9dd97", "GUI Events", Relay_OnGui_1)) return; 
+      if (true == CheckDebugBreak("41f92a5b-34c7-4b9d-bd60-46382eb9dd97", "GUI_Events", Relay_OnGui_1)) return; 
       Relay_In_3();
    }
    
@@ -593,7 +593,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("10249a6d-2195-4def-8862-67a9bd4564bb", "GUI Label", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("10249a6d-2195-4def-8862-67a9bd4564bb", "GUI_Label", Relay_In_2)) return; 
          {
             {
                logic_uScriptAct_GUILabel_Text_2 = local_wwwStatus_System_String;
@@ -628,7 +628,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_OnButtonDown_3)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_OnButtonDown_3)) return; 
       }
       else
       {
@@ -640,7 +640,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_OnButtonHeld_3)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_OnButtonHeld_3)) return; 
       }
       else
       {
@@ -652,7 +652,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_OnButtonUp_3)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_OnButtonUp_3)) return; 
       }
       else
       {
@@ -664,7 +664,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_OnButtonClicked_3)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_OnButtonClicked_3)) return; 
          Relay_In_47();
       }
       else
@@ -677,7 +677,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI Button", Relay_In_3)) return; 
+         if (true == CheckDebugBreak("4acb7d8e-f127-48de-b062-b6e4bb35715d", "GUI_Button", Relay_In_3)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_3 = local_74_System_String;
@@ -714,7 +714,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0848e806-0fd8-4212-8cec-9af2ef9b75c3", "Set String", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("0848e806-0fd8-4212-8cec-9af2ef9b75c3", "Set_String", Relay_In_4)) return; 
          {
             {
             }
@@ -743,7 +743,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8e6e13a7-9a23-4bde-9699-778b4dc054a3", "GUI Text Field", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("8e6e13a7-9a23-4bde-9699-778b4dc054a3", "GUI_Text_Field", Relay_In_5)) return; 
          {
             {
                logic_uScriptAct_GUITextField_Value_5 = local_URL_System_String;
@@ -779,7 +779,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("97faba6a-b9ea-4d5f-98b3-9e2d31dc1e32", "Set String", Relay_In_6)) return; 
+         if (true == CheckDebugBreak("97faba6a-b9ea-4d5f-98b3-9e2d31dc1e32", "Set_String", Relay_In_6)) return; 
          {
             {
                logic_uScriptAct_SetString_Value_6 = local_72_System_String;
@@ -815,7 +815,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3578c7cb-ec1a-4d3f-aa14-4b4c56805b60", "Set String", Relay_In_8)) return; 
+         if (true == CheckDebugBreak("3578c7cb-ec1a-4d3f-aa14-4b4c56805b60", "Set_String", Relay_In_8)) return; 
          {
             {
             }
@@ -844,7 +844,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d4942041-725f-48b6-91cc-a4061343f559", "Set String", Relay_In_9)) return; 
+         if (true == CheckDebugBreak("d4942041-725f-48b6-91cc-a4061343f559", "Set_String", Relay_In_9)) return; 
          {
             {
                logic_uScriptAct_SetString_Value_9 = local_WWW_Error_System_String;
@@ -875,7 +875,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f6b2fb87-ee8c-451d-8068-7917d72af032", "Set String", Relay_In_10)) return; 
+         if (true == CheckDebugBreak("f6b2fb87-ee8c-451d-8068-7917d72af032", "Set_String", Relay_In_10)) return; 
          {
             {
             }
@@ -905,7 +905,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("764a964b-b50c-41cc-aec4-c75387bc87ae", "Web Text", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("764a964b-b50c-41cc-aec4-c75387bc87ae", "Web_Text", Relay_In_12)) return; 
          {
             {
                logic_uScriptAct_WebText_URL_12 = local_URL_System_String;
@@ -993,20 +993,20 @@ public class WebText : uScriptLogic
    }
    void Relay_uScriptStart_13()
    {
-      if (true == CheckDebugBreak("2e250385-7c29-421f-8b98-5e26b9da1276", "uScript Events", Relay_uScriptStart_13)) return; 
+      if (true == CheckDebugBreak("2e250385-7c29-421f-8b98-5e26b9da1276", "uScript_Events", Relay_uScriptStart_13)) return; 
       Relay_In_6();
    }
    
    void Relay_uScriptLateStart_13()
    {
-      if (true == CheckDebugBreak("2e250385-7c29-421f-8b98-5e26b9da1276", "uScript Events", Relay_uScriptLateStart_13)) return; 
+      if (true == CheckDebugBreak("2e250385-7c29-421f-8b98-5e26b9da1276", "uScript_Events", Relay_uScriptLateStart_13)) return; 
    }
    
    void Relay_In_17()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2d8fda6d-080b-4c6a-a84c-7225b5e5969e", "GUI Toggle", Relay_In_17)) return; 
+         if (true == CheckDebugBreak("2d8fda6d-080b-4c6a-a84c-7225b5e5969e", "GUI_Toggle", Relay_In_17)) return; 
          {
             {
                logic_uScriptAct_GUIToggle_Value_17 = local_toggleValue_System_Boolean;
@@ -1049,7 +1049,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a3e1542e-3543-41f6-9cb6-67914852f92c", "GUI Text Field", Relay_In_18)) return; 
+         if (true == CheckDebugBreak("a3e1542e-3543-41f6-9cb6-67914852f92c", "GUI_Text_Field", Relay_In_18)) return; 
          {
             {
                logic_uScriptAct_GUITextField_Value_18 = local_usernameValue_System_String;
@@ -1090,7 +1090,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2420c4ba-b8f2-4e39-b822-8974b86744ba", "GUI Label", Relay_In_19)) return; 
+         if (true == CheckDebugBreak("2420c4ba-b8f2-4e39-b822-8974b86744ba", "GUI_Label", Relay_In_19)) return; 
          {
             {
             }
@@ -1126,14 +1126,22 @@ public class WebText : uScriptLogic
          if (true == CheckDebugBreak("bf7120e2-dd60-4fb0-9d05-6e98327476b6", "Concatenate", Relay_In_21)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_URL_System_String);
-               logic_uScriptAct_Concatenate_A_21 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_21.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_21, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_21[ index++ ] = local_URL_System_String;
+               
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_29_System_String);
-               logic_uScriptAct_Concatenate_B_21 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_21.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_21, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_21[ index++ ] = local_29_System_String;
+               
             }
             {
             }
@@ -1164,14 +1172,22 @@ public class WebText : uScriptLogic
          if (true == CheckDebugBreak("f0beb8dc-9cfe-4d75-bbf3-e79d2afcc801", "Concatenate", Relay_In_22)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_URL_System_String);
-               logic_uScriptAct_Concatenate_A_22 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_22.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_22, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_22[ index++ ] = local_URL_System_String;
+               
             }
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_33_System_String);
-               logic_uScriptAct_Concatenate_B_22 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_B_22.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_B_22, index + 1);
+               }
+               logic_uScriptAct_Concatenate_B_22[ index++ ] = local_33_System_String;
+               
             }
             {
             }
@@ -1197,9 +1213,13 @@ public class WebText : uScriptLogic
          if (true == CheckDebugBreak("271c68a2-a069-4904-8d6d-57c19718a056", "Concatenate", Relay_In_23)) return; 
          {
             {
-               List<System.Object> properties = new List<System.Object>();
-               properties.Add((System.Object)local_URL_System_String);
-               logic_uScriptAct_Concatenate_A_23 = properties.ToArray();
+               int index = 0;
+               if ( logic_uScriptAct_Concatenate_A_23.Length <= index)
+               {
+                  System.Array.Resize(ref logic_uScriptAct_Concatenate_A_23, index + 1);
+               }
+               logic_uScriptAct_Concatenate_A_23[ index++ ] = local_URL_System_String;
+               
             }
             {
             }
@@ -1229,7 +1249,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9bc32f89-6fc2-45f7-b1d2-810086f50109", "Set String", Relay_In_27)) return; 
+         if (true == CheckDebugBreak("9bc32f89-6fc2-45f7-b1d2-810086f50109", "Set_String", Relay_In_27)) return; 
          {
             {
             }
@@ -1263,7 +1283,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3e9227ac-ca42-46db-856a-6e0ee505b723", "Escape String", Relay_In_28)) return; 
+         if (true == CheckDebugBreak("3e9227ac-ca42-46db-856a-6e0ee505b723", "Escape_String", Relay_In_28)) return; 
          {
             {
                logic_uScriptAct_EscapeURL_Target_28 = local_usernameValue_System_String;
@@ -1293,7 +1313,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8f69f7bd-4bb7-4743-9d69-81aa0290f68d", "Escape String", Relay_In_30)) return; 
+         if (true == CheckDebugBreak("8f69f7bd-4bb7-4743-9d69-81aa0290f68d", "Escape_String", Relay_In_30)) return; 
          {
             {
                logic_uScriptAct_EscapeURL_Target_30 = local_32_System_String;
@@ -1323,7 +1343,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b71e175-ff8e-4a86-b994-42ea6245b85f", "Convert Variable", Relay_In_31)) return; 
+         if (true == CheckDebugBreak("3b71e175-ff8e-4a86-b994-42ea6245b85f", "Convert_Variable", Relay_In_31)) return; 
          {
             {
                logic_uScriptAct_ConvertVariable_Target_31 = local_toggleValue_System_Boolean;
@@ -1365,7 +1385,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("970212cc-1c42-4727-b4ba-de712d2c5bf8", "GUI Selection Grid", Relay_In_34)) return; 
+         if (true == CheckDebugBreak("970212cc-1c42-4727-b4ba-de712d2c5bf8", "GUI_Selection_Grid", Relay_In_34)) return; 
          {
             {
                logic_uScriptAct_GUISelectionGrid_Value_34 = local_WWW_Method_System_Int32;
@@ -1406,7 +1426,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("12774b80-b43d-4dcc-a8bb-e1495cc3f3be", "Compare Int", Relay_In_35)) return; 
+         if (true == CheckDebugBreak("12774b80-b43d-4dcc-a8bb-e1495cc3f3be", "Compare_Int", Relay_In_35)) return; 
          {
             {
                logic_uScriptCon_CompareInt_A_35 = local_WWW_Method_System_Int32;
@@ -1440,7 +1460,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cb7201d5-9038-496b-9821-88de26664aa8", "Set String", Relay_In_38)) return; 
+         if (true == CheckDebugBreak("cb7201d5-9038-496b-9821-88de26664aa8", "Set_String", Relay_In_38)) return; 
          {
             {
             }
@@ -1474,7 +1494,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("64a6cb88-9e61-4ad6-8314-2c81b4b27650", "Form Update Field", Relay_In_40)) return; 
+         if (true == CheckDebugBreak("64a6cb88-9e61-4ad6-8314-2c81b4b27650", "Form_Update_Field", Relay_In_40)) return; 
          {
             {
                logic_uScriptAct_FormUpdateField_Form_40 = local_WWW_Form_UnityEngine_WWWForm;
@@ -1508,7 +1528,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("889b50f5-7b1d-4499-af14-0c4974f5d38e", "Form Update Field", Relay_In_43)) return; 
+         if (true == CheckDebugBreak("889b50f5-7b1d-4499-af14-0c4974f5d38e", "Form_Update_Field", Relay_In_43)) return; 
          {
             {
                logic_uScriptAct_FormUpdateField_Form_43 = local_WWW_Form_UnityEngine_WWWForm;
@@ -1537,7 +1557,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ebb9015b-5975-4092-82b7-a97f9676eb15", "Compare Int", Relay_In_47)) return; 
+         if (true == CheckDebugBreak("ebb9015b-5975-4092-82b7-a97f9676eb15", "Compare_Int", Relay_In_47)) return; 
          {
             {
                logic_uScriptCon_CompareInt_A_47 = local_WWW_Method_System_Int32;
@@ -1571,7 +1591,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1353bf0a-cf25-4b1b-a6ef-a3ab18410d8e", "Web Text", Relay_In_48)) return; 
+         if (true == CheckDebugBreak("1353bf0a-cf25-4b1b-a6ef-a3ab18410d8e", "Web_Text", Relay_In_48)) return; 
          {
             {
                logic_uScriptAct_WebText_URL_48 = local_URL_System_String;
@@ -1657,7 +1677,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e48477ee-ed64-44b4-821c-41b374446a44", "Set String", Relay_In_64)) return; 
+         if (true == CheckDebugBreak("e48477ee-ed64-44b4-821c-41b374446a44", "Set_String", Relay_In_64)) return; 
          {
             {
             }
@@ -1691,7 +1711,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9b6629cb-9394-46f8-9483-6583ac36e0d6", "Append URL Query", Relay_In_70)) return; 
+         if (true == CheckDebugBreak("9b6629cb-9394-46f8-9483-6583ac36e0d6", "Append_URL_Query", Relay_In_70)) return; 
          {
             {
                logic_uScriptAct_AppendURLQuery_URL_70 = local_URL_System_String;
@@ -1731,7 +1751,7 @@ public class WebText : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cfe5e1d1-d645-47d3-abe3-0eb5e52646b9", "Append URL Query", Relay_In_71)) return; 
+         if (true == CheckDebugBreak("cfe5e1d1-d645-47d3-abe3-0eb5e52646b9", "Append_URL_Query", Relay_In_71)) return; 
          {
             {
                logic_uScriptAct_AppendURLQuery_URL_71 = local_URL_System_String;
@@ -1795,7 +1815,7 @@ public class WebText : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

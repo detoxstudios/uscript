@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3008
+//uScript Generated Code - Build 1.0.3055
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -314,12 +314,12 @@ public class FireBot_Gameplay : uScriptLogic
    bool logic_uScriptAct_Delay_Stopped_64 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_64 = false;
    //pointer to script instanced logic node
-   uScriptAct_AddFloat logic_uScriptAct_AddFloat_uScriptAct_AddFloat_65 = new uScriptAct_AddFloat( );
-   System.Single[] logic_uScriptAct_AddFloat_A_65 = new System.Single[] {};
-   System.Single[] logic_uScriptAct_AddFloat_B_65 = new System.Single[] {};
-   System.Single logic_uScriptAct_AddFloat_FloatResult_65;
-   System.Int32 logic_uScriptAct_AddFloat_IntResult_65;
-   bool logic_uScriptAct_AddFloat_Out_65 = true;
+   uScriptAct_AddFloat_v2 logic_uScriptAct_AddFloat_v2_uScriptAct_AddFloat_v2_65 = new uScriptAct_AddFloat_v2( );
+   System.Single logic_uScriptAct_AddFloat_v2_A_65 = (float) 0;
+   System.Single logic_uScriptAct_AddFloat_v2_B_65 = (float) 0;
+   System.Single logic_uScriptAct_AddFloat_v2_FloatResult_65;
+   System.Int32 logic_uScriptAct_AddFloat_v2_IntResult_65;
+   bool logic_uScriptAct_AddFloat_v2_Out_65 = true;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_69 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_69 = UnityEngine.KeyCode.Space;
@@ -378,12 +378,12 @@ public class FireBot_Gameplay : uScriptLogic
    UnityEngine.Vector3 logic_uScriptAct_SetComponentsVector3_OutputVector3_87;
    bool logic_uScriptAct_SetComponentsVector3_Out_87 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_88 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_88 = new System.Int32[] {};
-   System.Int32[] logic_uScriptAct_AddInt_B_88 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_88;
-   System.Single logic_uScriptAct_AddInt_FloatResult_88;
-   bool logic_uScriptAct_AddInt_Out_88 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_88 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_88 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_88 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_88;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_88;
+   bool logic_uScriptAct_AddInt_v2_Out_88 = true;
    //pointer to script instanced logic node
    uScriptAct_SpawnPrefab logic_uScriptAct_SpawnPrefab_uScriptAct_SpawnPrefab_91 = new uScriptAct_SpawnPrefab( );
    System.String logic_uScriptAct_SpawnPrefab_PrefabName_91 = "WaterBall";
@@ -525,12 +525,12 @@ public class FireBot_Gameplay : uScriptLogic
    System.Single logic_uScriptAct_GetComponentsVector3_Z_136;
    bool logic_uScriptAct_GetComponentsVector3_Out_136 = true;
    //pointer to script instanced logic node
-   uScriptAct_AddInt logic_uScriptAct_AddInt_uScriptAct_AddInt_137 = new uScriptAct_AddInt( );
-   System.Int32[] logic_uScriptAct_AddInt_A_137 = new System.Int32[] {1};
-   System.Int32[] logic_uScriptAct_AddInt_B_137 = new System.Int32[] {};
-   System.Int32 logic_uScriptAct_AddInt_IntResult_137;
-   System.Single logic_uScriptAct_AddInt_FloatResult_137;
-   bool logic_uScriptAct_AddInt_Out_137 = true;
+   uScriptAct_AddInt_v2 logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_137 = new uScriptAct_AddInt_v2( );
+   System.Int32 logic_uScriptAct_AddInt_v2_A_137 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_B_137 = (int) 0;
+   System.Int32 logic_uScriptAct_AddInt_v2_IntResult_137;
+   System.Single logic_uScriptAct_AddInt_v2_FloatResult_137;
+   bool logic_uScriptAct_AddInt_v2_Out_137 = true;
    //pointer to script instanced logic node
    uScriptAct_SpawnPrefabAtLocation logic_uScriptAct_SpawnPrefabAtLocation_uScriptAct_SpawnPrefabAtLocation_140 = new uScriptAct_SpawnPrefabAtLocation( );
    System.String logic_uScriptAct_SpawnPrefabAtLocation_PrefabName_140 = "";
@@ -1080,7 +1080,7 @@ public class FireBot_Gameplay : uScriptLogic
       logic_uScriptCon_CompareString_uScriptCon_CompareString_60.SetParent(g);
       logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_62.SetParent(g);
       logic_uScriptAct_Delay_uScriptAct_Delay_64.SetParent(g);
-      logic_uScriptAct_AddFloat_uScriptAct_AddFloat_65.SetParent(g);
+      logic_uScriptAct_AddFloat_v2_uScriptAct_AddFloat_v2_65.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_69.SetParent(g);
       logic_uScriptAct_SetBool_uScriptAct_SetBool_73.SetParent(g);
       logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_74.SetParent(g);
@@ -1090,7 +1090,7 @@ public class FireBot_Gameplay : uScriptLogic
       logic_uScriptAct_SetFloat_uScriptAct_SetFloat_83.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_84.SetParent(g);
       logic_uScriptAct_SetComponentsVector3_uScriptAct_SetComponentsVector3_87.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_88.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_88.SetParent(g);
       logic_uScriptAct_SpawnPrefab_uScriptAct_SpawnPrefab_91.SetParent(g);
       logic_uScriptCon_CompareInt_uScriptCon_CompareInt_99.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_106.SetParent(g);
@@ -1110,7 +1110,7 @@ public class FireBot_Gameplay : uScriptLogic
       logic_uScriptAct_PrintText_uScriptAct_PrintText_133.SetParent(g);
       logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_135.SetParent(g);
       logic_uScriptAct_GetComponentsVector3_uScriptAct_GetComponentsVector3_136.SetParent(g);
-      logic_uScriptAct_AddInt_uScriptAct_AddInt_137.SetParent(g);
+      logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_137.SetParent(g);
       logic_uScriptAct_SpawnPrefabAtLocation_uScriptAct_SpawnPrefabAtLocation_140.SetParent(g);
       logic_uScriptAct_PrintText_uScriptAct_PrintText_142.SetParent(g);
       logic_uScriptAct_ScaleVector3_uScriptAct_ScaleVector3_146.SetParent(g);
@@ -3069,24 +3069,14 @@ public class FireBot_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("96806546-d135-4046-9de8-a046ad698142", "Add_Float__OLD_", Relay_In_65)) return; 
+         if (true == CheckDebugBreak("96806546-d135-4046-9de8-a046ad698142", "Add_Float", Relay_In_65)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddFloat_A_65.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddFloat_A_65, index + 1);
-               }
-               logic_uScriptAct_AddFloat_A_65[ index++ ] = local_115_System_Single;
+               logic_uScriptAct_AddFloat_v2_A_65 = local_115_System_Single;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddFloat_B_65.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddFloat_B_65, index + 1);
-               }
-               logic_uScriptAct_AddFloat_B_65[ index++ ] = local_45_System_Single;
+               logic_uScriptAct_AddFloat_v2_B_65 = local_45_System_Single;
                
             }
             {
@@ -3094,11 +3084,11 @@ public class FireBot_Gameplay : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddFloat_uScriptAct_AddFloat_65.In(logic_uScriptAct_AddFloat_A_65, logic_uScriptAct_AddFloat_B_65, out logic_uScriptAct_AddFloat_FloatResult_65, out logic_uScriptAct_AddFloat_IntResult_65);
-         local_44_System_Single = logic_uScriptAct_AddFloat_FloatResult_65;
+         logic_uScriptAct_AddFloat_v2_uScriptAct_AddFloat_v2_65.In(logic_uScriptAct_AddFloat_v2_A_65, logic_uScriptAct_AddFloat_v2_B_65, out logic_uScriptAct_AddFloat_v2_FloatResult_65, out logic_uScriptAct_AddFloat_v2_IntResult_65);
+         local_44_System_Single = logic_uScriptAct_AddFloat_v2_FloatResult_65;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddFloat_uScriptAct_AddFloat_65.Out;
+         bool test_0 = logic_uScriptAct_AddFloat_v2_uScriptAct_AddFloat_v2_65.Out;
          
          if ( test_0 == true )
          {
@@ -3107,7 +3097,7 @@ public class FireBot_Gameplay : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Float (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Float.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -3479,24 +3469,14 @@ public class FireBot_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7004c7c3-4361-47ff-8d06-20f232f5e207", "Add_Int__OLD_", Relay_In_88)) return; 
+         if (true == CheckDebugBreak("7004c7c3-4361-47ff-8d06-20f232f5e207", "Add_Int", Relay_In_88)) return; 
          {
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_A_88.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_A_88, index + 1);
-               }
-               logic_uScriptAct_AddInt_A_88[ index++ ] = local_95_System_Int32;
+               logic_uScriptAct_AddInt_v2_A_88 = local_95_System_Int32;
                
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_B_88.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_88, index + 1);
-               }
-               logic_uScriptAct_AddInt_B_88[ index++ ] = local_Points_System_Int32;
+               logic_uScriptAct_AddInt_v2_B_88 = local_Points_System_Int32;
                
             }
             {
@@ -3504,15 +3484,15 @@ public class FireBot_Gameplay : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_88.In(logic_uScriptAct_AddInt_A_88, logic_uScriptAct_AddInt_B_88, out logic_uScriptAct_AddInt_IntResult_88, out logic_uScriptAct_AddInt_FloatResult_88);
-         local_Points_System_Int32 = logic_uScriptAct_AddInt_IntResult_88;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_88.In(logic_uScriptAct_AddInt_v2_A_88, logic_uScriptAct_AddInt_v2_B_88, out logic_uScriptAct_AddInt_v2_IntResult_88, out logic_uScriptAct_AddInt_v2_FloatResult_88);
+         local_Points_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_88;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -4287,17 +4267,12 @@ public class FireBot_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("15606cb3-61b4-4937-8ea5-475fb49e03aa", "Add_Int__OLD_", Relay_In_137)) return; 
+         if (true == CheckDebugBreak("15606cb3-61b4-4937-8ea5-475fb49e03aa", "Add_Int", Relay_In_137)) return; 
          {
             {
             }
             {
-               int index = 0;
-               if ( logic_uScriptAct_AddInt_B_137.Length <= index)
-               {
-                  System.Array.Resize(ref logic_uScriptAct_AddInt_B_137, index + 1);
-               }
-               logic_uScriptAct_AddInt_B_137[ index++ ] = local_150_System_Int32;
+               logic_uScriptAct_AddInt_v2_B_137 = local_150_System_Int32;
                
             }
             {
@@ -4305,11 +4280,11 @@ public class FireBot_Gameplay : uScriptLogic
             {
             }
          }
-         logic_uScriptAct_AddInt_uScriptAct_AddInt_137.In(logic_uScriptAct_AddInt_A_137, logic_uScriptAct_AddInt_B_137, out logic_uScriptAct_AddInt_IntResult_137, out logic_uScriptAct_AddInt_FloatResult_137);
-         local_150_System_Int32 = logic_uScriptAct_AddInt_IntResult_137;
+         logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_137.In(logic_uScriptAct_AddInt_v2_A_137, logic_uScriptAct_AddInt_v2_B_137, out logic_uScriptAct_AddInt_v2_IntResult_137, out logic_uScriptAct_AddInt_v2_FloatResult_137);
+         local_150_System_Int32 = logic_uScriptAct_AddInt_v2_IntResult_137;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_AddInt_uScriptAct_AddInt_137.Out;
+         bool test_0 = logic_uScriptAct_AddInt_v2_uScriptAct_AddInt_v2_137.Out;
          
          if ( test_0 == true )
          {
@@ -4318,7 +4293,7 @@ public class FireBot_Gameplay : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Int (OLD).  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Add Int.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
