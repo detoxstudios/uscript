@@ -21,6 +21,10 @@ using System.Reflection;
 using JetBrains.Annotations;
 
 using UnityEngine;
+#if UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+#endif
 
 // The list of asset types supported by the AssetBrowserWindow class
 public enum AssetType
@@ -360,8 +364,18 @@ public class uScriptCustomEvent
 
    public static void BroadcastCustomEvent(string eventName, object eventData, GameObject eventSender)
    {
-      GameObject[] gos = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
       CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
+#if UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6
+      List<GameObject> rootGOs = new List<GameObject>(50);
+      for (int i = 0; i < SceneManager.sceneCount; i++)
+      {
+         Scene scene = SceneManager.GetSceneAt(i);
+         rootGOs.AddRange(scene.GetRootGameObjects());
+      }
+      GameObject[] gos = rootGOs.ToArray();
+#else
+      GameObject[] gos = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+#endif
       foreach (GameObject go in gos)
       {
          if (go && go.transform.parent == null)
