@@ -148,7 +148,7 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
 
       internetReachability = Application.internetReachability;
 
-#if !UNITY_5_5
+#if !UNITY_5_5_OR_NEWER
       webSecurityEnabled = Application.webSecurityEnabled;
       webSecurityHostUrl = Application.webSecurityHostUrl;
 #else
