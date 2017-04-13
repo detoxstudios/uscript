@@ -24,7 +24,7 @@ internal class ImportGUITextures : AssetPostprocessor
       var textureImporter = (TextureImporter)this.assetImporter;
       var textureSettings = new TextureImporterSettings();
 
-#if UNITY_5_5
+#if UNITY_5_5_OR_NEWER
       textureImporter.textureType = TextureImporterType.Default;
 #else
       textureImporter.textureType = TextureImporterType.Advanced;

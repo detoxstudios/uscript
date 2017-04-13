@@ -76,7 +76,9 @@ namespace Detox.Editor
 
       public static void AntiAlias(float zoomScale)
       {
+#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5
          uScript.Instance.antiAlias = zoomScale < 1 ? 2 : 0;
+#endif
       }
 
       public static void InitPanels()

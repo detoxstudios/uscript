@@ -15,7 +15,7 @@ public class uScriptAct_GetNavMeshHitProperties : uScriptLogic
 
    public void In(
       [FriendlyName("NavMeshHit", "The input NavMeshHit to get the properties of.")]
-#if UNITY_5_5
+#if UNITY_5_5_OR_NEWER
       UnityEngine.AI.NavMeshHit navMeshHit,
 #else
       NavMeshHit navMeshHit,

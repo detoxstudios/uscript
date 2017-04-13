@@ -49,7 +49,7 @@ public class uScript_Level : uScriptEvent
 
 public class uScript_Level : uScriptEvent
 {
-   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
+   public delegate void uScriptEventHandler(object sender, LevelWasLoadedEventArgs args);
 
    [FriendlyName("On Level Was Loaded")]
    public event uScriptEventHandler LevelWasLoaded;
