@@ -1,8 +1,7 @@
 // uScript uScript_Button.cs
 // (C) 2015 Detox Studios LLC
 
-using UnityEngine;
-using System.Collections;
+using UnityEngine.EventSystems;
 
 //Unity 4.6 and above only
 #if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2 && !UNITY_4_3 && !UNITY_4_4 && !UNITY_4_5
@@ -15,7 +14,7 @@ using System.Collections;
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("UI Button Events", "Fires an event signal when Instance Button receives a click event.")]
-public class uScript_Button : uScriptEvent
+public class uScript_Button : uScriptEvent, IPointerDownHandler, IPointerUpHandler
 {
    public delegate void uScriptEventHandler(object sender, ClickEventArgs args);
 
@@ -29,6 +28,12 @@ public class uScript_Button : uScriptEvent
    [FriendlyName("On Button Click")]
    public event uScriptEventHandler OnButtonClick;
 
+   [FriendlyName("On Button Down")]
+   public event uScriptEventHandler OnButtonDown;
+
+   [FriendlyName("On Button Up")]
+   public event uScriptEventHandler OnButtonUp;
+
    private UnityEngine.UI.Button m_Button;
 
    public void Start()
@@ -41,6 +46,16 @@ public class uScript_Button : uScriptEvent
    void HandleButton()
    {
       if ( OnButtonClick != null ) OnButtonClick( this, new ClickEventArgs() ); 
+   }
+
+   public void OnPointerDown(PointerEventData eventData)
+   {
+      if ( OnButtonDown != null ) OnButtonDown( this, new ClickEventArgs() ); 
+   }
+
+   public void OnPointerUp(PointerEventData eventData)
+   {
+      if ( OnButtonUp != null ) OnButtonUp( this, new ClickEventArgs() ); 
    }
 }
 
