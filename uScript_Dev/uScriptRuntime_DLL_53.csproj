@@ -55,16 +55,6 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Detox_Store_Basic|AnyCPU' ">
-    <OutputPath>Temp\bin\Release_Detox_Store_Basic_5\</OutputPath>
-    <DefineConstants>TRACE;UNITY_5_0;UNITY_5_3;UNITY_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_BASIC</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>0169</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Unity_Store_PLE|AnyCPU' ">
     <OutputPath>Temp\bin\Release_Unity_Store_PLE_5\</OutputPath>
     <DefineConstants>TRACE;UNITY_5_0;UNITY_5_3;UNITY_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_PLE</DefineConstants>
@@ -75,19 +65,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Detox_Store_Pro|AnyCPU' ">
-    <OutputPath>Temp\bin\Release_Detox_Store_Pro_5\</OutputPath>
-    <DefineConstants>TRACE;UNITY_5_0;UNITY_5_3;UNITY_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_PRO</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>0169</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Unity_Store_Basic|AnyCPU' ">
     <OutputPath>Temp\bin\Release_Unity_Store_Basic_5\</OutputPath>
-    <DefineConstants>TRACE;UNITY_5_0;UNITY_5_3;UNITY_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_BASIC</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3;UNITY_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_BASIC</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
     <DebugType>pdbonly</DebugType>
