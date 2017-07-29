@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2015 Detox Studios LLC
-#if UNITY_5
+#if (UNITY_5 || UNITY_2017)
 using UnityEngine;
 using System.Collections;
 

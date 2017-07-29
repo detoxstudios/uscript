@@ -21,7 +21,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 
 using UnityEngine;
-#if UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6
+#if UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 #endif
@@ -365,7 +365,7 @@ public class uScriptCustomEvent
    public static void BroadcastCustomEvent(string eventName, object eventData, GameObject eventSender)
    {
       CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
-#if UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6
+#if UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017
       List<GameObject> rootGOs = new List<GameObject>(50);
       for (int i = 0; i < SceneManager.sceneCount; i++)
       {

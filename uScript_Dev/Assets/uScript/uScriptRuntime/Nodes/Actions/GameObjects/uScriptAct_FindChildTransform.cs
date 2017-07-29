@@ -41,9 +41,13 @@ public class uScriptAct_FindChildTransform : uScriptLogic
 	{
 		m_Out = false;
 		m_True = false;
-		
+
+#if UNITY_2017		
+		Transform t = Target.transform.Find(Name);
+#else
 		Transform t = Target.transform.FindChild(Name);
-		
+#endif
+
 		if ( t != null )
 		{
 			m_True = true;

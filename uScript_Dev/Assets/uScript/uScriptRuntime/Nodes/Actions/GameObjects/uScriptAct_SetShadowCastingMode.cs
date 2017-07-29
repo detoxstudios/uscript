@@ -1,4 +1,4 @@
-#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9
+#if UNITY_5 || UNITY_2017
 // uScript Action Node
 // (C) 2015 Detox Studios LLC
 
