@@ -23,6 +23,8 @@ public class uScriptCon_Switch : uScriptLogic
    private bool m_Output4 = false;
    private bool m_Output5 = false;
    private bool m_Output6 = false;
+   private bool m_Output7 = false;
+   private bool m_Output8 = false;
 
 
    // ================================================================================
@@ -47,6 +49,12 @@ public class uScriptCon_Switch : uScriptLogic
    [FriendlyName("Output 6")]
    public bool Output6 { get { return m_Output6; } }
 
+   [FriendlyName("Output 7")]
+   public bool Output7 { get { return m_Output7; } }
+
+   [FriendlyName("Output 8")]
+   public bool Output8 { get { return m_Output8; } }
+
 
    // ================================================================================
    //    Input Sockets and Node Parameters
@@ -61,9 +69,11 @@ public class uScriptCon_Switch : uScriptLogic
       m_Output4 = false;
       m_Output5 = false;
       m_Output6 = false;
+      m_Output7 = false;
+      m_Output8 = false;
 
       // Check bounds on MaxOutputUsed
-      Mathf.Clamp(MaxOutputUsed, 1, 6);
+      Mathf.Clamp(MaxOutputUsed, 1, 8);
 
       // Set correct output socket to true
       if (m_SwitchOpen)
@@ -173,6 +183,40 @@ public class uScriptCon_Switch : uScriptLogic
             case 6:
                CurrentOutput = m_CurrentOutput;
                m_Output6 = true;
+               if (m_CurrentOutput < MaxOutputUsed)
+               {
+                  m_CurrentOutput = 7;
+               }
+               if (Loop)
+               {
+                  m_CurrentOutput = 1;
+               }
+               else
+               {
+                  m_SwitchOpen = false;
+               }
+               break;
+
+            case 7:
+               CurrentOutput = m_CurrentOutput;
+               m_Output7 = true;
+               if (m_CurrentOutput < MaxOutputUsed)
+               {
+                  m_CurrentOutput = 8;
+               }
+               if (Loop)
+               {
+                  m_CurrentOutput = 1;
+               }
+               else
+               {
+                  m_SwitchOpen = false;
+               }
+               break;
+
+            case 8:
+               CurrentOutput = m_CurrentOutput;
+               m_Output8 = true;
                if (Loop)
                {
                   m_CurrentOutput = 1;
@@ -199,7 +243,7 @@ public class uScriptCon_Switch : uScriptLogic
       bool Loop,
       
       [FriendlyName("Max Output Used", "Highest valid output switch to use.")]
-      [DefaultValue(6), SocketState(false, false)]
+      [DefaultValue(8), SocketState(false, false)]
       int MaxOutputUsed,
       
       [FriendlyName("Current Output", "The output switch that last executed.")]
@@ -212,6 +256,8 @@ public class uScriptCon_Switch : uScriptLogic
       m_Output4 = false;
       m_Output5 = false;
       m_Output6 = false;
+      m_Output7 = false;
+      m_Output8 = false;
 
       m_CurrentOutput = 1;
       CurrentOutput = 1;

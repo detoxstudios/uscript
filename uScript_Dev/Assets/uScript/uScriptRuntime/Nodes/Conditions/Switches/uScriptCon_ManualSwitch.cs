@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
-[FriendlyName("Manual Switch", "Manually pick an Output to fire the signal to.\n\nThe specified Output To Use value will be clamped within the range of 1 to 6.")]
+[FriendlyName("Manual Switch", "Manually pick an Output to fire the signal to.\n\nThe specified Output To Use value will be clamped within the range of 1 to 8.")]
 public class uScriptCon_ManualSwitch : uScriptLogic
 {
    private int m_CurrentOutput = 1;
@@ -30,6 +30,10 @@ public class uScriptCon_ManualSwitch : uScriptLogic
    public event uScriptEventHandler Output5;
    [FriendlyName("Output 6")]
    public event uScriptEventHandler Output6;
+   [FriendlyName("Output 7")]
+   public event uScriptEventHandler Output7;
+   [FriendlyName("Output 8")]
+   public event uScriptEventHandler Output8;
 
    public void In(
       [FriendlyName("Output To Use", "The output switch to use.")]
@@ -65,6 +69,14 @@ public class uScriptCon_ManualSwitch : uScriptLogic
 
             case 6:
                Output6(this, new System.EventArgs());
+               break;
+
+            case 7:
+               Output7(this, new System.EventArgs());
+               break;
+
+            case 8:
+               Output8(this, new System.EventArgs());
                break;
 
             default:
