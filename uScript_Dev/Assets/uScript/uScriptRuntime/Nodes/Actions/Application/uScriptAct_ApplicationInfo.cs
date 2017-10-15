@@ -49,9 +49,11 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       [SocketState(false, false)]
       out bool isPlaying,
 
+#if !(UNITY_2017_2_OR_NEWER)
       [FriendlyName("isWebPlayer", "Are we running inside a web player?")]
       [SocketState(false, false)]
       out bool isWebPlayer,
+#endif
 
       [FriendlyName("streamedBytes", "Returns the number of bytes that have been downloaded from the main unity web stream.")]
       [SocketState(false, false)]
@@ -73,9 +75,11 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       [SocketState(false, false)]
       out string temporaryCachePath,
 
+#if !(UNITY_2017_2_OR_NEWER)
       [FriendlyName("srcValue", "The path to the web player data file relative to the html file (Read Only).")]
       [SocketState(false, false)]
       out string srcValue,
+#endif
 
       [FriendlyName("absoluteURL", "The absolute path to the web player data file (Read Only).")]
       [SocketState(false, false)]
@@ -133,7 +137,9 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
 #endif
 
       isPlaying = Application.isPlaying;
+#if !(UNITY_2017_2_OR_NEWER)
       isWebPlayer = Application.isWebPlayer;
+#endif
       streamedBytes = Application.streamedBytes;
 
       platform = Application.platform;
@@ -141,7 +147,9 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       persistentDataPath = Application.persistentDataPath;
       temporaryCachePath = Application.temporaryCachePath;
 
+#if !(UNITY_2017_2_OR_NEWER)
       srcValue = Application.srcValue;
+#endif
       absoluteURL = Application.absoluteURL;
       unityVersion = Application.unityVersion;
       systemLanguage = Application.systemLanguage;
