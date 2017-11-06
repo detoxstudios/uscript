@@ -169,7 +169,7 @@ namespace Detox.Editor.GUI
 
       private static string WatchedControlName { get; set; }
 
-      public static void BeginColumns(string col1, string col2, string col3, Vector2 offset, Rect rect)
+      public static void BeginColumns(string col1, string col2, string col3, Detox.Drawing.PointF offset, Detox.Drawing.RectangleF rect)
       {
          columnEnabled = new Column(string.Empty, 20);
          columnLabel = new Column(col1, 140);
@@ -178,8 +178,8 @@ namespace Detox.Editor.GUI
 
          propertyCount = 0;   // Needed for VariableNameField()
 
-         columnOffset = offset;
-         scrollviewRect = rect;
+         columnOffset = new Vector2(offset.X, offset.Y);
+         scrollviewRect = new Rect(rect.X, rect.Y, rect.Width, rect.Height);
 
          GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(Style.ColumnHeaderHeight));
 

@@ -121,6 +121,7 @@ namespace Detox.Windows.Forms
    using Detox.Editor.GUI;
    using Detox.FlowChart;
    using Detox.ScriptEditor;
+   using System.Reflection;
 
    public class PropertyValueChangedEventArgs : System.EventArgs
    {}
@@ -145,110 +146,165 @@ namespace Detox.Windows.Forms
          if ( null != PropertyValueChanged ) PropertyValueChanged( this, new PropertyValueChangedEventArgs( ) );
       }
 
-      public void OnPaint( )
+      public void OnPaint( PointF scrollViewOffset, RectangleF scrollViewRect )
       {
          bool signalUpdate = false;
+         bool customRenderer = false;
 
          if (SelectedObjects.Length == 0)
          {
             Property.ResetFoldouts();
          }
 
-         foreach ( object selectedObject in SelectedObjects )
+         if (SelectedObjects.Length == 1)
          {
-            PropertyGridParameters parameters = selectedObject as PropertyGridParameters;
-            List<Parameter> updatedParameters = new List<Parameter>( );
-
-            if (parameters.Parameters.Length > 1)
+            // check to see if there's a custom renderer we should be using
+            PropertyGridParameters parameters = SelectedObjects[0] as PropertyGridParameters;
+            if (parameters.Parameters.Length > 1 && parameters.EntityNode != null)
             {
-               Node node = parameters.EntityNode != null
-                              ? uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid)
-                              : null;
-
-               if (Property.BeginPropertyList(parameters.Description, node))
+               // is this a supported node type?
+               Data.ScriptEditor.LogicNodeData nodeData = parameters.EntityNode.NodeData as Data.ScriptEditor.LogicNodeData;
+               if (nodeData != null)
                {
-                  foreach ( Parameter p in parameters.Parameters )
+                  // check and see if an *Editor class exists for this node type
+                  Type type = uScript.GetAssemblyQualifiedType(nodeData.Type + "Editor");
+                  if (type != null)
                   {
-                     if ( p == Parameter.Empty || (false == p.Input && false == p.Output) ) 
+                     // found an *Editor class for our node, now check to see if it has the magic method (OnPropertyGridGUI)
+                     MethodInfo[] methods = type.GetMethods();
+                     foreach (MethodInfo mi in methods)
                      {
-                        updatedParameters.Add(  p );
-                        continue;
-                     }
-
-                     Parameter cloned = p;
-
-                     object val = cloned.DefaultAsObject;
-
-                     bool isLocked = p.IsLocked();
-
-                     if (null != node)
-                     {
-                        if ( false == isLocked )
+                        if (mi.Name == "OnPropertyGridGUI")
                         {
-                           if ( false == parameters.ScriptEditorCtrl.CanCollapseParameter(parameters.EntityNode.Guid, p)
-                                && false == parameters.ScriptEditorCtrl.CanExpandParameter(p) )
+                           // found the method we're looking for - make sure it's static
+                           if (!mi.IsStatic)
                            {
-                              isLocked = true;
+                              uScriptDebug.Log(string.Format("Found {0} method in {1}, but it needs to be static and is not.  Please update the code.", mi.Name, type.Name));
+                              continue;
                            }
+
+                           // it's static - make sure the parameter types match
+                           ParameterInfo[] pInfos = mi.GetParameters();
+                           if (pInfos[0].ParameterType != typeof(PropertyGridParameters) || pInfos[1].ParameterType != typeof(Detox.Drawing.PointF) || pInfos[2].ParameterType != typeof(Detox.Drawing.RectangleF))
+                           {
+                              uScriptDebug.Log(string.Format("Found {0} method in {1}, but its parameter types don't match (should be PropertyGridParameters, PointF, RectangleF).  Please update the code.", mi.Name, type.Name));
+                              continue;
+                           }
+
+                           // it's static and has the right parameter types - call it!
+                           signalUpdate |= (bool)mi.Invoke(null, new object[] { parameters, scrollViewOffset, scrollViewRect });
+                           customRenderer = true;
+                           break;
                         }
                      }
-
-                     Property.State propertyState = new Property.State(
-                        isSocketExposed: p.IsVisible(),
-                        isLocked: isLocked,
-                        isReadOnly: p.Input == false,
-                        name: p.Name,
-                        type: p.Type,
-                        defaultValue: p.Default,
-                        entityNode: parameters.EntityNode);
-
-                     if ( node == null || false == uScript.GetRequiresLink(parameters.EntityNode, p.Name) )
-                     {
-                        val = Property.Draw(p.FriendlyName, val, propertyState);
-                     }
-                     else
-                     {
-                        Property.DrawText(p.FriendlyName, "Requires Link", propertyState);
-                     }
-
-                     //remove the old states
-                     cloned.State &= ~Parameter.VisibleState.Visible;
-                     cloned.State &= ~Parameter.VisibleState.Hidden;
-
-                     //add it back in if selected
-                     if ( true == propertyState.IsSocketExposed )
-                     {
-                        cloned.State |= Parameter.VisibleState.Visible;
-                     }
-                     else
-                     {
-                        cloned.State |= Parameter.VisibleState.Hidden;
-                     }
-
-                     cloned.DefaultAsObject = val;
-
-                     //they changed the value - the reference guid
-                     //must be rebuilt
-                     if ( cloned.Default != p.Default )
-                     {
-                        cloned.ReferenceGuid = "";
-                     }
-
-                     signalUpdate |= cloned.Default != p.Default;
-                     signalUpdate |= cloned.State   != p.State;
-
-                     updatedParameters.Add( cloned );
                   }
-
-                  parameters.Parameters = updatedParameters.ToArray( );
                }
-               Property.EndPropertyList();
             }
          }
 
-         if ( true == signalUpdate )
+         if (!customRenderer)
          {
-            OnPropertyValueChanged( );
+            Property.BeginColumns("Property", "Value", "Type", scrollViewOffset, scrollViewRect);
+            {
+               foreach (object selectedObject in SelectedObjects)
+               {
+                  PropertyGridParameters parameters = selectedObject as PropertyGridParameters;
+                  List<Parameter> updatedParameters = new List<Parameter>();
+
+                  if (parameters.Parameters.Length > 1)
+                  {
+                     Node node = parameters.EntityNode != null
+                                    ? uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid)
+                                    : null;
+
+                     if (Property.BeginPropertyList(parameters.Description, node))
+                     {
+                        foreach (Parameter p in parameters.Parameters)
+                        {
+                           if (p == Parameter.Empty || (false == p.Input && false == p.Output))
+                           {
+                              updatedParameters.Add(p);
+                              continue;
+                           }
+
+                           Parameter cloned = p;
+
+                           object val = cloned.DefaultAsObject;
+
+                           bool isLocked = p.IsLocked();
+
+                           if (null != node)
+                           {
+                              if (false == isLocked)
+                              {
+                                 if (false == parameters.ScriptEditorCtrl.CanCollapseParameter(parameters.EntityNode.Guid, p)
+                                       && false == parameters.ScriptEditorCtrl.CanExpandParameter(p))
+                                 {
+                                    isLocked = true;
+                                 }
+                              }
+                           }
+
+                           Property.State propertyState = new Property.State(
+                              isSocketExposed: p.IsVisible(),
+                              isLocked: isLocked,
+                              isReadOnly: p.Input == false,
+                              name: p.Name,
+                              type: p.Type,
+                              defaultValue: p.Default,
+                              entityNode: parameters.EntityNode);
+
+                           if (node == null || false == uScript.GetRequiresLink(parameters.EntityNode, p.Name))
+                           {
+                              val = Property.Draw(p.FriendlyName, val, propertyState);
+                           }
+                           else
+                           {
+                              Property.DrawText(p.FriendlyName, "Requires Link", propertyState);
+                           }
+
+                           //remove the old states
+                           cloned.State &= ~Parameter.VisibleState.Visible;
+                           cloned.State &= ~Parameter.VisibleState.Hidden;
+
+                           //add it back in if selected
+                           if (true == propertyState.IsSocketExposed)
+                           {
+                              cloned.State |= Parameter.VisibleState.Visible;
+                           }
+                           else
+                           {
+                              cloned.State |= Parameter.VisibleState.Hidden;
+                           }
+
+                           cloned.DefaultAsObject = val;
+
+                           //they changed the value - the reference guid
+                           //must be rebuilt
+                           if (cloned.Default != p.Default)
+                           {
+                              cloned.ReferenceGuid = "";
+                           }
+
+                           signalUpdate |= cloned.Default != p.Default;
+                           signalUpdate |= cloned.State != p.State;
+
+                           updatedParameters.Add(cloned);
+                        }
+
+                        parameters.Parameters = updatedParameters.ToArray();
+                     }
+                     Property.EndPropertyList();
+                  }
+               }
+            }
+
+            Property.EndColumns();
+         }
+
+         if (true == signalUpdate)
+         {
+            OnPropertyValueChanged();
          }
       }
    }

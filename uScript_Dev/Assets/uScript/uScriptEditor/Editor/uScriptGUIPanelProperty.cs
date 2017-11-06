@@ -99,15 +99,11 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
             uScriptGUIStyle.VerticalScrollbar,
             "scrollview");
          {
-            Property.BeginColumns("Property", "Value", "Type", this.ScrollviewOffset, this.ScrollviewRect);
+            if (uScript.Instance.ScriptEditorCtrl != null)
             {
-               if (uScript.Instance.ScriptEditorCtrl != null)
-               {
-                  uScript.Instance.ScriptEditorCtrl.PropertyGrid.OnPaint();
-               }
+               uScript.Instance.ScriptEditorCtrl.PropertyGrid.OnPaint(new Detox.Drawing.PointF(this.ScrollviewOffset.x, this.ScrollviewOffset.y), 
+                                                                      new Detox.Drawing.RectangleF(this.ScrollviewRect.x, this.ScrollviewRect.y, this.ScrollviewRect.width, this.ScrollviewRect.height));
             }
-
-            Property.EndColumns();
          }
 
          EditorGUILayout.EndScrollView();
