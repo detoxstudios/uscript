@@ -442,7 +442,7 @@ public sealed partial class uScript : EditorWindow
 
    public bool AllowKeyInput()
    {
-      return (UnityVersion <= 3.5f && "MainView" == GUI.GetNameOfFocusedControl()) || FocusedControl.ID == 0;
+      return ((UnityVersion <= 3.5f || UnityVersion >= 2017.0f) && "MainView" == GUI.GetNameOfFocusedControl()) || FocusedControl.ID == 0;
    }
 
    public ScriptEditorCtrl ScriptEditorCtrl
