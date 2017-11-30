@@ -1845,6 +1845,10 @@ public sealed partial class uScript : EditorWindow
                   e.Use();
                }
             }
+			else
+			{
+			   Debug.Log(FocusedControl.ID + ":" + FocusedControl.Name);
+			}
 
             break;
 
@@ -1868,6 +1872,10 @@ public sealed partial class uScript : EditorWindow
                   this.m_SelectAllNodes = true;
                }
             }
+			else
+			{
+			   Debug.Log(FocusedControl.ID + ":" + FocusedControl.Name);
+			}
 
             break;
 
