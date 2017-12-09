@@ -1828,7 +1828,6 @@ public sealed partial class uScript : EditorWindow
          case EventType.ValidateCommand:
             if (allowKeyInput)
             {
-				Debug.Log(UnityVersion);
                if (e.commandName == "Copy" && this.m_ScriptEditorCtrl.CanCopy)
                {
                   e.Use();
@@ -1846,17 +1845,12 @@ public sealed partial class uScript : EditorWindow
                   e.Use();
                }
             }
-			else
-			{
-			   Debug.Log(FocusedControl.ID + ":" + FocusedControl.Name);
-			}
 
             break;
 
          case EventType.ExecuteCommand:
             if (allowKeyInput)
             {
-				Debug.Log(UnityVersion);
                if (e.commandName == "Copy")
                {
                   this.wantsCopy = true;
@@ -1874,10 +1868,6 @@ public sealed partial class uScript : EditorWindow
                   this.m_SelectAllNodes = true;
                }
             }
-			else
-			{
-			   Debug.Log(FocusedControl.ID + ":" + FocusedControl.Name);
-			}
 
             break;
 
