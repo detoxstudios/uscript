@@ -190,9 +190,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="uScriptRuntime_DLL_53.csproj">
+    <ProjectReference Include="uScriptRuntime_DLL_20171.csproj">
       <Project>{bd28f23c-2ec1-4b74-ab69-1510ebd650ee}</Project>
-      <Name>uScriptRuntime_DLL_53</Name>
+      <Name>uScriptRuntime_DLL_20171</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
