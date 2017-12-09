@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7761F2C3-F719-A3C5-C99C-2D7E1B75A6F7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>uScript</RootNamespace>
+    <AssemblyName>uScript</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Unity_Store_PLE|AnyCPU' ">
+    <OutputPath>Temp\bin\Release_Unity_Store_PLE_20171\</OutputPath>
+    <DefineConstants>TRACE;UNITY_2017_1;UNITY_2017;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_PLE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>0169</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Unity_Store_Basic|AnyCPU' ">
+    <OutputPath>Temp\bin\Release_Unity_Store_Basic_20171\</OutputPath>
+    <DefineConstants>TRACE;UNITY_2017_1;UNITY_2017;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_BASIC</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>0169</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Unity_Store_Pro|AnyCPU' ">
+    <OutputPath>Temp\bin\Release_Unity_Store_Pro_20171\</OutputPath>
+    <DefineConstants>TRACE;UNITY_2017_1;UNITY_2017;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_PRO</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>0169</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>..\..\..\..\..\Program Files\Unity2017.1\Editor\Data\Managed\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\Program Files\Unity2017.1\Editor\Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\AssetBrowserWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\BinaryXml.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\BuildInfo.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\CodeValidator.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\CommentNode.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\EditableObject.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\EditorCommands.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityEventDisplayNode.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityMethodDisplayNode.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityPropertyDisplayNode.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ExportPNG.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Extensions\RichTextExtensions.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Extensions\UnityEditorExtensions.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\FlowChart.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\AutoCompletePopup.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\CanvasCommands.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Control.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\FocusedControl.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\GuiState.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\HierarchyWindowIcon.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ProjectWindowIcon.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemScript.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\MenuLocation.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScript.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptCurrent.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptList.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Property.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\StatusBar.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\AboutWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\HotkeyWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\LicenseWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\PreferenceWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\PromotionWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\ReferenceWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\WelcomeWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\JobManager.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\LocalNodeDisplayNode.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\LogicNodeDisplayNode.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\MetadataDatas.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ModelData.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\NodeUtility.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ObjectSerializer.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Partials.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\PatchData.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Platform.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Preferences.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Promotion.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\RawScript.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\References.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditor.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditorCtrl.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditorData.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Status.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\SystemsData.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ToolsDatas.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\TypeSerializers.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\UnityCSharpGenerator.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\UpdateNotification.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptBackgroundProcess.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptBuild.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptConfig.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUI.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIContent.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanel.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelContent.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelProperty.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelReference.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelToolbox.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIStyle.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Ellipsis.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListView.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewColumn.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItem.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemData.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript_UndoComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="uScriptRuntime_DLL_53.csproj">
+      <Project>{bd28f23c-2ec1-4b74-ab69-1510ebd650ee}</Project>
+      <Name>uScriptRuntime_DLL_53</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(ProjectDir)..\uScript_Test\Assets\uScript\uScriptEditor\Editor" mkdir "$(ProjectDir)..\uScript_Test\Assets\uScript\uScriptEditor\Editor"
+copy "$(TargetPath)" "$(ProjectDir)..\uScript_Test\Assets\uScript\uScriptEditor\Editor"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
