@@ -25,9 +25,11 @@ namespace Detox.Editor.GUI.Windows
 #elif UNITY_4_6 || UNITY_4_7
       private const string UnityVersion = "for Unity 4.7";
 #elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2
-      private const string UnityVersion = "for Unity 5.0";
+      private const string UnityVersion = "for Unity 5.0-5.2";
+#elif UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6
+      private const string UnityVersion = "for Unity 5.3-5.6";
 #else
-      private const string UnityVersion = "for Unity 5.3+";
+      private const string UnityVersion = "for Unity 2017.1+";
 #endif
 
       private static AboutWindow window;
