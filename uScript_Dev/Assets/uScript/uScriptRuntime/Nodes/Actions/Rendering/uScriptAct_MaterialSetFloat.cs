@@ -2,12 +2,11 @@
 // (C) 2011 Detox Studios LLC
 
 using UnityEngine;
-using System.Collections;
 
-[NodePath("Actions/Rendering")]
+[NodePath("Actions/Rendering/Materials")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Loads a Material")]
+[NodeToolTip("Sets a float property on a Material.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
@@ -17,7 +16,7 @@ public class uScriptAct_MaterialSetFloat : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Material", "The Material to set the float.")]
+      [FriendlyName("Material", "The Material to set the float on.")]
       Material material,
       [FriendlyName("Property", "The name of the float variable on the Material.")]
       string name,
