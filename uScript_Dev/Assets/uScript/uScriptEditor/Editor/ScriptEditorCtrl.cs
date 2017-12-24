@@ -24,6 +24,7 @@ namespace Detox.ScriptEditor
    using Cursor = Detox.Windows.Forms.Cursor;
    using Graphics = Detox.Drawing.Graphics;
    using Object = System.Object;
+   using System.Reflection;
 
    public partial class ScriptEditorCtrl : ToolWindow
    {
@@ -3358,6 +3359,12 @@ namespace Detox.ScriptEditor
       }
    }
 
+   public class DisplayNodeEditor
+   {
+      public DisplayNode Node { get; set; }
+      public virtual bool Render(Detox.ScriptEditor.PropertyGridParameters parameters, Detox.Drawing.PointF scrollViewOffset, Detox.Drawing.RectangleF scrollViewRect) { return false; }
+   }
+
    public class DisplayNode : Detox.FlowChart.Node
    {
       protected struct Socket
@@ -3411,6 +3418,118 @@ namespace Detox.ScriptEditor
       Socket [] m_Sockets = new Socket[ 0 ];
 
       public override Guid Guid { get { return m_EntityNode.Guid; } }
+
+      private DisplayNodeEditor m_Editor = null;
+      public DisplayNodeEditor GetEditor()
+      {
+         if (m_Editor != null) return m_Editor;
+
+         string nodeType = "";
+         if (m_EntityNode is LogicNode)
+         {
+            Data.ScriptEditor.LogicNodeData nodeData = m_EntityNode.NodeData as Data.ScriptEditor.LogicNodeData;
+            if (nodeData != null)
+            {
+               nodeType = nodeData.Type;
+            }
+         }
+         else if (m_EntityNode is EntityEvent)
+         {
+            Data.ScriptEditor.EntityEventData eventData = m_EntityNode.NodeData as Data.ScriptEditor.EntityEventData;
+            if (eventData != null)
+            {
+               nodeType = eventData.ComponentType;
+            }
+         }
+         else if (m_EntityNode is EntityMethod)
+         {
+            Data.ScriptEditor.EntityMethodData methodData = m_EntityNode.NodeData as Data.ScriptEditor.EntityMethodData;
+            if (methodData != null)
+            {
+               nodeType = methodData.ComponentType;
+            }
+         }
+         else if (m_EntityNode is EntityProperty)
+         {
+            Data.ScriptEditor.EntityPropertyData propertyData = m_EntityNode.NodeData as Data.ScriptEditor.EntityPropertyData;
+            if (propertyData != null)
+            {
+               nodeType = propertyData.ComponentType;
+            }
+         }
+
+         if (!string.IsNullOrEmpty(nodeType))
+         {
+            // check and see if an *Editor class exists for this node type
+            Type type = uScript.GetAssemblyQualifiedType(nodeType + "Editor");
+            if (type != null)
+            {
+               // found an *Editor class for our node, now check to see if it has the magic method (OnPropertyGridGUI)
+               //MethodInfo[] methods = type.GetMethods();
+               //foreach (MethodInfo mi in methods)
+               //{
+               //   if (mi.Name == "OnPropertyGridGUI")
+               //   {
+               //      // found the method we're looking for - make sure it's static
+               //      if (!mi.IsStatic)
+               //      {
+               //         uScriptDebug.Log(string.Format("Found {0} method in {1}, but it needs to be static and is not.  Please update the code.", mi.Name, type.Name));
+               //         continue;
+               //      }
+
+               //      // it's static - make sure the parameter types match
+               //      ParameterInfo[] pInfos = mi.GetParameters();
+               //      if (pInfos[0].ParameterType != typeof(PropertyGridParameters) || pInfos[1].ParameterType != typeof(Detox.Drawing.PointF) || pInfos[2].ParameterType != typeof(Detox.Drawing.RectangleF))
+               //      {
+               //         uScriptDebug.Log(string.Format("Found {0} method in {1}, but its parameter types don't match (should be PropertyGridParameters, PointF, RectangleF).  Please update the code.", mi.Name, type.Name));
+               //         continue;
+               //      }
+
+               //      // it's static and has the right parameter types - call it!
+               //      signalUpdate |= (bool)mi.Invoke(null, new object[] { parameters, scrollViewOffset, scrollViewRect });
+               //      customRenderer = true;
+               //      break;
+               //   }
+               //}
+               m_Editor = (DisplayNodeEditor)Activator.CreateInstance(type);
+               m_Editor.Node = this;
+               return m_Editor;
+            }
+         }
+
+         return null;
+      }
+
+      public virtual PropertyGridParameters GetPropertyGridParameters()
+      {
+         string name = Name;
+
+         if (this is EntityPropertyDisplayNode)
+         {
+            name = "Instance Property";
+         }
+         else if (this is LocalNodeDisplayNode)
+         {
+            name = ((LocalNodeDisplayNode)this).LocalNode.Value.Type; // get FriendlyName
+            name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+         }
+         else if (this is OwnerConnectionDisplayNode)
+         {
+            name = "Owner GameObject";
+         }
+
+         PropertyGridParameters parameters = new PropertyGridParameters(name, EntityNode, m_Ctrl);
+         parameters.AddParameters("Parameters", EntityNode.Parameters);
+         parameters.AddParameters("Comment", new Parameter[] { EntityNode.ShowComment, EntityNode.Comment });
+         parameters.AddParameters("Instance", new Parameter[] { EntityNode.Instance });
+
+         if (EntityNode is LogicNode)
+         {
+            parameters.AddParameters("Inspector Name", new Parameter[] { ((LogicNode)EntityNode).InspectorName });
+         }
+
+         return parameters;
+      }
 
       protected void UpdateNode(EntityNode node)
       {

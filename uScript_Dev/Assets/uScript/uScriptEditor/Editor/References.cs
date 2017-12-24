@@ -163,39 +163,53 @@ namespace Detox.Windows.Forms
             if (parameters.Parameters.Length > 1 && parameters.EntityNode != null)
             {
                // is this a supported node type?
-               Data.ScriptEditor.LogicNodeData nodeData = parameters.EntityNode.NodeData as Data.ScriptEditor.LogicNodeData;
-               if (nodeData != null)
+               Node node = parameters.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid);
+               if (node is DisplayNode)
                {
-                  // check and see if an *Editor class exists for this node type
-                  Type type = uScript.GetAssemblyQualifiedType(nodeData.Type + "Editor");
-                  if (type != null)
+                  DisplayNode displayNode = (DisplayNode)node;
+                  if (displayNode != null)
                   {
-                     // found an *Editor class for our node, now check to see if it has the magic method (OnPropertyGridGUI)
-                     MethodInfo[] methods = type.GetMethods();
-                     foreach (MethodInfo mi in methods)
+                     DisplayNodeEditor editor = displayNode.GetEditor();
+                     if (editor != null)
                      {
-                        if (mi.Name == "OnPropertyGridGUI")
-                        {
-                           // found the method we're looking for - make sure it's static
-                           if (!mi.IsStatic)
-                           {
-                              uScriptDebug.Log(string.Format("Found {0} method in {1}, but it needs to be static and is not.  Please update the code.", mi.Name, type.Name));
-                              continue;
-                           }
+                        signalUpdate |= editor.Render(parameters, scrollViewOffset, scrollViewRect);
+                        customRenderer = true;
+                        //Data.ScriptEditor.LogicNodeData nodeData = parameters.EntityNode.NodeData as Data.ScriptEditor.LogicNodeData;
+                        //if (nodeData != null)
+                        //{
+                        //   // check and see if an *Editor class exists for this node type
+                        //   Type type = uScript.GetAssemblyQualifiedType(nodeData.Type + "Editor");
+                        //   if (type != null)
+                        //   {
+                        //      // found an *Editor class for our node, now check to see if it has the magic method (OnPropertyGridGUI)
+                        //      MethodInfo[] methods = type.GetMethods();
+                        //      foreach (MethodInfo mi in methods)
+                        //      {
+                        //         if (mi.Name == "OnPropertyGridGUI")
+                        //         {
+                        //            // found the method we're looking for - make sure it's static
+                        //            if (!mi.IsStatic)
+                        //            {
+                        //               uScriptDebug.Log(string.Format("Found {0} method in {1}, but it needs to be static and is not.  Please update the code.", mi.Name, type.Name));
+                        //               continue;
+                        //            }
 
-                           // it's static - make sure the parameter types match
-                           ParameterInfo[] pInfos = mi.GetParameters();
-                           if (pInfos[0].ParameterType != typeof(PropertyGridParameters) || pInfos[1].ParameterType != typeof(Detox.Drawing.PointF) || pInfos[2].ParameterType != typeof(Detox.Drawing.RectangleF))
-                           {
-                              uScriptDebug.Log(string.Format("Found {0} method in {1}, but its parameter types don't match (should be PropertyGridParameters, PointF, RectangleF).  Please update the code.", mi.Name, type.Name));
-                              continue;
-                           }
+                        //            // it's static - make sure the parameter types match
+                        //            ParameterInfo[] pInfos = mi.GetParameters();
+                        //            if (pInfos[0].ParameterType != typeof(PropertyGridParameters) || pInfos[1].ParameterType != typeof(Detox.Drawing.PointF) || pInfos[2].ParameterType != typeof(Detox.Drawing.RectangleF))
+                        //            {
+                        //               uScriptDebug.Log(string.Format("Found {0} method in {1}, but its parameter types don't match (should be PropertyGridParameters, PointF, RectangleF).  Please update the code.", mi.Name, type.Name));
+                        //               continue;
+                        //            }
 
-                           // it's static and has the right parameter types - call it!
-                           signalUpdate |= (bool)mi.Invoke(null, new object[] { parameters, scrollViewOffset, scrollViewRect });
-                           customRenderer = true;
-                           break;
-                        }
+                        //            // it's static and has the right parameter types - call it!
+                        //            signalUpdate |= (bool)mi.Invoke(null, new object[] { parameters, scrollViewOffset, scrollViewRect });
+                        //            customRenderer = true;
+                        //            break;
+                        //         }
+                        //      }
+                        //   }
+                        //}
                      }
                   }
                }
