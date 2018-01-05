@@ -3535,6 +3535,8 @@ namespace Detox.ScriptEditor
       {
          m_EntityNode = node.Copy( true );
 
+         TransferEditor(node);
+
          UpdateStyleName(); 
       }
 
@@ -3547,8 +3549,27 @@ namespace Detox.ScriptEditor
       {
          m_EntityNode = entityNode;
          m_Ctrl       = ctrl;
-         
+
+         TransferEditor(entityNode);
+
          UpdateStyleName();
+      }
+
+      private void TransferEditor(EntityNode entityNode)
+      {
+         if (m_Ctrl != null)
+         {
+            Node node = m_Ctrl.GetNode(entityNode.Guid);
+            if (node is DisplayNode)
+            {
+               DisplayNode displayNode = (DisplayNode)node;
+               if (displayNode != null)
+               {
+                  // don't re-create the editor if it already exists for this node/guid
+                  m_Editor = displayNode.GetEditor();
+               }
+            }
+         }
       }
 
       protected string FormatName(Socket socket)
