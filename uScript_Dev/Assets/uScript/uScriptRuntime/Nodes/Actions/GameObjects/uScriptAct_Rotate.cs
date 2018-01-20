@@ -20,8 +20,8 @@ public class uScriptAct_Rotate : uScriptLogic
    bool m_UseDegreesPerSecond;
    bool m_Done;
    float m_Degrees;
-   float m_RadiansPerSecond;
-   float m_RadiansRemaining;
+   float m_DegreesPerSecond;
+   float m_DegreesRemaining;
    Quaternion[] m_TargetTransforms;
    Vector3 m_VectorAxis;
 
@@ -77,11 +77,11 @@ public class uScriptAct_Rotate : uScriptLogic
 
       m_Seconds = Seconds;
       m_Degrees = Degrees;
-      m_RadiansPerSecond = DegreesPerSecond * Mathf.Deg2Rad;
+      m_DegreesPerSecond = DegreesPerSecond;
       m_Loop = Loop;
       m_UseDegreesPerSecond = UseDegreesPerSecond;
       m_Time = 0f;
-      m_RadiansRemaining = m_Degrees * Mathf.Deg2Rad;
+      m_DegreesRemaining = m_Degrees;
       m_Done = false;
    }
 
@@ -125,30 +125,30 @@ public class uScriptAct_Rotate : uScriptLogic
       }
       else
       {
-         float radians = m_RadiansPerSecond * Time.deltaTime;
+         float degrees = m_DegreesPerSecond * Time.deltaTime;
          if (m_Degrees >= 0.0f)  // rotating in the positive direction
          {
             // check if we've gone past
-            if (radians >= m_RadiansRemaining)
+            if (degrees >= m_DegreesRemaining)
             {
-               radians = m_RadiansRemaining;
+               degrees = m_DegreesRemaining;
                m_Done = true;
             }
          }
          else  // rotating in the negative direction
          {
             // check if we've gone past
-            if (radians <= m_RadiansRemaining)
+            if (degrees <= m_DegreesRemaining)
             {
-               radians = m_RadiansRemaining;
+               degrees = m_DegreesRemaining;
                m_Done = true;
             }
          }
-         m_RadiansRemaining -= radians;
+         m_DegreesRemaining -= degrees;
 
          foreach (GameObject obj in m_Target)
          {
-            obj.transform.Rotate(m_VectorAxis, radians);
+            obj.transform.Rotate(m_VectorAxis, degrees);
 
             i++;
          }
