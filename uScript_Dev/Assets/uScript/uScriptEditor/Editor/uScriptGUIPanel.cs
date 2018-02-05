@@ -14,6 +14,8 @@ public abstract class uScriptGUIPanel
 
    public Vector2 ScrollviewOffset { get; protected set; }
 
+   public bool InUScriptPanel { get; set; }
+
    public abstract void Draw();
 
    protected void DrawHiddenNotification()

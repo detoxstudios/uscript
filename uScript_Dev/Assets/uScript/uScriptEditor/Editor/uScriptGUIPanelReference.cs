@@ -42,6 +42,7 @@ namespace Detox.Editor
 
       private uScriptGUIPanelReference()
       {
+         InUScriptPanel = true;
          this.Init();
       }
 
@@ -361,6 +362,19 @@ namespace Detox.Editor
             DrawToolbarButton(Content.ButtonHelp, this.OpenWebHelp, string.IsNullOrEmpty(this.toolbarButtonHelpURL));
             DrawToolbarButton(Content.ButtonForum, this.OpenWebForum, this.hotSelection != null);
             DrawToolbarButton(Content.ButtonKeyboard, this.OpenReferenceWindow);
+
+            if (InUScriptPanel)
+            {
+               if (GUILayout.Button(Content.ButtonPopout, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonPopout).x)))
+               {
+                  if (uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelProperty>() == null) uScript.OpenPopOutWindow(this);
+                  uScript.Instance.CommandCanvasShowReferencePanel();
+               }
+               if (GUILayout.Button(Content.ButtonClose, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonClose).x)))
+               {
+                  uScript.Instance.CommandCanvasShowReferencePanel();
+               }
+            }
          }
          EditorGUILayout.EndHorizontal();
       }
@@ -500,7 +514,19 @@ namespace Detox.Editor
                image = uScriptGUI.GetSkinnedTexture("iconKeyboard"),
                tooltip = "Open the Quick Command Reference window."
             };
-            
+
+            ButtonPopout = new GUIContent
+            {
+               image = uScriptGUI.GetSkinnedTexture("iconPopout"),
+               tooltip = "Open a standalone window with this panel's contents within it."
+            };
+
+            ButtonClose = new GUIContent
+            {
+               image = uScriptGUI.GetSkinnedTexture("iconMiniDelete"),
+               tooltip = "Close this panel."
+            };
+
             ButtonSource = new GUIContent("Source", "Ping the source file associated with this node.");
             
             DetailTitle = new GUIContent("Graph contains:");
@@ -525,6 +551,10 @@ namespace Detox.Editor
          public static GUIContent ButtonHelp { get; private set; }
 
          public static GUIContent ButtonKeyboard { get; private set; }
+
+         public static GUIContent ButtonPopout { get; private set; }
+
+         public static GUIContent ButtonClose { get; private set; }
 
          public static GUIContent ButtonSource { get; private set; }
 

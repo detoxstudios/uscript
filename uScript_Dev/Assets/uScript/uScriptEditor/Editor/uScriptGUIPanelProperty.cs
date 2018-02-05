@@ -10,7 +10,6 @@
 using System;
 
 using Detox.Editor;
-using Detox.Editor.GUI;
 
 using UnityEditor;
 
@@ -24,6 +23,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
    private uScriptGUIPanelProperty()
    {
+      InUScriptPanel = true;
       this.Init();
    }
 
@@ -45,7 +45,15 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
       this.selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
 
-      var rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelPropertiesWidth));
+      Rect rect;
+      if (InUScriptPanel)
+      {
+         rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelPropertiesWidth));
+      }
+      else
+      {
+         rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandWidth(true));
+      }
       {
          if (Math.Abs(rect.width) > 0 && Math.Abs(rect.width - uScriptGUI.PanelPropertiesWidth) > 0)
          {
@@ -55,7 +63,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
             uScript.Instance.ForceReleaseMouse();
          }
 
-         this.DrawToolbar();
+         if (InUScriptPanel) this.DrawToolbar();
          this.DrawProperties();
       }
 
@@ -74,6 +82,18 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
       {
          GUILayout.Label(this.Name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
+         if (InUScriptPanel)
+         {
+            if (GUILayout.Button(Content.ButtonPopout, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonPopout).x)))
+            {
+               if (uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelProperty>() == null) uScript.OpenPopOutWindow(this);
+               uScript.Instance.CommandCanvasShowPropertiesPanel();
+            }
+            if (GUILayout.Button(Content.ButtonClose, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonClose).x)))
+            {
+               uScript.Instance.CommandCanvasShowPropertiesPanel();
+            }
+         }
       }
 
       EditorGUILayout.EndHorizontal();
@@ -137,5 +157,26 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
    private void Init()
    {
       this.Name = "Properties";
+   }
+
+   private static class Content
+   {
+      static Content()
+      {
+         ButtonPopout = new GUIContent
+         {
+            image = uScriptGUI.GetSkinnedTexture("iconPopout"),
+            tooltip = "Open a standalone window with this panel's contents within it."
+         };
+
+         ButtonClose = new GUIContent
+         {
+            image = uScriptGUI.GetSkinnedTexture("iconMiniDelete"),
+            tooltip = "Close this panel."
+         };
+      }
+
+      public static GUIContent ButtonPopout { get; private set; }
+      public static GUIContent ButtonClose { get; private set; }
    }
 }

@@ -45,6 +45,7 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
 
    private uScriptGUIPanelContent()
    {
+      InUScriptPanel = true;
       this.Init();
    }
 
@@ -73,7 +74,14 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
          this.stylePadding = new GUIStyle(GUIStyle.none) { stretchWidth = true };
       }
   
-      uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelLeftWidth));
+      if (InUScriptPanel)
+      {
+         uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelLeftWidth));
+      }
+      else
+      {
+         uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
+      }
       {
          uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
          {
@@ -577,6 +585,19 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
 
             //this.FilterMenuItems(filterText, false);
          }
+
+         if (InUScriptPanel)
+         {
+            if (GUILayout.Button(Content.ButtonPopout, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonPopout).x)))
+            {
+               if (uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelProperty>() == null) uScript.OpenPopOutWindow(this);
+               uScript.Instance.CommandCanvasShowPalettePanel();
+            }
+            if (GUILayout.Button(Content.ButtonClose, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonClose).x)))
+            {
+               uScript.Instance.CommandCanvasShowPalettePanel();
+            }
+         }
       }
       EditorGUILayout.EndHorizontal();
    }
@@ -605,5 +626,26 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
          }
       }
       return false;
+   }
+
+   private static class Content
+   {
+      static Content()
+      {
+         ButtonPopout = new GUIContent
+         {
+            image = uScriptGUI.GetSkinnedTexture("iconPopout"),
+            tooltip = "Open a standalone window with this panel's contents within it."
+         };
+
+         ButtonClose = new GUIContent
+         {
+            image = uScriptGUI.GetSkinnedTexture("iconMiniDelete"),
+            tooltip = "Close this panel."
+         };
+      }
+
+      public static GUIContent ButtonPopout { get; private set; }
+      public static GUIContent ButtonClose { get; private set; }
    }
 }

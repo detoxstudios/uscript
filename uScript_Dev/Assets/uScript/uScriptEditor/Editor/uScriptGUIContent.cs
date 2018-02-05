@@ -67,7 +67,12 @@ public static class uScriptGUIContent
       FileMenuItemRemoveSource = new GUIContent("Remove Generated Code");
 
       ViewMenu = new GUIContent("View");
-      ViewMenuItemPanels = new GUIContent("Show Panels _`");
+      ViewMenuItemPanels = new GUIContent("Show Panels/All _`");
+      ViewMenuItemPalettePanel = new GUIContent("Show Panels/Toobox");
+      ViewMenuItemContentsPanel = new GUIContent("Show Panels/Contents");
+      ViewMenuItemPropertiesPanel = new GUIContent("Show Panels/Properties");
+      ViewMenuItemReferencePanel = new GUIContent("Show Panels/Reference");
+      ViewMenuItemFileListPanel = new GUIContent("Show Panels/File List");
       ViewMenuItemFindNextEvent = new GUIContent("Locate/Next Event Node _]");
       ViewMenuItemFindPreviousEvent = new GUIContent("Locate/Previous Event Node _[");
       ViewMenuItemFindCanvasOrigin = new GUIContent("Locate/Canvas Origin _Home");
@@ -78,8 +83,6 @@ public static class uScriptGUIContent
       ViewMenuItemZoomOut = new GUIContent("Zoom/Zoom Out _-");
       ViewMenuItemZoomReset = new GUIContent("Zoom/Reset Zoom _0");
       
-      ViewMenuItemPreferences = new GUIContent("Preferences...");
-
       HelpMenu = new GUIContent("Help");
       HelpMenuItemOnlineDocs = new GUIContent("Online Documentation _F1");
       HelpMenuItemOnlineForum = new GUIContent("Online Forums");
@@ -280,6 +283,16 @@ public static class uScriptGUIContent
 
    public static GUIContent ViewMenuItemPanels { get; private set; }
 
+   public static GUIContent ViewMenuItemPalettePanel { get; private set; }
+
+   public static GUIContent ViewMenuItemContentsPanel { get; private set; }
+
+   public static GUIContent ViewMenuItemPropertiesPanel { get; private set; }
+
+   public static GUIContent ViewMenuItemReferencePanel { get; private set; }
+
+   public static GUIContent ViewMenuItemFileListPanel { get; private set; }
+
    public static GUIContent ViewMenuItemFindNextEvent { get; private set; }
 
    public static GUIContent ViewMenuItemFindPreviousEvent { get; private set; }
@@ -297,8 +310,6 @@ public static class uScriptGUIContent
    public static GUIContent ViewMenuItemZoomOut { get; private set; }
 
    public static GUIContent ViewMenuItemZoomReset { get; private set; }
-
-   public static GUIContent ViewMenuItemPreferences { get; private set; }
 
    public static GUIContent HelpMenu { get; private set; }
 

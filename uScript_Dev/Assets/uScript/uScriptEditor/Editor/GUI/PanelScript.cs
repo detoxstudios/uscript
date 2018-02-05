@@ -27,6 +27,7 @@ namespace Detox.Editor.GUI
       {
          instance = this;
          uScriptInstance = uScript.Instance;
+         InUScriptPanel = true;
 
          this.Init();
       }
@@ -49,7 +50,15 @@ namespace Detox.Editor.GUI
       public override void Draw()
       {
          //Rect rect = EditorGUILayout.BeginVertical(/* uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelScriptsWidth) */);
-         var rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelScriptsWidth));
+         Rect rect;
+         if (InUScriptPanel)
+         {
+            rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelScriptsWidth));
+         }
+         else
+         {
+            rect = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
+         }
          {
             if ((int)rect.width != 0 && ((int)rect.width != uScriptGUI.PanelScriptsWidth))
             {
@@ -66,7 +75,7 @@ namespace Detox.Editor.GUI
                uScriptInstance.ForceReleaseMouse();
             }
 
-            this.panelScriptCurrent.Draw();
+            this.panelScriptCurrent.Draw(this);
 
             GUILayout.Space(uScriptGUI.PanelDividerThickness);
 

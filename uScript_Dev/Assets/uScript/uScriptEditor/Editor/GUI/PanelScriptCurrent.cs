@@ -29,7 +29,7 @@ namespace Detox.Editor.GUI
 
          private bool sourceMissing;
 
-         public void Draw()
+         public void Draw(PanelScript parent)
          {
             uScriptInstance = uScript.Instance;
             scriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
@@ -38,7 +38,7 @@ namespace Detox.Editor.GUI
 
             this.EvaluateScriptSceneData();
 
-            this.DrawToolbar();
+            this.DrawToolbar(parent);
 
             var rect = EditorGUILayout.BeginVertical();
 
@@ -295,7 +295,7 @@ namespace Detox.Editor.GUI
             }
          }
 
-         private void DrawToolbar()
+         private void DrawToolbar(PanelScript parent)
          {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
 
@@ -304,6 +304,19 @@ namespace Detox.Editor.GUI
             GUILayout.FlexibleSpace();
 
             this.DrawToolbarButtons();
+
+            if (parent.InUScriptPanel)
+            {
+               if (GUILayout.Button(Content.ButtonPopout, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonPopout).x)))
+               {
+                  if (uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelProperty>() == null) uScript.OpenPopOutWindow(parent);
+                  uScript.Instance.CommandCanvasShowFileListPanel();
+               }
+               if (GUILayout.Button(Content.ButtonClose, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonClose).x)))
+               {
+                  uScript.Instance.CommandCanvasShowFileListPanel();
+               }
+            }
 
             EditorGUILayout.EndHorizontal();
          }
@@ -382,6 +395,17 @@ namespace Detox.Editor.GUI
                IconScriptLogo = uScriptGUI.GetTexture("iconScriptFile02");
                IconSourceType = EditorGUIUtility.FindTexture("cs Script Icon");
                IconUnityScene = uScriptGUI.GetSkinnedTexture("UnityScene");
+               ButtonPopout = new GUIContent
+               {
+                  image = uScriptGUI.GetSkinnedTexture("iconPopout"),
+                  tooltip = "Open a standalone window with this panel's contents within it."
+               };
+
+               ButtonClose = new GUIContent
+               {
+                  image = uScriptGUI.GetSkinnedTexture("iconMiniDelete"),
+                  tooltip = "Close this panel."
+               };
             }
 
             public static Texture2D IconScriptLogo { get; private set; }
@@ -393,6 +417,10 @@ namespace Detox.Editor.GUI
             public static GUIContent MessageNoScene { get; private set; }
 
             public static GUIContent MessageWrongScene { get; private set; }
+
+            public static GUIContent ButtonPopout { get; private set; }
+
+            public static GUIContent ButtonClose { get; private set; }
          }
 
          private static class Style

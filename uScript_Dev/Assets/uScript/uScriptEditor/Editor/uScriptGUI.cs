@@ -104,7 +104,7 @@ namespace Detox.Editor
          SaveMethodPopupWidth += 10;
 
          PanelDividerThickness = 4;
-         PanelLeftWidth = 200;
+         PanelLeftWidth = 265;
          PanelPropertiesHeight = 250;
          PanelPropertiesWidth = 500;
          PanelScriptsWidth = 300;
