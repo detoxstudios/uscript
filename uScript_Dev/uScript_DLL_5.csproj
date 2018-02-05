@@ -130,6 +130,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\PreferenceWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\PromotionWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\ReferenceWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\uScriptGUIPanelWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\WelcomeWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\JobManager.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\LocalNodeDisplayNode.cs" />
