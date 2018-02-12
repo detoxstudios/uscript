@@ -180,6 +180,9 @@ namespace Detox.Editor.GUI.Windows
          boolValue = EditorGUILayout.Toggle("Enable uScript Scene Warning", Preferences.EnableSceneWarning);
          Preferences.EnableSceneWarning = boolValue;
 
+         boolValue = EditorGUILayout.Toggle("Enable First Save Attach Prompt", Preferences.EnableAttachOnSavePrompt);
+         Preferences.EnableAttachOnSavePrompt = boolValue;
+
          EditorGUILayout.BeginHorizontal();
          {
             boolValue = EditorGUILayout.Toggle("Check for Updates on Start", Preferences.CheckForUpdate);

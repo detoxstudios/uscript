@@ -3845,8 +3845,11 @@ public sealed partial class uScript : EditorWindow
       //whether or not we have to save the scene name with the script
       if (firstSave)
       {
-         // ask the user if they want to assign this script to the master game object
-         pleaseAttachMe = EditorUtility.DisplayDialog("Assign Graph To Master GameObject?", "This uScript graph has not been assigned to the master GameObject yet.\n\n Select YES to assign it now, or NO to manually assign the graph to a GameObject or Prefab later. ", "Yes", "No");
+         if (Preferences.EnableAttachOnSavePrompt)
+         {
+            // ask the user if they want to assign this script to the master game object
+            pleaseAttachMe = EditorUtility.DisplayDialog("Assign Graph To Master GameObject?", "This uScript graph has not been assigned to the master GameObject yet.\n\n Select YES to assign it now, or NO to manually assign the graph to a GameObject or Prefab later. ", "Yes", "No");
+         }
       }
       else
       {

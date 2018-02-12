@@ -278,6 +278,12 @@ namespace Detox.Editor
          set { EditorPrefs.SetBool("DetoxStudios.uScript.EnableSceneWarning", value); }
       }
 
+      public static bool EnableAttachOnSavePrompt
+      {
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.EnableAttachOnSavePrompt"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.EnableAttachOnSavePrompt", value); }
+      }
+
       public static bool ExpandFavoritePanel
       {
          get { return EditorPrefs.GetBool("DetoxStudios.uScript.ExpandFavoritePanel"); }
@@ -592,6 +598,7 @@ namespace Detox.Editor
          SetDefault("ShowHierarchyIcon", true, force);
          SetDefault("LineWidthMultiplier", 1.0f, force);
          SetDefault("EnableSceneWarning", true, force);
+         SetDefault("EnableAttachOnSavePrompt", true, force);
       }
 
       private static void SetDefault(string key, object value, bool force)
