@@ -158,7 +158,7 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
                {
                   if (GUILayout.Button(Content.ButtonPopout, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonPopout).x)))
                   {
-                     if (uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelProperty>() == null) uScript.OpenPopOutWindow(this);
+                     if (uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelToolbox>() == null) uScript.OpenPopOutWindow(this);
                      uScript.Instance.CommandCanvasShowPalettePanel();
                   }
                   if (GUILayout.Button(Content.ButtonClose, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonClose).x)))

@@ -309,7 +309,7 @@ namespace Detox.Editor.GUI
             {
                if (GUILayout.Button(Content.ButtonPopout, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonPopout).x)))
                {
-                  if (uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelProperty>() == null) uScript.OpenPopOutWindow(parent);
+                  if (uScript.GetUScriptGUIPanelWindow<PanelScript>() == null) uScript.OpenPopOutWindow(parent);
                   uScript.Instance.CommandCanvasShowFileListPanel();
                }
                if (GUILayout.Button(Content.ButtonClose, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(Content.ButtonClose).x)))

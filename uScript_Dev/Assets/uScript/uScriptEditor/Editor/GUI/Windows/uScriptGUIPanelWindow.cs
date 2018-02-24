@@ -15,7 +15,20 @@ namespace Detox.Editor.GUI.Windows
 
    public class uScriptGUIPanelWindow : EditorWindow
    {
-      public uScriptGUIPanel Panel { get; set; }
+      public string PanelType { get; set; }
+
+      private uScriptGUIPanel _panel = null;
+      public uScriptGUIPanel Panel {
+         get
+         {
+            return _panel;
+         }
+         set
+         {
+            if (value != null) PanelType = value.GetType().ToString();
+            _panel = value;
+         }
+      }
 
       private void OnGUI()
       {

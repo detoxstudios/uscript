@@ -75,6 +75,45 @@ public sealed partial class uScript : EditorWindow
       return null;
    }
 
+   private static void ReattachAllUScriptGUIPanelWindows()
+   {
+      uScriptGUIPanelWindow[] windows = Resources.FindObjectsOfTypeAll<uScriptGUIPanelWindow>();
+      if (windows != null && windows.Length > 0)
+      {
+         foreach (uScriptGUIPanelWindow window in windows)
+         {
+            switch (window.PanelType)
+            {
+               case "uScriptGUIPanelContent":
+                  window.Panel = uScriptGUIPanelContent.Instance;
+                  break;
+               case "uScriptGUIPanelToolbox":
+                  window.Panel = uScriptGUIPanelToolbox.Instance;
+                  break;
+               case "Detox.Editor.uScriptGUIPanelReference":
+                  window.Panel = uScriptGUIPanelReference.Instance;
+                  break;
+               case "Detox.Editor.GUI.PanelScript":
+                  window.Panel = PanelScript.Instance;
+                  break;
+               case "uScriptGUIPanelProperty":
+                  window.Panel = uScriptGUIPanelProperty.Instance;
+                  break;
+               default:
+                  uScriptDebug.Log("Unknown panel type " + window.PanelType + "! Window will remain unattached after app domain reload!");
+                  break;
+            }
+
+            if (window.Panel != null)
+            {
+               // if reattachment was successful, tell the panel it's in a window and repaint it
+               window.Panel.InUScriptPanel = false;
+               window.Repaint();
+            }
+         }
+      }
+   }
+
    private static void RepaintAllUScriptGUIPanelWindows()
    {
       uScriptGUIPanelWindow[] windows = Resources.FindObjectsOfTypeAll<uScriptGUIPanelWindow>();
@@ -867,6 +906,8 @@ public sealed partial class uScript : EditorWindow
       this.complexData = new ComplexData();
 
       OpenFromCache();
+
+      ReattachAllUScriptGUIPanelWindows();
 
       uScriptBackgroundProcess.ForceFileRefresh();
    }
