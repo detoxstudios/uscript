@@ -65,7 +65,7 @@ public sealed partial class uScript : EditorWindow
       {
          foreach(uScriptGUIPanelWindow window in windows)
          {
-            if (window.Panel.GetType() == typeof(T))
+            if (window != null && window.Panel != null && window.Panel.GetType() == typeof(T))
             {
                return window;
             }
@@ -73,6 +73,18 @@ public sealed partial class uScript : EditorWindow
       }
 
       return null;
+   }
+
+   private static void RepaintAllUScriptGUIPanelWindows()
+   {
+      uScriptGUIPanelWindow[] windows = Resources.FindObjectsOfTypeAll<uScriptGUIPanelWindow>();
+      if (windows != null && windows.Length > 0)
+      {
+         foreach (uScriptGUIPanelWindow window in windows)
+         {
+            window.Repaint();
+         }
+      }
    }
 
    private static void CloseAllUScriptGUIPanelWindows()
@@ -1348,6 +1360,9 @@ public sealed partial class uScript : EditorWindow
       {
          pendingRepaintRequests--;
          this.Repaint();
+
+         // repaint all spawned windows as well
+         RepaintAllUScriptGUIPanelWindows();
       }
    }
 
@@ -1551,6 +1566,8 @@ public sealed partial class uScript : EditorWindow
       //Debug.Log("OnFocus()\n");
       this.hasFocus = true;
       this.Repaint();
+      // repaint all spawned windows as well
+      RepaintAllUScriptGUIPanelWindows();
    }
 
    internal void OnLostFocus()
@@ -1558,6 +1575,8 @@ public sealed partial class uScript : EditorWindow
       //Debug.Log("OnLostFocus()\n");
       this.hasFocus = false;
       this.Repaint();
+      // repaint all spawned windows as well
+      RepaintAllUScriptGUIPanelWindows();
    }
 
    internal void OnGUI()
