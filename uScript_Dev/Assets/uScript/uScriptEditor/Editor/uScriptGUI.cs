@@ -31,6 +31,12 @@ namespace Detox.Editor
       public const string KeyBackspace = "\u232B";
       public const string KeyReturn = "\u23CE";
 
+      public const int DefaultPanelDividerThickness = 4;
+      public const int DefaultPanelLeftWidth = 265;
+      public const int DefaultPanelPropertiesHeight = 250;
+      public const int DefaultPanelPropertiesWidth = 500;
+      public const int DefaultPanelScriptsWidth = 300;
+
       private static TextEditor activeTextEditor;
       private static MethodInfo activeTextEditorMethodEndEditing;
 
@@ -103,11 +109,11 @@ namespace Detox.Editor
 
          SaveMethodPopupWidth += 10;
 
-         PanelDividerThickness = 4;
-         PanelLeftWidth = 265;
-         PanelPropertiesHeight = 250;
-         PanelPropertiesWidth = 500;
-         PanelScriptsWidth = 300;
+         PanelDividerThickness = DefaultPanelDividerThickness;
+         PanelLeftWidth = DefaultPanelLeftWidth;
+         PanelPropertiesHeight = DefaultPanelPropertiesHeight;
+         PanelPropertiesWidth = DefaultPanelPropertiesWidth;
+         PanelScriptsWidth = DefaultPanelScriptsWidth;
       }
 
       internal static void CheckOnGUI()

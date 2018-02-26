@@ -46,7 +46,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       this.selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
 
       Rect rect;
-      if (InUScriptPanel)
+      if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
       {
          rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelPropertiesWidth));
       }

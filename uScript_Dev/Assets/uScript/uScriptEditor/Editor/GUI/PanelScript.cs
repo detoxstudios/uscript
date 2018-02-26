@@ -51,9 +51,16 @@ namespace Detox.Editor.GUI
       {
          //Rect rect = EditorGUILayout.BeginVertical(/* uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelScriptsWidth) */);
          Rect rect;
-         if (InUScriptPanel)
+         if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
          {
-            rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelScriptsWidth));
+            if (uScriptInstance.referenceVisible)
+            {
+               rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelScriptsWidth));
+            }
+            else
+            {
+               rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptInstance.position.width - uScriptGUI.DefaultPanelDividerThickness - uScriptGUI.PanelPropertiesWidth));
+            }
          }
          else
          {

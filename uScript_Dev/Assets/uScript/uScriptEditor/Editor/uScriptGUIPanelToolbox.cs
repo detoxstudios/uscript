@@ -95,7 +95,7 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
          this.stylePadding = new GUIStyle(GUIStyle.none) { stretchWidth = true };
       }
 
-      if (InUScriptPanel)
+      if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
       {
          uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelLeftWidth));
       }
