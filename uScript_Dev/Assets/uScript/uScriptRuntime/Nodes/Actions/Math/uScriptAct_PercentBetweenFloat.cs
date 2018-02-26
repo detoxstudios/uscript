@@ -27,14 +27,13 @@ public class uScriptAct_PercentBetweenFloat : uScriptLogic
       out float FloatResult
       )
    {
+      FloatResult = -1.0f;
+
       if (Min > t || t > Max) uScriptDebug.Log(string.Format("{0} is not between {1} and {2}, can't calculate a percentage between them!", t, Min, Max), uScriptDebug.Type.Error);
       else
       {
          float range = Max - Min;
          FloatResult = (t - Min) / range;
-         return;
       }
-
-      FloatResult = -1.0f;
    }
 }

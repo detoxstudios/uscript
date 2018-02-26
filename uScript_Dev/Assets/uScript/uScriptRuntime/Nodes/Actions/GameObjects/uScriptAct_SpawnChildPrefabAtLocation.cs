@@ -52,7 +52,12 @@ public class uScriptAct_SpawnChildPrefabAtLocation : uScriptLogic
 
       [FriendlyName("Spawned InstancedID", "The instance ID of the spawned GameObject.")]
       [SocketState(false, false)]
-      out int SpawnedInstancedID
+      out int SpawnedInstancedID,
+
+      [FriendlyName("Keep World Transform", "Whether to keep the spawned object's world transform (true) or to keep its local transform (false).  Default is true.")]
+      [DefaultValue(true)]
+      [SocketState(false, false)]
+      bool KeepWorldTransform = true
       )
    {
       //Get Spawn point location and rotation
@@ -133,7 +138,7 @@ public class uScriptAct_SpawnChildPrefabAtLocation : uScriptLogic
 			
 			if (null != Parent)
 			{
-				spawnedPrefab.transform.parent = Parent.transform;
+				spawnedPrefab.transform.SetParent(Parent.transform, KeepWorldTransform);
 			}
 			
 
