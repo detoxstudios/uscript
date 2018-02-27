@@ -40,25 +40,37 @@ namespace Detox.Editor.GUI.Windows
          if (Panel != null)
          {
             Panel.InUScriptPanel = true;
+
+            bool validPanel = false;
             switch (Panel.GetType().ToString())
             {
                case "uScriptGUIPanelContent":
                case "uScriptGUIPanelToolbox":
                   uScript.Instance.paletteVisible = true;
-                  GetWindow<uScript>().Focus();
+                  validPanel = true;
                   break;
                case "uScriptGUIPanelProperty":
                   uScript.Instance.propertiesVisible = true;
-                  GetWindow<uScript>().Focus();
+                  validPanel = true;
                   break;
                case "Detox.Editor.uScriptGUIPanelReference":
                   uScript.Instance.referenceVisible = true;
-                  GetWindow<uScript>().Focus();
+                  validPanel = true;
                   break;
                case "Detox.Editor.GUI.PanelScript":
                   uScript.Instance.filelistVisible = true;
-                  GetWindow<uScript>().Focus();
+                  validPanel = true;
                   break;
+            }
+
+            if (validPanel)
+            {
+               uScript us = uScript.Instance;
+               if (us != null)
+               {
+                  us.Focus();
+               }
+               uScript.RequestRepaint(2);
             }
          }
       }

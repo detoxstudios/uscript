@@ -2420,7 +2420,7 @@ public sealed partial class uScript : EditorWindow
 
       // Draw the various GUI panels
       this.DrawGUITopAreas();
-      if (!uScriptGUI.PanelsHidden)
+      if (!uScriptGUI.PanelsHidden && (propertiesVisible || referenceVisible || filelistVisible))
       {
          this.DrawGUIHorizontalDivider();
 
