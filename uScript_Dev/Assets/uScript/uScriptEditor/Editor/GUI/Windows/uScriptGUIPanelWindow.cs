@@ -46,19 +46,19 @@ namespace Detox.Editor.GUI.Windows
             {
                case "uScriptGUIPanelContent":
                case "uScriptGUIPanelToolbox":
-                  uScript.Instance.paletteVisible = true;
+                  uScript.Instance.PaletteVisible = true;
                   validPanel = true;
                   break;
                case "uScriptGUIPanelProperty":
-                  uScript.Instance.propertiesVisible = true;
+                  uScript.Instance.PropertiesVisible = true;
                   validPanel = true;
                   break;
                case "Detox.Editor.uScriptGUIPanelReference":
-                  uScript.Instance.referenceVisible = true;
+                  uScript.Instance.ReferenceVisible = true;
                   validPanel = true;
                   break;
                case "Detox.Editor.GUI.PanelScript":
-                  uScript.Instance.filelistVisible = true;
+                  uScript.Instance.ScriptsVisible = true;
                   validPanel = true;
                   break;
             }

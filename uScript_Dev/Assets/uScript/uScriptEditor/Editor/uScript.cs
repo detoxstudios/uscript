@@ -53,10 +53,32 @@ public sealed partial class uScript : EditorWindow
 
    public bool wasCanvasDragged;
 
-   public bool paletteVisible = true;
-   public bool propertiesVisible = true;
-   public bool referenceVisible = true;
-   public bool filelistVisible = true;
+   private bool _paletteVisible = true;
+   public bool PaletteVisible { get { return _paletteVisible; } set { _paletteVisible = value; } }
+   private bool _propertiesVisible = true;
+   public bool PropertiesVisible { get { return _propertiesVisible; } set { _propertiesVisible = value; } }
+   private bool _referenceVisible = true;
+   public bool ReferenceVisible { get { return _referenceVisible; }
+      set
+      {
+         if (!_referenceVisible)
+         {
+            if (IsOnlyBottomPanelVisible("uScriptGUIPanelProperty"))
+            {
+               // reset widths to 50/50 if there was only one panel shown since without this, it would continue to take up the whole width of the uScript window
+               uScriptGUI.PanelPropertiesWidth = (int)(position.width / 2);
+            }
+            else if (IsOnlyBottomPanelVisible("Detox.Editor.GUI.PanelScript"))
+            {
+               // reset widths to 50/50 if there was only one panel shown since without this, it would continue to take up the whole width of the uScript window
+               uScriptGUI.PanelScriptsWidth = (int)(position.width / 2);
+            }
+         }
+         _referenceVisible = value;
+      }
+   }
+   private bool _scriptsVisible = true;
+   public bool ScriptsVisible { get { return _scriptsVisible; } set { _scriptsVisible = value; } }
 
    public static uScriptGUIPanelWindow GetUScriptGUIPanelWindow<T>() where T : uScriptGUIPanel
    {
@@ -82,26 +104,34 @@ public sealed partial class uScript : EditorWindow
       {
          foreach (uScriptGUIPanelWindow window in windows)
          {
-            switch (window.PanelType)
+            if (window.title == uScriptGUIPanelContent.Instance.Name)
             {
-               case "uScriptGUIPanelContent":
-                  window.Panel = uScriptGUIPanelContent.Instance;
-                  break;
-               case "uScriptGUIPanelToolbox":
-                  window.Panel = uScriptGUIPanelToolbox.Instance;
-                  break;
-               case "Detox.Editor.uScriptGUIPanelReference":
-                  window.Panel = uScriptGUIPanelReference.Instance;
-                  break;
-               case "Detox.Editor.GUI.PanelScript":
-                  window.Panel = PanelScript.Instance;
-                  break;
-               case "uScriptGUIPanelProperty":
-                  window.Panel = uScriptGUIPanelProperty.Instance;
-                  break;
-               default:
-                  uScriptDebug.Log("Unknown panel type " + window.PanelType + "! Window will remain unattached after app domain reload!");
-                  break;
+               window.Panel = uScriptGUIPanelContent.Instance;
+               uScript.Instance.PaletteVisible = false;
+            }
+            else if (window.title == uScriptGUIPanelToolbox.Instance.Name)
+            {
+               window.Panel = uScriptGUIPanelToolbox.Instance;
+               uScript.Instance.PaletteVisible = false;
+            }
+            else if (window.title == uScriptGUIPanelReference.Instance.Name)
+            {
+               window.Panel = uScriptGUIPanelReference.Instance;
+               uScript.Instance.ReferenceVisible = false;
+            }
+            else if (window.title == PanelScript.Instance.Name)
+            {
+               window.Panel = PanelScript.Instance;
+               uScript.Instance.ScriptsVisible = false;
+            }
+            else if (window.title == uScriptGUIPanelProperty.Instance.Name)
+            {
+               window.Panel = uScriptGUIPanelProperty.Instance;
+               uScript.Instance.PropertiesVisible = false;
+            }
+            else
+            {
+               uScriptDebug.Log("Unknown panel type " + window.PanelType + "! Window will remain unattached after app domain reload!");
             }
 
             if (window.Panel != null)
@@ -143,11 +173,11 @@ public sealed partial class uScript : EditorWindow
       switch (panelType)
       {
          case "Detox.Editor.uScriptGUIPanelReference":
-            return !propertiesVisible && referenceVisible && !filelistVisible;
+            return !PropertiesVisible && ReferenceVisible && !ScriptsVisible;
          case "Detox.Editor.GUI.PanelScript":
-            return !propertiesVisible && !referenceVisible && filelistVisible;
+            return !PropertiesVisible && !ReferenceVisible && ScriptsVisible;
          case "uScriptGUIPanelProperty":
-            return propertiesVisible && !referenceVisible && !filelistVisible;
+            return PropertiesVisible && !ReferenceVisible && !ScriptsVisible;
       }
 
       return false;
@@ -309,7 +339,15 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-#if !UNITY_3_5
+   public static uScript WeakInstance
+   {
+      get
+      {
+         return instance;
+      }
+   }
+
+ #if !UNITY_3_5
    public static Detox.Editor.GUI.Windows.HotkeyWindow HotkeyWindow { get; set; }
 #else
    public static HotkeyWindow HotkeyWindow { get; set; }
@@ -805,6 +843,8 @@ public sealed partial class uScript : EditorWindow
       {
          RelaunchingFromRebuiltAppDomain();
       }
+
+      ReattachAllUScriptGUIPanelWindows();
    }
 
    private void LaunchingFromUnity()
@@ -1728,7 +1768,7 @@ public sealed partial class uScript : EditorWindow
 
          m_MouseUpArgs.Button = button;
          m_MouseUpArgs.X = (int)(e.mousePosition.x);
-         if (!uScriptGUI.PanelsHidden && paletteVisible) m_MouseUpArgs.X -= uScriptGUI.PanelLeftWidth;
+         if (!uScriptGUI.PanelsHidden && PaletteVisible) m_MouseUpArgs.X -= uScriptGUI.PanelLeftWidth;
          m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
          this.mouseDownRegion = MouseRegion.Outside;
@@ -2052,7 +2092,7 @@ public sealed partial class uScript : EditorWindow
 
                      m_MouseDownArgs.Button = button;
                      m_MouseDownArgs.X = (int)(e.mousePosition.x);
-                     if (!uScriptGUI.PanelsHidden && paletteVisible) m_MouseDownArgs.X -= uScriptGUI.PanelLeftWidth;
+                     if (!uScriptGUI.PanelsHidden && PaletteVisible) m_MouseDownArgs.X -= uScriptGUI.PanelLeftWidth;
                      m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
                      this.mouseDownOverCanvas = true;
@@ -2122,7 +2162,7 @@ public sealed partial class uScript : EditorWindow
                   Y = (int)(e.mousePosition.y - this._canvasRect.yMin)
                };
 
-               if (!uScriptGUI.PanelsHidden && paletteVisible)
+               if (!uScriptGUI.PanelsHidden && PaletteVisible)
                {
                   this.m_MouseUpArgs.X -= uScriptGUI.PanelLeftWidth;
                }
@@ -2322,8 +2362,6 @@ public sealed partial class uScript : EditorWindow
       this.currentScript = null;
       this.currentScriptName = null;
       this.complexData = null;
-
-      CloseAllUScriptGUIPanelWindows();
    }
 
    public void NodeDoubleClicked(Node node)
@@ -2420,7 +2458,7 @@ public sealed partial class uScript : EditorWindow
 
       // Draw the various GUI panels
       this.DrawGUITopAreas();
-      if (!uScriptGUI.PanelsHidden && (propertiesVisible || referenceVisible || filelistVisible))
+      if (!uScriptGUI.PanelsHidden && (PropertiesVisible || ReferenceVisible || ScriptsVisible))
       {
          this.DrawGUIHorizontalDivider();
 
@@ -2466,7 +2504,7 @@ public sealed partial class uScript : EditorWindow
             //    Draw the button labels during repaint to prevent the appearance of the horizontal scrollbar
             //    Update the help text to display the button text in the refernce panel (non-truncated labels)
             //
-            if (paletteVisible)
+            if (PaletteVisible)
             {
                DrawGUIPalette();
 
@@ -2494,22 +2532,22 @@ public sealed partial class uScript : EditorWindow
             ForceReleaseMouse();
          }
          {
-            if (propertiesVisible)
+            if (PropertiesVisible)
             {
                uScriptGUIPanelProperty.Instance.Draw();
 
-               if (referenceVisible || filelistVisible)
+               if (ReferenceVisible || ScriptsVisible)
                {
                   DrawGUIVerticalDivider();
                   SetMouseRegion(MouseRegion.HandleProperties);//, -3, 3, 6, -3 );
                }
             }
 
-            if (referenceVisible)
+            if (ReferenceVisible)
             {
                uScriptGUIPanelReference.Instance.Draw();
 
-               if (filelistVisible)
+               if (ScriptsVisible)
                {
                   DrawGUIVerticalDivider();
                   SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
@@ -2517,7 +2555,7 @@ public sealed partial class uScript : EditorWindow
             }
 
 //            uScriptGUIPanelScript.Instance.Draw();
-            if (filelistVisible)
+            if (ScriptsVisible)
             {
                Detox.Editor.GUI.PanelScript.Instance.Draw();
             }
@@ -2739,32 +2777,22 @@ public sealed partial class uScript : EditorWindow
 
    public void CommandCanvasShowPalettePanel()
    {
-      uScript.Instance.paletteVisible = !uScript.Instance.paletteVisible;
+      uScript.Instance.PaletteVisible = !uScript.Instance.PaletteVisible;
    }
 
    public void CommandCanvasShowPropertiesPanel()
    {
-      uScript.Instance.propertiesVisible = !uScript.Instance.propertiesVisible;
-      if (!uScript.Instance.propertiesVisible)
-      {
-         // re-initialize to default width
-         uScriptGUI.PanelPropertiesHeight = uScriptGUI.DefaultPanelPropertiesHeight;
-      }
+      uScript.Instance.PropertiesVisible = !uScript.Instance.PropertiesVisible;
    }
 
    public void CommandCanvasShowReferencePanel()
    {
-      uScript.Instance.referenceVisible = !uScript.Instance.referenceVisible;
+      uScript.Instance.ReferenceVisible = !uScript.Instance.ReferenceVisible;
    }
 
    public void CommandCanvasShowFileListPanel()
    {
-      uScript.Instance.filelistVisible = !uScript.Instance.filelistVisible;
-      if (!uScript.Instance.filelistVisible)
-      {
-         // re-initialize to default width
-         uScriptGUI.PanelScriptsWidth = uScriptGUI.DefaultPanelScriptsWidth;
-      }
+      uScript.Instance.ScriptsVisible = !uScript.Instance.ScriptsVisible;
    }
 
    public static void CommandViewMenuGrid()
@@ -3125,11 +3153,11 @@ public sealed partial class uScript : EditorWindow
       var menu = new GenericMenu();
 
       menu.AddItem(uScriptGUIContent.ViewMenuItemPanels, !uScriptGUI.PanelsHidden, this.CommandCanvasShowPanels);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemPalettePanel, uScript.Instance.paletteVisible, this.CommandCanvasShowPalettePanel);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemContentsPanel, uScript.Instance.paletteVisible, this.CommandCanvasShowPalettePanel);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemPropertiesPanel, uScript.Instance.propertiesVisible, this.CommandCanvasShowPropertiesPanel);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemReferencePanel, uScript.Instance.referenceVisible, this.CommandCanvasShowReferencePanel);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemFileListPanel, uScript.Instance.filelistVisible, this.CommandCanvasShowFileListPanel);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemPalettePanel, uScript.Instance.PaletteVisible, this.CommandCanvasShowPalettePanel);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemContentsPanel, uScript.Instance.PaletteVisible, this.CommandCanvasShowPalettePanel);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemPropertiesPanel, uScript.Instance.PropertiesVisible, this.CommandCanvasShowPropertiesPanel);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemReferencePanel, uScript.Instance.ReferenceVisible, this.CommandCanvasShowReferencePanel);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemFileListPanel, uScript.Instance.ScriptsVisible, this.CommandCanvasShowFileListPanel);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.ViewMenuItemGrid, Preferences.ShowGrid, CommandViewMenuGrid);
       menu.AddItem(uScriptGUIContent.ViewMenuItemSnap, Preferences.GridSnap, CommandViewMenuSnap);
@@ -3352,6 +3380,10 @@ public sealed partial class uScript : EditorWindow
       // calculate delta for handle dragging
       int deltaX = m_MouseMoveArgs.X - lastMouseX;
       int deltaY = m_MouseMoveArgs.Y - lastMouseY;
+      //Debug.Log(this.MouseDownRegion.ToString());
+      //Debug.Log("m_MouseMoveArgs: " + m_MouseMoveArgs.X.ToString() + ", " + m_MouseMoveArgs.Y.ToString());
+      //Debug.Log("lastMouse: " + lastMouseX.ToString() + ", " + lastMouseY.ToString());
+      //Debug.Log("delta: " + deltaX.ToString() + ", " + deltaY.ToString());
       lastMouseX = m_MouseMoveArgs.X;
       lastMouseY = m_MouseMoveArgs.Y;
 
@@ -3391,7 +3423,7 @@ public sealed partial class uScript : EditorWindow
          else if (this.mouseDownRegion == MouseRegion.HandleProperties && deltaX != 0)
          {
             uScriptGUI.PanelPropertiesWidth += deltaX;
-            if (!referenceVisible && filelistVisible) uScriptGUI.PanelScriptsWidth -= deltaX;
+            if (!ReferenceVisible && ScriptsVisible) uScriptGUI.PanelScriptsWidth -= deltaX;
             RequestRepaint();
          }
          else if (this.mouseDownRegion == MouseRegion.HandleReference && deltaX != 0)

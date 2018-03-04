@@ -68,49 +68,62 @@ namespace Detox.Editor
 
       public override void Draw()
       {
-         var uScriptInstance = uScript.Instance;
-         var scriptEditor = uScriptInstance.ScriptEditorCtrl.ScriptEditor;
+         var uScriptInstance = uScript.WeakInstance;
 
-         EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
+         if (uScriptInstance == null && !InUScriptPanel)
          {
-            var node = this.GetSelectedNodeAndUpdateInformation();
-
-            this.DrawToolbar();
-
-            if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
+            EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
             {
-               this.DrawHiddenNotification();
+               // draw empty panel
+               this.DrawOrphanNotification();
             }
-            else
-            {
-               this.ScrollviewOffset = EditorGUILayout.BeginScrollView(
-                  this.ScrollviewOffset,
-                  false,
-                  false,
-                  uScriptGUIStyle.HorizontalScrollbar,
-                  uScriptGUIStyle.VerticalScrollbar,
-                  "scrollview");
-               {
-                  if (node == null)
-                  {
-                     this.DrawGraphInformation();
-                  }
-                  else
-                  {
-                     if (uScript.IsNodeTypeDeprecated(node) || scriptEditor.IsNodeInstanceDeprecated(node))
-                     {
-                        GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", Style.DeprecatedNodeMessage);
-                     }
-
-                     this.DrawNodeInformation(node);
-                  }
-               }
-               EditorGUILayout.EndScrollView();
-            }
+            EditorGUILayout.EndVertical();
          }
-         EditorGUILayout.EndVertical();
+         else
+         {
+            var scriptEditor = uScriptInstance.ScriptEditorCtrl.ScriptEditor;
 
-         uScriptInstance.SetMouseRegion(uScript.MouseRegion.Reference);
+            EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
+            {
+               var node = this.GetSelectedNodeAndUpdateInformation();
+
+               this.DrawToolbar();
+
+               if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
+               {
+                  this.DrawHiddenNotification();
+               }
+               else
+               {
+                  this.ScrollviewOffset = EditorGUILayout.BeginScrollView(
+                     this.ScrollviewOffset,
+                     false,
+                     false,
+                     uScriptGUIStyle.HorizontalScrollbar,
+                     uScriptGUIStyle.VerticalScrollbar,
+                     "scrollview");
+                  {
+                     if (node == null)
+                     {
+                        this.DrawGraphInformation();
+                     }
+                     else
+                     {
+                        if (uScript.IsNodeTypeDeprecated(node) || scriptEditor.IsNodeInstanceDeprecated(node))
+                        {
+                           GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", Style.DeprecatedNodeMessage);
+                        }
+
+                        this.DrawNodeInformation(node);
+                     }
+                  }
+                  EditorGUILayout.EndScrollView();
+               }
+            }
+            EditorGUILayout.EndVertical();
+
+            if (InUScriptPanel) uScriptInstance.SetMouseRegion(uScript.MouseRegion.Reference);
+         }
       }
 
       private void DrawFormattedParameter(Parameter p)

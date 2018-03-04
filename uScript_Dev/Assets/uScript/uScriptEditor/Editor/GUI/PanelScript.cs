@@ -17,8 +17,6 @@ namespace Detox.Editor.GUI
    {
       private static PanelScript instance;
 
-      private static uScript uScriptInstance;
-
       private PanelScriptCurrent panelScriptCurrent;
 
       private PanelScriptList panelScriptList;
@@ -26,7 +24,6 @@ namespace Detox.Editor.GUI
       private PanelScript()
       {
          instance = this;
-         uScriptInstance = uScript.Instance;
          InUScriptPanel = true;
 
          this.Init();
@@ -49,50 +46,67 @@ namespace Detox.Editor.GUI
       /// </summary>
       public override void Draw()
       {
-         //Rect rect = EditorGUILayout.BeginVertical(/* uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelScriptsWidth) */);
-         Rect rect;
-         if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
+         var uScriptInstance = uScript.WeakInstance;
+
+         if (uScriptInstance == null && !InUScriptPanel)
          {
-            if (uScriptInstance.referenceVisible)
+            EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
             {
-               rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelScriptsWidth));
+               // draw empty panel
+               this.DrawOrphanNotification();
             }
-            else
-            {
-               rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptInstance.position.width - uScriptGUI.DefaultPanelDividerThickness - uScriptGUI.PanelPropertiesWidth));
-            }
+            EditorGUILayout.EndVertical();
          }
          else
          {
-            rect = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
-         }
-         {
-            if ((int)rect.width != 0 && ((int)rect.width != uScriptGUI.PanelScriptsWidth))
+            //Rect rect = EditorGUILayout.BeginVertical(/* uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelScriptsWidth) */);
+            Rect rect;
+            if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
             {
-               // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
-               uScriptGUI.PanelScriptsWidth = (int)rect.width;
-               uScriptInstance.MouseDownRegion = uScript.MouseRegion.Canvas;
-               uScriptInstance.ForceReleaseMouse();
+               if (uScriptInstance.ReferenceVisible)
+               {
+                  rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelScriptsWidth));
+               }
+               else
+               {
+                  rect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptInstance.position.width - uScriptGUI.DefaultPanelDividerThickness - uScriptGUI.PanelPropertiesWidth));
+               }
             }
-            else if ((rect.x + rect.width) > uScriptInstance.position.width && (uScriptInstance.MouseDownRegion != uScript.MouseRegion.Canvas))
+            else
             {
-               // panel is growing off the edge of the window, bring it back in and stop dragging
-               uScriptGUI.PanelScriptsWidth = (int)(uScriptInstance.position.width - rect.x);
-               uScriptInstance.MouseDownRegion = uScript.MouseRegion.Canvas;
-               uScriptInstance.ForceReleaseMouse();
+               rect = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
+            }
+            {
+               if (InUScriptPanel)
+               {
+                  if ((int)rect.width != 0 && ((int)rect.width != uScriptGUI.PanelScriptsWidth))
+                  {
+                     // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
+                     uScriptGUI.PanelScriptsWidth = (int)rect.width;
+                     uScriptInstance.MouseDownRegion = uScript.MouseRegion.Canvas;
+                     uScriptInstance.ForceReleaseMouse();
+                  }
+                  else if ((rect.x + rect.width) > uScriptInstance.position.width && (uScriptInstance.MouseDownRegion != uScript.MouseRegion.Canvas))
+                  {
+                     // panel is growing off the edge of the window, bring it back in and stop dragging
+                     uScriptGUI.PanelScriptsWidth = (int)(uScriptInstance.position.width - rect.x);
+                     uScriptInstance.MouseDownRegion = uScript.MouseRegion.Canvas;
+                     uScriptInstance.ForceReleaseMouse();
+                  }
+               }
+
+               this.panelScriptCurrent.Draw(this);
+
+               GUILayout.Space(uScriptGUI.PanelDividerThickness);
+
+               this.panelScriptList.Draw();
             }
 
-            this.panelScriptCurrent.Draw(this);
+            EditorGUILayout.EndVertical();
 
-            GUILayout.Space(uScriptGUI.PanelDividerThickness);
-
-            this.panelScriptList.Draw();
+            //uScriptGUI.DefineRegion(uScriptGUI.Region.Script);
+            if (InUScriptPanel) uScriptInstance.SetMouseRegion(uScript.MouseRegion.Scripts);
          }
-
-         EditorGUILayout.EndVertical();
-
-         //uScriptGUI.DefineRegion(uScriptGUI.Region.Script);
-         uScriptInstance.SetMouseRegion(uScript.MouseRegion.Scripts);
       }
 
       public void FindMissingGraphs()

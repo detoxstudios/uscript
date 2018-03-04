@@ -31,34 +31,38 @@ namespace Detox.Editor.GUI
 
          public void Draw(PanelScript parent)
          {
-            uScriptInstance = uScript.Instance;
-            scriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
+            var uScriptInstance = uScript.WeakInstance;
 
-            EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
-
-            this.EvaluateScriptSceneData();
-
-            this.DrawToolbar(parent);
-
-            var rect = EditorGUILayout.BeginVertical();
-
-            // Context menu must go before any buttons that will appear in the region
-            var e = Event.current;
-            if (e.type == EventType.ContextClick || (e.type == EventType.MouseUp && e.button == 1))
+            if (uScriptInstance != null)
             {
-               if (rect.Contains(e.mousePosition))
+               scriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
+
+               EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
+
+               this.EvaluateScriptSceneData();
+
+               this.DrawToolbar(parent);
+
+               var rect = EditorGUILayout.BeginVertical();
+
+               // Context menu must go before any buttons that will appear in the region
+               var e = Event.current;
+               if (e.type == EventType.ContextClick || (e.type == EventType.MouseUp && e.button == 1))
                {
-                  this.ContextMenuCreate(new Rect(e.mousePosition.x, e.mousePosition.y, 0, 0));
+                  if (rect.Contains(e.mousePosition))
+                  {
+                     this.ContextMenuCreate(new Rect(e.mousePosition.x, e.mousePosition.y, 0, 0));
+                  }
                }
+
+               this.DrawGraphName();
+               this.DrawSceneName();
+               this.DrawSceneMessage();
+
+               EditorGUILayout.EndVertical();
+
+               EditorGUILayout.EndVertical();
             }
-
-            this.DrawGraphName();
-            this.DrawSceneName();
-            this.DrawSceneMessage();
-
-            EditorGUILayout.EndVertical();
-
-            EditorGUILayout.EndVertical();
          }
 
          public void RefreshSourceState()
@@ -73,12 +77,12 @@ namespace Detox.Editor.GUI
 
          private void CommandGraphReload()
          {
-            uScriptInstance.OpenGraph(uScriptBackgroundProcess.GraphInfoList[this.graphFileName].GraphPath, false);
+            uScript.Instance.OpenGraph(uScriptBackgroundProcess.GraphInfoList[this.graphFileName].GraphPath, false);
          }
 
          private void CommandGraphSave()
          {
-            uScriptInstance.RequestSave(
+            uScript.Instance.RequestSave(
                Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
                Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
                false);
@@ -86,7 +90,7 @@ namespace Detox.Editor.GUI
 
          private void CommandGraphSaveAs()
          {
-            uScriptInstance.RequestSave(
+            uScript.Instance.RequestSave(
                Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
                Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
                true);
@@ -94,17 +98,17 @@ namespace Detox.Editor.GUI
 
          private void CommandGraphSaveDebug()
          {
-            uScriptInstance.RequestSave(false, true, false);
+            uScript.Instance.RequestSave(false, true, false);
          }
 
          private void CommandGraphSaveQuick()
          {
-            uScriptInstance.RequestSave(true, false, false);
+            uScript.Instance.RequestSave(true, false, false);
          }
 
          private void CommandGraphSaveRelease()
          {
-            uScriptInstance.RequestSave(false, false, false);
+            uScript.Instance.RequestSave(false, false, false);
          }
 
          private void CommandSceneLocate()
@@ -241,57 +245,62 @@ namespace Detox.Editor.GUI
 
          private void DrawSceneName()
          {
-            GUILayout.Label(GUIContent.none, GUILayout.Height(Content.IconScriptLogo.height));
+            var uScriptInstance = uScript.WeakInstance;
 
-            // No GUILayout beyond this point, and ignore all non-left mouse clicks
-            if (Event.current.type == EventType.Layout || (Event.current.isMouse && Event.current.button != 0))
+            if (uScriptInstance != null)
             {
-               return;
-            }
+               GUILayout.Label(GUIContent.none, GUILayout.Height(Content.IconScriptLogo.height));
 
-            var sceneRect = GUILayoutUtility.GetLastRect();
-            var commandRect = sceneRect;
+               // No GUILayout beyond this point, and ignore all non-left mouse clicks
+               if (Event.current.type == EventType.Layout || (Event.current.isMouse && Event.current.button != 0))
+               {
+                  return;
+               }
 
-            // Script icon
-            commandRect.xMin = commandRect.xMax - 44;
-            commandRect.y -= 1;
-            commandRect.width = 24;
-            GUI.DrawTexture(commandRect, Content.IconSourceType, ScaleMode.ScaleToFit);
+               var sceneRect = GUILayoutUtility.GetLastRect();
+               var commandRect = sceneRect;
 
-            // State icon
-            var stateButtonContent = this.sourceMissing
-               ? SourceStateContent.Missing
-               : (uScriptInstance.IsStale(this.graphFileName)
-                  ? SourceStateContent.Stale
-                  : (uScriptInstance.HasDebugCode(this.graphFileName)
-                     ? SourceStateContent.Debug
-                     : SourceStateContent.Release));
+               // Script icon
+               commandRect.xMin = commandRect.xMax - 44;
+               commandRect.y -= 1;
+               commandRect.width = 24;
+               GUI.DrawTexture(commandRect, Content.IconSourceType, ScaleMode.ScaleToFit);
 
-            commandRect.x += commandRect.width;
-            commandRect.width = stateButtonContent.image.width + 2;
-            commandRect.height = stateButtonContent.image.height + 2;
+               // State icon
+               var stateButtonContent = this.sourceMissing
+                  ? SourceStateContent.Missing
+                  : (uScriptInstance.IsStale(this.graphFileName)
+                     ? SourceStateContent.Stale
+                     : (uScriptInstance.HasDebugCode(this.graphFileName)
+                        ? SourceStateContent.Debug
+                        : SourceStateContent.Release));
 
-            sceneRect.width -= 56;
+               commandRect.x += commandRect.width;
+               commandRect.width = stateButtonContent.image.width + 2;
+               commandRect.height = stateButtonContent.image.height + 2;
 
-            if (GUI.Button(commandRect, stateButtonContent, Style.ButtonSourceState))
-            {
-               this.CommandSourceLocate();
-            }
+               sceneRect.width -= 56;
 
-            // Scene icon
-            GUI.Label(sceneRect, Content.IconUnityScene, GUIStyle.none);
+               if (GUI.Button(commandRect, stateButtonContent, Style.ButtonSourceState))
+               {
+                  this.CommandSourceLocate();
+               }
 
-            // Scene name
-            sceneRect.xMin += Content.IconUnityScene.width + 4;
-            var label = string.IsNullOrEmpty(this.graphSceneName) ? "(none)" : this.graphSceneName;
-            var isScriptAttachToScene = this.graphSceneName == this.currentSceneName;
+               // Scene icon
+               GUI.Label(sceneRect, Content.IconUnityScene, GUIStyle.none);
 
-            if (GUI.Button(
-               sceneRect,
-               Ellipsis.Compact(label, Style.ButtonSceneName, sceneRect, Ellipsis.Format.Middle),
-               isScriptAttachToScene || this.graphSceneName == string.Empty ? Style.ButtonSceneName : Style.ButtonSceneNameError))
-            {
-               this.CommandSceneLocate();
+               // Scene name
+               sceneRect.xMin += Content.IconUnityScene.width + 4;
+               var label = string.IsNullOrEmpty(this.graphSceneName) ? "(none)" : this.graphSceneName;
+               var isScriptAttachToScene = this.graphSceneName == this.currentSceneName;
+
+               if (GUI.Button(
+                  sceneRect,
+                  Ellipsis.Compact(label, Style.ButtonSceneName, sceneRect, Ellipsis.Format.Middle),
+                  isScriptAttachToScene || this.graphSceneName == string.Empty ? Style.ButtonSceneName : Style.ButtonSceneNameError))
+               {
+                  this.CommandSceneLocate();
+               }
             }
          }
 
@@ -323,31 +332,36 @@ namespace Detox.Editor.GUI
 
          private void DrawToolbarButtons()
          {
-            var rect = EditorGUILayout.BeginHorizontal();
+            var uScriptInstance = uScript.WeakInstance;
 
-            // Save button
-            var saveButtonContent = Preferences.SaveMethod == Preferences.SaveMethodType.Quick
-                                       ? uScriptGUIContent.buttonScriptSaveQuick
-                                       : (Preferences.SaveMethod == Preferences.SaveMethodType.Debug
-                                          ? uScriptGUIContent.buttonScriptSaveDebug
-                                          : uScriptGUIContent.buttonScriptSaveRelease);
-
-            if (GUILayout.Button(saveButtonContent, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.buttonScriptSaveRelease).x)))
+            if (uScriptInstance != null)
             {
-               uScriptInstance.RequestSave(
-                  Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
-                  Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
-                  false);
-            }
+               var rect = EditorGUILayout.BeginHorizontal();
 
-            // Miscellaneous file commands
-            var iconScriptCommands = GUI.skin.FindStyle("PaneOptions").normal.background;
-            if (GUILayout.Button(iconScriptCommands, Style.ButtonToolbarDropDown))
-            {
-               this.ContextMenuCreate(rect);
-            }
+               // Save button
+               var saveButtonContent = Preferences.SaveMethod == Preferences.SaveMethodType.Quick
+                                          ? uScriptGUIContent.buttonScriptSaveQuick
+                                          : (Preferences.SaveMethod == Preferences.SaveMethodType.Debug
+                                             ? uScriptGUIContent.buttonScriptSaveDebug
+                                             : uScriptGUIContent.buttonScriptSaveRelease);
 
-            EditorGUILayout.EndHorizontal();
+               if (GUILayout.Button(saveButtonContent, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.buttonScriptSaveRelease).x)))
+               {
+                  uScriptInstance.RequestSave(
+                     Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+                     Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+                     false);
+               }
+
+               // Miscellaneous file commands
+               var iconScriptCommands = GUI.skin.FindStyle("PaneOptions").normal.background;
+               if (GUILayout.Button(iconScriptCommands, Style.ButtonToolbarDropDown))
+               {
+                  this.ContextMenuCreate(rect);
+               }
+
+               EditorGUILayout.EndHorizontal();
+            }
          }
 
          private void EvaluateScriptSceneData()

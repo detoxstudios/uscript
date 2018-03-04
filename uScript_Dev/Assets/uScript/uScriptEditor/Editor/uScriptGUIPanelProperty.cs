@@ -41,40 +41,56 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
    public override void Draw()
    {
-      var uScriptInstance = uScript.Instance;
+      var uScriptInstance = uScript.WeakInstance;
 
-      this.selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
-
-      Rect rect;
-      if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
+      if (uScriptInstance == null && !InUScriptPanel)
       {
-         rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelPropertiesWidth));
+         EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
+         {
+            // draw empty panel
+            this.DrawOrphanNotification();
+         }
+         EditorGUILayout.EndVertical();
       }
       else
       {
-         rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandWidth(true));
-      }
-      {
-         if (Math.Abs(rect.width) > 0 && Math.Abs(rect.width - uScriptGUI.PanelPropertiesWidth) > 0)
+         this.selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
+
+         Rect rect;
+         if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
          {
-            // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
-            uScriptGUI.PanelPropertiesWidth = (int)rect.width;
-            uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
-            uScript.Instance.ForceReleaseMouse();
+            rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelPropertiesWidth));
+         }
+         else
+         {
+            rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandWidth(true));
+         }
+         {
+            if (InUScriptPanel)
+            {
+               if (Math.Abs(rect.width) > 0 && Math.Abs(rect.width - uScriptGUI.PanelPropertiesWidth) > 0)
+               {
+                  // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
+                  uScriptGUI.PanelPropertiesWidth = (int)rect.width;
+                  uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
+                  uScript.Instance.ForceReleaseMouse();
+               }
+
+               this.DrawToolbar();
+            }
+
+            this.DrawProperties();
          }
 
-         if (InUScriptPanel) this.DrawToolbar();
-         this.DrawProperties();
+         EditorGUILayout.EndVertical();
+
+         if (Event.current.type == EventType.Repaint)
+         {
+            this.Rect = GUILayoutUtility.GetLastRect();
+         }
+
+         if (InUScriptPanel) uScriptInstance.SetMouseRegion(uScript.MouseRegion.Properties);
       }
-
-      EditorGUILayout.EndVertical();
-
-      if (Event.current.type == EventType.Repaint)
-      {
-         this.Rect = GUILayoutUtility.GetLastRect();
-      }
-
-      uScriptInstance.SetMouseRegion(uScript.MouseRegion.Properties);
    }
 
    private void DrawToolbar()

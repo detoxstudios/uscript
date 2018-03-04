@@ -38,6 +38,14 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
    private int listItemRowCount;
    private int listItemRowWidth;
 
+   public override bool InUScriptPanel {
+      set
+      {
+         _inUScriptPanel = value;
+         if (uScriptGUIPanelToolbox.Instance != null && uScriptGUIPanelToolbox.Instance.InUScriptPanel != value) uScriptGUIPanelToolbox.Instance.InUScriptPanel = value;
+      }
+   }
+
    static uScriptGUIPanelContent()
    {
       Instance = new uScriptGUIPanelContent();
@@ -66,39 +74,50 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
       // Called during OnGUI()
 
       // Local references to uScript
-      var uScriptInstance = uScript.Instance;
+      var uScriptInstance = uScript.WeakInstance;
 
       // Initialize the style used for scrollview "padding"
       if (this.stylePadding == null)
       {
          this.stylePadding = new GUIStyle(GUIStyle.none) { stretchWidth = true };
       }
-  
-      if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
+
+      if (uScriptInstance == null && !InUScriptPanel)
       {
-         uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelLeftWidth));
+         EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
+         {
+            // draw empty panel
+            this.DrawOrphanNotification();
+         }
+         EditorGUILayout.EndVertical();
       }
       else
       {
-         uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
-      }
-      {
-         uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
+         if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
          {
-            this.DrawToolbar();
-
-            if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
+            uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelLeftWidth));
+         }
+         else
+         {
+            uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
+         }
+         {
+            uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
             {
-               this.DrawHiddenNotification();
-            }
-            else
-            {
-               // Graph Contents list
-               //
-               // Every node in the graph should be listed here, categorized by type.
+               this.DrawToolbar();
 
-               // Process all nodes and place them in the appropriate list
-               var categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>
+               if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
+               {
+                  this.DrawHiddenNotification();
+               }
+               else
+               {
+                  // Graph Contents list
+                  //
+                  // Every node in the graph should be listed here, categorized by type.
+
+                  // Process all nodes and place them in the appropriate list
+                  var categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>
                {
                   { "Comments", new Dictionary<string, List<DisplayNode>>() },
                   { "Actions", new Dictionary<string, List<DisplayNode>>() },
@@ -109,182 +128,183 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
                   { "Miscellaneous", new Dictionary<string, List<DisplayNode>>() }
                };
 
-               if (CategoryFoldout.Count == 0)
-               {
-                  foreach (var kvpCategory in categories)
+                  if (CategoryFoldout.Count == 0)
                   {
-                     // Default each foldout to "expanded"
-                     CategoryFoldout.Add(kvpCategory.Key, true);
-                  }
-               }
-
-               // TODO: clean up this code
-               foreach (var node in uScript.Instance.ScriptEditorCtrl.FlowChart.Nodes)
-               {
-                  var displayNode = node as DisplayNode;
-                  var category = "Miscellaneous";
-                  var key = string.Empty;
-                  var comment = string.Empty;
-
-                  var eventDisplayNode = displayNode as EntityEventDisplayNode;
-                  if (eventDisplayNode != null)
-                  {
-                     category = "Events";
-                     key = eventDisplayNode.EntityEvent.FriendlyType;
-                     comment = eventDisplayNode.EntityEvent.Comment.Default;
-                  }
-                  else
-                  {
-                     var nodeDisplayNode = displayNode as LogicNodeDisplayNode;
-                     if (nodeDisplayNode != null)
+                     foreach (var kvpCategory in categories)
                      {
-                        category = "Actions";
-                        key = nodeDisplayNode.LogicNode.FriendlyName;
-                        comment = nodeDisplayNode.LogicNode.Comment.Default;
+                        // Default each foldout to "expanded"
+                        CategoryFoldout.Add(kvpCategory.Key, true);
+                     }
+                  }
+
+                  // TODO: clean up this code
+                  foreach (var node in uScript.Instance.ScriptEditorCtrl.FlowChart.Nodes)
+                  {
+                     var displayNode = node as DisplayNode;
+                     var category = "Miscellaneous";
+                     var key = string.Empty;
+                     var comment = string.Empty;
+
+                     var eventDisplayNode = displayNode as EntityEventDisplayNode;
+                     if (eventDisplayNode != null)
+                     {
+                        category = "Events";
+                        key = eventDisplayNode.EntityEvent.FriendlyType;
+                        comment = eventDisplayNode.EntityEvent.Comment.Default;
                      }
                      else
                      {
-                        var localNodeDisplayNode = displayNode as LocalNodeDisplayNode;
-                        if (localNodeDisplayNode != null)
+                        var nodeDisplayNode = displayNode as LogicNodeDisplayNode;
+                        if (nodeDisplayNode != null)
                         {
-                           category = "Variables";
-                           key = localNodeDisplayNode.LocalNode.Value.Type; // get FriendlyName
-                           key = uScriptConfig.Variable.FriendlyName(key).Replace("UnityEngine.", string.Empty);
-
-                           var value = localNodeDisplayNode.LocalNode.Value.Default;
-                           if (key == "String")
-                           {
-                              value = string.Format("\"{0}\"", localNodeDisplayNode.LocalNode.Value.Default);
-                           }
-
-                           key = string.Format("{0} ({1})", key, value);
-                           comment = localNodeDisplayNode.LocalNode.Name.Default;
+                           category = "Actions";
+                           key = nodeDisplayNode.LogicNode.FriendlyName;
+                           comment = nodeDisplayNode.LogicNode.Comment.Default;
                         }
                         else
                         {
-                           var commentDisplayNode = displayNode as CommentDisplayNode;
-                           if (commentDisplayNode != null)
+                           var localNodeDisplayNode = displayNode as LocalNodeDisplayNode;
+                           if (localNodeDisplayNode != null)
                            {
-                              category = "Comments";
-                              key = commentDisplayNode.Comment.TitleText.FriendlyName;
-                              comment = commentDisplayNode.Comment.TitleText.Default;
+                              category = "Variables";
+                              key = localNodeDisplayNode.LocalNode.Value.Type; // get FriendlyName
+                              key = uScriptConfig.Variable.FriendlyName(key).Replace("UnityEngine.", string.Empty);
+
+                              var value = localNodeDisplayNode.LocalNode.Value.Default;
+                              if (key == "String")
+                              {
+                                 value = string.Format("\"{0}\"", localNodeDisplayNode.LocalNode.Value.Default);
+                              }
+
+                              key = string.Format("{0} ({1})", key, value);
+                              comment = localNodeDisplayNode.LocalNode.Name.Default;
                            }
                            else
                            {
-                              var propertyDisplayNode = displayNode as EntityPropertyDisplayNode;
-                              if (propertyDisplayNode != null)
+                              var commentDisplayNode = displayNode as CommentDisplayNode;
+                              if (commentDisplayNode != null)
                               {
-                                 category = "Properties";
-                                 key = propertyDisplayNode.DisplayName.Replace("\n", ": ");
-                                 comment = propertyDisplayNode.DisplayValue;
+                                 category = "Comments";
+                                 key = commentDisplayNode.Comment.TitleText.FriendlyName;
+                                 comment = commentDisplayNode.Comment.TitleText.Default;
                               }
                               else
                               {
-                                 var methodDisplayNode = displayNode as EntityMethodDisplayNode;
-                                 if (methodDisplayNode != null)
+                                 var propertyDisplayNode = displayNode as EntityPropertyDisplayNode;
+                                 if (propertyDisplayNode != null)
                                  {
-                                    category = "Actions";
-                                    key = methodDisplayNode.EntityMethod.Input.FriendlyName;
-                                    comment = methodDisplayNode.EntityMethod.Comment.Default;
+                                    category = "Properties";
+                                    key = propertyDisplayNode.DisplayName.Replace("\n", ": ");
+                                    comment = propertyDisplayNode.DisplayValue;
                                  }
-                                 else if (displayNode is OwnerConnectionDisplayNode)
+                                 else
                                  {
-                                    category = "Variables";
-                                    key = "Owner GameObject";
-                                    ////comment = ((OwnerConnectionDisplayNode)displayNode).OwnerConnection.Instance.FriendlyName;
+                                    var methodDisplayNode = displayNode as EntityMethodDisplayNode;
+                                    if (methodDisplayNode != null)
+                                    {
+                                       category = "Actions";
+                                       key = methodDisplayNode.EntityMethod.Input.FriendlyName;
+                                       comment = methodDisplayNode.EntityMethod.Comment.Default;
+                                    }
+                                    else if (displayNode is OwnerConnectionDisplayNode)
+                                    {
+                                       category = "Variables";
+                                       key = "Owner GameObject";
+                                       ////comment = ((OwnerConnectionDisplayNode)displayNode).OwnerConnection.Instance.FriendlyName;
+                                    }
                                  }
                               }
                            }
                         }
                      }
-                  }
 
-                  // Validate strings
-                  key = string.IsNullOrEmpty(key) ? "UNKNOWN" : key;
-                  key += string.IsNullOrEmpty(comment) ? string.Empty : string.Format(" ({0})", comment);
+                     // Validate strings
+                     key = string.IsNullOrEmpty(key) ? "UNKNOWN" : key;
+                     key += string.IsNullOrEmpty(comment) ? string.Empty : string.Format(" ({0})", comment);
 
-                  // Apply the filter now, to ignore items that are not matched
-                  if (string.IsNullOrEmpty(this.panelFilterText) || this.IncludeAsMenuItem(key, false))
-                  {
-                     //this.filterMatches++;
-
-                     if (categories[category].ContainsKey(key) == false)
+                     // Apply the filter now, to ignore items that are not matched
+                     if (string.IsNullOrEmpty(this.panelFilterText) || this.IncludeAsMenuItem(key, false))
                      {
-                        categories[category].Add(key, new List<DisplayNode>());
-                     }
+                        //this.filterMatches++;
 
-                     // Add the node to the list
-                     categories[category][key].Add(displayNode);
-                  }
-               }
+                        if (categories[category].ContainsKey(key) == false)
+                        {
+                           categories[category].Add(key, new List<DisplayNode>());
+                        }
 
-               // Examine the final filtered categories to determine how many items will be drawn
-               this.DetermineListStats(categories);
-
-               // Draw the list
-               this.ScrollviewOffset = EditorGUILayout.BeginScrollView(
-                  this.ScrollviewOffset,
-                  false,
-                  false,
-                  uScriptGUIStyle.HorizontalScrollbar,
-                  uScriptGUIStyle.VerticalScrollbar,
-                  "scrollview",
-                  GUILayout.ExpandWidth(true));
-               {
-                  // Draw the padding box to establish the row width (excluding scrollbar)
-                  // and force the scrollview content height
-                  GUILayout.Box(
-                     string.Empty,
-                     this.stylePadding,
-                     GUILayout.Height(Math.Max(0, (RowHeight * this.listItemRowCount) - 10)),
-                     GUILayout.Width(this.listItemRowWidth));
-                  GUILayout.Box(string.Empty, this.stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
-
-                  // Prepare to draw each row of the filtered list
-                  // From this point on, the contents of the scrollview should
-                  // never use GUILayout, so we can safely skip EventType.Layout.
-                  if (Event.current.type != EventType.Layout)
-                  {
-                     // Make sure the we get the width of the last GUILayout.Box
-                     // just in case it is wider than the widest button below
-                     this.listItemRowWidth = Math.Max(this.listItemRowWidth, (int)GUILayoutUtility.GetLastRect().width);
-
-                     this.buttonRect = new Rect(0, 0, 0, RowHeight);
-                     this.filterMatches = 0;
-
-                     // Draw all the palette items
-                     foreach (var category in categories)
-                     {
-                        this.filterMatches += this.DrawCategoryItems(category);
+                        // Add the node to the list
+                        categories[category][key].Add(displayNode);
                      }
                   }
 
-                  // Display a message if no filter matches were found.
-                  if (this.filterMatches == 0)
-                  {
-                     GUILayout.Label("The search found no matches!", uScriptGUIStyle.PanelMessageBold);
-                  }
-               }
-               EditorGUILayout.EndScrollView();
+                  // Examine the final filtered categories to determine how many items will be drawn
+                  this.DetermineListStats(categories);
 
-               if (Event.current.type == EventType.Repaint)
-               {
-                  scrollviewRect = GUILayoutUtility.GetLastRect();
+                  // Draw the list
+                  this.ScrollviewOffset = EditorGUILayout.BeginScrollView(
+                     this.ScrollviewOffset,
+                     false,
+                     false,
+                     uScriptGUIStyle.HorizontalScrollbar,
+                     uScriptGUIStyle.VerticalScrollbar,
+                     "scrollview",
+                     GUILayout.ExpandWidth(true));
+                  {
+                     // Draw the padding box to establish the row width (excluding scrollbar)
+                     // and force the scrollview content height
+                     GUILayout.Box(
+                        string.Empty,
+                        this.stylePadding,
+                        GUILayout.Height(Math.Max(0, (RowHeight * this.listItemRowCount) - 10)),
+                        GUILayout.Width(this.listItemRowWidth));
+                     GUILayout.Box(string.Empty, this.stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
+
+                     // Prepare to draw each row of the filtered list
+                     // From this point on, the contents of the scrollview should
+                     // never use GUILayout, so we can safely skip EventType.Layout.
+                     if (Event.current.type != EventType.Layout)
+                     {
+                        // Make sure the we get the width of the last GUILayout.Box
+                        // just in case it is wider than the widest button below
+                        this.listItemRowWidth = Math.Max(this.listItemRowWidth, (int)GUILayoutUtility.GetLastRect().width);
+
+                        this.buttonRect = new Rect(0, 0, 0, RowHeight);
+                        this.filterMatches = 0;
+
+                        // Draw all the palette items
+                        foreach (var category in categories)
+                        {
+                           this.filterMatches += this.DrawCategoryItems(category);
+                        }
+                     }
+
+                     // Display a message if no filter matches were found.
+                     if (this.filterMatches == 0)
+                     {
+                        GUILayout.Label("The search found no matches!", uScriptGUIStyle.PanelMessageBold);
+                     }
+                  }
+                  EditorGUILayout.EndScrollView();
+
+                  if (Event.current.type == EventType.Repaint)
+                  {
+                     scrollviewRect = GUILayoutUtility.GetLastRect();
+                  }
                }
             }
+            EditorGUILayout.EndVertical();
          }
          EditorGUILayout.EndVertical();
-      }
-      EditorGUILayout.EndVertical();
-      
-      if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.PanelLeftWidth)
-      {
-         // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
-         uScriptGUI.PanelLeftWidth = (int)uScript.Instance.paletteRect.width;
-      }
 
-      ////uScriptGUI.DefineRegion(uScriptGUI.Region.Palette);
-      uScriptInstance.SetMouseRegion(uScript.MouseRegion.Palette);
+         if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.PanelLeftWidth)
+         {
+            // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
+            uScriptGUI.PanelLeftWidth = (int)uScript.Instance.paletteRect.width;
+         }
+
+         ////uScriptGUI.DefineRegion(uScriptGUI.Region.Palette);
+         if (InUScriptPanel) uScriptInstance.SetMouseRegion(uScript.MouseRegion.Palette);
+      }
    }
 
    // Use recursion to set all menu item foldouts in the node palette
@@ -539,6 +559,17 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
          if (uScript._paletteMode != index)
          {
             uScript._paletteMode = index;
+            if (!InUScriptPanel)
+            {
+               // if we're not in the uScript window, switch the uScriptGUIPanelWindow's Panel to the toolbox
+               var window = uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelContent>();
+               if (window != null)
+               {
+                  var panel = uScriptGUIPanelToolbox.Instance;
+                  window.title = panel.Name;
+                  window.Panel = panel;
+               }
+            }
             uScript.RequestRepaint(2);
          }
 

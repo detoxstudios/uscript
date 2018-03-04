@@ -34,8 +34,6 @@ namespace Detox.Editor.GUI
 
          public PanelScriptList()
          {
-            uScriptInstance = uScript.Instance;
-
             this.listView = new ListView(uScript.Instance, typeof(ListViewItemScript))
             {
                ForceHorizontalColumnFit = true,
@@ -59,65 +57,70 @@ namespace Detox.Editor.GUI
 
          public void Draw()
          {
-            //if (this.listView.PendingExecution != null)
-            //{
-            //   Debug.Log("EXECUTE LOAD of \"" + this.listView.PendingExecution.Path + "\"\n");
-            //   this.listView.PendingExecution = null;
-            //}
+            var uScriptInstance = uScript.WeakInstance;
 
-            if (updateRequested)
+            if (uScriptInstance != null)
             {
-               updateRequested = false;
-               UpdateListContents();
-            }
-
-            var rectPanel = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandHeight(true));
-            {
-               //Event e = Event.current;
-
-               //if (e.type == EventType.MouseDown || e.type == EventType.Used)
+               //if (this.listView.PendingExecution != null)
                //{
-
-               //   //Focused = EditorWindow.focusedWindow && rectPanel.Contains(e.mousePosition);
-               //   bool newFocus = ((FocusedControl.ID == 0) && rectPanel.Contains(e.mousePosition));
-               //   if (newFocus == false && newFocus != _listView.hasFocus)
-               //   {
-               //      // check the hot control too
-               //      Debug.Log("REPAINT\n");
-               //      ListViewEditor.Instance.Repaint();
-               //   }
-
-               //   //Debug.Log("FOCUS: " + _listView.hasFocus.ToString() + ", KEYBOARD CONTROL: " + FocusedControl.ToString() + ", EVENT: " + e.ToString() + "\n");
-               //   Debug.Log("FOCUS: " + _listView.hasFocus.ToString() + ",\t\t" + "keyboardControl: " + FocusedControl.ToString() + "\t\tEventType: " + e.type.ToString()
-               //      + "\n" + "\t\t\t\t\t\t" + "hotControl: " + GUIUtility.hotControl.ToString() + "\t\t\t\t\t" + "FocusChanged: " + (newFocus != _listView.hasFocus).ToString());
-
-               //   _listView.hasFocus = newFocus;
+               //   Debug.Log("EXECUTE LOAD of \"" + this.listView.PendingExecution.Path + "\"\n");
+               //   this.listView.PendingExecution = null;
                //}
 
-               this.DrawDirectoryPanelToolbar();
-
-               if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
+               if (updateRequested)
                {
-                  Instance.DrawHiddenNotification();
-               }
-               else
-               {
-                  this.listView.Draw(rectPanel);
+                  updateRequested = false;
+                  UpdateListContents();
                }
 
-               //// Update the list view focus
-               //if (e.type == EventType.MouseDown || e.type == EventType.Used)
-               //{
-               //   bool newFocus = ((FocusedControl.ID == 0) && rectPanel.Contains(e.mousePosition));
-               //   if (newFocus != _listView.hasFocus)
-               //   {
-               //      ListViewEditor.Instance.Repaint();
-               //   }
-               //   _listView.hasFocus = newFocus;
-               //}
+               var rectPanel = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandHeight(true));
+               {
+                  //Event e = Event.current;
+
+                  //if (e.type == EventType.MouseDown || e.type == EventType.Used)
+                  //{
+
+                  //   //Focused = EditorWindow.focusedWindow && rectPanel.Contains(e.mousePosition);
+                  //   bool newFocus = ((FocusedControl.ID == 0) && rectPanel.Contains(e.mousePosition));
+                  //   if (newFocus == false && newFocus != _listView.hasFocus)
+                  //   {
+                  //      // check the hot control too
+                  //      Debug.Log("REPAINT\n");
+                  //      ListViewEditor.Instance.Repaint();
+                  //   }
+
+                  //   //Debug.Log("FOCUS: " + _listView.hasFocus.ToString() + ", KEYBOARD CONTROL: " + FocusedControl.ToString() + ", EVENT: " + e.ToString() + "\n");
+                  //   Debug.Log("FOCUS: " + _listView.hasFocus.ToString() + ",\t\t" + "keyboardControl: " + FocusedControl.ToString() + "\t\tEventType: " + e.type.ToString()
+                  //      + "\n" + "\t\t\t\t\t\t" + "hotControl: " + GUIUtility.hotControl.ToString() + "\t\t\t\t\t" + "FocusChanged: " + (newFocus != _listView.hasFocus).ToString());
+
+                  //   _listView.hasFocus = newFocus;
+                  //}
+
+                  this.DrawDirectoryPanelToolbar();
+
+                  if (uScriptInstance.wasCanvasDragged && Preferences.DrawPanelsOnUpdate == false)
+                  {
+                     Instance.DrawHiddenNotification();
+                  }
+                  else
+                  {
+                     this.listView.Draw(rectPanel);
+                  }
+
+                  //// Update the list view focus
+                  //if (e.type == EventType.MouseDown || e.type == EventType.Used)
+                  //{
+                  //   bool newFocus = ((FocusedControl.ID == 0) && rectPanel.Contains(e.mousePosition));
+                  //   if (newFocus != _listView.hasFocus)
+                  //   {
+                  //      ListViewEditor.Instance.Repaint();
+                  //   }
+                  //   _listView.hasFocus = newFocus;
+                  //}
+               }
+
+               EditorGUILayout.EndVertical();
             }
-
-            EditorGUILayout.EndVertical();
          }
 
          public void FindMissingGraphs()

@@ -14,7 +14,19 @@ public abstract class uScriptGUIPanel
 
    public Vector2 ScrollviewOffset { get; protected set; }
 
-   public bool InUScriptPanel { get; set; }
+   protected bool _inUScriptPanel = true;
+   public virtual bool InUScriptPanel
+   {
+      get
+      {
+         return _inUScriptPanel;
+      }
+
+      set
+      {
+         _inUScriptPanel = value;
+      }
+   }
 
    public abstract void Draw();
 
@@ -35,6 +47,30 @@ public abstract class uScriptGUIPanel
          "scrollview");
       {
          GUILayout.Label(message, uScriptGUIStyle.PanelMessage);
+      }
+      EditorGUILayout.EndScrollView();
+   }
+
+   protected void DrawOrphanNotification()
+   {
+      var message =
+         string.Format(
+            "The {0} panel is not drawn while the uScript window is closed.\n\nWaiting for uScript to reopen...",
+            this.Name);
+
+      EditorGUILayout.BeginScrollView(
+         Vector2.zero,
+         false,
+         false,
+         uScriptGUIStyle.HorizontalScrollbar,
+         uScriptGUIStyle.VerticalScrollbar,
+         "scrollview");
+      {
+         GUILayout.Label(message, uScriptGUIStyle.PanelMessage);
+
+         GUILayout.Space(20.0f);
+
+         if (GUILayout.Button("Open uScript", GUILayout.ExpandWidth(true))) uScript.Instance.GetType();  // call any function just to force the instance to be rebuilt
       }
       EditorGUILayout.EndScrollView();
    }
