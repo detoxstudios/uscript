@@ -67,14 +67,13 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          }
          {
             if (InUScriptPanel)
-            {
+            {/*
                if (Math.Abs(rect.width) > 0 && Math.Abs(rect.width - uScriptGUI.PanelPropertiesWidth) > 0)
                {
                   // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
                   uScriptGUI.PanelPropertiesWidth = (int)rect.width;
-                  uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
                   uScript.Instance.ForceReleaseMouse();
-               }
+               }*/
 
                this.DrawToolbar();
             }

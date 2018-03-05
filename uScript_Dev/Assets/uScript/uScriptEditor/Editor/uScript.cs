@@ -772,6 +772,7 @@ public sealed partial class uScript : EditorWindow
    // Call to force release the mouse and stop a drag operation
    public void ForceReleaseMouse()
    {
+      uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
       this.mouseDown = false;
       this.mouseDownOverCanvas = false;
    }
@@ -2528,7 +2529,6 @@ public sealed partial class uScript : EditorWindow
          {
             // if we didn't get the height we requested, we must have hit a limit, stop dragging and reset the height
             uScriptGUI.PanelPropertiesHeight = (int)rect.height;
-            this.mouseDownRegion = MouseRegion.Canvas;
             ForceReleaseMouse();
          }
          {
@@ -2554,7 +2554,6 @@ public sealed partial class uScript : EditorWindow
                }
             }
 
-//            uScriptGUIPanelScript.Instance.Draw();
             if (ScriptsVisible)
             {
                Detox.Editor.GUI.PanelScript.Instance.Draw();

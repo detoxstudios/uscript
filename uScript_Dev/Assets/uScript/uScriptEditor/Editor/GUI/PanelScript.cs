@@ -78,21 +78,19 @@ namespace Detox.Editor.GUI
             }
             {
                if (InUScriptPanel)
-               {
+               {/*
                   if ((int)rect.width != 0 && ((int)rect.width != uScriptGUI.PanelScriptsWidth))
                   {
                      // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
                      uScriptGUI.PanelScriptsWidth = (int)rect.width;
-                     uScriptInstance.MouseDownRegion = uScript.MouseRegion.Canvas;
                      uScriptInstance.ForceReleaseMouse();
                   }
                   else if ((rect.x + rect.width) > uScriptInstance.position.width && (uScriptInstance.MouseDownRegion != uScript.MouseRegion.Canvas))
                   {
                      // panel is growing off the edge of the window, bring it back in and stop dragging
                      uScriptGUI.PanelScriptsWidth = (int)(uScriptInstance.position.width - rect.x);
-                     uScriptInstance.MouseDownRegion = uScript.MouseRegion.Canvas;
                      uScriptInstance.ForceReleaseMouse();
-                  }
+                  }*/
                }
 
                this.panelScriptCurrent.Draw(this);
