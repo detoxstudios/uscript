@@ -1202,6 +1202,7 @@ namespace Detox.ScriptEditor
       Parameter Comment { get; set; }
       Parameter Instance { get; set; }
       bool IsStatic { get; }
+      string TypeName { get; }
 
       EntityNode Copy( bool preserveGuid );
    }
@@ -1446,6 +1447,14 @@ namespace Detox.ScriptEditor
 
       public Point Position { get { throw new Exception("Link has no position"); } set { throw new Exception("Link has no position"); } }
 
+      public string TypeName
+      {
+         get
+         {
+            return "Link";
+         }
+      }
+
       public LinkNode(Guid source, string sourceAnchor, Guid dest, string destAnchor )
       {
          m_Guid = Guid.NewGuid( );
@@ -1560,6 +1569,14 @@ namespace Detox.ScriptEditor
       {
          get { return m_Guid; }
          set { m_Guid = value; }
+      }
+
+      public string TypeName
+      {
+         get
+         {
+            return "External";
+         }
       }
 
       public ExternalConnection( Guid guid )
@@ -1704,6 +1721,14 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
+      public string TypeName
+      {
+         get
+         {
+            return "UnityEngine.GameObject";
+         }
+      }
+
       public OwnerConnection( Guid guid )
       {
          m_Guid = guid;
@@ -1843,6 +1868,14 @@ namespace Detox.ScriptEditor
       {
          get { return m_Guid; }
          set { m_Guid = value; }
+      }
+
+      public string TypeName
+      {
+         get
+         {
+            return ComponentType;
+         }
       }
 
       public string ComponentType;
@@ -2016,6 +2049,14 @@ namespace Detox.ScriptEditor
       {
          get { return m_Guid; }
          set { m_Guid = value; }
+      }
+
+      public string TypeName
+      {
+         get
+         {
+            return "Comment";
+         }
       }
 
       public CommentNode(string titleText)
@@ -2235,6 +2276,14 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
+      public string TypeName
+      {
+         get
+         {
+            return ComponentType;
+         }
+      }
+
       public EntityEvent(string componentType, string friendlyType, Plug [] outputs)
       { 
          Outputs = outputs;
@@ -2445,6 +2494,14 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
+      public string TypeName
+      {
+         get
+         {
+            return Type;
+         }
+      }
+
       public LogicNode(string type, string friendlyName)       
       { 
          Type = type;
@@ -2612,6 +2669,14 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
+      public string TypeName
+      {
+         get
+         {
+            return ComponentType;
+         }
+      }
+
       public EntityProperty(string name, string friendlyName, string componentType, string valueType, bool input, bool output)
       { 
          ComponentType = componentType;
@@ -2754,6 +2819,14 @@ namespace Detox.ScriptEditor
       {
          get { return Parameter.Empty; }
          set { ; } 
+      }
+
+      public string TypeName
+      {
+         get
+         {
+            return m_Value.Type;
+         }
       }
 
       public LocalNode(string name, string type, string defaultValue)

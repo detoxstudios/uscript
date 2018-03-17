@@ -524,6 +524,27 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   public static Dictionary<string, string> AutoCommentTypes
+   {
+      get
+      {
+         Type t = uScript.Instance.GetType("uScriptUserTypes");
+         if (null != t)
+         {
+            FieldInfo p = t.GetField("AutoCommentTypes");
+            if (null != p)
+            {
+               object instance = Activator.CreateInstance(t);
+
+               object v = p.GetValue(instance);
+               if (v is Dictionary<string, string>) return (Dictionary<string, string>)v;
+            }
+         }
+
+         return new Dictionary<string, string>();
+      }
+   }
+
    private static GameObject CreateMasterGameObject()
    {
       uScriptDebug.Log(

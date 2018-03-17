@@ -289,6 +289,28 @@ namespace Detox.FlowChart
 
          node.Parent = this;
 
+         // default comment to sequence #
+         var autoCommentTypes = uScript.AutoCommentTypes;
+         DisplayNode dn = (DisplayNode)node;
+         string typeString = dn.EntityNode.TypeName;
+         if (!string.IsNullOrEmpty(typeString) && autoCommentTypes.ContainsKey(typeString))
+         {
+            Parameter clone = dn.EntityNode.Comment;
+            string comment = clone.DefaultAsObject as string;
+            if (string.IsNullOrEmpty(comment))
+            {
+               // count nodes of the desired type
+               int count = 0;
+               foreach (Node n in m_Nodes.Values)
+               {
+                  DisplayNode dNode = (DisplayNode)n;
+                  if (dNode.EntityNode.TypeName == typeString) count++;
+               }
+               clone.DefaultAsObject = autoCommentTypes[typeString].Replace("#", count.ToString());
+               dn.EntityNode.Comment = clone;
+            }
+         }
+         
          if ( -1 ==index )
          {
             for (index = 0; index < Controls.Count; index++)
