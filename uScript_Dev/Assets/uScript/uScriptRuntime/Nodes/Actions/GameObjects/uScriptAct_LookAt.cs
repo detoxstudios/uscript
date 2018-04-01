@@ -171,7 +171,7 @@ public class uScriptAct_LookAt : uScriptLogic
                }
             }
 
-            m_Targets[i].transform.Rotate(rotationAxis, degrees);
+            m_Targets[i].transform.Rotate(xProd, degrees);
          }
          else
          {
