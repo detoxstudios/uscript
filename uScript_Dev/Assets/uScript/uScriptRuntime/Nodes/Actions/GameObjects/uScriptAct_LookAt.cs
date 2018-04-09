@@ -121,39 +121,43 @@ public class uScriptAct_LookAt : uScriptLogic
          if (null == m_Targets[i]) continue;
 
          //our targets might be moving too, so recalculate their desired lookat and slerp it
-         Vector3 rotationAxis = Vector3.up;
+         Vector3 up = Vector3.up;
          Vector3 look = m_FocusPosition - m_StartPositions[i];
 
          if (m_LockAxis != LockAxis.None)
          {
             if (m_LockAxis == LockAxis.X)
             {
-               rotationAxis = Vector3.right;
+               up = Vector3.right;
                look.x = 0;
             }
             else if (m_LockAxis == LockAxis.Y)
             {
-               rotationAxis = Vector3.up;
+               up = Vector3.up;
                look.y = 0;
             }
             else if (m_LockAxis == LockAxis.Z)
             {
-               rotationAxis = Vector3.forward;
+               up = Vector3.forward;
                look.z = 0;
             }
-
-            look.Normalize();
          }
 
-         Quaternion q = Quaternion.LookRotation(look, rotationAxis);
+         look.Normalize();
+
          if (m_UseDegreesPerSecond)
          {
-            float angle = Quaternion.Angle(m_Targets[i].transform.rotation, q);
-            Vector3 xProd = Vector3.Cross(m_Targets[i].transform.forward, look);
-            float degrees = m_DegreesPerSecond * Mathf.Sign(xProd.y) * Time.deltaTime;
+            Vector3 right = Vector3.Cross(look, up);
+            up = Vector3.Cross(right, look);
+            float angle = Mathf.Acos(Vector3.Dot(look, m_Targets[i].transform.forward)) * Mathf.Rad2Deg;
+            Vector3 rotationAxis = Vector3.Cross(look, m_Targets[i].transform.forward).normalized;
+            float degrees = m_DegreesPerSecond * Mathf.Sign(rotationAxis.y) * Time.deltaTime;
             t = 0.0f;
-            if (angle >= 0.0f)  // rotating in the positive direction
+            if (Mathf.Sign(rotationAxis.y) >= 0.0f)  // rotating in the positive direction
             {
+               // rotation axis is inverted, fix it
+               rotationAxis = -rotationAxis;
+
                // check if we've gone past
                if (degrees >= angle)
                {
@@ -164,17 +168,18 @@ public class uScriptAct_LookAt : uScriptLogic
             else  // rotating in the negative direction
             {
                // check if we've gone past
-               if (degrees <= angle)
+               if (Mathf.Abs(degrees) >= angle)
                {
-                  degrees = angle;
+                  degrees = -angle;
                   t = 1.0f;
                }
             }
 
-            m_Targets[i].transform.Rotate(xProd, degrees);
+            m_Targets[i].transform.Rotate(rotationAxis, degrees, Space.World);
          }
          else
          {
+            Quaternion q = Quaternion.LookRotation(look, up);
             m_Targets[i].transform.rotation = Quaternion.Slerp(m_StartRotations[i], q, t);
          }
       }
