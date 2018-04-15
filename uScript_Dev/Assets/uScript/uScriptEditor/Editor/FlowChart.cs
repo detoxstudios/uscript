@@ -17,6 +17,7 @@ namespace Detox.FlowChart
 
    using Detox.Drawing;
    using Detox.Editor;
+   using Detox.ScriptEditor;
    using Detox.Windows.Forms;
 
    using UnityEditor;
