@@ -1,6 +1,7 @@
 // uScript uScript_Button.cs
 // (C) 2015 Detox Studios LLC
 
+using System;
 using UnityEngine.EventSystems;
 
 //Unity 4.6 and above only
@@ -14,7 +15,7 @@ using UnityEngine.EventSystems;
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("UI Button Events", "Fires an event signal when Instance Button receives a click event.")]
-public class uScript_Button : uScriptEvent, IPointerDownHandler, IPointerUpHandler
+public class uScript_Button : uScriptEvent, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler
 {
    public delegate void uScriptEventHandler(object sender, ClickEventArgs args);
 
@@ -33,6 +34,15 @@ public class uScript_Button : uScriptEvent, IPointerDownHandler, IPointerUpHandl
 
    [FriendlyName("On Button Up")]
    public event uScriptEventHandler OnButtonUp;
+
+   [FriendlyName("On Button Enter")]
+   public event uScriptEventHandler OnButtonEnter;
+
+   [FriendlyName("On Button Exit")]
+   public event uScriptEventHandler OnButtonExit;
+
+   [FriendlyName("On Button Drag")]
+   public event uScriptEventHandler OnButtonDrag;
 
    private UnityEngine.UI.Button m_Button;
 
@@ -56,6 +66,21 @@ public class uScript_Button : uScriptEvent, IPointerDownHandler, IPointerUpHandl
    public void OnPointerUp(PointerEventData eventData)
    {
       if ( OnButtonUp != null ) OnButtonUp( this, new ClickEventArgs() ); 
+   }
+
+   public void OnPointerEnter(PointerEventData eventData)
+   {
+      if ( OnButtonEnter != null ) OnButtonEnter( this, new ClickEventArgs() );
+   }
+
+   public void OnPointerExit(PointerEventData eventData)
+   {
+      if ( OnButtonExit != null ) OnButtonExit( this, new ClickEventArgs() );
+   }
+
+   public void OnDrag(PointerEventData eventData)
+   {
+      if ( OnButtonDrag != null ) OnButtonDrag( this, new ClickEventArgs() );
    }
 }
 

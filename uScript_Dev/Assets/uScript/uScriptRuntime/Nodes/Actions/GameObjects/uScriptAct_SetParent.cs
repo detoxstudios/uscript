@@ -2,8 +2,6 @@
 // (C) 2011 Detox Studios LLC
 
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 [NodePath("Actions/GameObjects")]
 
@@ -32,7 +30,7 @@ public class uScriptAct_SetParent : uScriptLogic
 		 {
 		    if (null != Parent)
 			{
-			   tmpTarget.transform.parent = Parent.transform;
+			   tmpTarget.transform.SetParent(Parent.transform);
 			}
 			else
 			{
