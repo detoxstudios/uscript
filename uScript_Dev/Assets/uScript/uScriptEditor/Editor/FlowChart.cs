@@ -432,8 +432,6 @@ namespace Detox.FlowChart
 
       private bool InLink(Link link, Point position)
       {
-         const int tolerance = 5;
-
          Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width),
                                   (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height) );
 
@@ -449,7 +447,7 @@ namespace Detox.FlowChart
          if (true)
          {
             // Perform bezier accurate test
-            int toleranceSq = tolerance * tolerance;
+            float toleranceSq = Preferences.LineSelectionTolerance * Preferences.LineSelectionTolerance / Zoom;
 
             //control point 1
             //is 25% of the X length and only 10% of the Y length
@@ -1386,8 +1384,9 @@ namespace Detox.FlowChart
             }
          }
 
-         Pen pen = new Pen( Detox.Drawing.Color.Black, uScriptConfig.BezierPenWidth * Preferences.LineWidthMultiplier );
-         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, uScriptConfig.BezierPenWidthSelected * Preferences.LineWidthMultiplier );
+         float lineWidth = uScriptConfig.BezierPenWidth * Preferences.LineWidthMultiplier / Mathf.Max(Zoom, 0.25f);
+         Pen pen = new Pen( Detox.Drawing.Color.Black, lineWidth );
+         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, lineWidth );
 
          if (null != m_StartLinkNode)
          {
@@ -1517,7 +1516,7 @@ namespace Detox.FlowChart
             }
             else
             {
-               float lineWidth = -1;
+               lineWidth = -1;
 
                // check source node type first
                string styleName = link.Source.Node.UnselectedStyleName;
@@ -1535,7 +1534,7 @@ namespace Detox.FlowChart
                   int index = (int) value;
 
                   Handles.color = uScriptConfig.LineColors[index];
-                  lineWidth = uScriptConfig.LineWidths[index] * Preferences.LineWidthMultiplier;
+                  lineWidth = uScriptConfig.LineWidths[index] * Preferences.LineWidthMultiplier / Mathf.Max(Zoom, 0.25f);
                }
                else
                {
@@ -1547,7 +1546,7 @@ namespace Detox.FlowChart
                   if ( true == oneNodeIsVariable )
                   {
                      Handles.color = uScriptConfig.LineColors[0];
-                     lineWidth = uScriptConfig.LineWidths[0] * Preferences.LineWidthMultiplier;
+                     lineWidth = uScriptConfig.LineWidths[0] * Preferences.LineWidthMultiplier / Mathf.Max(Zoom, 0.25f);
                   }
                }
 

@@ -272,6 +272,12 @@ namespace Detox.Editor
          set { EditorPrefs.SetFloat("DetoxStudios.uScript.LineWidthMultiplier", value); }
       }
 
+      public static float LineSelectionTolerance
+      {
+         get { return EditorPrefs.GetFloat("DetoxStudios.uScript.LineSelectionTolerance"); }
+         set { EditorPrefs.SetFloat("DetoxStudios.uScript.LineSelectionTolerance", value); }
+      }
+
       public static bool EnableSceneWarning
       {
          get { return EditorPrefs.GetBool("DetoxStudios.uScript.EnableSceneWarning"); }
@@ -597,6 +603,7 @@ namespace Detox.Editor
 
          SetDefault("ShowHierarchyIcon", true, force);
          SetDefault("LineWidthMultiplier", 1.0f, force);
+         SetDefault("LineSelectionTolerance", 8.0f, force);
          SetDefault("EnableSceneWarning", true, force);
          SetDefault("EnableAttachOnSavePrompt", true, force);
       }
