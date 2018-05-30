@@ -187,13 +187,16 @@ public class uScriptCon_Switch : uScriptLogic
                {
                   m_CurrentOutput = 7;
                }
-               if (Loop)
-               {
-                  m_CurrentOutput = 1;
-               }
                else
                {
-                  m_SwitchOpen = false;
+                  if (Loop)
+                  {
+                     m_CurrentOutput = 1;
+                  }
+                  else
+                  {
+                     m_SwitchOpen = false;
+                  }
                }
                break;
 
@@ -204,13 +207,16 @@ public class uScriptCon_Switch : uScriptLogic
                {
                   m_CurrentOutput = 8;
                }
-               if (Loop)
-               {
-                  m_CurrentOutput = 1;
-               }
                else
                {
-                  m_SwitchOpen = false;
+                  if (Loop)
+                  {
+                     m_CurrentOutput = 1;
+                  }
+                  else
+                  {
+                     m_SwitchOpen = false;
+                  }
                }
                break;
 
