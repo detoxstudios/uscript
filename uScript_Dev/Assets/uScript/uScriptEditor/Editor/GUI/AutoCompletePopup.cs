@@ -22,7 +22,7 @@ namespace Detox.Editor.GUI
    {
       public static class AutoCompletePopup
       {
-         private const int MaxItems = 5;
+         private const int MaxItems = 15;
 
          private static readonly List<Cache.SceneObject> List = new List<Cache.SceneObject>(MaxItems);
 
