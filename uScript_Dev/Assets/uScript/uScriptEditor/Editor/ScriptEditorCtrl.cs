@@ -3462,7 +3462,7 @@ namespace Detox.ScriptEditor
          {
             // check and see if an *Editor class exists for this node type
             Type type = uScript.GetAssemblyQualifiedType(nodeType + "Editor");
-            if (type != null)
+            if (type != null && typeof(DisplayNodeEditor).IsAssignableFrom(type))
             {
                // found an *Editor class for our node, now check to see if it has the magic method (OnPropertyGridGUI)
                //MethodInfo[] methods = type.GetMethods();
