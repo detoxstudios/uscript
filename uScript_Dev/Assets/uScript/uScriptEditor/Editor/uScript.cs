@@ -202,6 +202,8 @@ public sealed partial class uScript : EditorWindow
 
    private static bool shouldPerformUpdateCheck;
 
+   private static bool panelPositionsAndSizesLoaded = false;
+
    private static int lastMouseX;
    private static int lastMouseY;
 
@@ -1251,6 +1253,7 @@ public sealed partial class uScript : EditorWindow
    {
       if (this.shouldCloseEditorWindowOnNextUpdate)
       {
+         SavePanelLocationsAndSizes();
          this.Close();
          return;
       }
@@ -1482,6 +1485,35 @@ public sealed partial class uScript : EditorWindow
          // repaint all spawned windows as well
          RepaintAllUScriptGUIPanelWindows();
       }
+   }
+
+   private void LoadPanelLocationsAndSizes()
+   {
+      if (!panelPositionsAndSizesLoaded)
+      {
+         PaletteVisible = Preferences.PaletteVisible;
+         ReferenceVisible = Preferences.ReferenceVisible;
+         ScriptsVisible = Preferences.ScriptsVisible;
+         PropertiesVisible = Preferences.PropertiesVisible;
+         uScriptGUI.PanelLeftWidth = Preferences.PanelLeftWidth;
+         uScriptGUI.PanelPropertiesHeight = Preferences.PanelPropertiesHeight;
+         uScriptGUI.PanelPropertiesWidth = Preferences.PanelPropertiesWidth;
+         uScriptGUI.PanelScriptsWidth = Preferences.PanelScriptsWidth;
+
+         panelPositionsAndSizesLoaded = true;
+      }
+   }
+
+   private void SavePanelLocationsAndSizes()
+   {
+      Preferences.PaletteVisible = PaletteVisible;
+      Preferences.ReferenceVisible = ReferenceVisible;
+      Preferences.ScriptsVisible = ScriptsVisible;
+      Preferences.PropertiesVisible = PropertiesVisible;
+      Preferences.PanelLeftWidth = uScriptGUI.PanelLeftWidth;
+      Preferences.PanelPropertiesHeight = uScriptGUI.PanelPropertiesHeight;
+      Preferences.PanelPropertiesWidth = uScriptGUI.PanelPropertiesWidth;
+      Preferences.PanelScriptsWidth = uScriptGUI.PanelScriptsWidth;
    }
 
    private void UndoRedoPerformed()
@@ -1891,6 +1923,7 @@ public sealed partial class uScript : EditorWindow
 
       uScriptGUI.PanelPropertiesWidth = (int)(Instance.position.width / 3);
       uScriptGUI.PanelScriptsWidth = (int)(Instance.position.width / 3);
+      panelPositionsAndSizesLoaded = false;
 
       if (Preferences.ShowAtStartup)
       {
@@ -2384,6 +2417,8 @@ public sealed partial class uScript : EditorWindow
       this.currentScript = null;
       this.currentScriptName = null;
       this.complexData = null;
+
+      SavePanelLocationsAndSizes();
    }
 
    public void NodeDoubleClicked(Node node)
@@ -2461,6 +2496,7 @@ public sealed partial class uScript : EditorWindow
    private void DrawMainGUI()
    {
       uScriptGUI.InitPanels();
+      LoadPanelLocationsAndSizes();
 
       // Notify the user when the editor is in play mode, since any changes
       // made to the uScript will be lost when exiting the mode.

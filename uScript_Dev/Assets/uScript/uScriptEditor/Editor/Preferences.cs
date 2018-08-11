@@ -392,6 +392,54 @@ namespace Detox.Editor
          set { EditorPrefs.SetBool("DetoxStudios.uScript.ShowHierarchyIcon", value); }
       }
 
+      public static bool PaletteVisible
+      {
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.PaletteVisible"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.PaletteVisible", value); }
+      }
+
+      public static bool ReferenceVisible
+      {
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.ReferenceVisible"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.ReferenceVisible", value); }
+      }
+
+      public static bool ScriptsVisible
+      {
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.ScriptsVisible"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.ScriptsVisible", value); }
+      }
+
+      public static bool PropertiesVisible
+      {
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.PropertiesVisible"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.PropertiesVisible", value); }
+      }
+
+      public static int PanelLeftWidth
+      {
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.PanelLeftWidth"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.PanelLeftWidth", value); }
+      }
+
+      public static int PanelPropertiesHeight
+      {
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.PanelPropertiesHeight"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.PanelPropertiesHeight", value); }
+      }
+
+      public static int PanelPropertiesWidth
+      {
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.PanelPropertiesWidth"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.PanelPropertiesWidth", value); }
+      }
+
+      public static int PanelScriptsWidth
+      {
+         get { return EditorPrefs.GetInt("DetoxStudios.uScript.PanelScriptsWidth"); }
+         set { EditorPrefs.SetInt("DetoxStudios.uScript.PanelScriptsWidth", value); }
+      }
+
       public static bool ShouldDrawCollapsedVariable(bool selected)
       {
          return VariableExpansion != VariableExpansionType.AlwaysExpanded
@@ -606,6 +654,15 @@ namespace Detox.Editor
          SetDefault("LineSelectionTolerance", 8.0f, force);
          SetDefault("EnableSceneWarning", true, force);
          SetDefault("EnableAttachOnSavePrompt", true, force);
+
+         SetDefault("PaletteVisible", true, force);
+         SetDefault("ReferenceVisible", true, force);
+         SetDefault("ScriptsVisible", true, force);
+         SetDefault("PropertiesVisible", true, force);
+         SetDefault("PanelLeftWidth", 265, force);
+         SetDefault("PanelPropertiesHeight", 250, force);
+         SetDefault("PanelPropertiesWidth", 500, force);
+         SetDefault("PanelScriptsWidth", 300, force);
       }
 
       private static void SetDefault(string key, object value, bool force)
