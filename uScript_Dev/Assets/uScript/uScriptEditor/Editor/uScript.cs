@@ -54,9 +54,9 @@ public sealed partial class uScript : EditorWindow
    public bool wasCanvasDragged;
 
    private bool _paletteVisible = true;
-   public bool PaletteVisible { get { return _paletteVisible; } set { _paletteVisible = value; } }
+   public bool PaletteVisible { get { return _paletteVisible; } set { _paletteVisible = value; SavePanelLocationsAndSizes(); } }
    private bool _propertiesVisible = true;
-   public bool PropertiesVisible { get { return _propertiesVisible; } set { _propertiesVisible = value; } }
+   public bool PropertiesVisible { get { return _propertiesVisible; } set { _propertiesVisible = value; SavePanelLocationsAndSizes(); } }
    private bool _referenceVisible = true;
    public bool ReferenceVisible { get { return _referenceVisible; }
       set
@@ -75,10 +75,11 @@ public sealed partial class uScript : EditorWindow
             }
          }
          _referenceVisible = value;
+         SavePanelLocationsAndSizes();
       }
    }
    private bool _scriptsVisible = true;
-   public bool ScriptsVisible { get { return _scriptsVisible; } set { _scriptsVisible = value; } }
+   public bool ScriptsVisible { get { return _scriptsVisible; } set { _scriptsVisible = value; SavePanelLocationsAndSizes(); } }
 
    public static uScriptGUIPanelWindow GetUScriptGUIPanelWindow<T>() where T : uScriptGUIPanel
    {
@@ -1491,10 +1492,10 @@ public sealed partial class uScript : EditorWindow
    {
       if (!panelPositionsAndSizesLoaded)
       {
-         PaletteVisible = Preferences.PaletteVisible;
-         ReferenceVisible = Preferences.ReferenceVisible;
-         ScriptsVisible = Preferences.ScriptsVisible;
-         PropertiesVisible = Preferences.PropertiesVisible;
+         _paletteVisible = Preferences.PaletteVisible;
+         _referenceVisible = Preferences.ReferenceVisible;
+         _scriptsVisible = Preferences.ScriptsVisible;
+         _propertiesVisible = Preferences.PropertiesVisible;
          uScriptGUI.PanelLeftWidth = Preferences.PanelLeftWidth;
          uScriptGUI.PanelPropertiesHeight = Preferences.PanelPropertiesHeight;
          uScriptGUI.PanelPropertiesWidth = Preferences.PanelPropertiesWidth;
@@ -3469,22 +3470,26 @@ public sealed partial class uScript : EditorWindow
          if (this.mouseDownRegion == MouseRegion.HandleCanvas && deltaY != 0)
          {
             uScriptGUI.PanelPropertiesHeight -= deltaY;
+            SavePanelLocationsAndSizes();
             RequestRepaint();
          }
          else if (this.mouseDownRegion == MouseRegion.HandlePalette && deltaX != 0)
          {
             uScriptGUI.PanelLeftWidth += deltaX;
+            SavePanelLocationsAndSizes();
             RequestRepaint();
          }
          else if (this.mouseDownRegion == MouseRegion.HandleProperties && deltaX != 0)
          {
             uScriptGUI.PanelPropertiesWidth += deltaX;
             if (!ReferenceVisible && ScriptsVisible) uScriptGUI.PanelScriptsWidth -= deltaX;
+            SavePanelLocationsAndSizes();
             RequestRepaint();
          }
          else if (this.mouseDownRegion == MouseRegion.HandleReference && deltaX != 0)
          {
             uScriptGUI.PanelScriptsWidth -= deltaX;
+            SavePanelLocationsAndSizes();
             RequestRepaint();
          }
       }
