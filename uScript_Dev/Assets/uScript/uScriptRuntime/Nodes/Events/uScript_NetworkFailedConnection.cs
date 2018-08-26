@@ -1,7 +1,7 @@
 // uScript uScript_NetworkFailedConnection.cs
 // (C) 2010 Detox Studios LLC
 
-#if !(UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1)
+#if !(UNITY_WP8 || UNITY_WP8_1 || UNITY_WINRT_8_1 || UNITY_2018)
 
 using UnityEngine;
 using System.Collections;

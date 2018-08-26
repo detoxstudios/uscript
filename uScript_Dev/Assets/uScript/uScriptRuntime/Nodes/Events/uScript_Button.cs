@@ -44,13 +44,14 @@ public class uScript_Button : uScriptEvent, IPointerDownHandler, IPointerUpHandl
    [FriendlyName("On Button Drag")]
    public event uScriptEventHandler OnButtonDrag;
 
-   private UnityEngine.UI.Button m_Button;
-
    public void Start()
    {
-      m_Button = GetComponent<UnityEngine.UI.Button>();
-      m_Button.onClick.RemoveAllListeners();
-      m_Button.onClick.AddListener(HandleButton);
+      UnityEngine.UI.Button button = GetComponent<UnityEngine.UI.Button>();
+      if (button != null)
+      {
+         button.onClick.RemoveAllListeners();
+         button.onClick.AddListener(HandleButton);
+      }
    }
 
    void HandleButton()
