@@ -184,6 +184,7 @@ GameObject:
   - 114: {fileID: 191924682}
   - 114: {fileID: 191924681}
   - 114: {fileID: 191924680}
+  - 114: {fileID: 191924677}
   m_Layer: 0
   m_Name: _uScript
   m_TagString: Untagged
@@ -203,6 +204,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &191924677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 191924675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f661e14a91a4e9e429fb9e3ca8868739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseAsMaster: 0
+  undoObjectReference: {fileID: 0}
+  m_Breakpoints: []
+  CurrentBreakpoint: 
+  GameObjects:
+  - {fileID: 6}
+  - {fileID: 191924675}
+  GameObjectGuids:
+  - d89d11f4-b052-4cc9-8cd2-9c3765100750
+  - b607bdde-c7aa-45a3-a83d-5345b2db6528
+  m_uScriptsToAttach: []
+  m_FilesToAddToVC: []
 --- !u!114 &191924679
 MonoBehaviour:
   m_ObjectHideFlags: 0

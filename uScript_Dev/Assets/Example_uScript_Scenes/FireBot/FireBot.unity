@@ -624,6 +624,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 184611009}
   - 114: {fileID: 184611012}
+  - 114: {fileID: 184611010}
   m_Layer: 0
   m_Name: _uScript
   m_TagString: Untagged
@@ -643,6 +644,43 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &184611010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 184611008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f661e14a91a4e9e429fb9e3ca8868739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseAsMaster: 0
+  undoObjectReference: {fileID: 0}
+  m_Breakpoints: []
+  CurrentBreakpoint: 
+  GameObjects:
+  - {fileID: 6}
+  - {fileID: 7}
+  - {fileID: 8}
+  - {fileID: 9}
+  - {fileID: 10}
+  - {fileID: 11}
+  - {fileID: 12}
+  - {fileID: 13}
+  - {fileID: 184611008}
+  GameObjectGuids:
+  - e26a5735-9dd2-4e20-8500-0821aa695ea6
+  - da02e0b4-c9b8-4eb3-b6dd-06b616c3b82f
+  - 8b84657b-d2a0-40d1-9a04-627ed35be60d
+  - ac218942-0818-4386-9ba7-6e55694f3c83
+  - 650cdb13-6873-4c30-b3ce-f99fa99fa68a
+  - 23dffb5e-6476-424d-acee-3a6cfd75d468
+  - ff7bbc29-d809-4b02-9d43-170f85030f54
+  - ccd8c749-5936-49a1-b216-d32d444396fa
+  - 15ef09ea-5e8c-43c6-bc72-912901d75d8d
+  m_uScriptsToAttach: []
+  m_FilesToAddToVC: []
 --- !u!114 &184611012
 MonoBehaviour:
   m_ObjectHideFlags: 0
