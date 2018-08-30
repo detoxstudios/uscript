@@ -265,18 +265,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &17 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100004, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
-  m_PrefabInternal: {fileID: 91}
---- !u!1 &18 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100002, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
-  m_PrefabInternal: {fileID: 91}
---- !u!1 &19 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
-  m_PrefabInternal: {fileID: 91}
 --- !u!1 &20
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,7 +1091,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1435213812}
   - 114: {fileID: 1435213815}
-  - 114: {fileID: 1435213813}
   m_Layer: 0
   m_Name: _uScript
   m_TagString: Untagged
@@ -1123,61 +1110,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &1435213813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1435213811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f661e14a91a4e9e429fb9e3ca8868739, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseAsMaster: 0
-  undoObjectReference: {fileID: 0}
-  m_Breakpoints: []
-  CurrentBreakpoint: 
-  GameObjects:
-  - {fileID: 5}
-  - {fileID: 6}
-  - {fileID: 7}
-  - {fileID: 8}
-  - {fileID: 9}
-  - {fileID: 10}
-  - {fileID: 11}
-  - {fileID: 12}
-  - {fileID: 13}
-  - {fileID: 15}
-  - {fileID: 16}
-  - {fileID: 17}
-  - {fileID: 18}
-  - {fileID: 19}
-  - {fileID: 20}
-  - {fileID: 21}
-  - {fileID: 22}
-  - {fileID: 1435213811}
-  GameObjectGuids:
-  - ae2f25b1-3e17-44b3-adbb-e83c0b907031
-  - f4b1e45f-cf71-40c7-8e2c-d315b2af8db7
-  - f697090e-5ed5-49d4-b025-0ae292d7362c
-  - 5b57c2dc-2804-466f-9c45-cc188695651e
-  - 31d397a4-63bc-4d6c-b750-73f2314dfa6a
-  - 497d47a9-fea3-4e1e-ac55-2d5d78072893
-  - 64a33055-1619-4a13-8fd8-8e58b877ef5a
-  - a964e147-8160-456b-9da4-c321726ea877
-  - b79933c1-fa4b-499f-a8fc-a104601c2ef6
-  - 7c497c34-fdb3-4402-ab7d-418885225d0b
-  - bbb7fd6e-8b02-4d1e-b2cd-ce7934d87ca3
-  - fc8cf01c-2196-4bcf-8cc9-14167b4ed00b
-  - 2bb78437-2bb6-487a-9d60-80b0bfe54a67
-  - a34d58a9-bf31-4997-a573-bca8d77f752b
-  - 9b77f255-7b82-497e-9ed2-5ee7db6ef7bb
-  - 8689158a-dc1c-4e04-8ea4-d1634b313776
-  - c93ded54-4073-4011-b3e0-3d5a5b85da9b
-  - 7859802b-2d2c-4d40-b4c6-872f90ce2aad
-  m_uScriptsToAttach: []
-  m_FilesToAddToVC: []
 --- !u!114 &1435213815
 MonoBehaviour:
   m_ObjectHideFlags: 0

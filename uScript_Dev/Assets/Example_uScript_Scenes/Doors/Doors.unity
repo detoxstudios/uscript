@@ -86,86 +86,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &6 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100016, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 251}
---- !u!1 &7 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100014, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 251}
---- !u!1 &8 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100012, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 251}
---- !u!1 &9 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100010, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 251}
---- !u!1 &10 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100008, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 251}
---- !u!1 &11 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100006, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 251}
---- !u!1 &12 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100004, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 251}
---- !u!1 &13 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100010, guid: 4663fc76d3c5c42d0b16ee4f70df9838, type: 2}
-  m_PrefabInternal: {fileID: 252}
---- !u!1 &14 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100008, guid: 4663fc76d3c5c42d0b16ee4f70df9838, type: 2}
-  m_PrefabInternal: {fileID: 252}
---- !u!1 &15 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100006, guid: 4663fc76d3c5c42d0b16ee4f70df9838, type: 2}
-  m_PrefabInternal: {fileID: 252}
---- !u!1 &16 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100004, guid: 4663fc76d3c5c42d0b16ee4f70df9838, type: 2}
-  m_PrefabInternal: {fileID: 252}
---- !u!1 &17 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100002, guid: 4663fc76d3c5c42d0b16ee4f70df9838, type: 2}
-  m_PrefabInternal: {fileID: 252}
---- !u!1 &18 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: 4663fc76d3c5c42d0b16ee4f70df9838, type: 2}
-  m_PrefabInternal: {fileID: 252}
---- !u!1 &19 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100004, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 253}
---- !u!1 &20 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100008, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 253}
---- !u!1 &21 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100010, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 253}
---- !u!1 &22 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100012, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 253}
---- !u!1 &23 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100014, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 253}
---- !u!1 &24 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100016, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 253}
---- !u!1 &25 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100006, guid: e42edf0e0b54c4a4a9849ab6ff0b0356, type: 2}
-  m_PrefabInternal: {fileID: 253}
 --- !u!1 &27
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,18 +278,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &38 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100004, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
-  m_PrefabInternal: {fileID: 254}
---- !u!1 &39 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100002, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
-  m_PrefabInternal: {fileID: 254}
---- !u!1 &40 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: 9d4133d5d30b644bd87802a347eaccbe, type: 2}
-  m_PrefabInternal: {fileID: 254}
 --- !u!1 &41
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +740,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: .5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!4 &99
 Transform:
   m_ObjectHideFlags: 0
@@ -2168,7 +2076,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 959261978}
   - 114: {fileID: 959261981}
-  - 114: {fileID: 959261979}
   m_Layer: 0
   m_Name: _uScript
   m_TagString: Untagged
@@ -2188,129 +2095,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &959261979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959261977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f661e14a91a4e9e429fb9e3ca8868739, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseAsMaster: 0
-  undoObjectReference: {fileID: 0}
-  m_Breakpoints: []
-  CurrentBreakpoint: 
-  GameObjects:
-  - {fileID: 5}
-  - {fileID: 6}
-  - {fileID: 7}
-  - {fileID: 8}
-  - {fileID: 9}
-  - {fileID: 10}
-  - {fileID: 11}
-  - {fileID: 12}
-  - {fileID: 13}
-  - {fileID: 14}
-  - {fileID: 15}
-  - {fileID: 16}
-  - {fileID: 17}
-  - {fileID: 18}
-  - {fileID: 19}
-  - {fileID: 20}
-  - {fileID: 21}
-  - {fileID: 22}
-  - {fileID: 23}
-  - {fileID: 24}
-  - {fileID: 25}
-  - {fileID: 27}
-  - {fileID: 28}
-  - {fileID: 29}
-  - {fileID: 30}
-  - {fileID: 31}
-  - {fileID: 32}
-  - {fileID: 33}
-  - {fileID: 34}
-  - {fileID: 35}
-  - {fileID: 36}
-  - {fileID: 37}
-  - {fileID: 38}
-  - {fileID: 39}
-  - {fileID: 40}
-  - {fileID: 41}
-  - {fileID: 43}
-  - {fileID: 44}
-  - {fileID: 45}
-  - {fileID: 46}
-  - {fileID: 47}
-  - {fileID: 48}
-  - {fileID: 49}
-  - {fileID: 50}
-  - {fileID: 51}
-  - {fileID: 52}
-  - {fileID: 53}
-  - {fileID: 54}
-  - {fileID: 55}
-  - {fileID: 56}
-  - {fileID: 506196860}
-  - {fileID: 959261977}
-  GameObjectGuids:
-  - 1a0a2e5d-fd95-4276-95bc-dddb8b0baa0c
-  - 3cf68977-f6c4-484d-8ad6-9b330ccff14b
-  - 73f4f406-a79b-4cc7-a738-17160ae2b0bc
-  - d9aadeb4-77c8-4651-b6ec-5dc178bb92cb
-  - e948a275-24a4-4a5f-a8a4-25389cebbf55
-  - fd63d454-fc6b-4597-a7cd-673dfe734bc8
-  - 7a5e15d9-0602-4fe4-9288-aa9ed4909251
-  - bb1d4b5a-d258-4f3f-af25-961faf46ea6e
-  - 016a7085-3c6e-4747-8268-5ab4dec899d9
-  - 2f5e2f96-b809-4bda-b7cd-b1548e70ff02
-  - 488f935e-e1ca-4cd2-b3c2-552dab239b41
-  - 274830ca-3920-444d-b7af-d745823baa74
-  - ef676b71-1694-4ca5-8e6b-714d653162d1
-  - e26ac243-7a2b-4c5f-84b8-d39bb436e47a
-  - adeb2c4b-e946-482c-9afa-627bb1d80e11
-  - 9efd4857-7202-427c-acea-a47f5b9ef6e6
-  - 1634074d-9642-46c5-9447-54dd3acee02c
-  - f933b626-930a-4995-8da8-10aec18a22dc
-  - 7b79b62e-3afe-4987-b3ef-403a283d51a9
-  - 689509c0-7311-48a5-a59e-bbc0b4602a48
-  - 72c001a7-76f7-4b19-8d84-44054313fa85
-  - 878df527-9f2e-401c-8ece-ee7aa87c6ede
-  - 18cfc90a-410f-4182-86ed-e92cdada1009
-  - 03bca64d-0365-4208-be10-dd2a317583e0
-  - aea49abc-bfa1-442b-8d03-382b672b5b72
-  - 9b8c674d-a5e0-4ad3-be58-c22b50ff6d1e
-  - 408acd67-e215-4ef6-a51a-1d5466cbc2ba
-  - 0de5dcf2-f6c9-41e5-8f00-5483109a0424
-  - 18e9a3ef-abc2-4ec5-a8f7-80dcef9f56e3
-  - 48a79e93-fd16-43d7-a119-226086885c1b
-  - 4ed611bd-61a6-40ff-a68f-4529dab87986
-  - 832f84ef-eeae-40af-b6cc-6ff0d48f0105
-  - f917abdf-e30b-43d3-a6f8-68ff1cce6a72
-  - f2711ccd-cb00-4bd9-ae01-4d559794a66d
-  - 02f293f4-312a-41ab-815a-e72c836ea9ae
-  - 07c4fc49-e286-4380-9d44-e374e2643453
-  - 79e89418-d6ae-4def-b3b2-61e6bdcf2886
-  - 29902a8d-e59a-4296-af0e-aca8abdc2399
-  - 43635370-2b9f-411c-8d5c-d90be2639a54
-  - 573e102a-5192-449c-9986-9c5773bf382d
-  - 86d378b3-bae6-426e-b8c4-41675df2e929
-  - c4171b85-b2b5-4ee5-9b4f-aaec95785707
-  - aab61ccc-d65e-4526-9e90-a7d081f8d91d
-  - 381fe7ea-c791-4af7-8112-dd1a78e452a7
-  - f99ed720-3108-4bb1-9a36-0072b9931a9a
-  - e6508262-a472-410c-a418-74bef1b49358
-  - 3f153548-2fa6-4a74-a133-b37c1580eb4c
-  - b9c56682-d35d-4f80-9bd1-d6b77f572c8a
-  - de1f6dbb-6d20-47a6-b6da-6e1932655fef
-  - 546e01d8-ac26-4a08-b0e7-a3b3f96aef51
-  - ca8d4eb3-b93a-4f65-8ca2-2c83d4da0c32
-  - 686803d9-a88c-4a73-9d98-e2b71ab3be71
-  m_uScriptsToAttach: []
-  m_FilesToAddToVC: []
 --- !u!114 &959261981
 MonoBehaviour:
   m_ObjectHideFlags: 0
