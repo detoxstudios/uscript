@@ -1256,7 +1256,7 @@ namespace Detox.FlowChart
             return new Rect();
          }
 
-         const BindingFlags Bindings = BindingFlags.Public | BindingFlags.Static;
+         const BindingFlags Bindings = BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic;
          var property = guiClip.GetProperty("topmostRect", Bindings);
          return (Rect)property.GetValue(null, null);
       }
