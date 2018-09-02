@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Detox Studios, LLC" file="uScriptBuild.cs">
-//   Copyright 2010-2017 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2018 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Contains classes referenced by uScript generated code which needs to be included in a dll to be linked with users' games.
@@ -19,7 +19,7 @@ public static class uScriptBuild
 
    // Version Name and Version Data
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-BUILD-NUMBER
-   public static string Number { get { return "1.0.3099"; } }
+   public static string Number { get { return "1.0.3100"; } }
    private static string productNameAppendText = "";
 
 
