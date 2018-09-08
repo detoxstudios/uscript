@@ -2987,6 +2987,22 @@ public sealed partial class uScript : EditorWindow
       Instance.RequestSave(false, false, false);
    }
 
+   public static void FileMenuItem_GenerateListNodes()
+   {
+      // Bring up dialog to get type
+
+      // Generate nodes
+      GenerateNodes.List(typeof(bool), GenerateNodes.ListNodes.AccessList | GenerateNodes.ListNodes.ForEach);
+   }
+
+   public static void FileMenuItem_GenerateSetNode()
+   {
+      // Bring up dialog to get type
+
+      // Generate node
+      GenerateNodes.Set(typeof(bool));
+   }
+
    public static void FileMenuItem_ExportPNG()
    {
       ExportPNG.BeginExport();
@@ -3188,6 +3204,9 @@ public sealed partial class uScript : EditorWindow
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveQuick, false, FileMenuItem_QuickSave);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveDebug, false, FileMenuItem_DebugSave);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveRelease, false, FileMenuItem_ReleaseSave);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.FileMenuItemGenerateNodesList, false, FileMenuItem_GenerateListNodes);
+      menu.AddItem(uScriptGUIContent.FileMenuItemGenerateNodeSet, false, FileMenuItem_GenerateSetNode);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemExportImage, false, FileMenuItem_ExportPNG);
       menu.AddItem(uScriptGUIContent.FileMenuItemUpgradeNodes, false, this.FileMenuItem_UpgradeDeprecatedNodes);
