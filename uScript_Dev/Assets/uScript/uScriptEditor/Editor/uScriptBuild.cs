@@ -15,11 +15,11 @@ using System;
 
 public static class uScriptBuild
 {
-   public static string Copyright { get { return "\u00A9 2010-2017 Detox Studios, LLC."; } }
+   public static string Copyright { get { return "\u00A9 2010-2018 Detox Studios, LLC."; } }
 
    // Version Name and Version Data
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-BUILD-NUMBER
-   public static string Number { get { return "1.0.3101"; } }
+   public static string Number { get { return "1.0.3104"; } }
    private static string productNameAppendText = "";
 
 
