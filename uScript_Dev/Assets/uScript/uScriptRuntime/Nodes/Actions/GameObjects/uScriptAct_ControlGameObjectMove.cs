@@ -2,7 +2,6 @@
 // (C) 2011 Detox Studios LLC
 
 using UnityEngine;
-using System.Collections;
 
 [NodePath("Actions/GameObjects/Movement")]
 
@@ -32,37 +31,43 @@ public class uScriptAct_ControlGameObjectMove : uScriptLogic
 	  [FriendlyName("Use Local", "Move the GameObject in local coordinates. Not used if the GameObject is using a component called CharacterController.")]
       [SocketState(false, false)]
 	  [DefaultValue(false)]
-      bool useLocal
+      bool useLocal,
+
+      [FriendlyName("Use Delta Time", "Multiply speed by Time.deltaTime so that time scaling works.")]
+      [SocketState(false, false)]
+      [DefaultValue(false)]
+      bool useDeltaTime = false
       )
    {
       if (null != Target && Speed != 0f)
       {
          Vector3 movement = Vector3.zero;
+         float speed = useDeltaTime ? Speed * Time.deltaTime : Speed;
 
          switch (moveDirection)
          {
             case Direction.Forward:
-               movement = useLocal ? Vector3.forward * Speed : Target.transform.forward * Speed;
+               movement = useLocal ? Vector3.forward * speed : Target.transform.forward * speed;
                break;
 
             case Direction.Backward:
-               movement = useLocal ? Vector3.back * Speed : Target.transform.forward * -Speed;
+               movement = useLocal ? Vector3.back * speed : Target.transform.forward * -speed;
                break;
 
             case Direction.Left:
-               movement = useLocal ? Vector3.left * Speed : Target.transform.right * -Speed;
+               movement = useLocal ? Vector3.left * speed : Target.transform.right * -speed;
                break;
 
             case Direction.Right:
-               movement = useLocal ? Vector3.right * Speed : Target.transform.right * Speed;
+               movement = useLocal ? Vector3.right * speed : Target.transform.right * speed;
                break;
 
             case Direction.Up:
-               movement = useLocal ? Vector3.up * Speed : Target.transform.up * Speed;
+               movement = useLocal ? Vector3.up * speed : Target.transform.up * speed;
                break;
 
             case Direction.Down:
-               movement = useLocal ? Vector3.down * Speed : Target.transform.up * - Speed;
+               movement = useLocal ? Vector3.down * speed : Target.transform.up * -speed;
                break;
 
             default:
