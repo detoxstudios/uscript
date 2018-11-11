@@ -10,6 +10,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+#if (UNITY_2017 || UNITY_2018)
+using UnityEngine.Video;
+#endif
 
 [NodePath("Actions/Texture")]
 
@@ -23,11 +26,15 @@ using System.Collections.Generic;
 	"\n\nNote 2: All instances of a GameObject with the same material will play their movie textures.")]
 public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 {
+#if (UNITY_2017 || UNITY_2018)
+   private List<VideoPlayer> m_TargetMovies = new List<VideoPlayer>( );
+#else
    private List<MovieTexture> m_TargetMovies = new List<MovieTexture>( );
+#endif
+
+    private bool m_paused;
 	
-   private bool m_paused;
-	
-	private int m_ReadyCount;
+   private int m_ReadyCount;
 
    public bool Out { get { return true; } }
 	
@@ -50,11 +57,19 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 #if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
 					MovieTexture mov = (MovieTexture)target.renderer.material.mainTexture;
 #else
-               MovieTexture mov = (MovieTexture)target.GetComponent<Renderer>().material.mainTexture;
+#if (UNITY_2017 || UNITY_2018)
+                    VideoPlayer mov = (VideoPlayer)target.GetComponent<VideoPlayer>();
+#else
+                    MovieTexture mov = (MovieTexture)target.GetComponent<Renderer>().material.mainTexture;
 #endif
-					if ( mov.isReadyToPlay )
-					{
-						m_ReadyCount++;
+#endif
+#if (UNITY_2017 || UNITY_2018)
+                    if ( mov.isPrepared )
+#else
+                    if ( mov.isReadyToPlay )
+#endif
+                    {
+                        m_ReadyCount++;
 					}
 				}
 			}
@@ -70,17 +85,27 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 #if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
             MovieTexture mov = (MovieTexture)Targets[i].renderer.material.mainTexture;
 #else
+#if (UNITY_2017 || UNITY_2018)
+            VideoPlayer mov = (VideoPlayer)Targets[i].GetComponent<VideoPlayer>();
+#else
             MovieTexture mov = (MovieTexture)Targets[i].GetComponent<Renderer>().material.mainTexture;
 #endif
-				
-				if ( mov.isReadyToPlay )
-				{
-					mov.loop = loop;
+#endif
 
-            		mov.Play();
+#if (UNITY_2017 || UNITY_2018)
+            if ( mov.isPrepared )
+			{
+				mov.isLooping = loop;
+#else
+            if ( mov.isReadyToPlay )
+			{
+				mov.loop = loop;
+#endif
 
-            		m_TargetMovies.Add( mov );
-				}
+            	mov.Play();
+
+            	m_TargetMovies.Add( mov );
+			}
          }
       }
    }
@@ -90,7 +115,11 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
       if (null != m_TargetMovies)
       {
 		 m_paused = true;
+#if (UNITY_2017 || UNITY_2018)
+         foreach (VideoPlayer mov in m_TargetMovies)
+#else
          foreach (MovieTexture mov in m_TargetMovies)
+#endif
          {
             mov.Pause();
          }
@@ -116,9 +145,13 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 		
       if (null != m_TargetMovies)
       {
+#if (UNITY_2017 || UNITY_2018)
+         foreach (VideoPlayer mov in m_TargetMovies)
+#else
          foreach (MovieTexture mov in m_TargetMovies)
-         {
-            mov.Stop();
+#endif
+            {
+                mov.Stop();
          }
       }
    }

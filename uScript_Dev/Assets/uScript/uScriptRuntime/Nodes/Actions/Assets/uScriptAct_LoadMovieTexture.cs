@@ -9,6 +9,9 @@
 
 using UnityEngine;
 using System.Collections;
+#if (UNITY_2017 || UNITY_2018)
+using UnityEngine.Video;
+#endif
 
 [NodePath("Actions/Assets")]
 
@@ -27,13 +30,22 @@ public class uScriptAct_LoadMovieTexture : uScriptLogic
       [AssetPathField(AssetType.MovieTexture)]
       string name,
 
+#if (UNITY_2017 || UNITY_2018)
+      [FriendlyName("Loaded Asset", "The VideoPlayer loaded from the specified file path.")]
+      out VideoPlayer textureFile
+#else
       [FriendlyName("Loaded Asset", "The MovieTexture loaded from the specified file path.")]
       out MovieTexture textureFile
+#endif
    )
    {
+#if (UNITY_2017 || UNITY_2018)
+      textureFile = Resources.Load(name) as VideoPlayer;
+#else
       textureFile = Resources.Load(name) as MovieTexture;
+#endif
 
-      if ( null == textureFile )
+        if ( null == textureFile )
       {
          uScriptDebug.Log( "Asset " + name + " couldn't be loaded, are you sure it's in a Resources folder?", uScriptDebug.Type.Warning );
       }
@@ -43,9 +55,15 @@ public class uScriptAct_LoadMovieTexture : uScriptLogic
 #if UNITY_EDITOR
    public override Hashtable EditorDragDrop( object o )
    {
+#if (UNITY_2017 || UNITY_2018)
+      if ( typeof(VideoPlayer).IsAssignableFrom( o.GetType() ) )
+      {
+         VideoPlayer ac = (VideoPlayer)o;
+#else
       if ( typeof(MovieTexture).IsAssignableFrom( o.GetType() ) )
       {
          MovieTexture ac = (MovieTexture)o;
+#endif
 
          string path = UnityEditor.AssetDatabase.GetAssetPath( ac.GetInstanceID( ) );
 
@@ -68,6 +86,6 @@ public class uScriptAct_LoadMovieTexture : uScriptLogic
       return null;
    }
 #endif
-	
-}
+
+        }
 #endif

@@ -42,11 +42,11 @@ public class uScriptAct_ApplicationInfoV2 : uScriptLogic
       [FriendlyName("isWebPlayer", "Are we running inside a web player?")]
       [SocketState(false, false)]
       out bool isWebPlayer,
-#endif
 
       [FriendlyName("streamedBytes", "Returns the number of bytes that have been downloaded from the main unity web stream.")]
       [SocketState(false, false)]
       out int streamedBytes,
+#endif
 
       [FriendlyName("platform", "Returns the platform the game is running (Read Only).")]
       [SocketState(false, false)]
@@ -135,8 +135,8 @@ UnityEngine.SceneManagement.Scene[] scenes = UnityEngine.SceneManagement.SceneMa
       isPlaying = Application.isPlaying;
 #if !(UNITY_2017_2_OR_NEWER)
       isWebPlayer = Application.isWebPlayer;
-#endif
       streamedBytes = Application.streamedBytes;
+#endif
 
       platform = Application.platform;
       dataPath = Application.dataPath;
