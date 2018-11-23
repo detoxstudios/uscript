@@ -809,6 +809,7 @@ namespace Detox.Data.ScriptEditor
       public Parameter NodeColor;         
       public Parameter Width;
       public Parameter Height;
+      public Parameter Locked;
 
       public CommentNodeData( )
       {
@@ -828,9 +829,10 @@ namespace Detox.Data.ScriptEditor
          NodeColor = data.NodeColor;
          Width = data.Width;
          Height = data.Height;
+         Locked = data.Locked;
       }
 
-      public new int Version { get { return 5; } }
+      public new int Version { get { return 6; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -902,8 +904,24 @@ namespace Detox.Data.ScriptEditor
             Height.State        = Parameter.VisibleState.Visible;
          }
 
-        if ( serializer.CurrentVersion < 5 )
-        {
+         if ( serializer.CurrentVersion > 5 )
+         {
+            Locked = (Parameter) serializer.LoadNamedObject( "Locked" );
+         }
+         else
+         {
+            Locked = new Parameter( );
+            Locked.Name    = "Locked";
+            Locked.FriendlyName = "Locked";
+            Locked.Type         = typeof(bool).ToString( );
+            Locked.Input        = true;
+            Locked.Output       = false;
+            Locked.Default      = "false";
+            Locked.State        = Parameter.VisibleState.Visible;
+         }
+
+         if ( serializer.CurrentVersion < 5 )
+         {
             try 
             { 
                 BodyTextColor.FriendlyName = "Body Text Color";
@@ -954,6 +972,7 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "NodeColor",      NodeColor );
          serializer.SaveNamedObject( "Width",          Width );
          serializer.SaveNamedObject( "Height",         Height );
+         serializer.SaveNamedObject( "Locked",         Locked );
       }
    }
 

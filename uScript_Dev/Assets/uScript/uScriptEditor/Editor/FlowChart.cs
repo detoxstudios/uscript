@@ -1932,24 +1932,34 @@ namespace Detox.FlowChart
 
       public void NodeMove( )
       {
-         //use the parent's position
-         //for mouse coords, if we use our position
-         //the mouse is relative to us which throws it off when
-         //we move ourselves
-         Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
-         position = this.Parent.PointToClient( position );
+         bool locked = false;
+         if (((Detox.ScriptEditor.DisplayNode)this).EntityNode is Detox.ScriptEditor.CommentNode)
+         {
+            Detox.ScriptEditor.CommentNode comment = (Detox.ScriptEditor.CommentNode)((Detox.ScriptEditor.DisplayNode)this).EntityNode;
+            locked = (bool)comment.Locked.DefaultAsObject;
+         }
 
-         Point p = new Detox.Drawing.Point( (int) ((position.X - m_MouseOffset.X)), (int) ((position.Y - m_MouseOffset.Y)) );
+         if (!locked)
+         {
+            //use the parent's position
+            //for mouse coords, if we use our position
+            //the mouse is relative to us which throws it off when
+            //we move ourselves
+            Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
+            position = this.Parent.PointToClient( position );
 
-         p = this.Parent.PointToScreen( p );
+            Point p = new Detox.Drawing.Point( (int) ((position.X - m_MouseOffset.X)), (int) ((position.Y - m_MouseOffset.Y)) );
 
-         //accounting for zoom factor must take place in screen space
-         //p.X = (int) (p.X / ZoomScale);
-         //p.Y = (int) (p.Y / ZoomScale);
+            p = this.Parent.PointToScreen( p );
 
-         p = this.Parent.PointToClient( p );
+            //accounting for zoom factor must take place in screen space
+            //p.X = (int) (p.X / ZoomScale);
+            //p.Y = (int) (p.Y / ZoomScale);
 
-         Location = p;
+            p = this.Parent.PointToClient( p );
+
+            Location = p;
+         }
       }
 
       public void NodeResize( )
@@ -1970,24 +1980,34 @@ namespace Detox.FlowChart
       /// <returns>True, if the node was repositioned, otherwise False.</returns>
       public bool GridSnap( )
       {
+         bool locked = false;
+         if (((Detox.ScriptEditor.DisplayNode)this).EntityNode is Detox.ScriptEditor.CommentNode)
+         {
+            Detox.ScriptEditor.CommentNode comment = (Detox.ScriptEditor.CommentNode)((Detox.ScriptEditor.DisplayNode)this).EntityNode;
+            locked = (bool)comment.Locked.DefaultAsObject;
+         }
+
          bool result = false;
-         int x = uScriptUtility.RoundToMultiple(Location.X, Preferences.GridSize);
-         int y = uScriptUtility.RoundToMultiple(Location.Y, Preferences.GridSize);
-         Point location = Location;
-
-         if (location.X != x)
+         if (!locked)
          {
-            location.X = x;
-            result = true;
-         }
+            int x = uScriptUtility.RoundToMultiple(Location.X, Preferences.GridSize);
+            int y = uScriptUtility.RoundToMultiple(Location.Y, Preferences.GridSize);
+            Point location = Location;
 
-         if (location.Y != y)
-         {
-            location.Y = y;
-            result = true;
-         }
+            if (location.X != x)
+            {
+               location.X = x;
+               result = true;
+            }
 
-         if (result) Location = location;
+            if (location.Y != y)
+            {
+               location.Y = y;
+               result = true;
+            }
+
+            if (result) Location = location;
+         }
 
          return result;
       }

@@ -1960,6 +1960,7 @@ namespace Detox.ScriptEditor
          commentNode.NodeColor      = NodeColor;
          commentNode.TitleTextColor = TitleTextColor;
          commentNode.BodyTextColor  = BodyTextColor;
+         commentNode.Locked         = Locked;
  
          return commentNode;
       }
@@ -1979,6 +1980,7 @@ namespace Detox.ScriptEditor
             nodeData.Position.X = Position.X;
             nodeData.Position.Y = Position.Y;
             nodeData.Guid       = Guid;
+            nodeData.Locked     = Locked.ToParameterData( );
          
             return nodeData;
          }
@@ -2023,20 +2025,22 @@ namespace Detox.ScriptEditor
       private Parameter m_NodeColor;
       private Parameter m_Width;
       private Parameter m_Height;
+      private Parameter m_Locked;
 
       public bool IsStatic { get { return false; } }
 
       public Parameter[] Parameters 
       { 
-         get { return new Parameter[] { m_TitleText, m_BodyText, m_Width, m_Height, m_NodeColor, m_BodyTextColor}; } 
-         set { m_TitleText = value[ 0 ]; m_BodyText = value[ 1 ]; m_Width = value[ 2 ]; m_Height = value[ 3 ]; m_NodeColor = value[4]; m_BodyTextColor = value[5];} 
+         get { return new Parameter[] { m_TitleText, m_BodyText, m_Width, m_Height, m_NodeColor, m_BodyTextColor, m_Locked}; } 
+         set { m_TitleText = value[ 0 ]; m_BodyText = value[ 1 ]; m_Width = value[ 2 ]; m_Height = value[ 3 ]; m_NodeColor = value[4]; m_BodyTextColor = value[5]; m_Locked = value[6]; } 
       }
       
       public Parameter BodyText       { get { return m_BodyText; } set { m_BodyText = value; } }
       public Parameter BodyTextColor  { get { return m_BodyTextColor; } set { m_BodyTextColor = value; } }
       public Parameter TitleText      { get { return m_TitleText; } set { m_TitleText = value; } }
       public Parameter TitleTextColor { get { return m_TitleTextColor; } set { m_TitleTextColor = value; } }
-      public Parameter NodeColor      { get { return m_NodeColor; } set { m_NodeColor= value; } }
+      public Parameter NodeColor      { get { return m_NodeColor; } set { m_NodeColor = value; } }
+      public Parameter Locked         { get { return m_Locked; } set { m_Locked = value; } }
 
       public Parameter Width { get { return m_Width; } set { m_Width = value; } }
       public Parameter Height { get { return m_Height; } set { m_Height = value; } }
@@ -2133,6 +2137,16 @@ namespace Detox.ScriptEditor
          m_Height.Output= false;
          m_Height.Default = "0";
          m_Height.AutoLinkType = m_Height.Type;
+
+         m_Locked = new Parameter( );
+         m_Locked.State = Parameter.VisibleState.Visible;
+         m_Locked.Name = "Locked";
+         m_Locked.FriendlyName = "Locked";
+         m_Locked.Default = "false";
+         m_Locked.Type = typeof(bool).ToString( );
+         m_Locked.Input = true;
+         m_Locked.Output = false;
+         m_Locked.AutoLinkType = m_Locked.Type;
       }
    }
 
@@ -5013,6 +5027,7 @@ namespace Detox.ScriptEditor
          local.TitleText      = new Parameter( data.TitleText );
          local.TitleTextColor = new Parameter( data.TitleTextColor );
          local.NodeColor      = new Parameter( data.NodeColor );
+         local.Locked         = new Parameter( data.Locked );
          return local;
       }
 
