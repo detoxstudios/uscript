@@ -53,10 +53,15 @@ public abstract class uScriptGUIPanel
 
    protected void DrawOrphanNotification()
    {
+      DrawOrphanGUI(this.Name + " panel");
+   }
+
+   public static void DrawOrphanGUI(string panelName)
+   {
       var message =
          string.Format(
-            "The {0} panel is not drawn while the uScript window is closed.\n\nWaiting for uScript to reopen...",
-            this.Name);
+            "The {0} is not drawn while the uScript window is closed.\n\nWaiting for uScript to reopen...",
+            panelName);
 
       EditorGUILayout.BeginScrollView(
          Vector2.zero,

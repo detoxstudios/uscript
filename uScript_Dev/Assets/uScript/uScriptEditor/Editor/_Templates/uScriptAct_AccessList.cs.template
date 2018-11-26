@@ -1,0 +1,64 @@
+﻿// uScript Action Node
+
+[NodePath("Actions/Variables/Lists/{NAME}")]
+[NodeToolTip("Access different elements in a {NAME} List. Can access first, last, random or by index.")]
+
+[FriendlyName("Access List ({NAME})", "Access the contents of a list. May return the first or last item, a random item, or the item at a specific index.")]
+public class {CLASS} : uScriptLogic
+{
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
+   public bool Out { get { return true; } }
+ 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in AtIndex()
+   public void First({TYPE}[] {NAME}List, int Index, out {TYPE} Value)
+   {
+      Value = {NAME}List[0];
+   }
+
+   // Parameter Attributes are applied below in AtIndex()
+   public void Last({TYPE}[] {NAME}List, int Index, out {TYPE} Value)
+   {
+      Value = {NAME}List[{NAME}List.Length - 1];
+   }
+
+   // Parameter Attributes are applied below in AtIndex()
+   public void Random({TYPE}[] {NAME}List, int Index, out {TYPE} Value)
+   {
+      int index = UnityEngine.Random.Range(0, {NAME}List.Length);
+      Value = {NAME}List[index];
+   }
+ 
+   [FriendlyName("At Index")]
+   public void AtIndex(
+      [FriendlyName("List", "The list to operate on.")]
+      {TYPE}[] {NAME}List,
+
+      [FriendlyName("Index", "The index or position of the item to return. If the list contains 5 items, the valid range is 0-4, where 0 is the first item. (this parameter is only used with the At Index input).")]
+      int Index,
+
+      [FriendlyName("Selected", "The selected variable.")]
+      out {TYPE} Value
+      )
+   {
+      bool outOfRange = false;
+      if (Index < 0 || Index >= {NAME}List.Length) {outOfRange = true;}
+
+      if(outOfRange)
+      {
+         uScriptDebug.Log("[Access List (Bool)] You are trying to use an index number that is out of range for this list variable. Index 0 was returned instead.", uScriptDebug.Type.Error);
+         Value = {NAME}List[0];
+      }
+      else
+      {
+         Value = {NAME}List[Index];
+      }
+   }
+}

@@ -60,8 +60,7 @@ public static class uScriptGUIContent
       FileMenuItemSaveQuick = new GUIContent("Save Quick &Q");
       FileMenuItemSaveDebug = new GUIContent("Save Debug &D");
       FileMenuItemSaveRelease = new GUIContent("Save Release &R");
-//      FileMenuItemGenerateNodesList = new GUIContent("Generate List Nodes for Type...");
-//      FileMenuItemGenerateNodeSet = new GUIContent("Generate Set Node for Type...");
+      FileMenuItemGenerateNodes = new GUIContent("Generate Nodes...");
       FileMenuItemExportImage = new GUIContent("Export to Image (PNG)   &E");
       FileMenuItemUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes");
       FileMenuItemFindMissingGraphs = new GUIContent("Find Missing Graphs");
@@ -271,9 +270,7 @@ public static class uScriptGUIContent
 
    public static GUIContent FileMenuItemSaveRelease { get; private set; }
 
-//   public static GUIContent FileMenuItemGenerateNodesList { get; private set; }
-
-//   public static GUIContent FileMenuItemGenerateNodeSet { get; private set; }
+   public static GUIContent FileMenuItemGenerateNodes { get; private set; }
 
    public static GUIContent FileMenuItemExportImage { get; private set; }
 

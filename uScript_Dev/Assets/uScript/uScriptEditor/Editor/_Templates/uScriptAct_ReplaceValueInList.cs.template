@@ -1,0 +1,65 @@
+﻿// uScript Action Node
+
+using System.Collections.Generic;
+
+[NodePath("Actions/Variables/Lists/{NAME}")]
+[NodeToolTip("Replaces all instances of a value in the list with the new value.")]
+
+[FriendlyName("Replace Value In List ({NAME})", "Replaces all instances of a value in the list with the new value. It will also return the number of values replaced.")]
+public class {CLASS} : uScriptLogic
+{
+    // ================================================================================
+    //    Output Sockets
+    // ================================================================================
+    //
+    public bool Out { get { return true; } }
+   
+    // ================================================================================
+    //    Input Sockets and Node Parameters
+    // ================================================================================
+    //
+    public void In(
+        [FriendlyName("Target List", "The list to check.")]
+        {TYPE}[] TargetList,
+
+        [FriendlyName("Old Value", "The value to be replaced.")]
+        {TYPE} OldValue,
+      
+        [FriendlyName("New Value", "The new value to replace the old one.")]
+        {TYPE} NewValue,
+      
+        [FriendlyName("Modified list", "The List after the values have been changed.")]
+        out {TYPE}[] ModifiedList,
+      
+        [FriendlyName("Found", "The number of values that were found and replaced in the list.")]
+        [SocketState(false, false)]
+        out int ValuesFound
+    )
+    {
+        List<{TYPE}> tempList = new List<{TYPE}>();
+        int foundCount = 0;
+
+        if (TargetList.Length > 0)
+        {
+            foreach ({TYPE} item in TargetList)
+            {
+                if (item == OldValue)
+                {
+                   tempList.Add(NewValue);
+                   foundCount++;
+                }
+                else
+                {
+                   tempList.Add(item);
+                }
+             }
+             ModifiedList = tempList.ToArray();
+             ValuesFound = foundCount;
+        }
+        else
+        {
+            ModifiedList = TargetList;
+            ValuesFound = foundCount;
+        }
+    }	
+}

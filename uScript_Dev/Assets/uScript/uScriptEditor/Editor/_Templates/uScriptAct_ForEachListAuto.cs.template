@@ -1,0 +1,100 @@
+﻿// uScript Action Node
+
+[NodePath("Actions/Variables/Lists/{NAME}")]
+[NodeToolTip("Iterate through each {NAME} in a {NAME} List (node will automatically iterate through the list).")]
+
+[FriendlyName("For Each In List Auto ({NAME})", "Iterate through each {NAME} in a {NAME} List (node will automatically iterate through the list).")]
+public class {CLASS} : uScriptLogic
+{
+   private {TYPE}[] m_List = null;
+   private int m_CurrentIndex = 0;
+   private bool m_Done = false;
+   private bool m_ImmediateDone = false;
+
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
+   public bool Immediate
+   {
+      get
+      { 
+         if (!m_ImmediateDone)
+         {
+            m_ImmediateDone = true;
+            return true; 
+         }
+         
+         return false;
+      } 
+   }
+   
+   [FriendlyName("Done Iterating")]
+   public bool Done { get { return m_Done; } }
+
+   [FriendlyName("Iteration")]
+   public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   public void In(
+      [FriendlyName("{NAME} List", "The list of {NAME} variables to iterate over.")]
+      {TYPE}[] List,
+      
+      [FriendlyName("Current {NAME}", "The {NAME} for the current loop iteration.")]
+      out {TYPE} Value,
+
+      [FriendlyName("Current Index", "The index value for the current loop iteration.")]
+      [SocketState(false, false)]
+      out int currentIndex
+      )
+   {
+      m_List = List;
+
+      m_CurrentIndex = 0;
+      m_Done = false;
+
+      Value = null;
+      currentIndex = m_CurrentIndex;
+      if (m_List != null)
+      {
+         if (m_CurrentIndex < m_List.Length)
+         {
+            Value = m_List[m_CurrentIndex];
+            currentIndex = m_CurrentIndex;
+         }
+         m_CurrentIndex++;
+      }
+
+      m_ImmediateDone = false;
+   }
+ 
+   [Driven]
+   public bool Driven(out {TYPE} Value, out int CurrentIndex)
+   {
+      Value = null;
+      CurrentIndex = m_CurrentIndex;
+      if (!m_Done && m_List != null)
+      {
+         if (m_CurrentIndex < m_List.Length)
+         {
+            Value = m_List[m_CurrentIndex];
+            CurrentIndex = m_CurrentIndex;
+         }
+         m_CurrentIndex++;
+
+         // done iterating
+         if (m_CurrentIndex > m_List.Length)
+         {
+            m_List = null;
+            m_Done = true;
+         }
+
+         return true;
+      }
+
+      return false;
+   }
+}

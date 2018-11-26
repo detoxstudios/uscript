@@ -2987,20 +2987,11 @@ public sealed partial class uScript : EditorWindow
       Instance.RequestSave(false, false, false);
    }
 
-   public static void FileMenuItem_GenerateListNodes()
+   public static void FileMenuItem_GenerateNodes()
    {
-      // Bring up dialog to get type and nodes to create
-
-      // Generate nodes
-//      GenerateNodes.List(typeof(bool), GenerateNodes.ListNodes.AccessList | GenerateNodes.ListNodes.ForEach);
-   }
-
-   public static void FileMenuItem_GenerateSetNode()
-   {
-      // Bring up dialog to get type
-
-      // Generate node
-//      GenerateNodes.Set(typeof(bool));
+      GenerateNodesWindow window = ScriptableObject.CreateInstance<GenerateNodesWindow>();
+      window.Init();
+      window.Show();
    }
 
    public static void FileMenuItem_ExportPNG()
@@ -3204,9 +3195,8 @@ public sealed partial class uScript : EditorWindow
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveQuick, false, FileMenuItem_QuickSave);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveDebug, false, FileMenuItem_DebugSave);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveRelease, false, FileMenuItem_ReleaseSave);
-//      menu.AddSeparator(string.Empty);
-//      menu.AddItem(uScriptGUIContent.FileMenuItemGenerateNodesList, false, FileMenuItem_GenerateListNodes);
-//      menu.AddItem(uScriptGUIContent.FileMenuItemGenerateNodeSet, false, FileMenuItem_GenerateSetNode);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.FileMenuItemGenerateNodes, false, FileMenuItem_GenerateNodes);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemExportImage, false, FileMenuItem_ExportPNG);
       menu.AddItem(uScriptGUIContent.FileMenuItemUpgradeNodes, false, this.FileMenuItem_UpgradeDeprecatedNodes);

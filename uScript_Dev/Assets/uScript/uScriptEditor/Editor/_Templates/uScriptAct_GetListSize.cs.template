@@ -1,0 +1,29 @@
+﻿// uScript Action Node
+
+[NodePath("Actions/Variables/Lists/{NAME}")]
+[NodeToolTip("Get the number of things currently in the list.")]
+
+[FriendlyName("Get List Size ({NAME})", "Get the number of things currently in the list.")]
+public class {CLASS} : uScriptLogic
+{
+    // ================================================================================
+    //    Output Sockets
+    // ================================================================================
+    //
+    public bool Out { get { return true; } }
+
+    // ================================================================================
+    //    Input Sockets and Node Parameters
+    // ================================================================================
+    //
+    public void In(
+        [FriendlyName("Target", "The list to get the size on.")]
+        {TYPE}[] List,
+
+        [FriendlyName("Size", "The size of the list specified.")]
+        out int ListSize
+    )
+    {
+        ListSize = List.Length;
+    }
+}

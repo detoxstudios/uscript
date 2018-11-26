@@ -109,6 +109,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Extensions\RichTextExtensions.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Extensions\UnityEditorExtensions.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\FlowChart.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GenerateNodes.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\AutoCompletePopup.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\CanvasCommands.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Property.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\StatusBar.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\AboutWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\GenerateNodesWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\HotkeyWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\LicenseWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\PreferenceWindow.cs" />

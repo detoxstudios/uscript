@@ -1,0 +1,21 @@
+﻿// uScript Action Node
+
+[NodePath("Actions/Variables/{NAME}")]
+[NodeToolTip("Sets a {NAME} to the defined value.")]
+
+[FriendlyName("Set {NAME}", "Sets a {NAME} to the defined value.")]
+public class {CLASS} : uScriptLogic
+{
+    public bool Out { get { return true; } }
+
+    public void In(
+        [FriendlyName("Value", "The variable you wish to use to set the target's value.")]
+        {TYPE} Value,
+
+        [FriendlyName("Target", "The Target variable you wish to set.")]
+        out {TYPE} Target
+    )
+    {
+        Target = Value;
+    }
+}
