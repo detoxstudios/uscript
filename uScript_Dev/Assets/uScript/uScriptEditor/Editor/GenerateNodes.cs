@@ -26,6 +26,7 @@ namespace Detox.Editor
             ModifyList = 64,
             ReplaceValueAtIndex = 128,
             ReplaceValueInList = 256,
+            List = AccessList | ForEach | ForEachAuto | GetListSize | IsInList | ModifyList | ReplaceValueAtIndex | ReplaceValueInList,
             All = 0xffff
         }
 
@@ -71,8 +72,21 @@ namespace Detox.Editor
                 string fileContents = File.ReadAllText(nodeFileTemplate);
                 fileContents = fileContents.Replace("{CLASS}", className).Replace("{TYPE}", GetTypeName(type, name)).Replace("{NAME}", GetName(type, name));
                 File.WriteAllText(nodeFile, fileContents);
-//                AssetDatabase.Refresh();
+                AssetDatabase.Refresh();
             }
+        }
+
+        public static int[] GetIndices(Nodes nodes)
+        {
+            List<int> indices = new List<int>();
+            int index = 1;
+            for (int i = 1; i <= (int)Nodes.ReplaceValueInList; i = i << 1)
+            {
+                if ((nodes & (Nodes)i) == (Nodes)i) indices.Add(index-1);
+                index++;
+            }
+
+            return indices.ToArray();
         }
 
         public static Nodes GetNodesFromBoolArray(bool[] nodes)

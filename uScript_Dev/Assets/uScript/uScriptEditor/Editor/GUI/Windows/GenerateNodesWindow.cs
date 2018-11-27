@@ -259,7 +259,16 @@ namespace Detox.Editor.GUI.Windows
                     string[] classNames = GenerateNodes.GetClassNames(GetCurrentType(), _shortName);
                     if (classNames != null && classNames.Length > 0)
                     {
-                        EditorGUILayout.LabelField(new GUIContent("Class Names:"), Style.Heading);
+                        EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
+                        {
+                            EditorGUILayout.LabelField(new GUIContent("Nodes To Generate:"), Style.Heading);
+                            if (GUILayout.Button("All")) { for (int i = 0; i < _nodesToGenerate.Length; i++) { _nodesToGenerate[i] = true; } }
+                            if (GUILayout.Button("None")) { for (int i = 0; i < _nodesToGenerate.Length; i++) { _nodesToGenerate[i] = false; } }
+                            if (GUILayout.Button("Invert")) { for (int i = 0; i < _nodesToGenerate.Length; i++) { _nodesToGenerate[i] = !_nodesToGenerate[i]; } }
+                            if (GUILayout.Button("Set")) { int[] indices = GenerateNodes.GetIndices(GenerateNodes.Nodes.Set); for (int i = 0; i < indices.Length; i++) { _nodesToGenerate[indices[i]] = true; } }
+                            if (GUILayout.Button("List")) { int[] indices = GenerateNodes.GetIndices(GenerateNodes.Nodes.List); for (int i = 0; i < indices.Length; i++) { _nodesToGenerate[indices[i]] = true; } }
+                        }
+                        EditorGUILayout.EndHorizontal();
                         for (int i = 0; i < classNames.Length; i++)
                         {
                             string content = classNames[i];
