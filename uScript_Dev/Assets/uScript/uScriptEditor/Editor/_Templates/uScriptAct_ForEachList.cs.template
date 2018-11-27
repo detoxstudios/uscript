@@ -44,7 +44,7 @@ public class {CLASS} : uScriptLogic
    [FriendlyName("Reset")]
    public void Reset({TYPE}[] List, out {TYPE} Value, out int currentIndex)
    {
-      Value = null;
+      Value = default({TYPE});
       m_List = List;
 
       m_CurrentIndex = 0;
@@ -75,7 +75,7 @@ public class {CLASS} : uScriptLogic
       }
 
       m_ImmediateDone = !(m_List != null && m_CurrentIndex == 0);
-      Value = null;
+      Value = default({TYPE});
       currentIndex = m_CurrentIndex;
       if (m_List != null)
       {

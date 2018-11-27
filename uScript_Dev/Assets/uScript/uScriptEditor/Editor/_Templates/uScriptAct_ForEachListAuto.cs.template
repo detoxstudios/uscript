@@ -56,7 +56,7 @@ public class {CLASS} : uScriptLogic
       m_CurrentIndex = 0;
       m_Done = false;
 
-      Value = null;
+      Value = default({TYPE});
       currentIndex = m_CurrentIndex;
       if (m_List != null)
       {
@@ -74,7 +74,7 @@ public class {CLASS} : uScriptLogic
    [Driven]
    public bool Driven(out {TYPE} Value, out int CurrentIndex)
    {
-      Value = null;
+      Value = default({TYPE});
       CurrentIndex = m_CurrentIndex;
       if (!m_Done && m_List != null)
       {
