@@ -25,10 +25,10 @@ namespace Detox.Editor.GUI.Windows
 
         public void Init()
         {
-            title = "uScript Node Generator";
+            title = "Node Gen";
             position = new Rect(Screen.width / 2, Screen.height / 2, 300, 350);
             _reflectedTypes = GenerateNodes.GetAllLoadedTypes().OrderBy(t => t.Name).ToArray();
-            _nodesToGenerate = new bool[Enum.GetNames(typeof(GenerateNodes.Nodes)).Length - 2];
+            _nodesToGenerate = new bool[Enum.GetNames(typeof(GenerateNodes.Nodes)).Length - 3];
             for (int i = 0; i < _nodesToGenerate.Length; i++)
             {
                 _nodesToGenerate[i] = true;
@@ -312,7 +312,7 @@ namespace Detox.Editor.GUI.Windows
             {
                 GUILayout.Space(10);    // horizontal space
                 bool close = false;
-                if (_nodesToGenerate.Where(b => b == true).Count() == 0) UnityEngine.GUI.enabled = false;
+                if (_nodesToGenerate.Where(b => b == true).Count() == 0 || GetCurrentType() == null || string.IsNullOrEmpty(_shortName)) UnityEngine.GUI.enabled = false;
                 if (GUILayout.Button("Generate Node(s)"))
                 {
                     // Generate selected nodes
