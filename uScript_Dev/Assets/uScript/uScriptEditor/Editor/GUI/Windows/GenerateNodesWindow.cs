@@ -20,7 +20,6 @@ namespace Detox.Editor.GUI.Windows
         private Type[] _reflectedTypes;
         private Color _customFieldColor = Color.white;
         private string _shortName = "";
-        private bool _shortNameChanged = false;
         private bool[] _nodesToGenerate;
 
         public void Init()
@@ -236,7 +235,6 @@ namespace Detox.Editor.GUI.Windows
                     string safeNewShortName = UnityCSharpGenerator.MakeSyntaxSafe(newShortName);
                     if (safeNewShortName != newShortName)
                     {
-                        _shortNameChanged = true;
                         Repaint();
                     }
                     _shortName = safeNewShortName;

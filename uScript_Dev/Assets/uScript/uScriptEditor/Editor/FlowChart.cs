@@ -219,17 +219,27 @@ namespace Detox.FlowChart
       public delegate void FlowChartNodesModifiedEventHandler(object sender, FlowchartNodesModifiedEventArgs e);
       public event FlowChartNodesModifiedEventHandler NodesModified;
 
+      private FlowchartNodesModifiedEventArgs NodeModifiedEventArgs = new FlowchartNodesModifiedEventArgs();
       private void OnNodesModified(Node []nodes)
       {
-         if (null != NodesModified) NodesModified(this, new FlowchartNodesModifiedEventArgs(nodes));
+         if (null != NodesModified)
+         {
+            NodeModifiedEventArgs.SetArguments(nodes);
+            NodesModified(this, NodeModifiedEventArgs);
+         }
       }
 
       public delegate void FlowChartPointRenderEventHandler(object sender, FlowchartPointRenderEventArgs e);
       public event FlowChartPointRenderEventHandler PointRender;
 
+      private FlowchartPointRenderEventArgs PointRenderEventArgs = new FlowchartPointRenderEventArgs();
       public void OnPointRender(Node sender, int index, AnchorPoint point, bool connecting)
       {
-         if (null != PointRender) PointRender(sender, new FlowchartPointRenderEventArgs(index, point, connecting));
+         if (null != PointRender)
+         {
+            PointRenderEventArgs.SetArguments(index, point, connecting);
+            PointRender(sender, PointRenderEventArgs);
+         }
       }
 
       public delegate void FlowChartSelectionModifiedEventHandler(object sender, EventArgs e);
@@ -237,16 +247,21 @@ namespace Detox.FlowChart
 
       public void OnSelectionModified( )
       {
-         if (null != SelectionModified) SelectionModified(this, new EventArgs());
+         if (null != SelectionModified) SelectionModified(this, EventArgs.Empty);
          Controls.Sort(CompareNodes);
       }
 
       public delegate void FlowChartLinkCreatedEventHandler(object sender, FlowchartLinkCreatedEventArgs e);
       public event FlowChartLinkCreatedEventHandler LinkCreated;
 
+      private FlowchartLinkCreatedEventArgs LinkCreatedEventArgs = new FlowchartLinkCreatedEventArgs();
       private void OnLinkCreated(Link link)
       {
-         if (null != LinkCreated) LinkCreated(this, new FlowchartLinkCreatedEventArgs(link));
+         if (null != LinkCreated)
+         {
+            LinkCreatedEventArgs.SetArguments(link);
+            LinkCreated(this, LinkCreatedEventArgs);
+         }
       }
 
       public delegate void FlowChartLocationChangedEventHandler(object sender, EventArgs e);
@@ -254,7 +269,7 @@ namespace Detox.FlowChart
 
       private void OnLocationChanged( )
       {
-         if (null != LocationChanged) LocationChanged(this, new EventArgs());
+         if (null != LocationChanged) LocationChanged(this, EventArgs.Empty);
       }
 
       public override Point Location
@@ -497,8 +512,6 @@ namespace Detox.FlowChart
 
             if (magSq <= toleranceSq)
                return true;
-
-            return false;
          }
          //else
          //{         
@@ -549,6 +562,8 @@ namespace Detox.FlowChart
 
          //   return false;
          //}
+
+         return false;
       }
 
       private void FlowChartCtrl_MouseDown(object sender, MouseEventArgs e)
@@ -1848,7 +1863,7 @@ namespace Detox.FlowChart
 
       public void OnModified( )
       {
-         if (null != Modified) Modified(this, new EventArgs());
+         if (null != Modified) Modified(this, EventArgs.Empty);
       }
 
       public void AddEventHandlers( )
@@ -2152,7 +2167,8 @@ namespace Detox.FlowChart
       public  Node[] Nodes
       { get { return m_Nodes; } }
 
-      public FlowchartNodesModifiedEventArgs(Node []nodes)
+      public FlowchartNodesModifiedEventArgs() { }
+      public void SetArguments(Node []nodes)
       {
          m_Nodes = nodes;
       }
@@ -2165,7 +2181,8 @@ namespace Detox.FlowChart
 
       public AnchorPoint Point;
 
-      public FlowchartPointRenderEventArgs(int index, AnchorPoint point, bool connecting)
+      public FlowchartPointRenderEventArgs() { }
+      public void SetArguments(int index, AnchorPoint point, bool connecting)
       {
          Index = index;
          Point = point;
@@ -2179,7 +2196,8 @@ namespace Detox.FlowChart
       public  Link Link
       { get { return m_Link; } }
 
-      public FlowchartLinkCreatedEventArgs(Link link)
+      public FlowchartLinkCreatedEventArgs() { }
+      public void SetArguments(Link link)
       {
          m_Link = link;
       }

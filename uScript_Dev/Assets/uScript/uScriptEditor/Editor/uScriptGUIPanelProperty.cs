@@ -56,25 +56,17 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       {
          this.selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
 
-         Rect rect;
          if (InUScriptPanel && !uScriptInstance.IsOnlyBottomPanelVisible(GetType().ToString()))
          {
-            rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelPropertiesWidth));
+            EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelPropertiesWidth));
          }
          else
          {
-            rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandWidth(true));
+            EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandWidth(true));
          }
          {
             if (InUScriptPanel)
-            {/*
-               if (Math.Abs(rect.width) > 0 && Math.Abs(rect.width - uScriptGUI.PanelPropertiesWidth) > 0)
-               {
-                  // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
-                  uScriptGUI.PanelPropertiesWidth = (int)rect.width;
-                  uScript.Instance.ForceReleaseMouse();
-               }*/
-
+            {
                this.DrawToolbar();
             }
 
