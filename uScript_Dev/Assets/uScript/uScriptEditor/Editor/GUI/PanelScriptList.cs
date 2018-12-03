@@ -181,7 +181,7 @@ namespace Detox.Editor.GUI
             }
 
             // Get the graph paths, making the path relative to the project folder
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
             var initialPaths = uScript.GetGraphPaths();
             var commonPath = uScriptUtility.FindCommonPath(initialPaths).Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             initialPaths = initialPaths.Select(path => path.Replace(commonPath, string.Empty)).ToList();
