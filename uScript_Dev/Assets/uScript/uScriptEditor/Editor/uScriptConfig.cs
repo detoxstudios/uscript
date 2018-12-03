@@ -779,9 +779,10 @@ public class uScriptDefaultStyle : uScriptStyle
 
       name = name ?? string.Empty;
 
-      if (this.styles.ContainsKey(name))
+      GUIStyle style = null;
+      if (this.styles.TryGetValue(name, out style))
       {
-         return this.styles[name];
+         return style;
       }
 
       if (false == name.Contains("socket") &&
