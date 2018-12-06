@@ -202,15 +202,20 @@ public class uScriptBackgroundProcess
 
       for (i = 0; i < FilesPerTick && currentKeyIndex < GraphInfoList.Count; i++, currentKeyIndex++)
       {
-         var info = GraphInfoList[keys[currentKeyIndex]];
+         GraphInfo info = GraphInfoList[keys[currentKeyIndex]];
+         // Try to load the graph status cache file first before loading the whole graph.
+         if( !info.Load() )
+         {
+            var p = new Profile("Opening \"" + info.GraphPath + "\"");
 
-         var p = new Profile("Opening \"" + info.GraphPath + "\"");
+            var scriptEditor = new ScriptEditor(string.Empty, null, null);
+            scriptEditor.Open( info.GraphPath );
+            info.Update( scriptEditor );
+            // Update this graph's status cache file.
+            info.Save();
 
-         var scriptEditor = new ScriptEditor(string.Empty, null, null);
-         scriptEditor.Open(info.GraphPath);
-         info.Update(scriptEditor);
-
-         p.End();
+            p.End();
+         }
       }
    }
 }

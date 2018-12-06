@@ -4751,20 +4751,35 @@ namespace Detox.ScriptEditor
          }
       }
 
-      public bool Read(string cacheName, MemoryStream stream)
+      private bool QueryCache( string fullPath, out ScriptEditorData cachedData )
+      {
+         cachedData = null;
+
+         if( null != fullPath )
+         {
+            fullPath = fullPath.RelativeAssetPath();
+
+            if( s_Cache.TryGetValue( fullPath, out cachedData ) )
+            {
+               return cachedData != null;
+            }
+         }
+
+         return false;
+      }
+		
+      public bool Read(string cacheName, MemoryStream stream, bool queryCache)
       {
          ScriptEditorData cachedData;
 
          Profile p;
 
-         if (null != cacheName) cacheName = cacheName.RelativeAssetPath();
-
-         if (null != cacheName && s_Cache.TryGetValue(cacheName, out cachedData))
+		 if( true == queryCache && true == QueryCache( cacheName, out cachedData ) )
          {
-            p = new Profile("Read Cache " + cacheName);
+            p = new Profile( "Read Cache " + cacheName );
             ScriptEditorData = cachedData as ScriptEditorData;
          }
-         else
+		 else
          {
             p = new Profile("Read " + cacheName);
             BinaryReader reader = new BinaryReader( stream );
@@ -4778,7 +4793,7 @@ namespace Detox.ScriptEditor
 
             ScriptEditorData = data as ScriptEditorData;
 
-            if (null != cacheName) s_Cache[cacheName] = data as ScriptEditorData;
+            if (null != cacheName) s_Cache[cacheName.RelativeAssetPath()] = data as ScriptEditorData;
             //VerifyAllLinks( );
          }
 
@@ -4820,7 +4835,7 @@ namespace Detox.ScriptEditor
          return base64;
       }
 
-      public bool OpenFromBase64(string cacheName, string name, string base64)
+      public bool OpenFromBase64(string cacheName, string name, string base64, bool queryCache)
       {
          try
          {
@@ -4830,7 +4845,7 @@ namespace Detox.ScriptEditor
             byte[] binary = Convert.FromBase64String( contents );
 
             MemoryStream stream = new MemoryStream( binary );
-            if ( false == Read(cacheName, stream) ) 
+            if ( false == Read(cacheName, stream, queryCache) ) 
             {
                Status.Error( "Failed to load " + name );
                return false;
@@ -4854,32 +4869,45 @@ namespace Detox.ScriptEditor
 
          try
          {
-            streamReader = File.OpenText(fullPath);
-            var contents = streamReader.ReadToEnd();
-
-            streamReader.Close();
-
-            const string Start = "/*[[BEGIN BASE64\r\n";
-            const string End = "\r\nEND BASE64]]*/";
-
-            if (contents.IndexOf(Start, StringComparison.Ordinal) == -1)
+            ScriptEditorData cachedData;
+            // test the cache before bothering with reading and decoding file data.
+            if( true == QueryCache( fullPath, out cachedData ) )
             {
-               const string OtherStart = "/*[[BEGIN BASE64\n";
-               const string OtherEnd = "\nEND BASE64]]*/";
-               contents = contents.Substring(contents.IndexOf(OtherStart, StringComparison.Ordinal));
-               contents = contents.Substring(OtherStart.Length);
-               contents = contents.Substring(0, contents.Length - OtherEnd.Length);
+               ScriptEditorData = cachedData as ScriptEditorData;
+
+               m_Name = Path.GetFileName( fullPath );
+
+               return true;
             }
             else
             {
-               contents = contents.Substring(contents.IndexOf(Start, StringComparison.Ordinal));
-               contents = contents.Substring(Start.Length);
-               contents = contents.Substring(0, contents.Length - End.Length);
+               streamReader = File.OpenText( fullPath );
+               var contents = streamReader.ReadToEnd();
+
+               streamReader.Close();
+
+               const string Start = "/*[[BEGIN BASE64\r\n";
+               const string End = "\r\nEND BASE64]]*/";
+
+               if( contents.IndexOf( Start, StringComparison.Ordinal ) == -1 )
+               {
+                  const string OtherStart = "/*[[BEGIN BASE64\n";
+                  const string OtherEnd = "\nEND BASE64]]*/";
+                  contents = contents.Substring( contents.IndexOf( OtherStart, StringComparison.Ordinal ) );
+                  contents = contents.Substring( OtherStart.Length );
+                  contents = contents.Substring( 0, contents.Length - OtherEnd.Length );
+               }
+               else
+               {
+                  contents = contents.Substring( contents.IndexOf( Start, StringComparison.Ordinal ) );
+                  contents = contents.Substring( Start.Length );
+                  contents = contents.Substring( 0, contents.Length - End.Length );
+               }
+
+               var result = this.OpenFromBase64(fullPath, Path.GetFileName(fullPath), contents, false);
+
+               return result;
             }
-
-            var result = this.OpenFromBase64(fullPath, Path.GetFileName(fullPath), contents);
-
-            return result;
          }
          catch (Exception e)
          {

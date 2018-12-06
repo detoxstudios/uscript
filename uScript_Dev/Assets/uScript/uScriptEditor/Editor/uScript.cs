@@ -1038,7 +1038,7 @@ public sealed partial class uScript : EditorWindow
       {
          //Debug.Log("Opening from valid script");
          scriptEditor = new ScriptEditor(string.Empty, PopulateEntityTypes(null), PopulateLogicTypes());
-         scriptEditor.OpenFromBase64(null, this.currentScriptName, this.currentScript);
+         scriptEditor.OpenFromBase64(null, this.currentScriptName, this.currentScript, true);
       }
 
       if (null == scriptEditor)
@@ -3818,6 +3818,27 @@ public sealed partial class uScript : EditorWindow
       return true;
    }
 
+   public static void RemoveLabelsFromFile(string fullPath, string[] labelsToRemove )
+   {
+      UnityEngine.Object obj = AssetDatabase.LoadMainAssetAtPath(fullPath.RelativeAssetPath());
+      if( obj != null )
+      {
+         List<string> labels = new List<string>( AssetDatabase.GetLabels(obj) );
+         foreach( string labelToRemove in labelsToRemove )
+         {
+            if( labels.Contains( labelToRemove ) )
+            {
+               labels.Remove( labelToRemove );
+
+               if( labels.Count == 0 )
+                  break;
+            }
+         }
+
+         AssetDatabase.SetLabels( obj, labels.ToArray() );
+      }
+   }
+
    public static void SetLabelsOnFile(string fullPath, string[] labels)
    {
       if (!FileHasLabels(fullPath, labels))
@@ -3897,6 +3918,29 @@ public sealed partial class uScript : EditorWindow
       else
       {
          result = script.Save(binaryPath);
+      }
+
+      GraphInfo status = null;
+
+      if( !uScriptBackgroundProcess.GraphInfoList.TryGetValue( Path.GetFileNameWithoutExtension(binaryPath), out status ) )
+         status = new GraphInfo(binaryPath);
+
+      status.Update( script );
+      // save the graph status cache file.
+      if( !status.Save() )
+      {
+         uScriptDebug.Log( "Failed to write graph status file for " + binaryPath + "." );
+         return false;
+      }
+
+      if( true == result )
+      {
+         RemoveLabelsFromFile( binaryPath, new string[] { "uScriptSourceNestable" } );
+
+         if( 0 < script.Externals.Length )
+            SetLabelsOnFile( binaryPath, new string[] { "uScript", "uScriptSource", "uScriptSourceNestable" } );
+         else
+            SetLabelsOnFile( binaryPath, new string[] { "uScript", "uScriptSource" } );
       }
 
       return result;
@@ -4529,7 +4573,7 @@ public sealed partial class uScript : EditorWindow
       List<RawScript> rawScripts = new List<RawScript>();
 
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
-      string[] files = GetGraphPaths().ToArray();
+      string[] files = GetGraphPaths( "uScriptSourceNestable" ).ToArray();
 #else
       string[] files = FindAllFiles(Preferences.UserScripts, ".uscript");
 #endif

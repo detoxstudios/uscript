@@ -863,7 +863,7 @@ namespace Detox.ScriptEditor
          byte[] binary = Convert.FromBase64String( text );
 
          ScriptEditor scriptEditor = new ScriptEditor( "", ScriptEditor.EntityDescs, ScriptEditor.LogicNodes );
-         if ( true == scriptEditor.Read( null, new System.IO.MemoryStream(binary)) )
+         if ( true == scriptEditor.Read( null, new System.IO.MemoryStream(binary), false) )
          {
             List<Guid> guidsToSelect = new List<Guid>( );
 
