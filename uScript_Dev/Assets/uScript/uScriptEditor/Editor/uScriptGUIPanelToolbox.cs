@@ -288,9 +288,6 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
             }
             EditorGUILayout.EndVertical();
 
-#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
-       
-#else
             EditorGUILayout.BeginHorizontal();
             {
                var toggleState = GUILayout.Toggle(Preferences.AutoUpdateReflection, "Auto", EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false));
@@ -317,7 +314,6 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
                GUILayout.Label(uScriptInstance.ScriptEditorCtrl.ScriptEditor.EntityDescs.Length + " reflected types");
             }
             EditorGUILayout.EndHorizontal();
-#endif
 
             this.DrawFavoritesPanel();
          }

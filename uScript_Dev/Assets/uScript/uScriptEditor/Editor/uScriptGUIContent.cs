@@ -93,10 +93,7 @@ public static class uScriptGUIContent
       HelpMenuItemWelcome = new GUIContent("Welcome Window");
 
 #if DETOX_STORE_PLE || UNITY_STORE_PLE
-      HelpMenuItemBuyBasic = new GUIContent("Buy uScript Basic");
       HelpMenuItemBuyPro = new GUIContent("Buy uScript Pro");
-#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
-      HelpMenuItemUpgrade = new GUIContent("Upgrade to uScript Pro");
 #endif
 
       SaveMethodOptions = new[]
@@ -329,10 +326,7 @@ public static class uScriptGUIContent
    public static GUIContent HelpMenuItemWelcome { get; private set; }
 
 #if DETOX_STORE_PLE || UNITY_STORE_PLE
-   public static GUIContent HelpMenuItemBuyBasic { get; private set; }
    public static GUIContent HelpMenuItemBuyPro { get; private set; }
-#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
-   public static GUIContent HelpMenuItemUpgrade { get; private set; }
 #endif
 
    public static GUIContent messageCompiling { get; private set; }

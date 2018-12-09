@@ -1,6 +1,6 @@
 Welcome to the uScript Example Scenes! This package contains many example Unity scenes that use uScript graphs to make them work. To view the different examples just open up any of the sub-folders under the 'Example_uScript_Scenes' folder and load the scene located there.
 
-IMPORTANT! - Please use the examples package file for the version of uScript you have installed (either the uScript Pro/Basic version OR the uScript PLE version).
+IMPORTANT! - Please use the examples package file for the version of uScript you have installed (either the uScript Pro version OR the uScript PLE version).
 
 
 ** What Was Installed **

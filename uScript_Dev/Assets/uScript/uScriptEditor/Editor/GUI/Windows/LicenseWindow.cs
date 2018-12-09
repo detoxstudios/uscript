@@ -3,7 +3,7 @@
 #endif
 //#define CLOSED_BETA
 
-#if !(UNITY_STORE_PRO || UNITY_STORE_BASIC || UNITY_STORE_PLE)
+#if !(UNITY_STORE_PRO || UNITY_STORE_PLE)
 
 using Detox.Editor;
 using Detox.Editor.GUI;
@@ -263,8 +263,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                GUILayout.TextArea(_licenseText, uScriptGUIStyle.ReferenceText);
 #elif DETOX_STORE_PLE
                GUILayout.TextArea(_licenseTextPLE, uScriptGUIStyle.ReferenceText);
-#elif DETOX_STORE_BASIC
-               GUILayout.TextArea(_licenseTextBasic, uScriptGUIStyle.ReferenceText);
 #endif
                if (GUI.GetNameOfFocusedControl() == "EULA")
                {

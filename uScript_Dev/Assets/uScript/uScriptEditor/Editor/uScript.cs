@@ -847,7 +847,7 @@ public sealed partial class uScript : EditorWindow
 
    private static void PerformPromotionCheck()
    {
-#if DETOX_STORE_PLE || UNITY_STORE_PLE || DETOX_STORE_BASIC || UNITY_STORE_BASIC
+#if DETOX_STORE_PLE || UNITY_STORE_PLE
       PromotionWindow.StartupCheck();
 #endif
    }
@@ -1275,7 +1275,7 @@ public sealed partial class uScript : EditorWindow
 
       if (null == m_ScriptEditorCtrl) return;
 
-#if !(UNITY_STORE_PRO || UNITY_STORE_BASIC || UNITY_STORE_PLE)
+#if !(UNITY_STORE_PRO || UNITY_STORE_PLE)
       // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
       // cause issues, such as null exception errors and reports that OnGUI calls
       // are being made outside of OnGUI.
@@ -1675,12 +1675,10 @@ public sealed partial class uScript : EditorWindow
          {
             uScriptGUIPanelToolbox.Instance.ClearSearchFilter();
 
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
             if (Preferences.AutoUpdateReflection)
             {
                this.UpdateReflectedTypes();
             }
-#endif
             this.OpenFromCache();
          }
 
@@ -2764,19 +2762,8 @@ public sealed partial class uScript : EditorWindow
    }
 
 #if DETOX_STORE_PLE || UNITY_STORE_PLE
-   private static void CommandHelpMenuBuyBasic()
-   {
-      UnityEditorInternal.AssetStore.Open("content/31443");
-   }
-
    private static void CommandHelpMenuBuyPro()
    {
-      UnityEditorInternal.AssetStore.Open("content/1808");
-   }
-#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
-   private static void CommandHelpMenuUpgrade()
-   {
-      //Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/1808");
       UnityEditorInternal.AssetStore.Open("content/1808");
    }
 #endif
@@ -3281,12 +3268,8 @@ public sealed partial class uScript : EditorWindow
       menu.AddSeparator(string.Empty);
 
 #if DETOX_STORE_PLE || UNITY_STORE_PLE
-      menu.AddItem(uScriptGUIContent.HelpMenuItemBuyBasic, false, CommandHelpMenuBuyBasic);
       menu.AddItem(uScriptGUIContent.HelpMenuItemBuyPro, false, CommandHelpMenuBuyPro);
       menu.AddSeparator(string.Empty);
-#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
-      //menu.AddItem(uScriptGUIContent.HelpMenuItemUpgrade, false, CommandHelpMenuUpgrade);
-      //menu.AddSeparator(string.Empty);
 #endif
 
       menu.AddItem(uScriptGUIContent.HelpMenuItemAbout, false, CommandHelpMenuAbout);
@@ -4461,7 +4444,7 @@ public sealed partial class uScript : EditorWindow
             if (false == m.IsPublic) continue;
             if (true == m.IsStatic) continue;
 
-			string drivenUpdate;
+            string drivenUpdate;
             bool isDriven = FindDrivenAttribute(m.GetCustomAttributes(false), out drivenUpdate);
 
             //driven functions are called automatically by the code generation
@@ -4656,9 +4639,7 @@ public sealed partial class uScript : EditorWindow
       MethodInfo[] methodInfos = type.GetMethods();
       EventInfo[] eventInfos = type.GetEvents();
       PropertyInfo[] propertyInfos = type.GetProperties();
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       FieldInfo[] fieldInfos = type.GetFields();
-#endif
 
       List<EntityMethod> entityMethods = new List<EntityMethod>();
 
@@ -4834,7 +4815,6 @@ public sealed partial class uScript : EditorWindow
 
       List<EntityProperty> entityProperties = new List<EntityProperty>();
 
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       foreach (PropertyInfo p in propertyInfos)
       {
          bool isInput = p.GetSetMethod() != null;
@@ -4866,7 +4846,6 @@ public sealed partial class uScript : EditorWindow
 
          uScript.Instance.AddType(f.FieldType);
       }
-#endif
       entityDesc.Properties = entityProperties.ToArray();
 
       entityDescs.Add(entityDesc);
@@ -4908,7 +4887,6 @@ public sealed partial class uScript : EditorWindow
 
       List<EntityDesc> entityDescs = new List<EntityDesc>();
 
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       foreach (MethodInfo m in typeof(UnityEngine.Behaviour).GetMethods(BindingFlags.DeclaredOnly))
       {
          baseMethods[m.Name] = m.Name;
@@ -4953,22 +4931,18 @@ public sealed partial class uScript : EditorWindow
       {
          baseProperties[p.Name] = p.Name;
       }
-#endif
 
       if (this.m_SzEntityTypes == null)
       {
          uScriptDebug.Log("Reparsing Entity Types", uScriptDebug.Type.Debug);
 
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
          List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(FindObjectsOfType(typeof(UnityEngine.Object)));
-#endif
          Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>();
 
          Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
          GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.RuntimeNodes, typeof(uScriptEvent));
          GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent));
 
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
          foreach (UnityEngine.Object o in allObjects)
          {
             //don't ignore uScriptCode because we want to reflect
@@ -4980,14 +4954,12 @@ public sealed partial class uScript : EditorWindow
 
             uniqueObjects[o.GetType().ToString()] = o.GetType();
          }
-#endif
 
          foreach (Type t in eventNodes.Values)
          {
             uniqueObjects[t.ToString()] = t;
          }
 
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
          string[] userTypes = UserTypes;
 
          foreach (string s in userTypes)
@@ -5068,7 +5040,6 @@ public sealed partial class uScript : EditorWindow
 
          uniqueObjects[typeof(Math).ToString()] = typeof(Math);
          uniqueObjects[typeof(UnityEngine.Mathf).ToString()] = typeof(UnityEngine.Mathf);
-#endif
 
          m_SzEntityTypes = new string[uniqueObjects.Values.Count];
 
@@ -5346,9 +5317,9 @@ public sealed partial class uScript : EditorWindow
 
    public static bool FindDrivenAttribute(object[] attributes, out string updateMethod)
    {
-	  updateMethod = "";
+      updateMethod = "";
 
-	  if (null == attributes) return false;
+      if (null == attributes) return false;
 
       foreach (object a in attributes)
       {

@@ -88,7 +88,7 @@ public class UpdateNotification : EditorWindow
          const string Message =
             "This update check will send basic, anonymous Unity and uScript version details to our update server."
             + " No personally identifiable information or proprietary data is transmitted or collected.\n\nThis"
-            + " service can be enable or disable at any time from within the uScript Preferences panel.\n";
+            + " service can be enabled or disabled at any time from within the uScript Preferences panel.\n";
 
          var enable = EditorUtility.DisplayDialog(
             "Automatically check for uScript updates?",
@@ -121,9 +121,7 @@ public class UpdateNotification : EditorWindow
 #pragma warning disable 429
 // ReSharper disable UnreachableCode
       const string Source = uScriptBuild.Source == uScriptBuild.SourceType.Unity ? "UNITY" : "DETOX";
-      const string Edition = uScriptBuild.Edition == uScriptBuild.EditionType.Pro
-                                ? "PRO"
-                                : (uScriptBuild.Edition == uScriptBuild.EditionType.Basic ? "BASIC" : "PLE");
+      const string Edition = uScriptBuild.Edition == uScriptBuild.EditionType.Pro ? "PRO" : "PLE";
 // ReSharper restore UnreachableCode
 #pragma warning restore 429
 
