@@ -138,7 +138,11 @@ public class FriendlyNameAttribute : Attribute
 [AttributeUsage(AttributeTargets.Method)]
 public class Driven : Attribute
 {
+   public string UpdateMethodName = "Update";
+
    public Driven() { }
+
+   public Driven( string methodName ) { UpdateMethodName = methodName; }
 }
 
 [AttributeUsage(AttributeTargets.Parameter)]

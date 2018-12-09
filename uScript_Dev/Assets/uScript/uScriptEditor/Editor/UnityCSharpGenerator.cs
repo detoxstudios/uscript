@@ -59,7 +59,7 @@ namespace Detox.ScriptEditor
       public Plug[] ExternalInputs { get { return m_ExternalInputs.ToArray(); } }
       public Plug[] ExternalOutputs { get { return m_ExternalOutputs.ToArray(); } }
       public Plug[] ExternalEvents { get { return m_ExternalEvents.ToArray(); } }
-      public string[] Drivens { get { return m_Drivens.ToArray(); } }
+      public Driven[] Drivens { get { return m_Drivens.ToArray(); } }
       public string[] RequiredMethods { get { return m_RequiredMethods.ToArray(); } }
 
       struct ExternalEventParameter
@@ -97,7 +97,7 @@ namespace Detox.ScriptEditor
       List<Plug> m_ExternalInputs = new List<Plug>();
       List<Plug> m_ExternalOutputs = new List<Plug>();
       List<Plug> m_ExternalEvents = new List<Plug>();
-      List<string> m_Drivens = new List<string>();
+      List<Driven> m_Drivens = new List<Driven>();
       List<string> m_RequiredMethods = new List<string>();
 
       List<ExternalEventParameter> m_LogicEventArgs = new List<ExternalEventParameter>();
@@ -779,7 +779,7 @@ namespace Detox.ScriptEditor
          return m_CSharpString.ToString();
       }
 
-      private bool NeedsMethod(EntityNode node, string methodName)
+      private bool NeedsMethod(EntityNode node, string methodName, bool includeDrivens)
       {
          Profile p = new Profile("NeedsMethod");
 
@@ -806,6 +806,18 @@ namespace Detox.ScriptEditor
                   return true;
                }
             }
+
+			if (true == includeDrivens)
+			{
+			   foreach (Driven d in logic.Drivens)
+			   {
+                  if (d.UpdateMethodName == methodName)
+                  {
+                     p.End();
+                     return true;
+                  }
+			   }
+			}
          }
          else if (null != t)
          {
@@ -813,6 +825,20 @@ namespace Detox.ScriptEditor
             {
                p.End();
                return true;
+            }
+
+            if (true == includeDrivens && node is LogicNode)
+            {
+               LogicNode logic = (LogicNode)node;
+
+               foreach (Driven d in logic.Drivens)
+               {
+                  if (d.UpdateMethodName == methodName)
+                  {
+                     p.End();
+                     return true;
+                  }
+               }
             }
          }
 
@@ -826,7 +852,7 @@ namespace Detox.ScriptEditor
 
          foreach (EntityNode node in m_Script.DirectEntityNodes)
          {
-            if (true == NeedsMethod(node, methodName))
+            if (true == NeedsMethod(node, methodName, true))
             {
                p.End();
                return true;
@@ -2214,9 +2240,9 @@ namespace Detox.ScriptEditor
                AddCSharpLine("bool " + CSharpName(logic, output.Name) + " = true;");
             }
 
-            foreach (string driven in logic.Drivens)
+            foreach (Driven driven in logic.Drivens)
             {
-               AddCSharpLine("bool " + CSharpName(logic, driven) + " = false;");
+               AddCSharpLine("bool " + CSharpName(logic, driven.MethodName) + " = false;");
             }
          }
 
@@ -2303,7 +2329,7 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (NeedsMethod(logicNode, "OnEnable"))
+            if (NeedsMethod(logicNode, "OnEnable", false))
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnEnable( );");
             }
@@ -2315,7 +2341,7 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (NeedsMethod(logicNode, "OnDisable"))
+            if (NeedsMethod(logicNode, "OnDisable", false) )
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDisable( );");
             }
@@ -2335,7 +2361,7 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (NeedsMethod(logicNode, "Start"))
+            if (NeedsMethod(logicNode, "Start", false) )
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Start( );");
             }
@@ -2347,7 +2373,7 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (NeedsMethod(logicNode, "Awake"))
+            if (NeedsMethod(logicNode, "Awake", false))
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Awake( );");
             }
@@ -2398,7 +2424,7 @@ namespace Detox.ScriptEditor
 
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (true == NeedsMethod(logicNode, "Update"))
+            if (true == NeedsMethod(logicNode, "Update", false))
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Update( );");
             }
@@ -2406,14 +2432,17 @@ namespace Detox.ScriptEditor
 
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            foreach (string driven in logicNode.Drivens)
+            foreach (Driven driven in logicNode.Drivens)
             {
-               AddCSharpLine("if (true == " + CSharpName(logicNode, driven) + ")");
-               AddCSharpLine("{");
-               ++m_TabStack;
-               AddCSharpLine(CSharpRelay(logicNode, driven) + "();");
-               --m_TabStack;
-               AddCSharpLine("}");
+               if (true == string.IsNullOrEmpty( driven.UpdateMethodName ) || driven.UpdateMethodName == "Update")
+               {
+                  AddCSharpLine( "if (true == " + CSharpName( logicNode, driven.MethodName ) + ")" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                  AddCSharpLine( CSharpRelay( logicNode, driven.MethodName ) + "();" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
             }
          }
 
@@ -2426,7 +2455,7 @@ namespace Detox.ScriptEditor
 
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (true == NeedsMethod(logicNode, "OnDestroy"))
+            if (true == NeedsMethod(logicNode, "OnDestroy", false))
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDestroy( );");
             }
@@ -2449,9 +2478,25 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (true == NeedsMethod(logicNode, "LateUpdate"))
+            if (true == NeedsMethod(logicNode, "LateUpdate", false))
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".LateUpdate( );");
+            }
+         }
+
+		 foreach (LogicNode logicNode in m_Script.Logics)
+         {
+            foreach (Driven driven in logicNode.Drivens)
+            {
+               if (driven.UpdateMethodName == "LateUpdate" )
+               {
+                  AddCSharpLine( "if (true == " + CSharpName( logicNode, driven.MethodName ) + ")" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                  AddCSharpLine( CSharpRelay( logicNode, driven.MethodName ) + "();" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
             }
          }
       }
@@ -2461,9 +2506,25 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (true == NeedsMethod(logicNode, "FixedUpdate"))
+            if (true == NeedsMethod(logicNode, "FixedUpdate", false))
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".FixedUpdate( );");
+            }
+         }
+
+		 foreach (LogicNode logicNode in m_Script.Logics)
+         {
+            foreach (Driven driven in logicNode.Drivens)
+            {
+               if (driven.UpdateMethodName == "FixedUpdate" )
+               {
+                  AddCSharpLine( "if (true == " + CSharpName( logicNode, driven.MethodName ) + ")" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                  AddCSharpLine( CSharpRelay( logicNode, driven.MethodName ) + "();" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
             }
          }
       }
@@ -2473,7 +2534,7 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
          {
-            if (true == NeedsMethod(logicNode, "OnGUI"))
+            if (true == NeedsMethod(logicNode, "OnGUI", false))
             {
                AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnGUI( );");
             }
@@ -4235,9 +4296,9 @@ namespace Detox.ScriptEditor
 
 
          //restart any drivens contained in this node
-         foreach (string driven in receiver.Drivens)
+         foreach (Driven driven in receiver.Drivens)
          {
-            AddCSharpLine(CSharpName(receiver, driven) + " = true;");
+            AddCSharpLine(CSharpName(receiver, driven.MethodName) + " = true;");
          }
 
          // Only copy variables back over if it's not a nested node
@@ -4309,7 +4370,8 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine("");
+         if (receiver.Outputs.Length > 0)
+            AddCSharpLine("");
          i = 0;
 
          //call anyone else connected to our outputs
@@ -4620,9 +4682,9 @@ namespace Detox.ScriptEditor
                AddCSharpLine("");
             }
 
-            foreach (string driven in logicNode.Drivens)
+            foreach (Driven driven in logicNode.Drivens)
             {
-               AddCSharpLine("void " + CSharpRelay(logicNode, driven) + "( )");
+               AddCSharpLine("void " + CSharpRelay(logicNode, driven.MethodName) + "( )");
                AddCSharpLine("{");
                ++m_TabStack;
 
@@ -4632,7 +4694,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine("{");
                   ++m_TabStack;
 
-                  DefineDriven(logicNode, driven);
+                  DefineDriven(logicNode, driven.MethodName);
 
                   --m_TabStack;
                   AddCSharpLine("}");
@@ -4647,7 +4709,7 @@ namespace Detox.ScriptEditor
                }
                else
                {
-                  DefineDriven(logicNode, driven);
+                  DefineDriven(logicNode, driven.MethodName);
                }
 
                --m_TabStack;

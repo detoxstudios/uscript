@@ -22,7 +22,7 @@ namespace Detox.ScriptEditor
       public Plug      []ExternalInputs           { get { return m_GeneratedCode.ExternalInputs; } }
       public Plug      []ExternalOutputs          { get { return m_GeneratedCode.ExternalOutputs; } }
       public Plug      []ExternalEvents           { get { return m_GeneratedCode.ExternalEvents; } }
-      public string    []Drivens                  { get { return m_GeneratedCode.Drivens; } }
+      public Driven    []Drivens                  { get { return m_GeneratedCode.Drivens; } }
       public string    []RequiredMethods          { get { return m_GeneratedCode.RequiredMethods; } }
       public string    EventArgs                  { get { return m_Type + "." + m_GeneratedCode.LogicEventArgsDeclaration(); } }
       public string    FriendlyName               { get { return m_FriendlyName; } }

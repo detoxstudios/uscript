@@ -31,6 +31,8 @@ namespace Detox.Data.ScriptEditor
          ObjectSerializer.AddTypeSerializer( new ParameterArraySerializer( ) );
          ObjectSerializer.AddTypeSerializer( new PlugSerializer( ) );
          ObjectSerializer.AddTypeSerializer( new PlugArraySerializer( ) );
+         ObjectSerializer.AddTypeSerializer( new DrivenSerializer( ) );
+         ObjectSerializer.AddTypeSerializer( new DrivenArraySerializer( ) );
       }
 
       public ScriptEditorData( )
@@ -581,13 +583,19 @@ namespace Detox.Data.ScriptEditor
 
    public class LogicNodeData : EntityNodeData
    {
+      public struct Driven
+      {
+         public string MethodName;
+         public string UpdateMethodName;
+      }
+
       public string Type;
       public string FriendlyName;
       public string EventArgs;
       public Plug   []Inputs;
       public Plug   []Outputs;
       public Plug   []Events;
-      public string []Drivens;
+      public Driven []Drivens;
       public string []RequiredMethods;
 
       public Parameter InspectorName;
@@ -673,7 +681,7 @@ namespace Detox.Data.ScriptEditor
 
             Events = plugs.ToArray( );
 
-            Drivens = new string[0];
+            Drivens = new Driven[0];
          }
          else
          {
@@ -683,11 +691,32 @@ namespace Detox.Data.ScriptEditor
          
             if ( serializer.CurrentVersion > 2 )
             {
-               Drivens = (string[]) serializer.LoadNamedObject( "Drivens" );
+               object drivenObject = serializer.LoadNamedObject( "Drivens" );
+				
+               if (drivenObject is Driven[])
+               {
+                  Drivens = ( Driven[] )drivenObject;
+               }
+               else if (drivenObject is string[])
+               {
+                  List<Driven> drivens = new List<Driven>( );
+
+                  string[] drivenStrings = ( string[] )drivenObject;
+                  foreach ( string s in drivenStrings )
+                  {
+                     Driven driven;
+                     driven.MethodName = s;
+                     driven.UpdateMethodName = "";
+
+                     drivens.Add( driven );
+                  }
+
+                  Drivens = drivens.ToArray();
+               }
             }
             else
             {
-               Drivens = new string[0];
+               Drivens = new Driven[0];
             }
 
             if ( serializer.CurrentVersion > 4 )
@@ -1399,6 +1428,98 @@ namespace Detox.Data.ScriptEditor
          {
             writer.Write( p.Name );
             writer.Write( p.FriendlyName );
+         }
+
+         serializer.SetData( stream.ToArray() );
+
+         writer.Close( );
+      }
+   }
+
+	public class DrivenSerializer : ITypeSerializer
+   {
+      public int Version { get { return 3; } }
+      public string SerializableType { get { return typeof(LogicNodeData.Driven).ToString( ); } }
+
+      public object Load(ObjectSerializer serializer)
+      {
+         object value;
+
+         serializer.GetData( out value );
+         byte [] data = value as byte[];
+      
+         MemoryStream stream = new MemoryStream( data );
+         BinaryReader reader = new BinaryReader( stream );
+
+         LogicNodeData.Driven driven;
+
+         driven.MethodName = reader.ReadString( );
+         driven.UpdateMethodName = reader.ReadString( );
+
+         reader.Close( );
+
+         return driven;
+      }
+
+      public void Save(ObjectSerializer serializer, object data)
+      {
+         LogicNodeData.Driven value = (LogicNodeData.Driven) data;
+
+         MemoryStream stream = new MemoryStream( );
+         BinaryWriter writer = new BinaryWriter( stream );
+
+         writer.Write( value.MethodName );
+         writer.Write( value.UpdateMethodName );
+
+         serializer.SetData( stream.ToArray( ) );
+
+         writer.Close( );
+      }
+   }
+
+   public class DrivenArraySerializer : ITypeSerializer
+   {
+      public int Version { get { return 3; } }
+      public string SerializableType { get { return typeof(LogicNodeData.Driven[]).ToString( ); } }
+
+      public object Load(ObjectSerializer serializer)
+      {
+         object value;
+
+         serializer.GetData( out value );
+         byte [] data = value as byte[];
+      
+         MemoryStream stream = new MemoryStream( data );
+         BinaryReader reader = new BinaryReader( stream );
+
+         int i, count = reader.ReadInt32( );
+
+         LogicNodeData.Driven []drivens = new LogicNodeData.Driven[ count ];
+
+         for ( i = 0; i < count; i++ )
+         {
+            drivens[ i ].MethodName       = reader.ReadString( );
+            drivens[ i ].UpdateMethodName = reader.ReadString( );
+         }
+
+         reader.Close( );
+
+         return drivens;
+      }
+
+      public void Save(ObjectSerializer serializer, object data)
+      {
+         LogicNodeData.Driven []drivens = (LogicNodeData.Driven[]) data;
+
+         MemoryStream stream = new MemoryStream( );
+         BinaryWriter writer = new BinaryWriter( stream );
+
+         writer.Write( (int) drivens.Length );
+
+         foreach (LogicNodeData.Driven driven in drivens)
+         {
+            writer.Write( driven.MethodName );
+            writer.Write( driven.UpdateMethodName );
          }
 
          serializer.SetData( stream.ToArray() );

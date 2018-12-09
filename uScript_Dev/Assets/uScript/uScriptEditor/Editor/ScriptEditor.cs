@@ -1313,6 +1313,21 @@ namespace Detox.ScriptEditor
          return true;
       }
 
+      static public bool ArraysAreEqual(Driven []a, Driven[]b)
+      {
+         if ( null == a && null != b ) return false;
+         if ( null != a && null == b ) return false;
+
+         if ( a.Length != b.Length ) return false;
+
+         for ( int i = 0; i < a.Length; i++ )
+         {
+            if ( a[i] != b[i] ) return false;
+         }
+
+         return true;
+      }
+
       static public Detox.Data.ScriptEditor.Parameter []ToParameterDatas(Parameter []p)
       {
          List<Detox.Data.ScriptEditor.Parameter> data = new List<Detox.Data.ScriptEditor.Parameter>( );
@@ -1359,6 +1374,30 @@ namespace Detox.ScriptEditor
          }
 
          return plugs.ToArray( );
+      }
+
+      static public Detox.Data.ScriptEditor.LogicNodeData.Driven []ToDrivenDatas(Driven []d)
+      {
+         List<Detox.Data.ScriptEditor.LogicNodeData.Driven> data = new List<Detox.Data.ScriptEditor.LogicNodeData.Driven>( );
+
+         foreach ( Driven driven in d )
+         {
+            data.Add( driven.ToPlugData( ) );
+         }
+
+         return data.ToArray( );
+      }
+
+      static public Driven []ToDrivens(Detox.Data.ScriptEditor.LogicNodeData.Driven []d)
+      {
+         List<Driven> drivens = new List<Driven>( );
+
+         foreach ( Detox.Data.ScriptEditor.LogicNodeData.Driven data in d )
+         {
+            drivens.Add( new Driven(data) );
+         }
+
+         return drivens.ToArray( );
       }
    }
 
@@ -2402,7 +2441,7 @@ namespace Detox.ScriptEditor
             nodeData.Inputs    = ArrayUtil.ToPlugDatas( Inputs );
             nodeData.Outputs   = ArrayUtil.ToPlugDatas( Outputs );
             nodeData.Events    = ArrayUtil.ToPlugDatas( Events );
-            nodeData.Drivens   = Drivens;
+            nodeData.Drivens   = ArrayUtil.ToDrivenDatas( Drivens );
             nodeData.Guid      = Guid;
             nodeData.InspectorName   = InspectorName.ToParameterData( );
             nodeData.Comment         = Comment.ToParameterData( );
@@ -2459,7 +2498,7 @@ namespace Detox.ScriptEditor
       public Plug      []Inputs;
       public Plug      []Outputs;
       public Plug      []Events;
-      public string    []Drivens;
+      public Driven    []Drivens;
       public Parameter []EventParameters;
       public bool        IsNestedNode;
 
@@ -2524,7 +2563,7 @@ namespace Detox.ScriptEditor
          m_Guid = Guid.NewGuid( );
 
          RequiredMethods = new string[ 0 ];
-         Drivens         = new string[ 0 ];
+         Drivens         = new Driven[ 0 ];
          Inputs          = new Plug[ 0 ];
          Outputs         = new Plug[ 0 ];
          Events          = new Plug[ 0 ];
@@ -2573,7 +2612,7 @@ namespace Detox.ScriptEditor
 
          m_Guid = data.Guid;
 
-         Drivens   = data.Drivens;
+         Drivens   = ArrayUtil.ToDrivens(data.Drivens);
          EventArgs = data.EventArgs;
          
          Inputs       = ArrayUtil.ToPlugs(data.Inputs);
@@ -2887,6 +2926,52 @@ namespace Detox.ScriptEditor
          
          m_Position = Point.Empty; 
          m_Guid = Guid.NewGuid( ); 
+      }
+   }
+
+   public struct Driven
+   {
+      public string MethodName;
+      public string UpdateMethodName;
+
+      public LogicNodeData.Driven ToPlugData( )
+      {
+         LogicNodeData.Driven data = new LogicNodeData.Driven( );
+
+         data.MethodName = MethodName;
+         data.UpdateMethodName = UpdateMethodName;
+
+         return data;
+      }
+
+      public Driven( LogicNodeData.Driven plugData )
+      {
+         MethodName = plugData.MethodName;
+         UpdateMethodName = plugData.UpdateMethodName;
+      }
+
+      public override int GetHashCode( )
+      {
+         return base.GetHashCode( );
+      }
+
+      public override bool Equals(object o)
+      {
+         if ( false == (o is Driven) ) return false;
+         
+         return (((Driven)o) == this);
+      }
+
+      public static bool operator == ( Driven a, Driven b )
+      {
+         if ( a.MethodName != b.MethodName || a.UpdateMethodName != b.UpdateMethodName ) return false; 
+         
+         return true;
+      }
+
+      public static bool operator != ( Driven a, Driven b )
+      {
+         return ! (a == b);
       }
    }
 

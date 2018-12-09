@@ -4350,7 +4350,7 @@ public sealed partial class uScript : EditorWindow
          LogicNode logicNode = new LogicNode(type.ToString(), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)));
 
          List<Plug> inputs = new List<Plug>();
-         List<string> drivens = new List<string>();
+         List<Detox.ScriptEditor.Driven> drivens = new List<Detox.ScriptEditor.Driven>();
 
          Hashtable accessorMethods = new Hashtable();
 
@@ -4461,16 +4461,20 @@ public sealed partial class uScript : EditorWindow
             if (false == m.IsPublic) continue;
             if (true == m.IsStatic) continue;
 
-            bool driven = FindDrivenAttribute(m.GetCustomAttributes(false));
+			string drivenUpdate;
+            bool isDriven = FindDrivenAttribute(m.GetCustomAttributes(false), out drivenUpdate);
 
             //driven functions are called automatically by the code generation
             //and need no other information parsed 
             //(they use the same parameters as the rest of the functions in the node)
-            if (true == driven)
+            if (true == isDriven)
             {
                if (m.ReturnParameter.ParameterType == typeof(bool))
                {
-                  drivens.Add(m.Name);
+                  Detox.ScriptEditor.Driven driven;
+                  driven.MethodName = m.Name;
+                  driven.UpdateMethodName = drivenUpdate;
+                  drivens.Add( driven );
                }
 
                continue;
@@ -5340,13 +5344,21 @@ public sealed partial class uScript : EditorWindow
       return type;
    }
 
-   public static bool FindDrivenAttribute(object[] attributes)
+   public static bool FindDrivenAttribute(object[] attributes, out string updateMethod)
    {
-      if (null == attributes) return false;
+	  updateMethod = "";
+
+	  if (null == attributes) return false;
 
       foreach (object a in attributes)
       {
-         if (a is Driven) return true;
+         Driven driven = a as Driven;
+         
+         if (null != driven)
+         {
+            updateMethod = driven.UpdateMethodName;
+            return true;
+         }
       }
 
       return false;
