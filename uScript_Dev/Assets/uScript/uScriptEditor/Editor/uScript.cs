@@ -3892,11 +3892,13 @@ public sealed partial class uScript : EditorWindow
 
          result = script.Save(binaryPath, logicPath, wrapperPath, generateDebugInfo, stubCode);
 
-         //if (result)
-         //{
+         if (result)
+         {
+            SetLabelsOnFile(logicPath, new string[] { "uScript", "uScriptCode" });
+            SetLabelsOnFile(wrapperPath, new string[] { "uScript", "uScriptCode" });
          //   // refresh uScript panel file list
          //   uScriptBackgroundProcess.ForceFileRefresh();
-         //}
+         }
       }
       else
       {

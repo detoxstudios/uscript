@@ -1,6 +1,9 @@
 fileFormatVersion: 2
-guid: a26e62b5f58e14948855fbb32a9de689
-timeCreated: 1544417336
+guid: 1aed93d9a1bed39479e2e1f96c82ba58
+labels:
+- uScript
+- uScriptCode
+timeCreated: 1544421438
 licenseType: Pro
 MonoImporter:
   serializedVersion: 2

@@ -1141,6 +1141,9 @@ public class AlarmGameplay_MainGame : uScriptLogic
             }
          }
          logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Alarm_Start(logic_AlarmGameplay_AlarmSetup_Alarm_Sound_34, logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__34);
+         
+         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
+         //and those values get set through an event which is called before the above method exited
       }
       else
       {
@@ -1164,6 +1167,9 @@ public class AlarmGameplay_MainGame : uScriptLogic
             }
          }
          logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Alarm_Stop(logic_AlarmGameplay_AlarmSetup_Alarm_Sound_34, logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__34);
+         
+         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
+         //and those values get set through an event which is called before the above method exited
       }
       else
       {
