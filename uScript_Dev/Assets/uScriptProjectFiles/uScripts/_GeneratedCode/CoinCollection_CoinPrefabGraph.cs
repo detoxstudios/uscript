@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3055
+//uScript Generated Code - Build 1.0.3109
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -48,6 +48,8 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    System.String logic_uScriptAct_Rotate_Axis_1 = "X";
    System.Single logic_uScriptAct_Rotate_Seconds_1 = (float) 2;
    System.Boolean logic_uScriptAct_Rotate_Loop_1 = (bool) true;
+   System.Single logic_uScriptAct_Rotate_DegreesPerSecond_1 = (float) 0;
+   System.Boolean logic_uScriptAct_Rotate_UseDegreesPerSecond_1 = (bool) false;
    bool logic_uScriptAct_Rotate_Out_1 = true;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectName logic_uScriptAct_GetGameObjectName_uScriptAct_GetGameObjectName_5 = new uScriptAct_GetGameObjectName( );
@@ -566,8 +568,12 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
             }
             {
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_Rotate_uScriptAct_Rotate_1.In(logic_uScriptAct_Rotate_Target_1, logic_uScriptAct_Rotate_Degrees_1, logic_uScriptAct_Rotate_Axis_1, logic_uScriptAct_Rotate_Seconds_1, logic_uScriptAct_Rotate_Loop_1);
+         logic_uScriptAct_Rotate_uScriptAct_Rotate_1.In(logic_uScriptAct_Rotate_Target_1, logic_uScriptAct_Rotate_Degrees_1, logic_uScriptAct_Rotate_Axis_1, logic_uScriptAct_Rotate_Seconds_1, logic_uScriptAct_Rotate_Loop_1, logic_uScriptAct_Rotate_DegreesPerSecond_1, logic_uScriptAct_Rotate_UseDegreesPerSecond_1);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3055
+//uScript Generated Code - Build 1.0.3109
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -204,6 +204,8 @@ public class uScript_StressTest : uScriptLogic
    System.Object logic_uScriptAct_LookAt_Focus_83 = "";
    System.Single logic_uScriptAct_LookAt_time_83 = (float) 0;
    uScriptAct_LookAt.LockAxis logic_uScriptAct_LookAt_lockAxis_83 = uScriptAct_LookAt.LockAxis.None;
+   System.Single logic_uScriptAct_LookAt_DegreesPerSecond_83 = (float) 0;
+   System.Boolean logic_uScriptAct_LookAt_UseDegreesPerSecond_83 = (bool) false;
    bool logic_uScriptAct_LookAt_Out_83 = true;
    //pointer to script instanced logic node
    uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_89 = new uScriptAct_LookAt( );
@@ -211,6 +213,8 @@ public class uScript_StressTest : uScriptLogic
    System.Object logic_uScriptAct_LookAt_Focus_89 = "";
    System.Single logic_uScriptAct_LookAt_time_89 = (float) 0;
    uScriptAct_LookAt.LockAxis logic_uScriptAct_LookAt_lockAxis_89 = uScriptAct_LookAt.LockAxis.None;
+   System.Single logic_uScriptAct_LookAt_DegreesPerSecond_89 = (float) 0;
+   System.Boolean logic_uScriptAct_LookAt_UseDegreesPerSecond_89 = (bool) false;
    bool logic_uScriptAct_LookAt_Out_89 = true;
    //pointer to script instanced logic node
    uScriptAct_Teleport logic_uScriptAct_Teleport_uScriptAct_Teleport_96 = new uScriptAct_Teleport( );
@@ -2113,8 +2117,12 @@ public class uScript_StressTest : uScriptLogic
             }
             {
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_LookAt_uScriptAct_LookAt_83.In(logic_uScriptAct_LookAt_Target_83, logic_uScriptAct_LookAt_Focus_83, logic_uScriptAct_LookAt_time_83, logic_uScriptAct_LookAt_lockAxis_83);
+         logic_uScriptAct_LookAt_uScriptAct_LookAt_83.In(logic_uScriptAct_LookAt_Target_83, logic_uScriptAct_LookAt_Focus_83, logic_uScriptAct_LookAt_time_83, logic_uScriptAct_LookAt_lockAxis_83, logic_uScriptAct_LookAt_DegreesPerSecond_83, logic_uScriptAct_LookAt_UseDegreesPerSecond_83);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -2237,8 +2245,12 @@ public class uScript_StressTest : uScriptLogic
             }
             {
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_LookAt_uScriptAct_LookAt_89.In(logic_uScriptAct_LookAt_Target_89, logic_uScriptAct_LookAt_Focus_89, logic_uScriptAct_LookAt_time_89, logic_uScriptAct_LookAt_lockAxis_89);
+         logic_uScriptAct_LookAt_uScriptAct_LookAt_89.In(logic_uScriptAct_LookAt_Target_89, logic_uScriptAct_LookAt_Focus_89, logic_uScriptAct_LookAt_time_89, logic_uScriptAct_LookAt_lockAxis_89, logic_uScriptAct_LookAt_DegreesPerSecond_89, logic_uScriptAct_LookAt_UseDegreesPerSecond_89);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          

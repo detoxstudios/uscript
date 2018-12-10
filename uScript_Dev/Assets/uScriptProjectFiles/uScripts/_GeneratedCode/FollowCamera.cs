@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3055
+//uScript Generated Code - Build 1.0.3109
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -157,6 +157,8 @@ public class FollowCamera : uScriptLogic
    System.Object logic_uScriptAct_LookAt_Focus_27 = "";
    System.Single logic_uScriptAct_LookAt_time_27 = (float) 0;
    uScriptAct_LookAt.LockAxis logic_uScriptAct_LookAt_lockAxis_27 = uScriptAct_LookAt.LockAxis.None;
+   System.Single logic_uScriptAct_LookAt_DegreesPerSecond_27 = (float) 0;
+   System.Boolean logic_uScriptAct_LookAt_UseDegreesPerSecond_27 = (bool) false;
    bool logic_uScriptAct_LookAt_Out_27 = true;
    
    //event nodes
@@ -876,8 +878,12 @@ public class FollowCamera : uScriptLogic
             }
             {
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_LookAt_uScriptAct_LookAt_27.In(logic_uScriptAct_LookAt_Target_27, logic_uScriptAct_LookAt_Focus_27, logic_uScriptAct_LookAt_time_27, logic_uScriptAct_LookAt_lockAxis_27);
+         logic_uScriptAct_LookAt_uScriptAct_LookAt_27.In(logic_uScriptAct_LookAt_Target_27, logic_uScriptAct_LookAt_Focus_27, logic_uScriptAct_LookAt_time_27, logic_uScriptAct_LookAt_lockAxis_27, logic_uScriptAct_LookAt_DegreesPerSecond_27, logic_uScriptAct_LookAt_UseDegreesPerSecond_27);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_LookAt_uScriptAct_LookAt_27.Out;

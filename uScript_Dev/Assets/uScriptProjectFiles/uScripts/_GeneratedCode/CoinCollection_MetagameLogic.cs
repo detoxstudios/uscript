@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3055
+//uScript Generated Code - Build 1.0.3109
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -69,6 +69,8 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    System.Object logic_uScriptAct_LookAt_Focus_5 = "";
    System.Single logic_uScriptAct_LookAt_time_5 = (float) 0;
    uScriptAct_LookAt.LockAxis logic_uScriptAct_LookAt_lockAxis_5 = uScriptAct_LookAt.LockAxis.None;
+   System.Single logic_uScriptAct_LookAt_DegreesPerSecond_5 = (float) 0;
+   System.Boolean logic_uScriptAct_LookAt_UseDegreesPerSecond_5 = (bool) false;
    bool logic_uScriptAct_LookAt_Out_5 = true;
    //pointer to script instanced logic node
    uScriptCon_Switch logic_uScriptCon_Switch_uScriptCon_Switch_6 = new uScriptCon_Switch( );
@@ -81,6 +83,8 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    bool logic_uScriptCon_Switch_Output4_6 = true;
    bool logic_uScriptCon_Switch_Output5_6 = true;
    bool logic_uScriptCon_Switch_Output6_6 = true;
+   bool logic_uScriptCon_Switch_Output7_6 = true;
+   bool logic_uScriptCon_Switch_Output8_6 = true;
    //pointer to script instanced logic node
    uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_7 = new uScriptAct_AddVector3_v2( );
    UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_7 = new Vector3( );
@@ -1163,8 +1167,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
             }
             {
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_LookAt_uScriptAct_LookAt_5.In(logic_uScriptAct_LookAt_Target_5, logic_uScriptAct_LookAt_Focus_5, logic_uScriptAct_LookAt_time_5, logic_uScriptAct_LookAt_lockAxis_5);
+         logic_uScriptAct_LookAt_uScriptAct_LookAt_5.In(logic_uScriptAct_LookAt_Target_5, logic_uScriptAct_LookAt_Focus_5, logic_uScriptAct_LookAt_time_5, logic_uScriptAct_LookAt_lockAxis_5, logic_uScriptAct_LookAt_DegreesPerSecond_5, logic_uScriptAct_LookAt_UseDegreesPerSecond_5);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          

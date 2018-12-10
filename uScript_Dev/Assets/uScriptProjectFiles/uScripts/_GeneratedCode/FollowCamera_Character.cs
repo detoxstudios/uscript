@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3055
+//uScript Generated Code - Build 1.0.3109
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -639,7 +639,7 @@ public class FollowCamera_Character : uScriptLogic
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera_Character.uscript at FollowCamera.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera_Character.uscript at .  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -707,14 +707,10 @@ public class FollowCamera_Character : uScriptLogic
             }
          }
          logic_FollowCamera_FollowCamera_0.Reset_Position(logic_FollowCamera_Follow_Object_0, logic_FollowCamera_Follow_Distance_0, logic_FollowCamera_Follow_Height_0, logic_FollowCamera_Look_At_Object_0, logic_FollowCamera_Filter_Value_0, logic_FollowCamera_Camera_0);
-         
-         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
-         //and those values get set through an event which is called before the above method exited
-         
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera_Character.uscript at FollowCamera.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera_Character.uscript at .  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    
@@ -782,14 +778,10 @@ public class FollowCamera_Character : uScriptLogic
             }
          }
          logic_FollowCamera_FollowCamera_0.Update_Position(logic_FollowCamera_Follow_Object_0, logic_FollowCamera_Follow_Distance_0, logic_FollowCamera_Follow_Height_0, logic_FollowCamera_Look_At_Object_0, logic_FollowCamera_Filter_Value_0, logic_FollowCamera_Camera_0);
-         
-         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
-         //and those values get set through an event which is called before the above method exited
-         
       }
       else
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera_Character.uscript at FollowCamera.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FollowCamera_Character.uscript at .  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
    

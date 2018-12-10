@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3055
+//uScript Generated Code - Build 1.0.3109
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -112,6 +112,8 @@ public class BallRoller_BallRollLogic : uScriptLogic
    System.Object logic_uScriptAct_LookAt_Focus_14 = "";
    System.Single logic_uScriptAct_LookAt_time_14 = (float) 0;
    uScriptAct_LookAt.LockAxis logic_uScriptAct_LookAt_lockAxis_14 = uScriptAct_LookAt.LockAxis.None;
+   System.Single logic_uScriptAct_LookAt_DegreesPerSecond_14 = (float) 0;
+   System.Boolean logic_uScriptAct_LookAt_UseDegreesPerSecond_14 = (bool) false;
    bool logic_uScriptAct_LookAt_Out_14 = true;
    //pointer to script instanced logic node
    uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_15 = new uScriptAct_AddVector3_v2( );
@@ -153,6 +155,8 @@ public class BallRoller_BallRollLogic : uScriptLogic
    bool logic_uScriptCon_Switch_Output4_20 = true;
    bool logic_uScriptCon_Switch_Output5_20 = true;
    bool logic_uScriptCon_Switch_Output6_20 = true;
+   bool logic_uScriptCon_Switch_Output7_20 = true;
+   bool logic_uScriptCon_Switch_Output8_20 = true;
    //pointer to script instanced logic node
    uScriptAct_AddVector3_v2 logic_uScriptAct_AddVector3_v2_uScriptAct_AddVector3_v2_21 = new uScriptAct_AddVector3_v2( );
    UnityEngine.Vector3 logic_uScriptAct_AddVector3_v2_A_21 = new Vector3( );
@@ -1692,8 +1696,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
             }
             {
             }
+            {
+            }
+            {
+            }
          }
-         logic_uScriptAct_LookAt_uScriptAct_LookAt_14.In(logic_uScriptAct_LookAt_Target_14, logic_uScriptAct_LookAt_Focus_14, logic_uScriptAct_LookAt_time_14, logic_uScriptAct_LookAt_lockAxis_14);
+         logic_uScriptAct_LookAt_uScriptAct_LookAt_14.In(logic_uScriptAct_LookAt_Target_14, logic_uScriptAct_LookAt_Focus_14, logic_uScriptAct_LookAt_time_14, logic_uScriptAct_LookAt_lockAxis_14, logic_uScriptAct_LookAt_DegreesPerSecond_14, logic_uScriptAct_LookAt_UseDegreesPerSecond_14);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
