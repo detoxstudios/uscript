@@ -194,14 +194,12 @@ namespace Detox.Editor
       public static bool IsGeneratedScriptMissing(string graphName)
       {
          var scriptName = string.Format("{0}.cs", graphName);
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4)
          // first see if we've already saved the file and then just use that path
          var files = uScript.GetGraphPaths("uScriptCode");
          if (files.Any(file => file.Contains(scriptName)))
          {
             return false;
          }
-#endif
          var assetPathRelativeToProject = string.Format(
             "{0}/{1}",
             Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6),
@@ -485,8 +483,6 @@ namespace Detox.Editor
       internal static void OverrideTextEditorTabBehavior()
       {
          // This method contains reflections into Unity's assembly. It has been tested on Unity 3.5.7 and 4.6.1.
-
-#if !UNITY_3_5
          var e = Event.current;
 
          // Both Tab and Shift Tab will be included. Tab with other modifier keys don't work consistently, and should be avoided.
@@ -514,7 +510,6 @@ namespace Detox.Editor
                }
             }
          }
-#endif
       }
    }
 }

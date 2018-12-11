@@ -570,9 +570,7 @@ namespace Detox.Editor.GUI
                      margin = new RectOffset(),
                      padding = new RectOffset(2, 2, 1, 2),
                      onNormal = ((GUIStyle)"CN EntryBackEven").onNormal,
-#if !UNITY_3_5
                      richText = true
-#endif
                   };
 
                Message = new GUIStyle(GUI.skin.label)

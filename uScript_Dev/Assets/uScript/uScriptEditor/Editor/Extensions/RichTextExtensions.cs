@@ -16,30 +16,18 @@ namespace Detox.Editor.Extensions
    {
       public static string Bold(this string value)
       {
-#if UNITY_3_5
-         return value;
-#else
          return string.Format("<b>{0}</b>", value);
-#endif
       }
 
       public static string Italic(this string value)
       {
-#if UNITY_3_5
-         return value;
-#else
          return string.Format("<i>{0}</i>", value);
-#endif
       }
 
       public static string Color(this string value, Color color)
       {
-#if UNITY_3_5
-         return value;
-#else
          // ReSharper disable once InvokeAsExtensionMethod
          return string.Format("<color=#{0}>{1}</color>", UnityEditorExtensions.ToHex(color), value);
-#endif
       }
 
       public static string HighlightMatch(
@@ -56,9 +44,6 @@ namespace Detox.Editor.Extensions
          Color color,
          StringComparison comparison = StringComparison.OrdinalIgnoreCase)
       {
-#if UNITY_3_5
-         return value;
-#else
          if (string.IsNullOrEmpty(match))
          {
             return value;
@@ -72,7 +57,6 @@ namespace Detox.Editor.Extensions
 
          match = value.Substring(index, match.Length);
          return value.Replace(match, match.Color(color));
-#endif
       }
    }
 }

@@ -7,10 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if !UNITY_3_5
 namespace Detox.DetoxDevTools.Editor.Promotion
 {
-#endif
    using System;
    using System.Globalization;
    using System.Linq;
@@ -43,11 +41,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
       internal void OnGUI()
       {
-#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
-      EditorGUIUtility.LookLikeControls(110);
-#else
          EditorGUIUtility.labelWidth = 110;
-#endif
 
          GUILayout.Label("Parameters", EditorStyles.boldLabel);
          EditorGUI.indentLevel++;
@@ -81,12 +75,8 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          {
             EditorGUI.indentLevel++;
             {
-#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
-               EditorGUIUtility.LookLikeControls(200);
-#else
                var originalLabelWidth = EditorGUIUtility.labelWidth;
                EditorGUIUtility.labelWidth = 200;
-#endif
 
                EditorGUILayout.LabelField("Status", PromotionWindow.WebResponseHeaders["STATUS"]);
 
@@ -107,11 +97,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
                   EditorGUILayout.LabelField(label, PromotionWindow.WebResponseHeaders[header]);
                }
 
-#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
-               EditorGUIUtility.LookLikeControls(110);
-#else
                EditorGUIUtility.labelWidth = originalLabelWidth;
-#endif
             }
             EditorGUI.indentLevel--;
 
@@ -241,6 +227,4 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          this.targetParameter = value;
       }
    }
-#if !UNITY_3_5
 }
-#endif

@@ -7,10 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if !UNITY_3_5
 namespace Detox.Editor.GUI.Windows
 {
-#endif
    using System;
    using System.Collections.Generic;
 
@@ -58,9 +56,7 @@ namespace Detox.Editor.GUI.Windows
 
       public static void CheckServerForPromotion(uScriptBuild.EditionType target, string ignoredIDs, string dateOverride = "")
       {
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7)
-         if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer)
-#elif (UNITY_5_4_OR_NEWER)
+#if (UNITY_5_4_OR_NEWER)
          if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
 #else
          if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
@@ -119,7 +115,7 @@ namespace Detox.Editor.GUI.Windows
 
          if (string.IsNullOrEmpty(promotion.Title) == false)
          {
-#if UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0
+#if UNITY_5_0
          // This is deprecated in the Unity 5.2 API
          this.title = promotion.Title;
 #else
@@ -249,7 +245,4 @@ namespace Detox.Editor.GUI.Windows
          Detox.Editor.JobManager.Add(() => webRequest.isDone, () => webRequest.Dispose());
       }
    }
-
-#if !UNITY_3_5
 }
-#endif

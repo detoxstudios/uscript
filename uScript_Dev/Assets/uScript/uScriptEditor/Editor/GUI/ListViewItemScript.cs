@@ -43,11 +43,7 @@ namespace Detox.Editor.GUI
       {
          get
          {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
             return uScript.GetGraphPath(this.ItemName + ".uscript");
-#else
-            return Preferences.UserScripts + "/" + this.ItemPath;
-#endif
          }
       }
 
@@ -214,16 +210,7 @@ namespace Detox.Editor.GUI
 
       private void CommandDirectoryLocate()
       {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
          uScriptGUI.PingProjectGraph(this.GraphPath);
-#else
-         var directoryPath = Preferences.UserScripts + "/";
-
-         // Foldout paths duplicate the folder name at the end, so remove it (e.g., "foo/bar/bar" -> "foo/bar")
-         directoryPath += this.ItemPath.Substring(0, this.ItemPath.LastIndexOf("/", StringComparison.Ordinal));
-
-         uScriptGUI.PingProjectGraph(directoryPath);
-#endif
       }
 
       private void CommandGraphLoad()
@@ -508,11 +495,7 @@ namespace Detox.Editor.GUI
             RemoveSource = new GUIContent("Remove Source");
 
             // Attempt to get the built-in folder icon
-#if UNITY_3_5
-            IconFolder = EditorGUIUtility.FindTexture("_Folder");
-#else
             IconFolder = EditorGUIUtility.FindTexture("Folder Icon");
-#endif
             IconScript = uScriptGUI.GetTexture("iconScriptFile01");
          }
 

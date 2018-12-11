@@ -7,10 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if !UNITY_3_5
 namespace Detox.Editor.GUI.Windows
 {
-#endif
    using System.Collections.Generic;
 
    using Detox.Editor;
@@ -280,6 +278,4 @@ namespace Detox.Editor.GUI.Windows
          public static GUIStyle WrappedText { get; private set; }
       }
    }
-#if !UNITY_3_5
 }
-#endif

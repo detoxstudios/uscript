@@ -112,15 +112,6 @@ public static class uScriptGUIContent
       messageCompiling = new GUIContent("The Unity Editor is compiling one or more scripts. Please wait.");
       messagePlaying = new GUIContent("The Unity Editor is in play mode!");
 
-      //#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
-      //      iconHelp = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/_Help.png") as Texture2D);
-      //      iconInfo = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.infoicon.png") as Texture2D);
-      //      iconInfoSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.infoicon.sml.png") as Texture2D);
-      //      iconWarning = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.warnicon.png") as Texture2D);
-      //      iconWarningSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.warnicon.sml.png") as Texture2D);
-      //      iconError = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.erroricon.png") as Texture2D);
-      //      iconErrorSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.erroricon.sml.png") as Texture2D);
-      //#else
       //      // Use abhorrent reflection to access internal editor textures that were once readily available
       //      iconHelp = typeof(EditorGUIUtility).InvokeMember("IconContent", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, new object[] { "_Help" }) as GUIContent;
       //
@@ -134,7 +125,6 @@ public static class uScriptGUIContent
       //      iconWarningSmall = new GUIContent(consoleWindow.GetField("iconWarnSmall", flags).GetValue(null) as Texture2D);
       //      iconError = new GUIContent(consoleWindow.GetField("iconError", flags).GetValue(null) as Texture2D);
       //      iconErrorSmall = new GUIContent(consoleWindow.GetField("iconErrorSmall", flags).GetValue(null) as Texture2D);
-      //#endif
 
       buttonArraySearch.image = uScriptGUI.GetSkinnedTexture("iconMiniSearch");
       buttonListCollapse.image = uScriptGUI.GetSkinnedTexture("iconExpand");

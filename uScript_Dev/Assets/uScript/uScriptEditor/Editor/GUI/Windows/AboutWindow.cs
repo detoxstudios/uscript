@@ -4,10 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if !UNITY_3_5
 namespace Detox.Editor.GUI.Windows
 {
-#endif
    using Detox.Editor;
 
    using UnityEditor;
@@ -20,11 +18,7 @@ namespace Detox.Editor.GUI.Windows
 
       private const int WindowHeight = 260;
 
-#if UNITY_3_5
-      private const string UnityVersion = "for Unity 3.5";
-#elif UNITY_4_6 || UNITY_4_7
-      private const string UnityVersion = "for Unity 4.7";
-#elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
       private const string UnityVersion = "for Unity 5.0-5.2";
 #elif UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6
       private const string UnityVersion = "for Unity 5.3-5.6";
@@ -64,12 +58,6 @@ namespace Detox.Editor.GUI.Windows
          {
             this.Repaint();
          }
-
-#if UNITY_3_5
-         // There is a 10 pixel high gap between the top of the window and the first GUI element on early versions of Unity.
-         // This is certainly needed for <= 3.5.7, but not >= 4.6.0. Early 4.x versions have not been tested.
-         GUILayout.Space(-10);
-#endif
 
          GUILayout.Label(Content.Header, Style.Header);
 
@@ -143,9 +131,7 @@ namespace Detox.Editor.GUI.Windows
          public static GUIStyle WebsiteLink { get; private set; }
       }
    }
-#if !UNITY_3_5
 }
-#endif
 
 namespace Detox.Editor.GUI.Windows
 {

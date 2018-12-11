@@ -4,10 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if !UNITY_3_5
 namespace Detox.Editor.GUI.Windows
 {
-#endif
    using System.Diagnostics.CodeAnalysis;
 
    using Detox.Editor;
@@ -50,7 +48,7 @@ namespace Detox.Editor.GUI.Windows
 
          scrollPos = EditorGUILayout.BeginScrollView(scrollPos, false, true);
          {
-#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.labelWidth = LabelWidth;
             EditorGUIUtility.fieldWidth = ValueWidth;
 #else
@@ -101,10 +99,8 @@ namespace Detox.Editor.GUI.Windows
          var method = (Detox.Editor.Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", Preferences.SaveMethod);
          Preferences.SaveMethod = method;
 
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          var fieldWidth = EditorGUIUtility.fieldWidth;
          EditorGUIUtility.fieldWidth = 28;
-#endif
          var multilineHeight = EditorGUILayout.IntSlider(
             "Inspector MultiLine Height",
             Preferences.MultilineHeight,
@@ -113,9 +109,7 @@ namespace Detox.Editor.GUI.Windows
             Preferences.MultilineHeight = Mathf.Min(
             MultilineMaxHeight,
             Mathf.Max(MultilineMinHeight, multilineHeight));
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          EditorGUIUtility.fieldWidth = fieldWidth;
-#endif
 
          EditorGUILayout.Separator();
       }
@@ -142,7 +136,7 @@ namespace Detox.Editor.GUI.Windows
 
 //            EditorGUI.indentLevel--;
 
-#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.fieldWidth = 30;
 #else
             EditorGUIUtility.LookLikeControls(0, 30);
@@ -150,7 +144,7 @@ namespace Detox.Editor.GUI.Windows
 
             Preferences.GridColorMinor = EditorGUILayout.ColorField(Preferences.GridColorMinor);
 
-#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.labelWidth = LabelWidth;
             EditorGUIUtility.fieldWidth = ValueWidth;
 #else
@@ -261,7 +255,7 @@ namespace Detox.Editor.GUI.Windows
 
             UnityEngine.GUI.enabled = Preferences.Profiling;
 
-#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.fieldWidth = 30;
 #else
             EditorGUIUtility.LookLikeControls(0, 30);
@@ -270,7 +264,7 @@ namespace Detox.Editor.GUI.Windows
             var floatValue = EditorGUILayout.FloatField(Preferences.ProfileMin);
             Preferences.ProfileMin = Mathf.Min(MaxProfileTime, Mathf.Max(MinProfileTime, floatValue));
 
-#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.labelWidth = LabelWidth;
             EditorGUIUtility.fieldWidth = ValueWidth;
 #else
@@ -337,6 +331,4 @@ namespace Detox.Editor.GUI.Windows
          public static GUIStyle Window { get; private set; }
       }
    }
-#if !UNITY_3_5
 }
-#endif

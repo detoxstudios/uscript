@@ -512,9 +512,7 @@ public static class uScriptGUIStyle
             items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
             items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
             items.Add(new StyleInformationItem("overflow", style.overflow));
-#if !UNITY_3_5
             items.Add(new StyleInformationItem("richText", style.richText));
-#endif
             items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
             break;
       }

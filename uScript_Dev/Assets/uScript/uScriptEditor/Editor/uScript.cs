@@ -32,7 +32,7 @@ using Detox.Windows.Forms;
 
 using UnityEditor;
 
-#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
 using UnityEditor.SceneManagement;
 #endif
 
@@ -350,11 +350,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
- #if !UNITY_3_5
    public static Detox.Editor.GUI.Windows.HotkeyWindow HotkeyWindow { get; set; }
-#else
-   public static HotkeyWindow HotkeyWindow { get; set; }
-#endif
 
    public static bool IsOpen
    {
@@ -563,9 +559,9 @@ public sealed partial class uScript : EditorWindow
       uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
       uScriptMaster.transform.position = Vector3.zero;
 
-#if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
       EditorSceneManager.MarkSceneDirty(uScriptMaster.scene);
-#elif !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7)
+#else
       EditorApplication.MarkSceneDirty();
 #endif
 
@@ -658,7 +654,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
    private static string GetFilePathWithLabel(string label, string fileName)
    {
       var guids = AssetDatabase.FindAssets("l:" + label, null);
@@ -681,24 +676,15 @@ public sealed partial class uScript : EditorWindow
       }
       return files;
    }
-#endif
 
    public static List<string> GetGraphPaths(string label = "uScriptSource")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
       return GetFilePathsWithLabel(label);
-#else
-      return Directory.GetFiles(Preferences.UserScripts, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
-#endif
    }
 
    public static string GetGraphPath(string fileName, string label = "uScriptSource")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
       return GetFilePathWithLabel(label, fileName);
-#else
-      return FindFile(Preferences.UserScripts, string.Format("{0}.uscript", fileName));
-#endif
    }
 
    // this function is expensive - it gets all *.uscript files starting from Assets/ down
@@ -1218,11 +1204,7 @@ public sealed partial class uScript : EditorWindow
 
          m_UndoPatches[m_UndoNumber] = base64;
 
-#if UNITY_3_5
-         UnityEditor.Undo.RegisterUndo(this.undoObject, p.Name + " (uScript)");
-#else
          UnityEditor.Undo.RecordObject(this.undoObject, p.Name + " (uScript)");
-#endif
 
          //now increment and if the old one is restored
          //the numbers won't match
@@ -1242,11 +1224,7 @@ public sealed partial class uScript : EditorWindow
       // Test for Unity Pro - Unity 3.1 Indie does not support RenderTextures
       get
       {
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7)
-         return SystemInfo.supportsRenderTextures;
-#else
          return Application.HasProLicense();
-#endif
       }
    }
 
@@ -2328,7 +2306,6 @@ public sealed partial class uScript : EditorWindow
 
    private static void SendEventToHotkeyWindow()
    {
-#if !UNITY_3_5
       var e = Event.current;
 
       if (HotkeyWindow != null)
@@ -2350,7 +2327,6 @@ public sealed partial class uScript : EditorWindow
                break;
          }
       }
-#endif
    }
 
    private void DropKeyboardFocusWhenNewControlClicked()
@@ -3638,7 +3614,7 @@ public sealed partial class uScript : EditorWindow
  
       if (scriptEditor.Open(fullPath))
       {
-         #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+         #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
          #else
             UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
@@ -3732,27 +3708,11 @@ public sealed partial class uScript : EditorWindow
    public void RebuildScripts(string path, bool stubCode)
    {
       Debug.Log(string.Format("RebuildScripts({0}, {1})", path, stubCode));
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
          this.RebuildScript(file, stubCode);
       }
-#else
-      var directory = new DirectoryInfo(path);
-
-      var files = directory.GetFiles();
-
-      foreach (var file in files.Where(file => ".uscript" == file.Extension))
-      {
-         this.RebuildScript(file.FullName, stubCode);
-      }
-
-      foreach (var subDirectory in directory.GetDirectories())
-      {
-         this.RebuildScripts(subDirectory.FullName, stubCode);
-      }
-#endif
    }
 
    // returns false if path is not in source control or source control is not active
@@ -3761,7 +3721,6 @@ public sealed partial class uScript : EditorWindow
    {
       bool inVC = false;
 
-#if (UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
       // blocking checkout of versioned file, if necessary
       if (UnityEditor.VersionControl.Provider.isActive)
       {
@@ -3781,7 +3740,6 @@ public sealed partial class uScript : EditorWindow
             }
          }
       }
-#endif
 
       return inVC;
    }
@@ -3841,7 +3799,6 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.GeneratedScripts);
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
@@ -3853,9 +3810,6 @@ public sealed partial class uScript : EditorWindow
 
       // not found, fall back to default
       return Preferences.GeneratedScripts + "/" + fileName;
-#else
-      return Preferences.GeneratedScripts + "/" + fileName;
-#endif
    }
 
    private string GetNestedScriptPath(string binaryPath)
@@ -3864,7 +3818,6 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.NestedScripts);
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
@@ -3876,9 +3829,6 @@ public sealed partial class uScript : EditorWindow
 
       // not found, fall back to default
       return Preferences.NestedScripts + "/" + fileName;
-#else
-      return Preferences.NestedScripts + "/" + fileName;
-#endif
    }
 
    private bool SaveGraph(ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
@@ -3961,36 +3911,6 @@ public sealed partial class uScript : EditorWindow
 
             if (chosenPath != string.Empty)
             {
-#if UNITY_3_5
-               // Validate the chosen graph location
-               isSafe = chosenPath.StartsWith(Preferences.UserScripts + "/");
-               if (!isSafe)
-               {
-                  // The specified directory is outside the UserScripts directory
-                  var displayPath = Preferences.UserScripts.Substring(Application.dataPath.Length);
-                  if (Application.platform == RuntimePlatform.WindowsEditor)
-                  {
-                     displayPath = displayPath.Replace("/", "\\");
-                  }
-
-                  displayPath = string.Format("Assets{0}", displayPath);
-
-                  var errorMessage =
-                     string.Format(
-                        "The chosen file location is invalid. The graph file must be saved in the uScript graphs directory"
-                        + " or in one of its sub-directories.\n\nThe project graph location can be modified through uScript"
-                        + " Preferences. It is currently set to:\n\n\t\"{0}\"\n",
-                        displayPath);
-
-                  if (EditorUtility.DisplayDialog("Invalid Location", errorMessage, "Try Again", "Cancel") == false)
-                  {
-                     return false;
-                  }
-
-                  continue;
-               }
-#endif
-
                // Update the defaults to reflect the most recently selected path
                directory = Path.GetDirectoryName(chosenPath);
 
@@ -4083,7 +4003,7 @@ public sealed partial class uScript : EditorWindow
       //the scene name before we save
       if (pleaseAttachMe || currentlyAttached)
       {
-         #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+         #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
          #else
             UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
@@ -4193,7 +4113,6 @@ public sealed partial class uScript : EditorWindow
 
    private void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType, string label = "")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6)
       DirectoryInfo directory = new DirectoryInfo(path);
       List<FileInfo> filesList = new List<FileInfo>();
       FileInfo[] files;
@@ -4210,10 +4129,6 @@ public sealed partial class uScript : EditorWindow
       {
          files = directory.GetFiles();
       }
-#else
-      DirectoryInfo directory = new DirectoryInfo(path);
-      FileInfo[] files = directory.GetFiles();
-#endif
 
       foreach (FileInfo file in files)
       {
@@ -4561,11 +4476,7 @@ public sealed partial class uScript : EditorWindow
    {
       List<RawScript> rawScripts = new List<RawScript>();
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
       string[] files = GetGraphPaths("uScriptSourceNested").ToArray();
-#else
-      string[] files = FindAllFiles(Preferences.UserScripts, ".uscript");
-#endif
 
       foreach (string file in files)
       {

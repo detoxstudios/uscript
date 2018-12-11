@@ -7,10 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if !UNITY_3_5
 namespace Detox.Editor.GUI.Windows
 {
-#endif
    using UnityEditor;
 
    public class uScriptGUIPanelWindow : EditorWindow
@@ -75,6 +73,4 @@ namespace Detox.Editor.GUI.Windows
          }
       }
    }
-#if !UNITY_3_5
 }
-#endif

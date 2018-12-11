@@ -226,12 +226,10 @@ $opts = array(
             //               return;
             //            }
 
-            //#if !UNITY_3_5
             //            if (updateStatus == UpdateStatus.ClientBuildOlder)
             //            {
             //               serverVersion = serverVersion.Bold();
             //            }
-            //#endif
 
             //            clientVersion = string.Format("        Your version: \t{0}", clientVersion);
             //            serverVersion = string.Format("        Latest version: \t{0}", serverVersion);

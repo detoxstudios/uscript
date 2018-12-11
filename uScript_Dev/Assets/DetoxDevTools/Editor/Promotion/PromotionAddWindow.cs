@@ -11,7 +11,6 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 {
    using System;
    using System.Collections.Generic;
-   using System.Diagnostics;
    using System.Globalization;
    using System.IO;
 
@@ -334,9 +333,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
       private void OnGUIDrawFieldEndDate()
       {
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          EditorGUIUtility.fieldWidth -= 19;
-#endif
 
          EditorGUILayout.BeginHorizontal();
          {
@@ -392,9 +389,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          }
          EditorGUILayout.EndHorizontal();
 
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          EditorGUIUtility.fieldWidth += 19;
-#endif
       }
 
       private void OnGUIDrawFieldID()
@@ -421,9 +416,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
       private void OnGUIDrawFieldImagePath()
       {
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          EditorGUIUtility.fieldWidth -= 19;
-#endif
 
          EditorGUILayout.BeginHorizontal();
          {
@@ -439,9 +432,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          }
          EditorGUILayout.EndHorizontal();
 
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          EditorGUIUtility.fieldWidth += 19;
-#endif
       }
 
       private void OnGUIDrawFieldLinkPath()
@@ -471,9 +462,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
       private void OnGUIDrawFieldStartDate()
       {
          var e = Event.current;
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          EditorGUIUtility.fieldWidth -= 19;
-#endif
 
          EditorGUILayout.BeginHorizontal();
          {
@@ -528,9 +517,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          }
          EditorGUILayout.EndHorizontal();
 
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2)
          EditorGUIUtility.fieldWidth += 19;
-#endif
       }
 
       private void OnGUIDrawCalendar(int windowID)
@@ -684,12 +671,8 @@ namespace Detox.DetoxDevTools.Editor.Promotion
       {
          EditorGUILayout.BeginVertical();
          {
-#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
-            EditorGUIUtility.LookLikeControls(100, 100);
-#else
             EditorGUIUtility.labelWidth = 100;
             EditorGUIUtility.fieldWidth = 100;
-#endif
 
             EditorGUILayout.Space();
 

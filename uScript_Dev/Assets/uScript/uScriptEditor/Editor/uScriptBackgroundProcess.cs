@@ -67,7 +67,6 @@ public class uScriptBackgroundProcess
          return;
       }
 
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018
       foreach (var path in uScript.MasterComponent.FilesToAddToVC)
       {
          // blocking add of unversioned file, if necessary
@@ -82,7 +81,6 @@ public class uScriptBackgroundProcess
       }
 
       ForceFileRefresh();
-#endif
       uScript.MasterComponent.ClearAddList();
    }
 
@@ -188,14 +186,12 @@ public class uScriptBackgroundProcess
          return;
       }
 
-#if UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018
       var graphs = uScript.GetGraphPaths();
       if (GraphInfoList.Count != graphs.Count)
       {
          // refresh file list
          ForceFileRefresh();
       }
-#endif
 
       int i;
       var keys = new List<string>(GraphInfoList.Keys).ToArray();

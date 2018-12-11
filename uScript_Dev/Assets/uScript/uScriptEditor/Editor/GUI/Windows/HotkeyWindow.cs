@@ -7,10 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if !UNITY_3_5
 namespace Detox.Editor.GUI.Windows
 {
-#endif
    using System;
    using System.Collections.Generic;
    using System.Linq;
@@ -294,10 +292,8 @@ namespace Detox.Editor.GUI.Windows
             case KeyCode.LeftAlt:
             case KeyCode.RightAlt:
                return IsWindows ? "Alt" : "Opt";
-#if !UNITY_3_5
             case KeyCode.LeftCommand:
             case KeyCode.RightCommand:
-#endif
             case KeyCode.LeftWindows:
             case KeyCode.RightWindows:
                return IsWindows ? "Win" : "Cmd";
@@ -655,33 +651,17 @@ namespace Detox.Editor.GUI.Windows
             if (IsWindows)
             {
                this.DrawCommandBasic("LINE 6", new[] { KeyCode.LeftControl, 
-#if !UNITY_3_5
                KeyCode.LeftCommand,
-#else
-               KeyCode.LeftWindows,
-#endif
                KeyCode.LeftAlt, KeyCode.Space, KeyCode.RightAlt,
-#if !UNITY_3_5
                KeyCode.RightCommand,
-#else
-               KeyCode.RightWindows,
-#endif
                KeyCode.Menu, KeyCode.RightControl });
             }
             else
             {
                this.DrawCommandBasic("LINE 6", new[] { KeyCode.LeftControl, KeyCode.LeftAlt, 
-#if !UNITY_3_5
                KeyCode.LeftCommand,
-#else
-               KeyCode.LeftWindows,
-#endif
                KeyCode.Space,
-#if !UNITY_3_5
                KeyCode.RightCommand,
-#else
-               KeyCode.RightWindows,
-#endif
                KeyCode.RightAlt, KeyCode.RightControl });
             }
 
@@ -760,31 +740,6 @@ namespace Detox.Editor.GUI.Windows
             this.keyDown[KeyCode.LeftShift] = e.shift;
             this.Repaint();
          }
-
-#if UNITY_3_5
-         // Handle other modifier input manually, because Unity 3.x does not correctly
-         // send KeyDown and KeyUp messages for them.
-         exists = this.keyDown.ContainsKey(KeyCode.LeftAlt);
-         if ((exists == false && e.alt) || (exists && this.keyDown[KeyCode.LeftAlt] != e.alt))
-         {
-            this.keyDown[KeyCode.LeftAlt] = e.alt;
-            this.Repaint();
-         }
-
-         exists = this.keyDown.ContainsKey(KeyCode.LeftControl);
-         if ((exists == false && e.control) || (exists && this.keyDown[KeyCode.LeftControl] != e.control))
-         {
-            this.keyDown[KeyCode.LeftControl] = e.control;
-            this.Repaint();
-         }
-
-         exists = this.keyDown.ContainsKey(KeyCode.LeftWindows);
-         if ((exists == false && e.command) || (exists && this.keyDown[KeyCode.LeftWindows] != e.command))
-         {
-            this.keyDown[KeyCode.LeftWindows] = e.command;
-            this.Repaint();
-         }
-#endif
       }
 
       private void UpdateCustomStyles()
@@ -905,6 +860,4 @@ namespace Detox.Editor.GUI.Windows
          public static GUIStyle Window { get; private set; }
       }
    }
-#if !UNITY_3_5
 }
-#endif

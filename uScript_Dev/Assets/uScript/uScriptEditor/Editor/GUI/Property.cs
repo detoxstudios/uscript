@@ -219,83 +219,6 @@ namespace Detox.Editor.GUI
             // Socket segment
             GUILayout.Box(GUIContent.none, Style.ButtonLeft);
 
-#if UNITY_3_5
-   // EditorGUI.showMixedValue was introduced in Unity 3.5
-
-   // Display socket toggle, if appropriate
-         if (isFoldoutExpanded)
-         {
-            if (node != null)
-            {
-               int expandCount = 0;
-               int collapseCount = 0;
-
-               foreach (Parameter p in entityNode.Parameters)
-               {
-                  if (scriptEditorCtrl.CanExpandParameter(p))
-                  {
-                     expandCount++;
-                  }
-                  else if (scriptEditorCtrl.CanCollapseParameter(node.Guid, p))
-                  {
-                     collapseCount++;
-                  }
-               }
-
-               if (scriptEditorCtrl.CanExpandParameter(entityNode.Instance))
-               {
-                  expandCount++;
-               }
-               else if (scriptEditorCtrl.CanCollapseParameter(node.Guid, entityNode.Instance))
-               {
-                  collapseCount++;
-               }
-
-               if (expandCount != 0 || collapseCount != 0)
-               {
-                  Rect toggleRect = GUILayoutUtility.GetLastRect();
-                  toggleRect.x += 3;
-                  toggleRect.y += 1;
-                  toggleRect.width = 20;
-                  toggleRect.height = 20;
-
-                  bool toggleState = (collapseCount > 0);
-
-                  if (expandCount > 0 && collapseCount > 0)
-                  {
-                     EditorGUI.showMixedValue = true;
-                  }
-
-                  // The "ToggleMixed" style does not exist in Unity 3.x
-                  GUIStyle toggleStyle = UnityEngine.GUI.skin.toggle;
-
-                  EditorGUI.BeginChangeCheck();
-                  toggleState = UnityEngine.GUI.Toggle(toggleRect, toggleState, GUIContent.none, toggleStyle);
-                  if (EditorGUI.EndChangeCheck())
-                  {
-                     // When showing a mixed value on Unity 3.x, the toggle returns True when pressed.
-                     // It returns False on Unity 4.x.
-                     if (EditorGUI.showMixedValue)
-                     {
-                        toggleState = !toggleState;
-                     }
-
-                     if (toggleState)
-                     {
-                        scriptEditorCtrl.ExpandNode(node);
-                     }
-                     else
-                     {
-                        scriptEditorCtrl.CollapseNode(node);
-                     }
-                  }
-
-                  EditorGUI.showMixedValue = false;
-               }
-            }
-         }
-#endif
-
             // Name segment
             if (uScript.IsDevelopmentBuild)
             {
@@ -694,11 +617,7 @@ namespace Detox.Editor.GUI
                            state.DefaultValueAsString));
                   }
 
-#if UNITY_3_5
-                  value = UnityObjectField((string)value, unityObjectType);
-#else
                   value = SceneObjectPathField((string)value, unityObjectType);
-#endif
 
                   valueType = unityObjectType.ToString();
                }
@@ -997,11 +916,7 @@ namespace Detox.Editor.GUI
          }
          else if (type != null && typeof(UnityEngine.Object).IsAssignableFrom(type))
          {
-#if UNITY_3_5
-            t = UnityObjectField((string)t, type);
-#else
             t = SceneObjectPathField((string)t, type);
-#endif
          }
          else if (value is string)
          {
@@ -1566,11 +1481,7 @@ namespace Detox.Editor.GUI
          }
 
          // Display the column label
-#if UNITY_3_5
-         EditorGUIUtility.LookLikeControls(columnLabel.Width);
-#else
          EditorGUIUtility.labelWidth = columnLabel.Width;
-#endif
       }
 
       private static string TextArea(string value, int minLines = 2, int maxLines = 10)
@@ -1613,30 +1524,6 @@ namespace Detox.Editor.GUI
 
          return type != null;
       }
-
-#if UNITY_3_5
-      private static string UnityObjectField(string value, Type type)
-      {
-         var objects = UnityEngine.Object.FindObjectsOfType(type);
-         var unityObject = objects.FirstOrDefault(o => o.name == value);
-
-         // Components should never be instances in the property grid.
-         // We must refer to (and select) their parent game object
-         if (typeof(Component).IsAssignableFrom(type))
-         {
-            if (null != unityObject)
-            {
-               unityObject = ((Component)unityObject).gameObject;
-            }
-         }
-
-         unityObject = EditorGUILayout.ObjectField(unityObject, type, true, GUILayout.Width(columnValue.Width));
-
-         // if that object (or the changed object) does exist, use it's name to update the property value
-         // if it doesn't exist then the 'val' will stay as what was entered into the TextField
-         return unityObject != null ? unityObject.name : string.Empty;
-      }
-#endif
 
       private static string VariableNameField(string label, string value, State state)
       {

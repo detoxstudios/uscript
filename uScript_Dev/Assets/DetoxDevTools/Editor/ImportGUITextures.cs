@@ -29,17 +29,10 @@ internal class ImportGUITextures : AssetPostprocessor
 #else
       textureImporter.textureType = TextureImporterType.Advanced;
 #endif
-#if UNITY_3_5
-      textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor, 100);
-#else
       textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor);
-#endif
       textureImporter.npotScale = TextureImporterNPOTScale.None;
       textureImporter.ReadTextureSettings(textureSettings);
       textureSettings.mipmapEnabled = false;
-#if UNITY_3_5
-      textureSettings.linearTexture = true;
-#endif
 
       textureSettings.aniso = 0;
       textureSettings.filterMode = this.assetPath.Contains("Bilinear") ? FilterMode.Bilinear : FilterMode.Point;

@@ -761,11 +761,7 @@ namespace Detox.ScriptEditor
          }
 
          // are we a game object?
-#if UNITY_3_5
-         return typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) && ((UnityEngine.GameObject)o).active;
-#else
          return typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) && ((UnityEngine.GameObject)o).activeSelf;
-#endif
       }
       
       public bool DoDragDropContextMenu( object[] objects )
@@ -2966,7 +2962,7 @@ namespace Detox.ScriptEditor
 
       private void BuildAddMenu(ToolStripMenuItem addMenu, Hashtable typeHash)
       {
-         #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+         #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
          #else
             UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();

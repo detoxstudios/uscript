@@ -36,7 +36,7 @@ public class uScriptBuildScript : MonoBehaviour
       List<string> fixedScenes = new List<string>();
       foreach (string scene in sceneFiles)
       {
-         #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+         #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             if (EditorApplication.OpenScene(scene))
          #else
             UnityEngine.SceneManagement.Scene sceneObj = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scene);
@@ -47,7 +47,7 @@ public class uScriptBuildScript : MonoBehaviour
             if (AddUScriptComponentsToOpenScene(scene))
             {
                // Save scene
-               #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+               #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
                   EditorApplication.SaveScene();
                #else
                   UnityEditor.SceneManagement.EditorSceneManager.SaveScene(sceneObj);
@@ -70,7 +70,7 @@ public class uScriptBuildScript : MonoBehaviour
       }
    }
 
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+#if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
    [MenuItem("uScript/Internal/Add uScript Components to Open Scene", false, 100)]
    public static void AddUScriptComponentsToOpenScene_Menu()
    {

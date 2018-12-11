@@ -119,21 +119,7 @@ namespace Detox.Editor.Extensions
 
       public static Rect GetControlRect(bool hasLabel, float height, GUIStyle style, params GUILayoutOption[] options)
       {
-#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
-         // EditorGUILayout.GetControlRect was introduced in 4.3.0
-         var value = new Rect();
-
-         var method = typeof(GUILayoutUtility).GetMethod("GetControlRect", BindingFlags.NonPublic | BindingFlags.Static);
-         if (method != null)
-         {
-            var parameters = new object[] { hasLabel, height, style, options };
-            value = (Rect)method.Invoke(null, parameters);
-         }
-
-         return value;
-#else
          return EditorGUILayout.GetControlRect(hasLabel, height, style, options);
-#endif
       }
 
       public static T GetFieldValue<T>(Type type, string fieldName, BindingFlags bindingFlags)

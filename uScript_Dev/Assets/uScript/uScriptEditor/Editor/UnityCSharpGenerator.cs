@@ -2193,10 +2193,8 @@ namespace Detox.ScriptEditor
 
             string prefix = "true" == local.Externaled.Default ? "public " : "";
 
-            #if (!UNITY_3_5)
-               if (prefix != "" && (local.Value.Type == typeof(String).ToString() || local.Value.Type == typeof(String[]).ToString()))
-                  AddCSharpLine("[Multiline(" + Preferences.MultilineHeight + ")]");
-            #endif
+            if (prefix != "" && (local.Value.Type == typeof(String).ToString() || local.Value.Type == typeof(String[]).ToString()))
+                AddCSharpLine("[Multiline(" + Preferences.MultilineHeight + ")]");
 
             AddCSharpLine(prefix + FormatType(local.Value.Type) + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";");
 

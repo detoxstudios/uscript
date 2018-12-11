@@ -390,7 +390,7 @@ namespace Detox.Editor.GUI
             //   }
             //}
 
-            #if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
+            #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
                this.currentSceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
             #else
                UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();

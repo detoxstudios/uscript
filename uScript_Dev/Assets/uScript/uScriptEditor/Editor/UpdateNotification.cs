@@ -219,9 +219,7 @@ public class UpdateNotification : EditorWindow
 
    private static void SilentlyCheckServerForUpdate()
    {
-#if (UNITY_3_5 || UNITY_4_6 || UNITY_4_7)
-         if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer)
-#elif (UNITY_5_4_OR_NEWER)
+#if (UNITY_5_4_OR_NEWER)
       if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
 #else
       if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebPlayer || EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
@@ -304,7 +302,6 @@ public class UpdateNotification : EditorWindow
          var clientVersion = clientBuild.ToString();
          var serverVersion = LatestVersion = serverBuild.ToString();
 
-#if !UNITY_3_5
          if (updateStatus == UpdateStatus.ClientBuildNewer)
          {
             clientVersion = clientVersion.Bold();
@@ -313,7 +310,6 @@ public class UpdateNotification : EditorWindow
          {
             serverVersion = serverVersion.Bold();
          }
-#endif
 
          clientVersion = string.Format("        Your version: \t{0}", clientVersion);
          serverVersion = string.Format("        Latest version: \t{0}", serverVersion);
@@ -385,12 +381,10 @@ public class UpdateNotification : EditorWindow
             return;
          }
 
-#if !UNITY_3_5
          if (updateStatus == UpdateStatus.ClientBuildOlder)
          {
             serverVersion = serverVersion.Bold();
          }
-#endif
 
          clientVersion = string.Format("        Your version: \t{0}", clientVersion);
          serverVersion = string.Format("        Latest version: \t{0}", serverVersion);
@@ -648,9 +642,7 @@ public class UpdateNotification : EditorWindow
             padding = new RectOffset(),
             margin = new RectOffset(),
             fontSize = 11,
-#if !UNITY_3_5
             richText = true
-#endif
          };
 
          Button = new GUIStyle(GUI.skin.button) { fixedHeight = 20, padding = new RectOffset(12, 12, 3, 4) };
