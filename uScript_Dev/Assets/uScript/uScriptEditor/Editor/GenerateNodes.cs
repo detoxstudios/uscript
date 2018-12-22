@@ -26,6 +26,7 @@ namespace Detox.Editor
             ModifyList = 64,
             ReplaceValueAtIndex = 128,
             ReplaceValueInList = 256,
+            SetEnumByString = 512,
             List = AccessList | ForEach | ForEachAuto | GetListSize | IsInList | ModifyList | ReplaceValueAtIndex | ReplaceValueInList,
             All = 0xffff
         }
@@ -52,6 +53,8 @@ namespace Detox.Editor
                     return "uScriptAct_ReplaceValueAtIndexInList" + (string.IsNullOrEmpty(name) ? "" : name);
                 case Nodes.ReplaceValueInList:
                     return "uScriptAct_ReplaceValueInList" + (string.IsNullOrEmpty(name) ? "" : name);
+                case Nodes.SetEnumByString:
+                    return "uScriptAct_SetEnumByString" + (string.IsNullOrEmpty(name) ? "" : name);
                 default:
                     Debug.Assert(false, "Invalid node type: " + node.ToString());
                     break;
@@ -80,7 +83,7 @@ namespace Detox.Editor
         {
             List<int> indices = new List<int>();
             int index = 1;
-            for (int i = 1; i <= (int)Nodes.ReplaceValueInList; i = i << 1)
+            for (int i = 1; i <= (int)Nodes.SetEnumByString; i = i << 1)
             {
                 if ((nodes & (Nodes)i) == (Nodes)i) indices.Add(index-1);
                 index++;
@@ -95,7 +98,7 @@ namespace Detox.Editor
             int expected = Enum.GetNames(typeof(Nodes)).Length - 2;
             Debug.Assert(nodes.Length == expected, string.Format("Wrong number of bools in nodes array.  Expected {0}, got {1}.", expected, nodes.Length));
             int index = 0;
-            for (int i = 1; i <= (int)Nodes.ReplaceValueInList; i = i << 1)
+            for (int i = 1; i <= (int)Nodes.SetEnumByString; i = i << 1)
             {
                 if (nodes[index]) retval |= (Nodes)i;
                 index++;
@@ -106,7 +109,7 @@ namespace Detox.Editor
         public static string[] GetClassNames(Type type, string name, Nodes nodesToInclude = Nodes.All)
         {
             List<string> names = new List<string>();
-            for (int i = 1; i <= (int)Nodes.ReplaceValueInList; i = i << 1)
+            for (int i = 1; i <= (int)Nodes.SetEnumByString; i = i << 1)
             {
                 if ((nodesToInclude & (Nodes)i) == (Nodes)i) names.Add(GetClassName(name, (Nodes)i));
             }
@@ -126,7 +129,7 @@ namespace Detox.Editor
         public static void Generate(Type type, string name, Nodes nodesToGenerate)
         {
             // loop through all the node types and generate the requested ones
-            for (int i = 1; i <= (int)Nodes.ReplaceValueInList; i = i << 1)
+            for (int i = 1; i <= (int)Nodes.SetEnumByString; i = i << 1)
             {
                 if ((nodesToGenerate & (Nodes)i) == (Nodes)i) GenerateNode(type, name, (Nodes)i);
             }

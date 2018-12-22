@@ -255,6 +255,7 @@ namespace Detox.Editor.GUI.Windows
                     EditorGUILayout.LabelField(new GUIContent("Type Name:"), Style.Heading);
                     EditorGUILayout.LabelField(GenerateNodes.GetTypeName(GetCurrentType(), _shortName));
                     string[] classNames = GenerateNodes.GetClassNames(GetCurrentType(), _shortName);
+                    int enumIndex = GenerateNodes.GetIndices(GenerateNodes.Nodes.SetEnumByString)[0];
                     if (classNames != null && classNames.Length > 0)
                     {
                         EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
@@ -282,6 +283,16 @@ namespace Detox.Editor.GUI.Windows
                                 UnityEngine.GUI.enabled = false;
                                 content += " (Type already exists)";
                                 _nodesToGenerate[i] = false;
+                            }
+                            if (i == enumIndex)
+                            {
+                                if (!typeof(Enum).IsAssignableFrom(GetCurrentType()))
+                                {
+                                    // this type needs to be an enum but it's not - force its generation switch to off and disable the GUI
+                                    UnityEngine.GUI.enabled = false;
+                                    content += " (Type is not an enum type)";
+                                    _nodesToGenerate[i] = false;
+                                }
                             }
                             _nodesToGenerate[i] = EditorGUILayout.ToggleLeft(new GUIContent(content), _nodesToGenerate[i]);
                             UnityEngine.GUI.enabled = true;

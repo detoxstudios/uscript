@@ -1,0 +1,32 @@
+﻿// uScript Action Node
+
+using System;
+using UnityEngine;
+
+[NodePath("Actions/Variables/{NAME}")]
+[NodeToolTip("Converts a string to an enum value of type {TYPE}.")]
+
+[FriendlyName("Set Enum By String {NAME}", "Converts a string to an enum value of type {TYPE}.")]
+public class {CLASS} : uScriptLogic
+{
+    public bool Out { get { return true; } }
+
+    public void In(
+        [FriendlyName("Enum String", "The string version of the {TYPE} enum value.")]
+        string enumString,
+
+        [FriendlyName("Enum Value", "The {TYPE} enum value matching the enum string.")]
+        out {TYPE} enumValue
+    )
+    {
+        try
+        {
+            enumValue = ({TYPE})Enum.Parse(typeof({TYPE}), enumString);
+        }
+        catch (Exception)
+        {
+            Debug.Log(string.Format("Failed setting {TYPE} Target to Value {0}, setting it to default value.", enumString));
+            enumValue = default({TYPE});
+        }
+    }
+}
