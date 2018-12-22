@@ -25,7 +25,7 @@ public class {CLASS} : uScriptLogic
         }
         catch (Exception)
         {
-            Debug.Log(string.Format("Failed setting {TYPE} Target to Value {0}, setting it to default value.", enumString));
+            Debug.Log(string.Format("Failed setting {TYPE} Target to Value '{0}', setting it to default value.  Valid values are: '{1}'", enumString, string.Join("', '", Enum.GetNames(typeof({TYPE})))));
             enumValue = default({TYPE});
         }
     }
