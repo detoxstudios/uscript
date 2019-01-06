@@ -269,11 +269,12 @@ namespace Detox.Editor
             var path = AssetDatabase.GetAssetPath(obj);
             var name = Path.GetFileNameWithoutExtension(path);
 
-            uScriptDebug.Assert(name != null, "name != null");
+            uScriptDebug.Assert(name != null, string.Format("name is null for file {0} when trying to get scene path", fi.Name));
 
             if (scenePaths.ContainsKey(name))
             {
                Debug.LogWarning("The project contains multiple scenes with the same name: \"" + name + "\".\n");
+               continue;
             }
 
             scenePaths.Add(name, path);
