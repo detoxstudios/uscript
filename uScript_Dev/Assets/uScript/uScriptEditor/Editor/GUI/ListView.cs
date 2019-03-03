@@ -1578,7 +1578,7 @@ namespace Detox.Editor.GUI
 
             if (item.Children != null && this.IsFolderExpanded(item) == false)
             {
-               skipPath = item.ItemPath.Substring(0, item.ItemPath.LastIndexOf("/", StringComparison.Ordinal));
+               skipPath = item.ItemPath.Substring(0, item.ItemPath.LastIndexOf("/", StringComparison.Ordinal) + 1);
             }
 
             item.IsVisible = true;
