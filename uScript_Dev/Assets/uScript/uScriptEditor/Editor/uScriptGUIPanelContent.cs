@@ -19,6 +19,7 @@ using Detox.ScriptEditor;
 using UnityEditor;
 
 using UnityEngine;
+using Detox.FlowChart;
 
 public sealed class uScriptGUIPanelContent : uScriptGUIPanel
 {
@@ -223,7 +224,7 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
                      key += string.IsNullOrEmpty(comment) ? string.Empty : string.Format(" ({0})", comment);
 
                      // Apply the filter now, to ignore items that are not matched
-                     if (string.IsNullOrEmpty(this.panelFilterText) || this.IncludeAsMenuItem(key, false))
+                     if (string.IsNullOrEmpty(this.panelFilterText) || this.IncludeAsMenuItem(key, false, node))
                      {
                         //this.filterMatches++;
 
@@ -637,12 +638,53 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
    /// <returns>True if the parent or item should be hidden, otherwise False</returns>
    /// <param name='label'>The Toolbox menu item to examine.</param>
    /// <param name='shouldForceVisible'>When True, the menu item will always be visible.</param>
-   private bool IncludeAsMenuItem(string label, bool shouldForceVisible)
+   private bool IncludeAsMenuItem(string label, bool shouldForceVisible, Node node)
    {
       var words = this.panelFilterText.ToLower().Split();
 
       // The user can now enter keywords in any order to find matches
       var matchFound = words.All(word => label.ToLower().Contains(word));
+
+      if (!matchFound && Preferences.EnableContentsFieldSearch)
+      {
+         EntityNode entityNode = ((DisplayNode)node).EntityNode;
+
+         // check comment...
+         var comment = entityNode.Comment;
+         if (!string.IsNullOrEmpty(comment.Type))
+         {
+            string commentString = (string)comment.DefaultAsObject;
+            if (!string.IsNullOrEmpty(commentString))
+            {
+               matchFound = words.All(word => commentString.ToLower().Contains(word));
+            }
+         }
+
+         // ...and all string params for the search term(s) as well
+         if (!matchFound)
+         {
+            var parameters = entityNode.Parameters;
+            foreach (var param in parameters)
+            {
+               if (param.Type == "System.String" || param.Type == "TextArea")
+               {
+                  matchFound = words.All(word => ((string)param.DefaultAsObject).ToLower().Contains(word));
+                  if (matchFound) return true;
+               }
+               else if (param.Type == "System.Object[]")
+               {
+                  // check any string arrays (which are typed as System.Object[])
+                  object[] objects = (object[])param.DefaultAsObject;
+                  foreach (object o in objects)
+                  {
+                     string s = o as string;
+                     if (!string.IsNullOrEmpty(s)) matchFound = words.All(word => s.ToLower().Contains(word));
+                     if (matchFound) return true;     
+                  }
+               }
+            }
+         }
+      }
 
       return shouldForceVisible || matchFound;
    }

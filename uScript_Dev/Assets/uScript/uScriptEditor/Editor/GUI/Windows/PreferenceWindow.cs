@@ -177,6 +177,9 @@ namespace Detox.Editor.GUI.Windows
          boolValue = EditorGUILayout.Toggle("Enable First Save Attach Prompt", Preferences.EnableAttachOnSavePrompt);
          Preferences.EnableAttachOnSavePrompt = boolValue;
 
+         boolValue = EditorGUILayout.Toggle("Search Fields in Contents Search", Preferences.EnableContentsFieldSearch);
+         Preferences.EnableContentsFieldSearch = boolValue;
+
          EditorGUILayout.BeginHorizontal();
          {
             boolValue = EditorGUILayout.Toggle("Check for Updates on Start", Preferences.CheckForUpdate);
