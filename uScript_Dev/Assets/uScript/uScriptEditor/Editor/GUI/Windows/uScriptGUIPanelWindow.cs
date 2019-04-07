@@ -10,6 +10,9 @@
 namespace Detox.Editor.GUI.Windows
 {
    using UnityEditor;
+#if !UNITY_5_0
+   using UnityEngine;
+#endif
 
    public class uScriptGUIPanelWindow : EditorWindow
    {
@@ -23,14 +26,35 @@ namespace Detox.Editor.GUI.Windows
          }
          set
          {
-            if (value != null) PanelType = value.GetType().ToString();
+            if (value != null)
+            {
+               PanelType = value.GetType().ToString();
+#if !UNITY_5_0
+               wantsMouseEnterLeaveWindow = true;
+#endif
+            }
             _panel = value;
          }
       }
 
       private void OnGUI()
       {
-         if (Panel != null) Panel.Draw();
+         if (Panel != null)
+         {
+#if !UNITY_5_0
+            if (Event.current.type == EventType.MouseDown.MouseEnterWindow)
+            {
+               if (this != EditorWindow.focusedWindow)
+               {
+                  // works around a bug with EditorGUILayout.TextField where values from different text fields can overwrite one another.
+                  // https://forum.unity.com/threads/textfields-become-soul-mates-and-show-the-same-text.106885/
+                  GUI.FocusControl( "" );
+               }
+            }
+#endif
+
+            Panel.Draw();
+         }
       }
 
       private void OnDestroy()
