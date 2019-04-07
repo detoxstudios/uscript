@@ -2889,7 +2889,7 @@ public sealed partial class uScript : EditorWindow
 
    private static bool SaveDenied()
    {
-      if (EditorApplication.isPlayingOrWillChangePlaymode)
+      if (!Preferences.AllowSaveInPlayMode && EditorApplication.isPlayingOrWillChangePlaymode)
       {
          EditorUtility.DisplayDialog("Unable to save", "The Unity Editor is in play mode, and the uScript graph cannot be saved at this time.", "Okay");
          return true;

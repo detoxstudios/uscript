@@ -180,6 +180,9 @@ namespace Detox.Editor.GUI.Windows
          boolValue = EditorGUILayout.Toggle("Search Fields in Contents Search", Preferences.EnableContentsFieldSearch);
          Preferences.EnableContentsFieldSearch = boolValue;
 
+         boolValue = EditorGUILayout.Toggle("Allow Saving in Play Mode", Preferences.AllowSaveInPlayMode);
+         Preferences.AllowSaveInPlayMode = boolValue;
+
          EditorGUILayout.BeginHorizontal();
          {
             boolValue = EditorGUILayout.Toggle("Check for Updates on Start", Preferences.CheckForUpdate);

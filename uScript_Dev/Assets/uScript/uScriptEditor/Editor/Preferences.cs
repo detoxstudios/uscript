@@ -296,6 +296,12 @@ namespace Detox.Editor
          set { EditorPrefs.SetBool("DetoxStudios.uScript.EnableContentsFieldSearch", value); }
       }
 
+      public static bool AllowSaveInPlayMode
+      {
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.AllowSaveInPlayMode"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.AllowSaveInPlayMode", value); }
+      }
+
       public static bool ExpandFavoritePanel
       {
          get { return EditorPrefs.GetBool("DetoxStudios.uScript.ExpandFavoritePanel"); }
@@ -661,6 +667,7 @@ namespace Detox.Editor
          SetDefault("EnableSceneWarning", true, force);
          SetDefault("EnableAttachOnSavePrompt", true, force);
          SetDefault("EnableContentsFieldSearch", true, force);
+         SetDefault("AllowSaveInPlayMode", false, force);
 
          SetDefault("PaletteVisible", true, force);
          SetDefault("ReferenceVisible", true, force);
