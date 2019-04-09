@@ -807,17 +807,17 @@ namespace Detox.ScriptEditor
                }
             }
 
-			if (true == includeDrivens)
-			{
-			   foreach (Driven d in logic.Drivens)
-			   {
+            if (true == includeDrivens)
+            {
+               foreach (Driven d in logic.Drivens)
+               {
                   if (d.UpdateMethodName == methodName)
                   {
                      p.End();
                      return true;
                   }
-			   }
-			}
+               }
+            }
          }
          else if (null != t)
          {
@@ -2482,7 +2482,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-		 foreach (LogicNode logicNode in m_Script.Logics)
+         foreach (LogicNode logicNode in m_Script.Logics)
          {
             foreach (Driven driven in logicNode.Drivens)
             {
@@ -2510,7 +2510,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-		 foreach (LogicNode logicNode in m_Script.Logics)
+         foreach (LogicNode logicNode in m_Script.Logics)
          {
             foreach (Driven driven in logicNode.Drivens)
             {
@@ -4035,7 +4035,10 @@ namespace Detox.ScriptEditor
          Profile profile = new Profile("RelayToMethod");
 
          //make sure any properties or variables connected to us are up to date
-         SyncSlaveConnections(receiver, receiver.Parameters);
+         List<Parameter> connections = new List<Parameter>();
+         connections.Add(receiver.Instance);
+         connections.AddRange(receiver.Parameters);
+         SyncSlaveConnections(receiver, connections.ToArray());
 
          Parameter returnParam = Parameter.Empty;
          string args = "";
@@ -5307,14 +5310,17 @@ namespace Detox.ScriptEditor
                   //we need to write the line for the property to refresh
                   if (argNode is LocalNode || argNode is OwnerConnection || argNode is ExternalConnection)
                   {
-                     if (argNode is LocalNode)
+                     if (!(node is EntityMethod && link.Destination.Anchor == "Instance"))
                      {
-                        LocalNode localNode = (LocalNode)argNode;
-                        SyncReferencedGameObject(localNode, localNode.Value);
-                     }
+                        if (argNode is LocalNode)
+                        {
+                           LocalNode localNode = (LocalNode)argNode;
+                           SyncReferencedGameObject(localNode, localNode.Value);
+                        }
 
-                     AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
-                     AddCSharpLine("");
+                        AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
+                        AddCSharpLine("");
+                     }
                   }
 
                   //if any of those links is a property node
@@ -5329,7 +5335,7 @@ namespace Detox.ScriptEditor
 
                         //If our node is an entity property
                         //we do nothing because it will refreshed automatically when its used
-                        if (node is EntityProperty) 
+                        if (node is EntityProperty || (node is EntityMethod && link.Destination.Anchor == "Instance")) 
                         {} // do nothing
                         else
                            //otherwise we fill the node with a new value
