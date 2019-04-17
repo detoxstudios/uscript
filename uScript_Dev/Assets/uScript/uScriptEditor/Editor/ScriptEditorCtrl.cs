@@ -25,6 +25,7 @@ namespace Detox.ScriptEditor
    using Graphics = Detox.Drawing.Graphics;
    using Object = System.Object;
    using System.Reflection;
+   using System.Text;
 
    public partial class ScriptEditorCtrl : ToolWindow
    {
@@ -1633,15 +1634,15 @@ namespace Detox.ScriptEditor
 
             LocalNode listNode = new LocalNode( "", type, "" );
 
-            string instances = "";
+            StringBuilder instances = new StringBuilder(Parameter.ArrayDelimeter.ToString());
 
             foreach ( LocalNode local in locals )
             {
-               instances += local.Value.Default + ", ";
+               instances.Append(local.Value.Default + Parameter.ArrayDelimeter);
             }
 
             Parameter value = listNode.Value;
-            value.Default = instances.Substring( 0, instances.Length - 2 );
+            value.Default = instances.ToString().Substring( 0, instances.Length - 1 );
             listNode.Value = value;
 
             listNode.Position = new Point( m_ContextCursor.X, m_ContextCursor.Y );
