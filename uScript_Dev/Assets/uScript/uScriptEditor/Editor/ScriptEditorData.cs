@@ -14,6 +14,8 @@ namespace Detox.Data.ScriptEditor
    using System.IO;
 
    using Detox.Drawing;
+   using System.Xml;
+   using System.Text;
 
    public class ScriptEditorData : ISerializable
    {
@@ -1199,19 +1201,54 @@ namespace Detox.Data.ScriptEditor
          Parameter value = (Parameter) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
+         if (serializer.TextMode)
+         {
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
 
-         writer.Write( value.Name );
-         writer.Write( value.FriendlyName );
-         writer.Write( value.Default );
-         writer.Write( value.Type );
-         writer.Write( value.Input );
-         writer.Write( value.Output );
-         writer.Write( value.State.ToString( ) );
-         writer.Write( value.ReferenceGuid != null ? value.ReferenceGuid : "" );
-         serializer.SetData( stream.ToArray( ) );
+            SavePropertiesToXml(value, writer);
+            writer.Flush();
 
-         writer.Close( );
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
+         }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
+
+            writer.Write( value.Name );
+            writer.Write( value.FriendlyName );
+            writer.Write( value.Default );
+            writer.Write( value.Type );
+            writer.Write( value.Input );
+            writer.Write( value.Output );
+            writer.Write( value.State.ToString( ) );
+            writer.Write( value.ReferenceGuid != null ? value.ReferenceGuid : "" );
+            serializer.SetData( stream.ToArray( ) );
+
+            writer.Close( );
+         }
+      }
+
+      public static void SavePropertiesToXml(Parameter value, XmlWriter writer)
+      {
+         writer.WriteElementString("Name", value.Name );
+         writer.WriteElementString("FriendlyName", value.FriendlyName);
+         string defaultValue = value.Default;
+         if (value.Type.Contains("[]")) defaultValue = defaultValue.Replace(Parameter.ArrayDelimeter.ToString(), ",");
+         writer.WriteElementString("Default", defaultValue);
+         writer.WriteElementString("Type", value.Type);
+         writer.WriteElementString("Input", value.Input.ToString());
+         writer.WriteElementString("Output", value.Output.ToString());
+         writer.WriteElementString("State", ((int)value.State).ToString());
+         writer.WriteElementString("ReferenceGuid", value.ReferenceGuid != null ? value.ReferenceGuid : "");
       }
    }
 
@@ -1322,25 +1359,51 @@ namespace Detox.Data.ScriptEditor
          Parameter []parameters = (Parameter[]) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
-
-         writer.Write( (int) parameters.Length );
-
-         foreach (Parameter p in parameters)
+         if (serializer.TextMode)
          {
-            writer.Write( p.Name );
-            writer.Write( p.FriendlyName );
-            writer.Write( p.Default );
-            writer.Write( p.Type );
-            writer.Write( p.Input );
-            writer.Write( p.Output );
-            writer.Write( p.State.ToString( ));
-            writer.Write( p.ReferenceGuid != null ? p.ReferenceGuid : "" );
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
+
+            foreach (Parameter p in parameters)
+            {
+               writer.WriteStartElement("Parameter");
+               ParameterSerializer.SavePropertiesToXml(p, writer);
+               writer.WriteEndElement();
+            }
+            writer.Flush();
+
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
          }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
 
-         serializer.SetData( stream.ToArray() );
+            writer.Write( (int) parameters.Length );
 
-         writer.Close( );
+            foreach (Parameter p in parameters)
+            {
+               writer.Write( p.Name );
+               writer.Write( p.FriendlyName );
+               writer.Write( p.Default );
+               writer.Write( p.Type );
+               writer.Write( p.Input );
+               writer.Write( p.Output );
+               writer.Write( p.State.ToString( ));
+               writer.Write( p.ReferenceGuid != null ? p.ReferenceGuid : "" );
+            }
+
+            serializer.SetData( stream.ToArray() );
+
+            writer.Close( );
+         }
       }
    }
 
@@ -1374,14 +1437,41 @@ namespace Detox.Data.ScriptEditor
          Plug value = (Plug) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
+         if (serializer.TextMode)
+         {
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
 
-         writer.Write( value.Name );
-         writer.Write( value.FriendlyName );
+            SavePropertiesToXml(value, writer);
+            writer.Flush();
 
-         serializer.SetData( stream.ToArray( ) );
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
 
-         writer.Close( );
+            writer.Close();
+         }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
+
+            writer.Write( value.Name );
+            writer.Write( value.FriendlyName );
+
+            serializer.SetData( stream.ToArray( ) );
+
+            writer.Close( );
+         }
+      }
+
+      public static void SavePropertiesToXml(Plug value, XmlWriter writer)
+      {
+         writer.WriteElementString("Name", value.Name );
+         writer.WriteElementString("FriendlyName", value.FriendlyName);
       }
    }
 
@@ -1420,23 +1510,49 @@ namespace Detox.Data.ScriptEditor
          Plug []plugs = (Plug[]) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
-
-         writer.Write( (int) plugs.Length );
-
-         foreach (Plug p in plugs)
+         if (serializer.TextMode)
          {
-            writer.Write( p.Name );
-            writer.Write( p.FriendlyName );
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
+
+            foreach (Plug p in plugs)
+            {
+               writer.WriteStartElement("Plug");
+               PlugSerializer.SavePropertiesToXml(p, writer);
+               writer.WriteEndElement();
+            }
+            writer.Flush();
+
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
          }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
 
-         serializer.SetData( stream.ToArray() );
+            writer.Write( (int) plugs.Length );
 
-         writer.Close( );
+            foreach (Plug p in plugs)
+            {
+               writer.Write( p.Name );
+               writer.Write( p.FriendlyName );
+            }
+
+            serializer.SetData( stream.ToArray() );
+
+            writer.Close( );
+         }
       }
    }
 
-	public class DrivenSerializer : ITypeSerializer
+    public class DrivenSerializer : ITypeSerializer
    {
       public int Version { get { return 3; } }
       public string SerializableType { get { return typeof(LogicNodeData.Driven).ToString( ); } }
@@ -1466,14 +1582,41 @@ namespace Detox.Data.ScriptEditor
          LogicNodeData.Driven value = (LogicNodeData.Driven) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
+         if (serializer.TextMode)
+         {
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
 
-         writer.Write( value.MethodName );
-         writer.Write( value.UpdateMethodName );
+            SavePropertiesToXml(value, writer);
+            writer.Flush();
 
-         serializer.SetData( stream.ToArray( ) );
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
 
-         writer.Close( );
+            writer.Close();
+         }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
+
+            writer.Write( value.MethodName );
+            writer.Write( value.UpdateMethodName );
+
+            serializer.SetData( stream.ToArray( ) );
+
+            writer.Close( );
+         }
+      }
+
+      public static void SavePropertiesToXml(LogicNodeData.Driven value, XmlWriter writer)
+      {
+         writer.WriteElementString("MethodName", value.MethodName);
+         writer.WriteElementString("UpdateMethodName", value.UpdateMethodName);
       }
    }
 
@@ -1512,19 +1655,45 @@ namespace Detox.Data.ScriptEditor
          LogicNodeData.Driven []drivens = (LogicNodeData.Driven[]) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
-
-         writer.Write( (int) drivens.Length );
-
-         foreach (LogicNodeData.Driven driven in drivens)
+         if (serializer.TextMode)
          {
-            writer.Write( driven.MethodName );
-            writer.Write( driven.UpdateMethodName );
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
+
+            foreach (LogicNodeData.Driven d in drivens)
+            {
+               writer.WriteStartElement("Driven");
+               DrivenSerializer.SavePropertiesToXml(d, writer);
+               writer.WriteEndElement();
+            }
+            writer.Flush();
+
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
          }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
 
-         serializer.SetData( stream.ToArray() );
+            writer.Write( (int) drivens.Length );
 
-         writer.Close( );
+            foreach (LogicNodeData.Driven driven in drivens)
+            {
+               writer.Write( driven.MethodName );
+               writer.Write( driven.UpdateMethodName );
+            }
+
+            serializer.SetData( stream.ToArray() );
+
+            writer.Close( );
+         }
       }
    }
 }

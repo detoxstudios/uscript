@@ -82,6 +82,35 @@ namespace Detox.Utility.Bxml
          }
       }      
 
+      public string GetString()
+      {
+         if ( m_Type == typeof(float).ToString( ) )
+         {
+            return Value.ToString();
+         }
+         else if ( m_Type == typeof(byte[]).ToString( ) )
+         {
+            return Convert.ToBase64String(m_Value);
+         }
+         else if ( m_Type == typeof(bool).ToString( ) )
+         {
+            return Value.ToString();
+         }
+         else if ( m_Type == typeof(int).ToString( ) )
+         {
+            return Value.ToString();
+         }
+         else if ( m_Type == typeof(string).ToString( ) )
+         {
+            System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding( );
+            string value = enc.GetString( m_Value, 0, (int) m_Value.Length );
+
+            return value.TrimEnd( new char[] { '\0' } );
+         }
+
+         return "Unrecognized value type for BxmlValue: " + m_Type;
+      }
+
       public void Write(BinaryWriter writer)
       {
          //writer.Write( m_Type.Length );
@@ -92,6 +121,11 @@ namespace Detox.Utility.Bxml
             writer.Write( m_Value.Length );
             writer.Write( m_Value );
          }
+      }
+
+      public void Write(XmlWriter writer)
+      {
+         if (m_Value != null && m_Value.Length > 0) writer.WriteValue(Value);
       }
 
       public void Read(BinaryReader reader)
@@ -133,6 +167,11 @@ namespace Detox.Utility.Bxml
          writer.Write( m_Name );
 
          m_Value.Write( writer );
+      }
+
+      public void Write(XmlWriter writer)
+      {
+         writer.WriteAttributeString(m_Name, m_Value.GetString());
       }
 
       public void Read(BinaryReader reader)
@@ -213,6 +252,34 @@ namespace Detox.Utility.Bxml
          foreach ( BxmlTag tag in m_Children )
          {
             count += tag.Write( writer );
+         }
+
+         return count;
+      }
+
+      public int Write(XmlWriter writer)
+      {
+         writer.WriteStartElement(m_Name);
+         foreach (BxmlAttribute attribute in m_Attributes)
+         {
+            attribute.Write(writer);
+         }
+
+         if (m_Children.Count == 0) m_Value.Write(writer);
+
+         WriteChildren(writer);
+
+         writer.WriteEndElement();
+
+         return m_Children.Count;
+      }
+
+      public int WriteChildren(XmlWriter writer)
+      {
+         int count = 0;
+         foreach (BxmlTag tag in m_Children)
+         {
+            count += tag.Write(writer);
          }
 
          return count;
@@ -379,6 +446,12 @@ namespace Detox.Utility.Bxml
          writer.Seek( 0, SeekOrigin.End );
 
          return true;
+      }
+
+      public bool Save(XmlWriter writer)
+      {
+         this.RootTag.AddAttribute("Version", CurrentVersion);
+         return this.RootTag.Write(writer) == this.RootTag.ChildTags.Count();
       }
    }
 }

@@ -24,6 +24,8 @@ namespace Detox.ScriptEditor
    using Detox.Utility;
 
    using UnityEngine;
+   using System.Xml;
+   using System.Text;
 
    public struct Plug
    {
@@ -4903,6 +4905,28 @@ namespace Detox.ScriptEditor
          return true;
       }
 
+      public bool WriteXml(string cacheName, StringBuilder sb)
+      {
+         XmlWriter writer = XmlWriter.Create(sb, new XmlWriterSettings()
+         {
+             Encoding = Encoding.Unicode
+         });
+         writer.WriteStartDocument();
+
+         ObjectSerializer serializer = new ObjectSerializer( true );
+         if ( false == serializer.Save(writer, ScriptEditorData) ) return false;
+         writer.WriteEndDocument();
+         writer.Flush();
+
+         if (null != cacheName)
+         {
+            cacheName = cacheName.RelativeAssetPath();
+            s_Cache[cacheName] = ScriptEditorData;
+         }
+
+         return true;
+      }
+
       public string ToBase64(string cacheName)
       {
          MemoryStream stream = new MemoryStream( );
@@ -4918,6 +4942,21 @@ namespace Detox.ScriptEditor
          stream.Close( );
 
          return base64;
+      }
+
+      public string ToXml(string cacheName)
+      {
+         StringBuilder sb = new StringBuilder("");
+
+         if ( false == WriteXml(cacheName, sb) ) 
+         {
+            Status.Error( "Could not write script data to a memory stream" );
+            return null;
+         }
+
+         string xml = sb.ToString().Replace("&lt;", "<").Replace("&gt;", ">");
+
+         return xml;
       }
 
       public bool OpenFromBase64(string cacheName, string name, string base64, bool queryCache)
@@ -5063,12 +5102,20 @@ namespace Detox.ScriptEditor
          return SaveTextFile(binaryFile, "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/");
       }
 
-      public bool Save(string binaryFile, string logicFile, string wrapperFile, bool saveForDebugging, bool stubCode)
+      public bool Save(string binaryFile, string logicFile, string wrapperFile, bool saveForDebugging, bool stubCode, bool textMode = false)
       {
          m_SavedForDebugging    = saveForDebugging;
          m_GeneratedCodeIsStale = false;
 
-         string base64 = ToBase64( binaryFile );
+         string text = "";
+         if (textMode)
+         {
+            text = ToXml(binaryFile);
+         }
+         else
+         {
+            text = "/*[[BEGIN BASE64\r\n" + ToBase64(binaryFile) + "\r\nEND BASE64]]*/";
+         }
 
          try
          {
@@ -5081,7 +5128,7 @@ namespace Detox.ScriptEditor
          }
 
          // save .uscript file
-         if (!SaveTextFile(binaryFile, "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/"))
+         if (!SaveTextFile(binaryFile, text))
          {
             Status.Error("Failed to write to " + binaryFile + ".");
             return false;

@@ -11,6 +11,7 @@ using Detox.Utility;
 //using Detox.Data.Model;
 
 using Detox.DirectX;
+using System.Xml;
 
 namespace Detox.Data
 {
@@ -43,6 +44,9 @@ namespace Detox.Data
       private int m_CurrentVersion = 0;
       public int CurrentVersion { get { return m_CurrentVersion; } }
 
+      private bool m_TextMode = false;
+      public bool TextMode { get { return m_TextMode; } }
+
       private static Hashtable m_TypeSerializers = new Hashtable( );
 
       public static void AddTypeSerializer(ITypeSerializer typeSerializer)
@@ -50,8 +54,10 @@ namespace Detox.Data
          m_TypeSerializers[ typeSerializer.SerializableType ] = typeSerializer;
       }
 
-      public ObjectSerializer( )
+      public ObjectSerializer( bool textMode = false )
       {
+         m_TextMode = textMode;
+
          AddTypeSerializer( new IntSerializer( ) );
          AddTypeSerializer( new ColorSerializer( ) );
          AddTypeSerializer( new HashtableSerializer( ) );
@@ -145,16 +151,40 @@ namespace Detox.Data
          return m_Bxml.Save( writer );
       }
 
+      public bool Save(XmlWriter writer, object data)
+      {
+         m_Bxml = new BinaryXml( "ObjectSerializer" );
+
+         SaveNamedObject( "Data", data );
+
+         return m_Bxml.Save( writer );
+      }
+
       public bool Save(string path, object data)
       {
          try
          {
-            StreamWriter output = new StreamWriter( path );
-            BinaryWriter writer = new BinaryWriter( output.BaseStream );
+            bool success = false;
+            if (m_TextMode)
+            {
+               XmlWriter writer = XmlWriter.Create( path, new XmlWriterSettings()
+               {
+                   Encoding = Encoding.Unicode
+               });
 
-            bool success = Save( writer, data );
+               success = Save( writer, data );
 
-            output.Close( );
+               writer.Close( );
+            }
+            else
+            {
+               StreamWriter output = new StreamWriter( path );
+               BinaryWriter writer = new BinaryWriter( output.BaseStream );
+
+               success = Save( writer, data );
+
+               output.Close( );
+            }
 
             return success;
          }
@@ -194,7 +224,7 @@ namespace Detox.Data
                //the array of a children
                m_Bxml.PushCurrentTag( tag );
 
-               int i, items = (int) tag.Value;
+               int i, items = tag.ChildTags.Count();
 
                array = new object[ items ];
 

@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections;
 using Detox.DirectX;
 using Detox.Utility;
+using System.Xml;
 
 namespace Detox.Data
 {
@@ -91,21 +92,50 @@ namespace Detox.Data
          UnityEngine.Keyframe []keyframes = (UnityEngine.Keyframe[]) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
-
-         writer.Write( (int) keyframes.Length );
-
-         foreach (UnityEngine.Keyframe keyframe in keyframes)
+         if (serializer.TextMode)
          {
-            writer.Write( keyframe.time );
-            writer.Write( keyframe.value );
-            writer.Write( keyframe.inTangent );
-            writer.Write( keyframe.outTangent );
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
+
+            foreach (UnityEngine.Keyframe keyframe in keyframes)
+            {
+               writer.WriteStartElement("Keyframe");
+               writer.WriteElementString("Time", keyframe.time.ToString());
+               writer.WriteElementString("Value", keyframe.value.ToString());
+               writer.WriteElementString("InTangent", keyframe.inTangent.ToString());
+               writer.WriteElementString("OutTangent", keyframe.outTangent.ToString());
+               writer.WriteEndElement();
+            }
+            writer.Flush();
+
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
          }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
 
-         serializer.SetData( stream.ToArray() );
+            writer.Write( (int) keyframes.Length );
 
-         writer.Close( );
+            foreach (UnityEngine.Keyframe keyframe in keyframes)
+            {
+               writer.Write( keyframe.time );
+               writer.Write( keyframe.value );
+               writer.Write( keyframe.inTangent );
+               writer.Write( keyframe.outTangent );
+            }
+
+            serializer.SetData( stream.ToArray() );
+
+            writer.Close( );
+         }
       }
    }
 
@@ -155,14 +185,36 @@ namespace Detox.Data
       public void Save(ObjectSerializer serializer, object data)
       {
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
+         if (serializer.TextMode)
+         {
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
 
-         writer.Write( data.GetType().AssemblyQualifiedName );
-         writer.Write( data.ToString( ) );
+            writer.WriteElementString("AssemblyQualifiedName", data.GetType().AssemblyQualifiedName);
+            writer.WriteElementString("Value", data.ToString());
+            writer.Flush();
 
-         serializer.SetData( stream.ToArray() );
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
 
-         writer.Close( );
+            writer.Close();
+         }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
+
+            writer.Write( data.GetType().AssemblyQualifiedName );
+            writer.Write( data.ToString( ) );
+
+            serializer.SetData( stream.ToArray() );
+
+            writer.Close( );
+         }
       }
    }
 
@@ -280,18 +332,44 @@ namespace Detox.Data
          string []strings = (string[]) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
-
-         writer.Write( (int) strings.Length );
-
-         foreach (string s in strings)
+         if (serializer.TextMode)
          {
-            writer.Write( s );
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
+
+            foreach (string s in strings)
+            {
+               writer.WriteStartElement("String");
+               writer.WriteElementString("Value", s);
+               writer.WriteEndElement();
+            }
+            writer.Flush();
+
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
          }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
 
-         serializer.SetData( stream.ToArray() );
+            writer.Write( (int) strings.Length );
 
-         writer.Close( );
+            foreach (string s in strings)
+            {
+               writer.Write( s );
+            }
+
+            serializer.SetData( stream.ToArray() );
+
+            writer.Close( );
+         }
       }
    }
 
@@ -362,22 +440,52 @@ namespace Detox.Data
          Detox.Data.Anim.AnimExportSettings []settings = (Detox.Data.Anim.AnimExportSettings[]) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
-
-         writer.Write( (int) settings.Length );
-
-         foreach (Detox.Data.Anim.AnimExportSettings setting in settings)
+         if (serializer.TextMode)
          {
-            writer.Write( setting.filename );
-            writer.Write( setting.id );
-            writer.Write( setting.fullRange );
-            writer.Write( setting.startTime );
-            writer.Write( setting.endTime );
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
+
+            foreach (Detox.Data.Anim.AnimExportSettings setting in settings)
+            {
+               writer.WriteStartElement("Setting");
+               writer.WriteElementString("Filename", setting.filename);
+               writer.WriteElementString("Id", setting.id.ToString());
+               writer.WriteElementString("FullRange", setting.fullRange.ToString());
+               writer.WriteElementString("StartTime", setting.startTime.ToString());
+               writer.WriteElementString("EndTime", setting.endTime.ToString());
+               writer.WriteEndElement();
+            }
+            writer.Flush();
+
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
          }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
 
-         serializer.SetData( stream.ToArray() );
+            writer.Write( (int) settings.Length );
 
-         writer.Close( );
+            foreach (Detox.Data.Anim.AnimExportSettings setting in settings)
+            {
+               writer.Write( setting.filename );
+               writer.Write( setting.id );
+               writer.Write( setting.fullRange );
+               writer.Write( setting.startTime );
+               writer.Write( setting.endTime );
+            }
+
+            serializer.SetData( stream.ToArray() );
+
+            writer.Close( );
+         }
       }
    }
 
@@ -460,29 +568,74 @@ namespace Detox.Data
       {
          Matrix matrix = (Matrix) data;
 
-         byte[] array = new byte[ 4 * 4 * 4 ];
+         MemoryStream stream = new MemoryStream( );
+         if (serializer.TextMode)
+         {
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
+
+            SavePropertiesToXml(matrix, writer);
+            writer.Flush();
+
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
+         }
+         else
+         {
+            byte[] array = new byte[ 4 * 4 * 4 ];
          
-         BitConverter.GetBytes( matrix.M11 ).CopyTo( array, 0 );
-         BitConverter.GetBytes( matrix.M12 ).CopyTo( array, 4 );
-         BitConverter.GetBytes( matrix.M13 ).CopyTo( array, 8 );
-         BitConverter.GetBytes( matrix.M14 ).CopyTo( array, 12 );
+            BitConverter.GetBytes( matrix.M11 ).CopyTo( array, 0 );
+            BitConverter.GetBytes( matrix.M12 ).CopyTo( array, 4 );
+            BitConverter.GetBytes( matrix.M13 ).CopyTo( array, 8 );
+            BitConverter.GetBytes( matrix.M14 ).CopyTo( array, 12 );
 
-         BitConverter.GetBytes( matrix.M21 ).CopyTo( array, 16 );
-         BitConverter.GetBytes( matrix.M22 ).CopyTo( array, 20 );
-         BitConverter.GetBytes( matrix.M23 ).CopyTo( array, 24 );
-         BitConverter.GetBytes( matrix.M24 ).CopyTo( array, 28 );
+            BitConverter.GetBytes( matrix.M21 ).CopyTo( array, 16 );
+            BitConverter.GetBytes( matrix.M22 ).CopyTo( array, 20 );
+            BitConverter.GetBytes( matrix.M23 ).CopyTo( array, 24 );
+            BitConverter.GetBytes( matrix.M24 ).CopyTo( array, 28 );
 
-         BitConverter.GetBytes( matrix.M31 ).CopyTo( array, 32 );
-         BitConverter.GetBytes( matrix.M32 ).CopyTo( array, 36 );
-         BitConverter.GetBytes( matrix.M33 ).CopyTo( array, 40 );
-         BitConverter.GetBytes( matrix.M34 ).CopyTo( array, 44 );
+            BitConverter.GetBytes( matrix.M31 ).CopyTo( array, 32 );
+            BitConverter.GetBytes( matrix.M32 ).CopyTo( array, 36 );
+            BitConverter.GetBytes( matrix.M33 ).CopyTo( array, 40 );
+            BitConverter.GetBytes( matrix.M34 ).CopyTo( array, 44 );
 
-         BitConverter.GetBytes( matrix.M41 ).CopyTo( array, 48 );
-         BitConverter.GetBytes( matrix.M42 ).CopyTo( array, 52 );
-         BitConverter.GetBytes( matrix.M43 ).CopyTo( array, 56 );
-         BitConverter.GetBytes( matrix.M44 ).CopyTo( array, 60 );
+            BitConverter.GetBytes( matrix.M41 ).CopyTo( array, 48 );
+            BitConverter.GetBytes( matrix.M42 ).CopyTo( array, 52 );
+            BitConverter.GetBytes( matrix.M43 ).CopyTo( array, 56 );
+            BitConverter.GetBytes( matrix.M44 ).CopyTo( array, 60 );
 
-         serializer.SetData( array );
+            serializer.SetData( array );
+         }
+      }
+
+      public static void SavePropertiesToXml(Matrix value, XmlWriter writer)
+      {
+         writer.WriteElementString("M11", value.M11.ToString());
+         writer.WriteElementString("M12", value.M11.ToString());
+         writer.WriteElementString("M13", value.M11.ToString());
+         writer.WriteElementString("M14", value.M11.ToString());
+
+         writer.WriteElementString("M21", value.M11.ToString());
+         writer.WriteElementString("M22", value.M11.ToString());
+         writer.WriteElementString("M23", value.M11.ToString());
+         writer.WriteElementString("M24", value.M11.ToString());
+
+         writer.WriteElementString("M31", value.M11.ToString());
+         writer.WriteElementString("M32", value.M11.ToString());
+         writer.WriteElementString("M33", value.M11.ToString());
+         writer.WriteElementString("M34", value.M11.ToString());
+
+         writer.WriteElementString("M41", value.M11.ToString());
+         writer.WriteElementString("M42", value.M11.ToString());
+         writer.WriteElementString("M43", value.M11.ToString());
+         writer.WriteElementString("M44", value.M11.ToString());
       }
    }
 
@@ -538,36 +691,62 @@ namespace Detox.Data
          Matrix []matrices = (Matrix[]) data;
 
          MemoryStream stream = new MemoryStream( );
-         BinaryWriter writer = new BinaryWriter( stream );
-
-         writer.Write( (int) matrices.Length );
-
-         foreach (Matrix matrix in matrices)
+         if (serializer.TextMode)
          {
-            writer.Write( matrix.M11 );
-            writer.Write( matrix.M12 );
-            writer.Write( matrix.M13 );
-            writer.Write( matrix.M14 );
+            XmlWriter writer = XmlWriter.Create( stream, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
 
-            writer.Write( matrix.M21 );
-            writer.Write( matrix.M22 );
-            writer.Write( matrix.M23 );
-            writer.Write( matrix.M24 );
+            foreach (Matrix matrix in matrices)
+            {
+               writer.WriteStartElement("Matrix");
+               MatrixSerializer.SavePropertiesToXml(matrix, writer);
+               writer.WriteEndElement();
+            }
+            writer.Flush();
 
-            writer.Write( matrix.M31 );
-            writer.Write( matrix.M32 );
-            writer.Write( matrix.M33 );
-            writer.Write( matrix.M34 );
+            string dataStream = Encoding.Unicode.GetString(stream.GetBuffer());
+            serializer.SetData(dataStream.Trim());
 
-            writer.Write( matrix.M41 );
-            writer.Write( matrix.M42 );
-            writer.Write( matrix.M43 );
-            writer.Write( matrix.M44 );
+            writer.Close();
          }
+         else
+         {
+            BinaryWriter writer = new BinaryWriter( stream );
 
-         serializer.SetData( stream.ToArray() );
+            writer.Write( (int) matrices.Length );
 
-         writer.Close( );
+            foreach (Matrix matrix in matrices)
+            {
+               writer.Write( matrix.M11 );
+               writer.Write( matrix.M12 );
+               writer.Write( matrix.M13 );
+               writer.Write( matrix.M14 );
+
+               writer.Write( matrix.M21 );
+               writer.Write( matrix.M22 );
+               writer.Write( matrix.M23 );
+               writer.Write( matrix.M24 );
+
+               writer.Write( matrix.M31 );
+               writer.Write( matrix.M32 );
+               writer.Write( matrix.M33 );
+               writer.Write( matrix.M34 );
+
+               writer.Write( matrix.M41 );
+               writer.Write( matrix.M42 );
+               writer.Write( matrix.M43 );
+               writer.Write( matrix.M44 );
+            }
+
+            serializer.SetData( stream.ToArray() );
+
+            writer.Close( );
+         }
       }
    }
 

@@ -3831,7 +3831,7 @@ public sealed partial class uScript : EditorWindow
       return Preferences.NestedScripts + "/" + fileName;
    }
 
-   private bool SaveGraph(ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
+   private bool SaveGraph(ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode, bool textMode = false)
    {
       bool result;
 
@@ -3840,7 +3840,7 @@ public sealed partial class uScript : EditorWindow
          string wrapperPath = this.GetGeneratedScriptPath(binaryPath);
          string logicPath = this.GetNestedScriptPath(binaryPath);
 
-         result = script.Save(binaryPath, logicPath, wrapperPath, generateDebugInfo, stubCode);
+         result = script.Save(binaryPath, logicPath, wrapperPath, generateDebugInfo, stubCode, textMode);
 
          if (result)
          {
