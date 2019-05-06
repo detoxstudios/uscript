@@ -92,6 +92,13 @@ namespace Detox.Data.ScriptEditor
          if ( serializer.CurrentVersion > 1 )
          {
             SceneName = (string) serializer.LoadNamedObject( "SceneName" );
+            if (serializer.TextMode)
+            {
+               // if in text mode, this may be an empty xml tag - if so, SceneName should just be "", so check that case
+               XmlDocument doc = new XmlDocument();
+               doc.LoadXml("<root>" + SceneName  + "</root>");
+               if (string.IsNullOrEmpty(doc.FirstChild.SelectSingleNode("SceneName").InnerText)) SceneName = "";
+            }
          }
 
          if ( serializer.CurrentVersion > 2 )
@@ -1109,53 +1116,25 @@ namespace Detox.Data.ScriptEditor
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
          Parameter parameter;
-
-         parameter.Name = reader.ReadString( );
-
-         if ( serializer.CurrentVersion > 1 )
+         if (serializer.TextMode)
          {
-            parameter.FriendlyName = reader.ReadString( );
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
+
+            LoadPropertiesFromXml(doc.FirstChild, out parameter);
          }
          else
          {
-            parameter.FriendlyName = parameter.Name;
-         }
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
 
-         parameter.Default = reader.ReadString( );
-         parameter.Type    = reader.ReadString( );
-         parameter.Input   = reader.ReadBoolean( );
-         parameter.Output  = reader.ReadBoolean( );
+            LoadPropertiesFromBinary(serializer, reader, out parameter);
 
-         if ( serializer.CurrentVersion < 5 )
-         {
-            if ( "Int"    == parameter.Type ) parameter.Type = typeof(int).ToString( );
-            if ( "String" == parameter.Type ) parameter.Type = typeof(String).ToString( );
-            if ( "Color"  == parameter.Type ) parameter.Type = typeof(UnityEngine.Color).ToString( );
-            if ( "Bool"   == parameter.Type ) parameter.Type = typeof(bool).ToString( );
-         }
-
-         if ( serializer.CurrentVersion > 2 )
-         {
-            parameter.State = (Parameter.VisibleState) Enum.Parse(typeof(Parameter.VisibleState), reader.ReadString( ));
-         }
-         else
-         {
-            parameter.State = Parameter.VisibleState.Visible;
-         }
-
-         if ( serializer.CurrentVersion > 3 )
-         {
-            parameter.ReferenceGuid = reader.ReadString( );
-         }
-         else
-         {
-            parameter.ReferenceGuid = "";
+            reader.Close( );
          }
 
          if ( serializer.CurrentVersion < 6 )
@@ -1191,9 +1170,64 @@ namespace Detox.Data.ScriptEditor
             }
          }
 
-         reader.Close( );
-
          return parameter;
+      }
+      
+      public static void LoadPropertiesFromXml(XmlNode root, out Parameter parameter)
+      {
+         parameter.Name          = root.SelectSingleNode("Name").InnerText;
+         parameter.FriendlyName  = root.SelectSingleNode("FriendlyName").InnerText;
+         parameter.Default       = root.SelectSingleNode("Default").InnerText;
+         parameter.Type          = root.SelectSingleNode("Type").InnerText;
+         parameter.Input         = bool.Parse(root.SelectSingleNode("Input").InnerText);
+         parameter.Output        = bool.Parse(root.SelectSingleNode("Output").InnerText);
+         parameter.State         = (Parameter.VisibleState)Enum.Parse(typeof(Parameter.VisibleState), root.SelectSingleNode("State").InnerText);
+         parameter.ReferenceGuid = root.SelectSingleNode("ReferenceGuid").InnerText;
+      }
+    
+      public static void LoadPropertiesFromBinary(ObjectSerializer serializer, BinaryReader reader, out Parameter parameter)
+      {
+         parameter.Name = reader.ReadString( );
+
+         if ( serializer.CurrentVersion > 1 )
+         {
+            parameter.FriendlyName = reader.ReadString( );
+         }
+         else
+         {
+            parameter.FriendlyName = parameter.Name;
+         }
+
+         parameter.Default = reader.ReadString( );
+         parameter.Type    = reader.ReadString( );
+         parameter.Input   = reader.ReadBoolean( );
+         parameter.Output  = reader.ReadBoolean( );
+                
+         if ( serializer.CurrentVersion < 5 )
+         {
+            if ( "Int"    == parameter.Type ) parameter.Type = typeof(int).ToString( );
+            if ( "String" == parameter.Type ) parameter.Type = typeof(String).ToString( );
+            if ( "Color"  == parameter.Type ) parameter.Type = typeof(UnityEngine.Color).ToString( );
+            if ( "Bool"   == parameter.Type ) parameter.Type = typeof(bool).ToString( );
+         }
+
+         if ( serializer.CurrentVersion > 2 )
+         {
+            parameter.State = (Parameter.VisibleState) Enum.Parse(typeof(Parameter.VisibleState), reader.ReadString( ));
+         }
+         else
+         {
+            parameter.State = Parameter.VisibleState.Visible;
+         }
+
+         if ( serializer.CurrentVersion > 3 )
+         {
+            parameter.ReferenceGuid = reader.ReadString( );
+         }
+         else
+         {
+            parameter.ReferenceGuid = "";
+         }
       }
 
       public void Save(ObjectSerializer serializer, object data)
@@ -1223,14 +1257,7 @@ namespace Detox.Data.ScriptEditor
          {
             BinaryWriter writer = new BinaryWriter( stream );
 
-            writer.Write( value.Name );
-            writer.Write( value.FriendlyName );
-            writer.Write( value.Default );
-            writer.Write( value.Type );
-            writer.Write( value.Input );
-            writer.Write( value.Output );
-            writer.Write( value.State.ToString( ) );
-            writer.Write( value.ReferenceGuid != null ? value.ReferenceGuid : "" );
+            SavePropertiesToBinary(value, writer);
             serializer.SetData( stream.ToArray( ) );
 
             writer.Close( );
@@ -1250,6 +1277,18 @@ namespace Detox.Data.ScriptEditor
          writer.WriteElementString("State", ((int)value.State).ToString());
          writer.WriteElementString("ReferenceGuid", value.ReferenceGuid != null ? value.ReferenceGuid : "");
       }
+      
+      public static void SavePropertiesToBinary(Parameter value, BinaryWriter writer)
+      {
+         writer.Write( value.Name );
+         writer.Write( value.FriendlyName );
+         writer.Write( value.Default );
+         writer.Write( value.Type );
+         writer.Write( value.Input );
+         writer.Write( value.Output );
+         writer.Write( value.State.ToString( ) );
+         writer.Write( value.ReferenceGuid != null ? value.ReferenceGuid : "" );
+      }
    }
 
    public class ParameterArraySerializer : ITypeSerializer
@@ -1262,94 +1301,75 @@ namespace Detox.Data.ScriptEditor
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
-         int i, count = reader.ReadInt32( );
+         Parameter []parameters;
 
-         Parameter []parameters = new Parameter[ count ];
-
-         for ( i = 0; i < count; i++ )
+         if (serializer.TextMode)
          {
-            parameters[ i ].Name    = reader.ReadString( );
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
 
-            if ( serializer.CurrentVersion > 1 )
-            {
-               parameters[ i ].FriendlyName = reader.ReadString( );
-            }
-            else
-            {
-               parameters[ i ].FriendlyName = parameters[ i ].Name;
-            }
+            var parameterNodes = doc.SelectNodes("//Parameter");
+            parameters = new Parameter[parameterNodes.Count];
+            int index = 0;
 
-            parameters[ i ].Default = reader.ReadString( );
-            parameters[ i ].Type    = reader.ReadString( );
-            parameters[ i ].Input   = reader.ReadBoolean( );
-            parameters[ i ].Output  = reader.ReadBoolean( );
-
-            if ( serializer.CurrentVersion < 5 )
+            foreach (XmlNode node in parameterNodes)
             {
-               if ( "Int"    == parameters[ i ].Type ) parameters[ i ].Type = typeof(int).ToString( );
-               if ( "String" == parameters[ i ].Type ) parameters[ i ].Type = typeof(String).ToString( );
-               if ( "Color"  == parameters[ i ].Type ) parameters[ i ].Type = typeof(UnityEngine.Color).ToString( );
-               if ( "Bool"   == parameters[ i ].Type ) parameters[ i ].Type = typeof(bool).ToString( );
-            }
-
-            if ( serializer.CurrentVersion > 2 )
-            {
-               parameters[ i ].State = (Parameter.VisibleState) Enum.Parse(typeof(Parameter.VisibleState), reader.ReadString( ));
-            }
-            else
-            {
-               parameters[ i ].State = Parameter.VisibleState.Visible;
-            }
-
-            if ( serializer.CurrentVersion > 3 )
-            {
-               parameters[ i ].ReferenceGuid = reader.ReadString( );
-            }
-            else
-            {
-               parameters[ i ].ReferenceGuid = "";
-            }
-
-            if ( serializer.CurrentVersion < 7 )
-            {
-               if ( parameters[i].Type.Contains("[]") )
-               {
-                  parameters[i].Default = parameters[i].Default.Replace( ',', Parameter.ArrayDelimeter );
-               }
-            }
-
-            if ( serializer.CurrentVersion < 8 )
-            {
-               if ( parameters[i].Type.Contains("[]") && parameters[i].Default.Length > 0 )
-               {
-                  parameters[i].Default = Parameter.ArrayDelimeter + parameters[i].Default;
-               }
-            }
-
-            if ( serializer.CurrentVersion < 9 )
-            {
-               if (parameters[i].Type == typeof(UnityEngine.LayerMask).ToString())
-               {
-                  try
-                  {
-                     //convert old layer masks to bit shifted values
-                     Int32 index = Int32.Parse(parameters[i].Default);
-                     index = 1 << index;
-                     
-                     parameters[i].Default = index.ToString();
-                  }
-                  catch (Exception)
-                  {}
-               }
+               ParameterSerializer.LoadPropertiesFromXml(node, out parameters[ index ]);
+               index++;
             }
          }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
 
-         reader.Close( );
+            int i, count = reader.ReadInt32( );
+
+            parameters = new Parameter[ count ];
+
+            for ( i = 0; i < count; i++ )
+            {
+               ParameterSerializer.LoadPropertiesFromBinary(serializer, reader, out parameters[ i ]);
+
+               if ( serializer.CurrentVersion < 7 )
+               {
+                  if ( parameters[i].Type.Contains("[]") )
+                  {
+                     parameters[i].Default = parameters[i].Default.Replace( ',', Parameter.ArrayDelimeter );
+                  }
+               }
+
+               if ( serializer.CurrentVersion < 8 )
+               {
+                  if ( parameters[i].Type.Contains("[]") && parameters[i].Default.Length > 0 )
+                  {
+                     parameters[i].Default = Parameter.ArrayDelimeter + parameters[i].Default;
+                  }
+               }
+               
+               if ( serializer.CurrentVersion < 9 )
+               {
+                  if (parameters[i].Type == typeof(UnityEngine.LayerMask).ToString())
+                  {
+                     try
+                     {
+                        //convert old layer masks to bit shifted values
+                        Int32 index = Int32.Parse(parameters[i].Default);
+                        index = 1 << index;
+                     
+                        parameters[i].Default = index.ToString();
+                     }
+                     catch (Exception)
+                     {}
+                  }
+               }
+            }
+
+            reader.Close( );
+         }
 
          return parameters;
       }
@@ -1390,14 +1410,7 @@ namespace Detox.Data.ScriptEditor
 
             foreach (Parameter p in parameters)
             {
-               writer.Write( p.Name );
-               writer.Write( p.FriendlyName );
-               writer.Write( p.Default );
-               writer.Write( p.Type );
-               writer.Write( p.Input );
-               writer.Write( p.Output );
-               writer.Write( p.State.ToString( ));
-               writer.Write( p.ReferenceGuid != null ? p.ReferenceGuid : "" );
+               ParameterSerializer.SavePropertiesToBinary(p, writer);
             }
 
             serializer.SetData( stream.ToArray() );
@@ -1417,19 +1430,40 @@ namespace Detox.Data.ScriptEditor
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
          Plug plug;
+         if (serializer.TextMode)
+         {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
 
-         plug.Name = reader.ReadString( );
-         plug.FriendlyName = reader.ReadString( );
+            LoadPropertiesFromXml(doc.FirstChild, out plug);
+         }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
 
-         reader.Close( );
+            LoadPropertiesFromBinary(reader, out plug);
+
+            reader.Close( );
+         }
 
          return plug;
+      }
+
+      public static void LoadPropertiesFromXml(XmlNode root, out Plug plug)
+      {
+         plug.Name         = root.SelectSingleNode("Name").InnerText;
+         plug.FriendlyName = root.SelectSingleNode("FriendlyName").InnerText;
+      }
+    
+      public static void LoadPropertiesFromBinary(BinaryReader reader, out Plug plug)
+      {
+         plug.Name = reader.ReadString( );
+         plug.FriendlyName = reader.ReadString( );
       }
 
       public void Save(ObjectSerializer serializer, object data)
@@ -1459,8 +1493,7 @@ namespace Detox.Data.ScriptEditor
          {
             BinaryWriter writer = new BinaryWriter( stream );
 
-            writer.Write( value.Name );
-            writer.Write( value.FriendlyName );
+            SavePropertiesToBinary(value, writer);
 
             serializer.SetData( stream.ToArray( ) );
 
@@ -1472,6 +1505,12 @@ namespace Detox.Data.ScriptEditor
       {
          writer.WriteElementString("Name", value.Name );
          writer.WriteElementString("FriendlyName", value.FriendlyName);
+      }
+
+      public static void SavePropertiesToBinary(Plug value, BinaryWriter writer)
+      {
+         writer.Write( value.Name );
+         writer.Write( value.FriendlyName );
       }
    }
 
@@ -1485,22 +1524,42 @@ namespace Detox.Data.ScriptEditor
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
+        
+         Plug []plugs;
 
-         int i, count = reader.ReadInt32( );
-
-         Plug []plugs = new Plug[ count ];
-
-         for ( i = 0; i < count; i++ )
+         if (serializer.TextMode)
          {
-            plugs[ i ].Name         = reader.ReadString( );
-            plugs[ i ].FriendlyName = reader.ReadString( );
-         }
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
 
-         reader.Close( );
+            var plugNodes = doc.SelectNodes("//Plug");
+            plugs = new Plug[plugNodes.Count];
+            int index = 0;
+
+            foreach (XmlNode node in plugNodes)
+            {
+               PlugSerializer.LoadPropertiesFromXml(node, out plugs[ index ]);
+               index++;
+            }
+         }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
+
+            int i, count = reader.ReadInt32( );
+
+            plugs = new Plug[ count ];
+
+            for ( i = 0; i < count; i++ )
+            {
+               PlugSerializer.LoadPropertiesFromBinary(reader, out plugs[ i ]);
+            }
+
+            reader.Close( );
+         }
 
          return plugs;
       }
@@ -1541,8 +1600,7 @@ namespace Detox.Data.ScriptEditor
 
             foreach (Plug p in plugs)
             {
-               writer.Write( p.Name );
-               writer.Write( p.FriendlyName );
+               PlugSerializer.SavePropertiesToBinary(p, writer);
             }
 
             serializer.SetData( stream.ToArray() );
@@ -1562,19 +1620,40 @@ namespace Detox.Data.ScriptEditor
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
          LogicNodeData.Driven driven;
+         if (serializer.TextMode)
+         {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
 
-         driven.MethodName = reader.ReadString( );
-         driven.UpdateMethodName = reader.ReadString( );
+            LoadPropertiesFromXml(doc.FirstChild, out driven);
+         }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
 
-         reader.Close( );
+            LoadPropertiesFromBinary(reader, out driven);
+
+            reader.Close( );
+         }
 
          return driven;
+      }
+
+      public static void LoadPropertiesFromXml(XmlNode root, out LogicNodeData.Driven driven)
+      {
+         driven.MethodName       = root.SelectSingleNode("MethodName").InnerText;
+         driven.UpdateMethodName = root.SelectSingleNode("UpdateMethodName").InnerText;
+      }
+    
+      public static void LoadPropertiesFromBinary(BinaryReader reader, out LogicNodeData.Driven driven)
+      {
+         driven.MethodName = reader.ReadString( );
+         driven.UpdateMethodName = reader.ReadString( );
       }
 
       public void Save(ObjectSerializer serializer, object data)
@@ -1604,8 +1683,7 @@ namespace Detox.Data.ScriptEditor
          {
             BinaryWriter writer = new BinaryWriter( stream );
 
-            writer.Write( value.MethodName );
-            writer.Write( value.UpdateMethodName );
+            SavePropertiesToBinary(value, writer);
 
             serializer.SetData( stream.ToArray( ) );
 
@@ -1617,6 +1695,12 @@ namespace Detox.Data.ScriptEditor
       {
          writer.WriteElementString("MethodName", value.MethodName);
          writer.WriteElementString("UpdateMethodName", value.UpdateMethodName);
+      }
+
+      public static void SavePropertiesToBinary(LogicNodeData.Driven value, BinaryWriter writer)
+      {
+         writer.Write( value.MethodName );
+         writer.Write( value.UpdateMethodName );
       }
    }
 
@@ -1630,22 +1714,41 @@ namespace Detox.Data.ScriptEditor
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
-         int i, count = reader.ReadInt32( );
-
-         LogicNodeData.Driven []drivens = new LogicNodeData.Driven[ count ];
-
-         for ( i = 0; i < count; i++ )
+         LogicNodeData.Driven []drivens;
+         if (serializer.TextMode)
          {
-            drivens[ i ].MethodName       = reader.ReadString( );
-            drivens[ i ].UpdateMethodName = reader.ReadString( );
-         }
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
 
-         reader.Close( );
+            var drivenNodes = doc.SelectNodes("//Driven");
+            drivens = new LogicNodeData.Driven[drivenNodes.Count];
+            int index = 0;
+
+            foreach (XmlNode node in drivenNodes)
+            {
+               DrivenSerializer.LoadPropertiesFromXml(node, out drivens[ index ]);
+               index++;
+            }
+         }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
+
+            int i, count = reader.ReadInt32( );
+
+            drivens = new LogicNodeData.Driven[ count ];
+
+            for ( i = 0; i < count; i++ )
+            {
+               DrivenSerializer.LoadPropertiesFromBinary(reader, out drivens[ i ]);
+            }
+
+            reader.Close( );
+         }
 
          return drivens;
       }
@@ -1686,8 +1789,7 @@ namespace Detox.Data.ScriptEditor
 
             foreach (LogicNodeData.Driven driven in drivens)
             {
-               writer.Write( driven.MethodName );
-               writer.Write( driven.UpdateMethodName );
+               DrivenSerializer.SavePropertiesToBinary(driven, writer);
             }
 
             serializer.SetData( stream.ToArray() );

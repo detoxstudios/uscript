@@ -4889,6 +4889,41 @@ namespace Detox.ScriptEditor
          return true;
       }
 
+      public bool ReadXml(string cacheName, string xml, bool queryCache)
+      {
+         ScriptEditorData cachedData;
+
+         Profile p;
+
+         if( true == queryCache && true == QueryCache( cacheName, out cachedData ) )
+         {
+            p = new Profile( "Read Cache " + cacheName );
+            ScriptEditorData = cachedData as ScriptEditorData;
+         }
+         else
+         {
+            p = new Profile("Read " + cacheName);
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            object data = null;
+
+            ObjectSerializer serializer = new ObjectSerializer( true );
+            if ( false == serializer.Load(doc, out data) ) return false;
+
+            ScriptEditorData readData = data as ScriptEditorData;
+            if ( null == readData ) return false;
+
+            ScriptEditorData = data as ScriptEditorData;
+
+            if (null != cacheName) s_Cache[cacheName.RelativeAssetPath()] = data as ScriptEditorData;
+            //VerifyAllLinks( );
+         }
+
+          p.End();
+
+         return true;
+      }
+
       public bool Write(string cacheName, MemoryStream stream)
       {
          BinaryWriter writer = new BinaryWriter( stream );
@@ -4987,6 +5022,30 @@ namespace Detox.ScriptEditor
          }
       }
 
+      public bool OpenFromXml(string cacheName, string name, string xml, bool queryCache)
+      {
+         try
+         {
+            Profile p = new Profile( "Open from Xml " + cacheName );
+
+            if ( false == ReadXml(cacheName, xml, queryCache) ) 
+            {
+               Status.Error( "Failed to load " + name );
+               return false;
+            }
+
+            m_Name = name;
+            p.End();
+
+            return true;
+         }
+         catch (Exception e)
+         {
+            Status.Error( "Failed to load " + name + ". Exception: " + e.Message );
+            return false;
+         }
+      }
+
       public bool Open(string fullPath)
       {
          StreamReader streamReader = null;
@@ -5017,9 +5076,17 @@ namespace Detox.ScriptEditor
                {
                   const string OtherStart = "/*[[BEGIN BASE64\n";
                   const string OtherEnd = "\nEND BASE64]]*/";
-                  contents = contents.Substring( contents.IndexOf( OtherStart, StringComparison.Ordinal ) );
-                  contents = contents.Substring( OtherStart.Length );
-                  contents = contents.Substring( 0, contents.Length - OtherEnd.Length );
+                  if( contents.IndexOf( OtherStart, StringComparison.Ordinal ) == -1 )
+                  {
+                     // couldn't find binary headers, this must be an xml
+                     return this.OpenFromXml(fullPath, Path.GetFileName(fullPath), contents, false);
+                  }
+                  else
+                  {
+                     contents = contents.Substring( contents.IndexOf( OtherStart, StringComparison.Ordinal ) );
+                     contents = contents.Substring( OtherStart.Length );
+                     contents = contents.Substring( 0, contents.Length - OtherEnd.Length );
+                  }
                }
                else
                {
@@ -5028,9 +5095,7 @@ namespace Detox.ScriptEditor
                   contents = contents.Substring( 0, contents.Length - End.Length );
                }
 
-               var result = this.OpenFromBase64(fullPath, Path.GetFileName(fullPath), contents, false);
-
-               return result;
+               return this.OpenFromBase64(fullPath, Path.GetFileName(fullPath), contents, false);
             }
          }
          catch (Exception e)

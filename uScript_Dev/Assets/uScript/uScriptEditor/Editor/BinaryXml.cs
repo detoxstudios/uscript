@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
-using System.Collections;
+using System.Xml;
 
 namespace Detox.Utility.Bxml
 {
@@ -139,6 +138,18 @@ namespace Detox.Utility.Bxml
             m_Value = reader.ReadBytes( length );
          }
       }
+
+      public void Read(string value)
+      {
+         //writer.Write( m_Type.Length );
+         m_Type = "System.String";
+       
+         if ( "" != m_Type )
+         {  
+            System.Text.ASCIIEncoding enc = new System.Text.ASCIIEncoding( );
+            m_Value = enc.GetBytes( value as string );
+         }
+      }
    }
 
    public class BxmlAttribute
@@ -179,6 +190,13 @@ namespace Detox.Utility.Bxml
          m_Name = reader.ReadString( );
 
          m_Value.Read( reader );
+      }
+      
+      public void Read(XmlAttribute attribute)
+      {
+         m_Name = attribute.Name;
+ 
+         m_Value.Read(attribute.Value);
       }
    }
    
@@ -221,6 +239,27 @@ namespace Detox.Utility.Bxml
          }
 
          return null;
+      }
+
+      public int GetAttributeInt(string name)
+      {
+         foreach ( BxmlAttribute attribute in m_Attributes )
+         {
+            if ( attribute.Name == name )
+            {
+               if (attribute.Value.GetType() == typeof(int))
+               {
+                  return (int)attribute.Value;
+               }
+               else if (attribute.Value.GetType() == typeof(string))
+               {
+                  int result;
+                  if (int.TryParse(attribute.Value as string, out result)) return result;
+               }
+            }
+         }
+
+         return -1;
       }
 
       public BxmlTag AddChild(string name)
@@ -312,6 +351,37 @@ namespace Detox.Utility.Bxml
             m_Children.Add( tag );
          }
       }
+
+      public void Read(XmlElement node)
+      {
+         m_Name = node.Name;
+
+         foreach (XmlAttribute attrib in node.Attributes)
+         {
+            BxmlAttribute attribute = new BxmlAttribute();
+            attribute.Read(attrib);
+
+            m_Attributes.Add(attribute);
+         }
+
+         if (node.HasChildNodes)
+         {
+            if (node.FirstChild.NodeType == XmlNodeType.Text)
+            {
+               m_Value.Read(node.InnerXml);
+            }
+            else
+            {
+               foreach (XmlElement child in node.ChildNodes)
+               {
+                  BxmlTag tag = new BxmlTag();
+                  tag.Read(child);
+
+                  m_Children.Add(tag);
+               }
+            }
+         }
+      }
    }
 
    public class BinaryXml
@@ -391,6 +461,24 @@ namespace Detox.Utility.Bxml
          PushCurrentTag( rootTag );
 
          return true;
+      }
+
+      public bool Load(XmlDocument doc)
+      {
+         XmlElement docTag = doc.DocumentElement;
+         int version = -1;
+         if (int.TryParse(docTag.GetAttribute("Version"), out version))
+         {
+            BxmlTag rootTag = new BxmlTag( );
+            rootTag.Read( docTag );
+
+            m_TagStack.Clear( );
+            PushCurrentTag( rootTag );
+            
+            return true;
+         }
+
+         return false;
       }
 
       public bool Save(string path)

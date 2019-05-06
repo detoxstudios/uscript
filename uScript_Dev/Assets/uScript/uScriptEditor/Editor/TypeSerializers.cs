@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Collections;
@@ -20,6 +19,8 @@ namespace Detox.Data
          object value;
          serializer.GetData( out value );
       
+         if (serializer.TextMode) return int.Parse(value as string);
+
          return (int) value;
       }
 
@@ -66,24 +67,48 @@ namespace Detox.Data
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
-         int i, count = reader.ReadInt32( );
-
-         UnityEngine.Keyframe []keyframes = new UnityEngine.Keyframe[ count ];
-
-         for ( i = 0; i < count; i++ )
+         UnityEngine.Keyframe []keyframes;
+         if (serializer.TextMode)
          {
-            keyframes[ i ].time      = reader.ReadSingle( );
-            keyframes[ i ].value     = reader.ReadSingle( );
-            keyframes[ i ].inTangent = reader.ReadSingle( );
-            keyframes[ i ].outTangent= reader.ReadSingle( );
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
+
+            var keyframeNodes = doc.SelectNodes("//Keyframe");
+            keyframes = new UnityEngine.Keyframe[keyframeNodes.Count];
+            int index = 0;
+
+            foreach (XmlNode node in keyframeNodes)
+            {
+               keyframes[ index ].time      = Single.Parse(node.SelectSingleNode("Time").InnerText);
+               keyframes[ index ].value     = Single.Parse(node.SelectSingleNode("Value").InnerText);
+               keyframes[ index ].inTangent = Single.Parse(node.SelectSingleNode("InTangent").InnerText);
+               keyframes[ index ].outTangent= Single.Parse(node.SelectSingleNode("OutTangent").InnerText);
+               index++;
+            }
+         }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
+                
+            int i, count = reader.ReadInt32( );
+
+            keyframes = new UnityEngine.Keyframe[ count ];
+
+            for ( i = 0; i < count; i++ )
+            {
+               keyframes[ i ].time      = reader.ReadSingle( );
+               keyframes[ i ].value     = reader.ReadSingle( );
+               keyframes[ i ].inTangent = reader.ReadSingle( );
+               keyframes[ i ].outTangent= reader.ReadSingle( );
+            }
+
+            reader.Close( );
          }
 
-         reader.Close( );
          return keyframes;
       }
 
@@ -169,15 +194,28 @@ namespace Detox.Data
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
+
+         string type, enumValue;
+         if (serializer.TextMode)
+         {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
+
+            type      = doc.FirstChild.SelectSingleNode("AssemblyQualifiedName").InnerText;
+            enumValue = doc.FirstChild.SelectSingleNode("Value").InnerText;
+         }
+         else
+         {
+            byte [] data = value as byte[];
       
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
 
-         string type  = reader.ReadString( );
-         string enumValue = reader.ReadString( );
+            type  = reader.ReadString( );
+            enumValue = reader.ReadString( );
 
-         reader.Close( );
+            reader.Close( );
+         }
 
          return Enum.Parse(Type.GetType(type), enumValue);
       }
@@ -228,6 +266,8 @@ namespace Detox.Data
          object value;
          serializer.GetData( out value );
       
+         if (serializer.TextMode) return float.Parse(value as string);
+
          return (float) value;
       }
 
@@ -268,6 +308,8 @@ namespace Detox.Data
          object value;
          serializer.GetData( out value );
       
+         if (serializer.TextMode) return bool.Parse(value as string);
+
          return (bool) value;
       }
 
@@ -308,21 +350,41 @@ namespace Detox.Data
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
-         int i, count = reader.ReadInt32( );
-
-         string []strings = new string[ count ];
-
-         for ( i = 0; i < count; i++ )
+         string []strings;
+         if (serializer.TextMode)
          {
-            strings[ i ] = reader.ReadString( );
-         }
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
 
-         reader.Close( );
+            var stringNodes = doc.SelectNodes("//String");
+            strings = new string[stringNodes.Count];
+            int index = 0;
+
+            foreach (XmlNode node in stringNodes)
+            {
+               strings[ index ] = node.SelectSingleNode("Value").InnerText;
+               index++;
+            }
+         }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
+
+            int i, count = reader.ReadInt32( );
+
+            strings = new string[ count ];
+
+            for ( i = 0; i < count; i++ )
+            {
+               strings[ i ] = reader.ReadString( );
+            }
+
+            reader.Close( );
+         }
 
          return strings;
       }
@@ -413,25 +475,50 @@ namespace Detox.Data
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
-         int i, count = reader.ReadInt32( );
-
-         Detox.Data.Anim.AnimExportSettings []settings = new Detox.Data.Anim.AnimExportSettings[ count ];
-
-         for ( i = 0; i < count; i++ )
+         Detox.Data.Anim.AnimExportSettings []settings;
+         if (serializer.TextMode)
          {
-            settings[ i ].filename   = reader.ReadString( );
-            settings[ i ].id         = reader.ReadInt32( );
-            settings[ i ].fullRange  = reader.ReadInt32( );
-            settings[ i ].startTime  = reader.ReadInt32( );
-            settings[ i ].endTime    = reader.ReadInt32( );
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
+
+            var settingNodes = doc.SelectNodes("//Setting");
+            settings = new Detox.Data.Anim.AnimExportSettings[settingNodes.Count];
+            int index = 0;
+
+            foreach (XmlNode node in settingNodes)
+            {
+               settings[ index ].filename  = node.SelectSingleNode("Filename").InnerText;
+               settings[ index ].id        = int.Parse(node.SelectSingleNode("Id").InnerText);
+               settings[ index ].fullRange = int.Parse(node.SelectSingleNode("FullRange").InnerText);
+               settings[ index ].startTime = int.Parse(node.SelectSingleNode("StartTime").InnerText);
+               settings[ index ].endTime   = int.Parse(node.SelectSingleNode("EndTime").InnerText);
+               index++;
+            }
+         }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
+
+            int i, count = reader.ReadInt32( );
+
+            settings = new Detox.Data.Anim.AnimExportSettings[ count ];
+
+            for ( i = 0; i < count; i++ )
+            {
+               settings[ i ].filename   = reader.ReadString( );
+               settings[ i ].id         = reader.ReadInt32( );
+               settings[ i ].fullRange  = reader.ReadInt32( );
+               settings[ i ].startTime  = reader.ReadInt32( );
+               settings[ i ].endTime    = reader.ReadInt32( );
+            }
+
+            reader.Close( );
          }
 
-         reader.Close( );
          return settings;
       }
 
@@ -501,12 +588,26 @@ namespace Detox.Data
          object value;
          
          serializer.GetData( out value );
-         byte[] data = value as byte[];
 
-         color.r = BitConverter.ToSingle( data, 0 );
-         color.g = BitConverter.ToSingle( data, 4 );
-         color.b = BitConverter.ToSingle( data, 8 );
-         color.a = BitConverter.ToSingle( data, 12 );
+         if (serializer.TextMode)
+         {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
+
+            color.r = float.Parse(doc.FirstChild.SelectSingleNode("R").InnerText);
+            color.g = float.Parse(doc.FirstChild.SelectSingleNode("G").InnerText);
+            color.b = float.Parse(doc.FirstChild.SelectSingleNode("B").InnerText);
+            color.a = float.Parse(doc.FirstChild.SelectSingleNode("A").InnerText);
+         }
+         else
+         {
+            byte[] data = value as byte[];
+
+            color.r = BitConverter.ToSingle( data, 0 );
+            color.g = BitConverter.ToSingle( data, 4 );
+            color.b = BitConverter.ToSingle( data, 8 );
+            color.a = BitConverter.ToSingle( data, 12 );
+         }
 
          return color;
       }
@@ -515,14 +616,39 @@ namespace Detox.Data
       {
          UnityEngine.Color color = (UnityEngine.Color) data;
 
-         byte[] array = new byte[ 4 * 4 ];
-         
-         BitConverter.GetBytes( color.r ).CopyTo( array, 0 );
-         BitConverter.GetBytes( color.g ).CopyTo( array, 4 );
-         BitConverter.GetBytes( color.b ).CopyTo( array, 8 );
-         BitConverter.GetBytes( color.a ).CopyTo( array, 12 );
+         if (serializer.TextMode)
+         {
+            StringBuilder sb = new StringBuilder();
+            XmlWriter writer = XmlWriter.Create( sb, new XmlWriterSettings()
+            {
+               OmitXmlDeclaration = true,
+               ConformanceLevel = ConformanceLevel.Fragment,
+               CloseOutput = true,
+               Encoding = Encoding.Unicode
+            });
 
-         serializer.SetData( array );
+            writer.WriteElementString("R", color.r.ToString());
+            writer.WriteElementString("G", color.g.ToString());
+            writer.WriteElementString("B", color.b.ToString());
+            writer.WriteElementString("A", color.a.ToString());
+            writer.Flush();
+
+            string dataStream = sb.ToString();
+            serializer.SetData(dataStream.Trim());
+
+            writer.Close();
+         }
+         else
+         {
+            byte[] array = new byte[ 4 * 4 ];
+         
+            BitConverter.GetBytes( color.r ).CopyTo( array, 0 );
+            BitConverter.GetBytes( color.g ).CopyTo( array, 4 );
+            BitConverter.GetBytes( color.b ).CopyTo( array, 8 );
+            BitConverter.GetBytes( color.a ).CopyTo( array, 12 );
+
+            serializer.SetData( array );
+         }
       }
    }
 
@@ -539,8 +665,49 @@ namespace Detox.Data
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
 
+         if (serializer.TextMode)
+         {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
+
+            LoadPropertiesFromXml(doc.FirstChild, out matrix);
+         }
+         else
+         {
+            byte [] data = value as byte[];
+
+            LoadPropertiesFromBinary(data, out matrix);
+         }
+
+         return matrix;
+      }
+      
+      public static void LoadPropertiesFromXml(XmlNode node, out Matrix matrix)
+      {
+         matrix.M11 = float.Parse(node.SelectSingleNode("M11").InnerText);
+         matrix.M12 = float.Parse(node.SelectSingleNode("M12").InnerText);
+         matrix.M13 = float.Parse(node.SelectSingleNode("M13").InnerText);
+         matrix.M14 = float.Parse(node.SelectSingleNode("M14").InnerText);
+
+         matrix.M21 = float.Parse(node.SelectSingleNode("M21").InnerText);
+         matrix.M22 = float.Parse(node.SelectSingleNode("M22").InnerText);
+         matrix.M23 = float.Parse(node.SelectSingleNode("M23").InnerText);
+         matrix.M24 = float.Parse(node.SelectSingleNode("M24").InnerText);
+
+         matrix.M31 = float.Parse(node.SelectSingleNode("M31").InnerText);
+         matrix.M32 = float.Parse(node.SelectSingleNode("M32").InnerText);
+         matrix.M33 = float.Parse(node.SelectSingleNode("M33").InnerText);
+         matrix.M34 = float.Parse(node.SelectSingleNode("M34").InnerText);
+
+         matrix.M41 = float.Parse(node.SelectSingleNode("M41").InnerText);
+         matrix.M42 = float.Parse(node.SelectSingleNode("M42").InnerText);
+         matrix.M43 = float.Parse(node.SelectSingleNode("M43").InnerText);
+         matrix.M44 = float.Parse(node.SelectSingleNode("M44").InnerText);
+      }
+
+      public static void LoadPropertiesFromBinary(byte[] data, out Matrix matrix)
+      {
          matrix.M11 = BitConverter.ToSingle( data, 0 );
          matrix.M12 = BitConverter.ToSingle( data, 4 );
          matrix.M13 = BitConverter.ToSingle( data, 8 );
@@ -560,8 +727,6 @@ namespace Detox.Data
          matrix.M42 = BitConverter.ToSingle( data, 52 );
          matrix.M43 = BitConverter.ToSingle( data, 56 );
          matrix.M44 = BitConverter.ToSingle( data, 60 );
-
-         return matrix;
       }
 
       public void Save(ObjectSerializer serializer, object data)
@@ -590,26 +755,8 @@ namespace Detox.Data
          else
          {
             byte[] array = new byte[ 4 * 4 * 4 ];
-         
-            BitConverter.GetBytes( matrix.M11 ).CopyTo( array, 0 );
-            BitConverter.GetBytes( matrix.M12 ).CopyTo( array, 4 );
-            BitConverter.GetBytes( matrix.M13 ).CopyTo( array, 8 );
-            BitConverter.GetBytes( matrix.M14 ).CopyTo( array, 12 );
 
-            BitConverter.GetBytes( matrix.M21 ).CopyTo( array, 16 );
-            BitConverter.GetBytes( matrix.M22 ).CopyTo( array, 20 );
-            BitConverter.GetBytes( matrix.M23 ).CopyTo( array, 24 );
-            BitConverter.GetBytes( matrix.M24 ).CopyTo( array, 28 );
-
-            BitConverter.GetBytes( matrix.M31 ).CopyTo( array, 32 );
-            BitConverter.GetBytes( matrix.M32 ).CopyTo( array, 36 );
-            BitConverter.GetBytes( matrix.M33 ).CopyTo( array, 40 );
-            BitConverter.GetBytes( matrix.M34 ).CopyTo( array, 44 );
-
-            BitConverter.GetBytes( matrix.M41 ).CopyTo( array, 48 );
-            BitConverter.GetBytes( matrix.M42 ).CopyTo( array, 52 );
-            BitConverter.GetBytes( matrix.M43 ).CopyTo( array, 56 );
-            BitConverter.GetBytes( matrix.M44 ).CopyTo( array, 60 );
+            SavePropertiesToBinary(matrix, array);
 
             serializer.SetData( array );
          }
@@ -637,6 +784,29 @@ namespace Detox.Data
          writer.WriteElementString("M43", value.M11.ToString());
          writer.WriteElementString("M44", value.M11.ToString());
       }
+
+      public static void SavePropertiesToBinary(Matrix matrix, byte[] array)
+      {
+         BitConverter.GetBytes( matrix.M11 ).CopyTo( array, 0 );
+         BitConverter.GetBytes( matrix.M12 ).CopyTo( array, 4 );
+         BitConverter.GetBytes( matrix.M13 ).CopyTo( array, 8 );
+         BitConverter.GetBytes( matrix.M14 ).CopyTo( array, 12 );
+
+         BitConverter.GetBytes( matrix.M21 ).CopyTo( array, 16 );
+         BitConverter.GetBytes( matrix.M22 ).CopyTo( array, 20 );
+         BitConverter.GetBytes( matrix.M23 ).CopyTo( array, 24 );
+         BitConverter.GetBytes( matrix.M24 ).CopyTo( array, 28 );
+
+         BitConverter.GetBytes( matrix.M31 ).CopyTo( array, 32 );
+         BitConverter.GetBytes( matrix.M32 ).CopyTo( array, 36 );
+         BitConverter.GetBytes( matrix.M33 ).CopyTo( array, 40 );
+         BitConverter.GetBytes( matrix.M34 ).CopyTo( array, 44 );
+
+         BitConverter.GetBytes( matrix.M41 ).CopyTo( array, 48 );
+         BitConverter.GetBytes( matrix.M42 ).CopyTo( array, 52 );
+         BitConverter.GetBytes( matrix.M43 ).CopyTo( array, 56 );
+         BitConverter.GetBytes( matrix.M44 ).CopyTo( array, 60 );
+      }
    }
 
    public class MatrixArraySerializer : ITypeSerializer
@@ -649,39 +819,59 @@ namespace Detox.Data
          object value;
 
          serializer.GetData( out value );
-         byte [] data = value as byte[];
-      
-         MemoryStream stream = new MemoryStream( data );
-         BinaryReader reader = new BinaryReader( stream );
 
-         int i, count = reader.ReadInt32( );
-
-         Matrix []matrices = new Matrix[ count ];
-
-         for ( i = 0; i < count; i++ )
+         Matrix []matrices;
+         if (serializer.TextMode)
          {
-            matrices[ i ].M11 = reader.ReadSingle( );
-            matrices[ i ].M12 = reader.ReadSingle( );
-            matrices[ i ].M13 = reader.ReadSingle( );
-            matrices[ i ].M14 = reader.ReadSingle( );
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(value as string);
 
-            matrices[ i ].M21 = reader.ReadSingle( );
-            matrices[ i ].M22 = reader.ReadSingle( );
-            matrices[ i ].M23 = reader.ReadSingle( );
-            matrices[ i ].M24 = reader.ReadSingle( );
+            var matrixNodes = doc.SelectNodes("//Matrix");
+            matrices = new Matrix[matrixNodes.Count];
+            int index = 0;
 
-            matrices[ i ].M31 = reader.ReadSingle( );
-            matrices[ i ].M32 = reader.ReadSingle( );
-            matrices[ i ].M33 = reader.ReadSingle( );
-            matrices[ i ].M34 = reader.ReadSingle( );
-
-            matrices[ i ].M41 = reader.ReadSingle( );
-            matrices[ i ].M42 = reader.ReadSingle( );
-            matrices[ i ].M43 = reader.ReadSingle( );
-            matrices[ i ].M44 = reader.ReadSingle( );
+            foreach (XmlNode node in matrixNodes)
+            {
+               MatrixSerializer.LoadPropertiesFromXml(node, out matrices[ index ]);
+               index++;
+            }
          }
+         else
+         {
+            byte [] data = value as byte[];
+      
+            MemoryStream stream = new MemoryStream( data );
+            BinaryReader reader = new BinaryReader( stream );
 
-         reader.Close( );
+            int i, count = reader.ReadInt32( );
+
+            matrices = new Matrix[ count ];
+
+            for ( i = 0; i < count; i++ )
+            {
+               matrices[ i ].M11 = reader.ReadSingle( );
+               matrices[ i ].M12 = reader.ReadSingle( );
+               matrices[ i ].M13 = reader.ReadSingle( );
+               matrices[ i ].M14 = reader.ReadSingle( );
+
+               matrices[ i ].M21 = reader.ReadSingle( );
+               matrices[ i ].M22 = reader.ReadSingle( );
+               matrices[ i ].M23 = reader.ReadSingle( );
+               matrices[ i ].M24 = reader.ReadSingle( );
+
+               matrices[ i ].M31 = reader.ReadSingle( );
+               matrices[ i ].M32 = reader.ReadSingle( );
+               matrices[ i ].M33 = reader.ReadSingle( );
+               matrices[ i ].M34 = reader.ReadSingle( );
+
+               matrices[ i ].M41 = reader.ReadSingle( );
+               matrices[ i ].M42 = reader.ReadSingle( );
+               matrices[ i ].M43 = reader.ReadSingle( );
+               matrices[ i ].M44 = reader.ReadSingle( );
+            }
+
+            reader.Close( );
+         }
 
          return matrices;
       }

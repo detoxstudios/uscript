@@ -82,12 +82,23 @@ namespace Detox.Data
          {
             if ( "" == path ) return false;
 
-            StreamReader input = new StreamReader( path );
-            BinaryReader reader = new BinaryReader( input.BaseStream );
+            bool success = false;
+            if (m_TextMode)
+            {
+               XmlDocument doc = new XmlDocument();
+               doc.Load(path);
+               
+               success = Load(doc, out data);
+            }
+            else
+            {
+               StreamReader input = new StreamReader( path );
+               BinaryReader reader = new BinaryReader( input.BaseStream );
 
-            bool success = Load( reader, out data );
+               success = Load( reader, out data );
 
-            input.Close( );
+               input.Close( );
+            }
 
             return success;
          }
@@ -105,6 +116,21 @@ namespace Detox.Data
          m_Bxml = new BinaryXml( );
          
          if ( true == m_Bxml.Load(reader) )
+         {
+            data = LoadNamedObject( "Data" );
+         }
+
+         return null != data;
+      }
+
+      public bool Load(XmlDocument doc, out object data )
+      {
+         data = null;
+
+         m_Bxml = new BinaryXml( );
+         m_TextMode = true;
+         
+         if ( true == m_Bxml.Load(doc) )
          {
             data = LoadNamedObject( "Data" );
          }
@@ -267,7 +293,33 @@ namespace Detox.Data
 
       public void GetData( out object value )
       {
-         value = m_Bxml.CurrentTag.Value;
+         if (m_TextMode)
+         {
+            try
+            {
+               value = m_Bxml.CurrentTag.Value;
+            }
+            catch (Exception)
+            {
+               // If CurrentTag does not have a value, 
+               // return its children as an xml string
+               StringBuilder sb = new StringBuilder();
+               XmlWriter writer = XmlWriter.Create(sb, new XmlWriterSettings()
+               {
+                   OmitXmlDeclaration = true,
+                   ConformanceLevel = ConformanceLevel.Fragment,
+                   CloseOutput = true,
+                   Encoding = Encoding.Unicode
+               });
+               m_Bxml.CurrentTag.Write(writer);
+               writer.Flush();
+               value = sb.ToString();
+            }
+         }
+         else
+         {
+            value = m_Bxml.CurrentTag.Value;
+         }
       }
 
       public void SetData(object value)
@@ -349,7 +401,7 @@ namespace Detox.Data
 
          int previousVersion = m_CurrentVersion;
 
-         m_CurrentVersion = (int) loadTag.GetAttribute( "Version" );
+         m_CurrentVersion = (int) loadTag.GetAttributeInt( "Version" );
 
          if ( m_TypeSerializers.Contains(type) )
          {
