@@ -469,7 +469,7 @@ namespace Detox.Editor.GUI
       {
          // TODO: Update the source state
          AssetDatabase.StartAssetEditing();
-         uScript.Instance.RebuildScript(this.GraphPath, true);
+         uScript.Instance.RebuildScript(this.GraphPath, true, false);
          AssetDatabase.StopAssetEditing();
          AssetDatabase.Refresh();
       }

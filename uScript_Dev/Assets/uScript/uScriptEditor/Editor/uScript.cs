@@ -2898,7 +2898,7 @@ public sealed partial class uScript : EditorWindow
       return false;
    }
 
-   public bool RequestSave(bool quick, bool debug, bool rename)
+   public bool RequestSave(bool quick, bool debug, bool rename, bool textMode)
    {
       if (SaveDenied())
       {
@@ -2908,7 +2908,7 @@ public sealed partial class uScript : EditorWindow
       var saved = false;
 
       AssetDatabase.StartAssetEditing();
-      saved = this.SaveGraph(rename, !quick, debug);
+      saved = this.SaveGraph(rename, !quick, debug, textMode);
       AssetDatabase.StopAssetEditing();
 
       if (saved)
@@ -2924,7 +2924,15 @@ public sealed partial class uScript : EditorWindow
       Instance.RequestSave(
          Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
          Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
-         false);
+         false, false);
+   }
+
+   public static void FileMenuItem_SaveXml()
+   {
+      Instance.RequestSave(
+         Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+         Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+         false, true);
    }
 
    public static void FileMenuItem_SaveAs()
@@ -2932,22 +2940,30 @@ public sealed partial class uScript : EditorWindow
       Instance.RequestSave(
          Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
          Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
-         true);
+         true, false);
+   }
+
+   public static void FileMenuItem_SaveAsXml()
+   {
+      Instance.RequestSave(
+         Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+         Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+         true, true);
    }
 
    public static void FileMenuItem_QuickSave()
    {
-      Instance.RequestSave(true, false, false);
+      Instance.RequestSave(true, false, false, false);
    }
 
    public static void FileMenuItem_DebugSave()
    {
-      Instance.RequestSave(false, true, false);
+      Instance.RequestSave(false, true, false, false);
    }
 
    public static void FileMenuItem_ReleaseSave()
    {
-      Instance.RequestSave(false, false, false);
+      Instance.RequestSave(false, false, false, false);
    }
 
    public static void FileMenuItem_GenerateNodes()
@@ -3153,7 +3169,9 @@ public sealed partial class uScript : EditorWindow
       menu.AddItem(uScriptGUIContent.FileMenuItemOpen, false, FileMenuItem_Open);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemSave, false, FileMenuItem_Save);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveXml, false, FileMenuItem_SaveXml);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveAs, false, FileMenuItem_SaveAs);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveAsXml, false, FileMenuItem_SaveAsXml);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveQuick, false, FileMenuItem_QuickSave);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveDebug, false, FileMenuItem_DebugSave);
@@ -3499,7 +3517,7 @@ public sealed partial class uScript : EditorWindow
             return RequestSave(
                Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
                Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
-               false);
+               false, false);
 
             //if (SaveDenied())
             //{
@@ -3685,7 +3703,7 @@ public sealed partial class uScript : EditorWindow
       this.rebuildSilently = silent;
    }
 
-   public void RebuildScript(string scriptFullName, bool stubCode)
+   public void RebuildScript(string scriptFullName, bool stubCode, bool textMode)
    {
       var scriptEditor = new ScriptEditor(string.Empty, null, null);
       scriptEditor.Open(scriptFullName);
@@ -3694,7 +3712,7 @@ public sealed partial class uScript : EditorWindow
 
       if (scriptEditor.Open(scriptFullName))
       {
-         if (this.SaveGraph(scriptEditor, scriptFullName, true, this.GenerateDebugInfo, stubCode))
+         if (this.SaveGraph(scriptEditor, scriptFullName, true, this.GenerateDebugInfo, stubCode, textMode))
          {
             uScriptDebug.Log(string.Format("Rebuilt:\t{0}", scriptFullName.RelativeAssetPath()));
          }
@@ -3705,13 +3723,13 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   public void RebuildScripts(string path, bool stubCode)
+   public void RebuildScripts(string path, bool stubCode, bool textMode = false)
    {
       Debug.Log(string.Format("RebuildScripts({0}, {1})", path, stubCode));
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
-         this.RebuildScript(file, stubCode);
+         this.RebuildScript(file, stubCode, textMode);
       }
    }
 
@@ -3881,7 +3899,7 @@ public sealed partial class uScript : EditorWindow
       return result;
    }
 
-   private bool SaveGraph(bool forceNameRequest, bool generateCode, bool generateDebugInfo)
+   private bool SaveGraph(bool forceNameRequest, bool generateCode, bool generateDebugInfo, bool textMode)
    {
       ScriptEditor script = this.m_ScriptEditorCtrl.ScriptEditor;
 
@@ -4018,7 +4036,7 @@ public sealed partial class uScript : EditorWindow
          script.SceneName = string.Empty;
       }
 
-      if (this.SaveGraph(script, this.fullPath, generateCode, generateDebugInfo, false))
+      if (this.SaveGraph(script, this.fullPath, generateCode, generateDebugInfo, false, textMode))
       {
          // When a file is saved (regardless of method), we should update the
          // Dictionary cache for that script.

@@ -85,7 +85,7 @@ namespace Detox.Editor.GUI
             uScript.Instance.RequestSave(
                Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
                Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
-               false);
+               false, false);
          }
 
          private void CommandGraphSaveAs()
@@ -93,22 +93,22 @@ namespace Detox.Editor.GUI
             uScript.Instance.RequestSave(
                Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
                Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
-               true);
+               true, false);
          }
 
          private void CommandGraphSaveDebug()
          {
-            uScript.Instance.RequestSave(false, true, false);
+            uScript.Instance.RequestSave(false, true, false, false);
          }
 
          private void CommandGraphSaveQuick()
          {
-            uScript.Instance.RequestSave(true, false, false);
+            uScript.Instance.RequestSave(true, false, false, false);
          }
 
          private void CommandGraphSaveRelease()
          {
-            uScript.Instance.RequestSave(false, false, false);
+            uScript.Instance.RequestSave(false, false, false, false);
          }
 
          private void CommandSceneLocate()
@@ -350,7 +350,7 @@ namespace Detox.Editor.GUI
                   uScriptInstance.RequestSave(
                      Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
                      Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
-                     false);
+                     false, false);
                }
 
                // Miscellaneous file commands
