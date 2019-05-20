@@ -1179,6 +1179,11 @@ namespace Detox.Data.ScriptEditor
          parameter.FriendlyName  = root.SelectSingleNode("FriendlyName").InnerText;
          parameter.Default       = root.SelectSingleNode("Default").InnerText;
          parameter.Type          = root.SelectSingleNode("Type").InnerText;
+         if (parameter.Type.Contains("[]"))
+         {
+            var elements         = parameter.Default.Split(new string[] { "&amp;#001f;" }, StringSplitOptions.None);
+            parameter.Default    = string.Join(string.Format("{0} ", Data.ScriptEditor.Parameter.ArrayDelimeter), elements);
+         }
          parameter.Input         = bool.Parse(root.SelectSingleNode("Input").InnerText);
          parameter.Output        = bool.Parse(root.SelectSingleNode("Output").InnerText);
          parameter.State         = (Parameter.VisibleState)Enum.Parse(typeof(Parameter.VisibleState), root.SelectSingleNode("State").InnerText);
@@ -1268,9 +1273,11 @@ namespace Detox.Data.ScriptEditor
       {
          writer.WriteElementString("Name", value.Name );
          writer.WriteElementString("FriendlyName", value.FriendlyName);
+         writer.WriteStartElement("Default");
          string defaultValue = value.Default;
-         if (value.Type.Contains("[]")) defaultValue = defaultValue.Replace(Parameter.ArrayDelimeter.ToString(), ",");
-         writer.WriteElementString("Default", defaultValue);
+         if (value.Type.Contains("[]")) defaultValue = defaultValue.Replace(Parameter.ArrayDelimeter.ToString(), "&#001f;");
+         writer.WriteCData(defaultValue);
+         writer.WriteEndElement();
          writer.WriteElementString("Type", value.Type);
          writer.WriteElementString("Input", value.Input.ToString());
          writer.WriteElementString("Output", value.Output.ToString());
