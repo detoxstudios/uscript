@@ -366,7 +366,11 @@ namespace Detox.Utility.Bxml
 
          if (node.HasChildNodes)
          {
-            if (node.FirstChild.NodeType == XmlNodeType.Text)
+            if (node.FirstChild.NodeType == XmlNodeType.CDATA)
+            {
+               m_Value.Read(node.FirstChild.Value);
+            }
+            else if (node.FirstChild.NodeType == XmlNodeType.Text)
             {
                m_Value.Read(node.InnerXml);
             }
