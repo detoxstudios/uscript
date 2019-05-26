@@ -302,10 +302,10 @@ namespace Detox.Editor
          set { EditorPrefs.SetBool("DetoxStudios.uScript.AllowSaveInPlayMode", value); }
       }
 
-      public static bool EnableVersionControle
+      public static bool EnableVersionControl
       {
-         get { return EditorPrefs.GetBool("DetoxStudios.uScript.EnableVersionControle"); }
-         set { EditorPrefs.SetBool("DetoxStudios.uScript.EnableVersionControle", value); }
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.EnableVersionControl"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.EnableVersionControl", value); }
       }
 
       public static bool ExpandFavoritePanel
