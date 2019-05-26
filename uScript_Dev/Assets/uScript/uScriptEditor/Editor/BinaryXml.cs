@@ -495,8 +495,9 @@ namespace Detox.Utility.Bxml
    
             result = Save( writer );
          }
-         catch( Exception )
+         catch( Exception e )
          {
+            uScriptDebug.Log(string.Format("Failed writing bxml file '{0}'.  Error: {1}", path, e.Message), uScriptDebug.Type.Error);
             result = false;
          }
 

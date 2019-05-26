@@ -5141,6 +5141,7 @@ namespace Detox.ScriptEditor
          {
             if (null != streamWriter) streamWriter.Close();
 
+            uScriptDebug.Log(e.GetType().ToString() + ": " + e.Message + ": " + e.StackTrace);
             Status.Error("Failed to write to " + path + ". Exception: " + e.Message);
             return false;
          }
