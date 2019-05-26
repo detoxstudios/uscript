@@ -183,6 +183,9 @@ namespace Detox.Editor.GUI.Windows
          boolValue = EditorGUILayout.Toggle("Allow Saving in Play Mode", Preferences.AllowSaveInPlayMode);
          Preferences.AllowSaveInPlayMode = boolValue;
 
+         boolValue = EditorGUILayout.Toggle("Enable Version Control Support", Preferences.EnableVersionControl);
+         Preferences.EnableVersionControl = boolValue;
+
          EditorGUILayout.BeginHorizontal();
          {
             boolValue = EditorGUILayout.Toggle("Check for Updates on Start", Preferences.CheckForUpdate);

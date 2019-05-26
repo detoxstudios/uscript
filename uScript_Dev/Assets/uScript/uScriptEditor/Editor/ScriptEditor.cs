@@ -5125,7 +5125,7 @@ namespace Detox.ScriptEditor
 
          try
          {
-            inVC = uScript.IsFileInSourceControl(path);
+            if (!Preferences.EnableVersionControle) inVC = uScript.IsFileInSourceControl(path);
 
             streamWriter = File.CreateText(path);
             streamWriter.Write(fileContents);

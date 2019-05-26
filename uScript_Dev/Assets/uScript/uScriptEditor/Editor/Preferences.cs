@@ -302,6 +302,12 @@ namespace Detox.Editor
          set { EditorPrefs.SetBool("DetoxStudios.uScript.AllowSaveInPlayMode", value); }
       }
 
+      public static bool EnableVersionControle
+      {
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.EnableVersionControle"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.EnableVersionControle", value); }
+      }
+
       public static bool ExpandFavoritePanel
       {
          get { return EditorPrefs.GetBool("DetoxStudios.uScript.ExpandFavoritePanel"); }
@@ -668,6 +674,7 @@ namespace Detox.Editor
          SetDefault("EnableAttachOnSavePrompt", true, force);
          SetDefault("EnableContentsFieldSearch", true, force);
          SetDefault("AllowSaveInPlayMode", false, force);
+         SetDefault("EnableVersionControl", true, force);
 
          SetDefault("PaletteVisible", true, force);
          SetDefault("ReferenceVisible", true, force);
