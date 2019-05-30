@@ -368,7 +368,8 @@ namespace Detox.Utility.Bxml
          {
             if (node.FirstChild.NodeType == XmlNodeType.CDATA)
             {
-               m_Value.Read(node.FirstChild.Value);
+               string val = FromCDATA(node.FirstChild.Value);
+               m_Value.Read(val);
             }
             else if (node.FirstChild.NodeType == XmlNodeType.Text)
             {
@@ -385,6 +386,21 @@ namespace Detox.Utility.Bxml
                }
             }
          }
+      }
+
+      private static readonly Dictionary<string, char> textEntities = new Dictionary<string, char> {
+          { "&amp;", '&'}, { "&lt;", '<' }, { "&gt;", '>' }, 
+          { "&quot;", '"' }, { "&apos;", '\'' }
+      };
+      public static string FromCDATA(string cdataString)
+      {
+         string retval = cdataString;
+         foreach(KeyValuePair<string, char> kvp in textEntities)
+         {
+            retval = retval.Replace(kvp.Key, new string(kvp.Value, 1));
+         }
+
+         return retval;
       }
    }
 
