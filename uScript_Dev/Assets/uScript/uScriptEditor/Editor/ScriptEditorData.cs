@@ -1182,7 +1182,7 @@ namespace Detox.Data.ScriptEditor
          if (parameter.Type.Contains("[]"))
          {
             var elements         = parameter.Default.Split(new string[] { "&#001f;" }, StringSplitOptions.None);
-            parameter.Default    = string.Join(string.Format("{0} ", Data.ScriptEditor.Parameter.ArrayDelimeter), elements);
+            parameter.Default    = string.Join(string.Format("{0}", Data.ScriptEditor.Parameter.ArrayDelimeter), elements);
          }
          parameter.Input         = bool.Parse(root.SelectSingleNode("Input").InnerText);
          parameter.Output        = bool.Parse(root.SelectSingleNode("Output").InnerText);
