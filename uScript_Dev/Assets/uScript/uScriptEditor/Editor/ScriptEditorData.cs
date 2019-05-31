@@ -1181,7 +1181,7 @@ namespace Detox.Data.ScriptEditor
          parameter.Type          = root.SelectSingleNode("Type").InnerText;
          if (parameter.Type.Contains("[]"))
          {
-            var elements         = parameter.Default.Split(new string[] { "&amp;#001f;" }, StringSplitOptions.None);
+            var elements         = parameter.Default.Split(new string[] { "&#001f;" }, StringSplitOptions.None);
             parameter.Default    = string.Join(string.Format("{0} ", Data.ScriptEditor.Parameter.ArrayDelimeter), elements);
          }
          parameter.Input         = bool.Parse(root.SelectSingleNode("Input").InnerText);
