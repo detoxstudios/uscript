@@ -1,8 +1,7 @@
 // uScript Action Node
 // (C) 2015 Detox Studios LLC
-#if (UNITY_5 || UNITY_2017 || UNITY_2018)
+#if (UNITY_5 || UNITY_2017 || UNITY_2017_1_OR_NEWER)
 using UnityEngine;
-using System.Collections;
 
 [NodePath("Actions/Animation/Animator")]
 

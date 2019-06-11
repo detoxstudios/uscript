@@ -120,7 +120,7 @@ public class uScriptAct_CaptureScreenshot : uScriptLogic
 		
 	  Path = Path + ".png";
 
-#if UNITY_2017 || UNITY_2018
+#if UNITY_2017 || UNITY_2017_1_OR_NEWER
       ScreenCapture.CaptureScreenshot(Path);
 #else
       Application.CaptureScreenshot(Path);

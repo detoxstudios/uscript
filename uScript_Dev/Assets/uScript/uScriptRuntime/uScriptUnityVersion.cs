@@ -33,6 +33,8 @@ public class uScriptUnityVersion : uScriptIUnityVersion
    public float Version { get { return 2017.0f; } }
 #elif UNITY_2018
    public float Version { get { return 2018.0f; } }
+#elif UNITY_2019
+   public float Version { get { return 2019.0f; } }
 #else
    public float Version { get { return 0.0f; } }
 #endif

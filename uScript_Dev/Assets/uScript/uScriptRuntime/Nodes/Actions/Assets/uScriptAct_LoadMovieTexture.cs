@@ -9,7 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
 using UnityEngine.Video;
 #endif
 
@@ -30,7 +30,7 @@ public class uScriptAct_LoadMovieTexture : uScriptLogic
       [AssetPathField(AssetType.MovieTexture)]
       string name,
 
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
       [FriendlyName("Loaded Asset", "The VideoPlayer loaded from the specified file path.")]
       out VideoPlayer textureFile
 #else
@@ -39,7 +39,7 @@ public class uScriptAct_LoadMovieTexture : uScriptLogic
 #endif
    )
    {
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
       textureFile = Resources.Load(name) as VideoPlayer;
 #else
       textureFile = Resources.Load(name) as MovieTexture;
@@ -55,7 +55,7 @@ public class uScriptAct_LoadMovieTexture : uScriptLogic
 #if UNITY_EDITOR
    public override Hashtable EditorDragDrop( object o )
    {
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
       if ( typeof(VideoPlayer).IsAssignableFrom( o.GetType() ) )
       {
          VideoPlayer ac = (VideoPlayer)o;

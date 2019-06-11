@@ -1,6 +1,6 @@
 using UnityEngine;
 
-#if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2018)
+#if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2017_1_OR_NEWER)
 
 public class uScript_StateMachineBehaviour : StateMachineBehaviour {
    public string StateName;

@@ -2,7 +2,6 @@
 // (C) 2011 Detox Studios LLC
 
 using UnityEngine;
-using System.Collections;
 
 #if !(UNITY_3_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
 [NodePath("Actions/Application")]
@@ -152,7 +151,7 @@ UnityEngine.SceneManagement.Scene[] scenes = UnityEngine.SceneManagement.SceneMa
 
       internetReachability = Application.internetReachability;
 
-#if !(UNITY_5_5_OR_NEWER || UNITY_2017 || UNITY_2018)
+#if !(UNITY_5_5_OR_NEWER || UNITY_2017 || UNITY_2017_1_OR_NEWER)
       webSecurityEnabled = Application.webSecurityEnabled;
       webSecurityHostUrl = Application.webSecurityHostUrl;
 #else

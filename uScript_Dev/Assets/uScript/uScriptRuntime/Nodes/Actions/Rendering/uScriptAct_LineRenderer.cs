@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if UNITY_5 || UNITY_2017 || UNITY_2018
+#if UNITY_5 || UNITY_2017 || UNITY_2017_1_OR_NEWER
 
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -76,7 +76,7 @@ public class uScriptAct_LineRenderer : uScriptLogic
 
       this.lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
 
-#if UNITY_5_5_OR_NEWER || UNITY_2017 || UNITY_2018
+#if UNITY_5_5_OR_NEWER || UNITY_2017 || UNITY_2017_1_OR_NEWER
       this.lineRenderer.SetPositions(positions);
 #else
       for (int i = 0; i < positions.Length; i++)
@@ -85,7 +85,7 @@ public class uScriptAct_LineRenderer : uScriptLogic
       }
 #endif
 
-#if UNITY_5_5_OR_NEWER || UNITY_2017 || UNITY_2018
+#if UNITY_5_5_OR_NEWER || UNITY_2017 || UNITY_2017_1_OR_NEWER
       this.lineRenderer.startColor = startColor;
       this.lineRenderer.endColor = endColor;
       this.lineRenderer.startWidth = startWidth;

@@ -10,7 +10,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
 using UnityEngine.Video;
 #endif
 
@@ -26,7 +26,7 @@ using UnityEngine.Video;
 	"\n\nNote 2: All instances of a GameObject with the same material will play their movie textures.")]
 public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 {
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
    private List<VideoPlayer> m_TargetMovies = new List<VideoPlayer>( );
 #else
    private List<MovieTexture> m_TargetMovies = new List<MovieTexture>( );
@@ -57,13 +57,13 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 #if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
 					MovieTexture mov = (MovieTexture)target.renderer.material.mainTexture;
 #else
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
                     VideoPlayer mov = (VideoPlayer)target.GetComponent<VideoPlayer>();
 #else
                     MovieTexture mov = (MovieTexture)target.GetComponent<Renderer>().material.mainTexture;
 #endif
 #endif
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
                     if ( mov.isPrepared )
 #else
                     if ( mov.isReadyToPlay )
@@ -85,14 +85,14 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 #if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
             MovieTexture mov = (MovieTexture)Targets[i].renderer.material.mainTexture;
 #else
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
             VideoPlayer mov = (VideoPlayer)Targets[i].GetComponent<VideoPlayer>();
 #else
             MovieTexture mov = (MovieTexture)Targets[i].GetComponent<Renderer>().material.mainTexture;
 #endif
 #endif
 
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
             if ( mov.isPrepared )
 			{
 				mov.isLooping = loop;
@@ -115,7 +115,7 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
       if (null != m_TargetMovies)
       {
 		 m_paused = true;
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
          foreach (VideoPlayer mov in m_TargetMovies)
 #else
          foreach (MovieTexture mov in m_TargetMovies)
@@ -145,7 +145,7 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 		
       if (null != m_TargetMovies)
       {
-#if (UNITY_2017 || UNITY_2018)
+#if (UNITY_2017 || UNITY_2017_1_OR_NEWER)
          foreach (VideoPlayer mov in m_TargetMovies)
 #else
          foreach (MovieTexture mov in m_TargetMovies)
