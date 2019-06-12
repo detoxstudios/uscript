@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Detox Studios LLC" file="uScript.cs">
-//   Copyright 2010-2018 Detox Studios LLC. All rights reserved.
+//   Copyright 2010-2019 Detox Studios LLC. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
