@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3109
+//uScript Generated Code - Build 1.0.3118
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -683,30 +683,29 @@ public class All_Action_Nodes : uScriptLogic
    System.Object logic_uScriptAct_Log_Postfix_139 = "";
    bool logic_uScriptAct_Log_Out_139 = true;
    //pointer to script instanced logic node
-   uScriptAct_ApplicationInfo logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_140 = new uScriptAct_ApplicationInfo( );
-   System.Int32 logic_uScriptAct_ApplicationInfo_levelCount_140;
-   System.Int32 logic_uScriptAct_ApplicationInfo_loadedLevel_140;
-   System.String logic_uScriptAct_ApplicationInfo_loadedLevelName_140;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isEditor_140;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isLoadingLevel_140;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isPlaying_140;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isWebPlayer_140;
-   System.Int32 logic_uScriptAct_ApplicationInfo_streamedBytes_140;
-   UnityEngine.RuntimePlatform logic_uScriptAct_ApplicationInfo_platform_140;
-   System.String logic_uScriptAct_ApplicationInfo_dataPath_140;
-   System.String logic_uScriptAct_ApplicationInfo_persistentDataPath_140;
-   System.String logic_uScriptAct_ApplicationInfo_temporaryCachePath_140;
-   System.String logic_uScriptAct_ApplicationInfo_srcValue_140;
-   System.String logic_uScriptAct_ApplicationInfo_absoluteURL_140;
-   UnityEngine.SystemLanguage logic_uScriptAct_ApplicationInfo_systemLanguage_140;
-   UnityEngine.NetworkReachability logic_uScriptAct_ApplicationInfo_internetReachability_140;
-   System.Boolean logic_uScriptAct_ApplicationInfo_webSecurityEnabled_140;
-   System.String logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_140;
-   System.Boolean logic_uScriptAct_ApplicationInfo_runInBackground_140;
-   System.Int32 logic_uScriptAct_ApplicationInfo_targetFrameRate_140;
-   UnityEngine.ThreadPriority logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_140;
-   System.String logic_uScriptAct_ApplicationInfo_unityVersion_140;
-   bool logic_uScriptAct_ApplicationInfo_Out_140 = true;
+   uScriptAct_ApplicationInfoV2 logic_uScriptAct_ApplicationInfoV2_uScriptAct_ApplicationInfoV2_140 = new uScriptAct_ApplicationInfoV2( );
+   System.Int32 logic_uScriptAct_ApplicationInfoV2_levelCount_140;
+   System.Int32[] logic_uScriptAct_ApplicationInfoV2_loadedLevels_140;
+   System.String[] logic_uScriptAct_ApplicationInfoV2_loadedLevelNames_140;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_isEditor_140;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_isPlaying_140;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_isWebPlayer_140;
+   System.Int32 logic_uScriptAct_ApplicationInfoV2_streamedBytes_140;
+   UnityEngine.RuntimePlatform logic_uScriptAct_ApplicationInfoV2_platform_140;
+   System.String logic_uScriptAct_ApplicationInfoV2_dataPath_140;
+   System.String logic_uScriptAct_ApplicationInfoV2_persistentDataPath_140;
+   System.String logic_uScriptAct_ApplicationInfoV2_temporaryCachePath_140;
+   System.String logic_uScriptAct_ApplicationInfoV2_srcValue_140;
+   System.String logic_uScriptAct_ApplicationInfoV2_absoluteURL_140;
+   UnityEngine.SystemLanguage logic_uScriptAct_ApplicationInfoV2_systemLanguage_140;
+   UnityEngine.NetworkReachability logic_uScriptAct_ApplicationInfoV2_internetReachability_140;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_webSecurityEnabled_140;
+   System.String logic_uScriptAct_ApplicationInfoV2_webSecurityHostUrl_140;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_runInBackground_140;
+   System.Int32 logic_uScriptAct_ApplicationInfoV2_targetFrameRate_140;
+   UnityEngine.ThreadPriority logic_uScriptAct_ApplicationInfoV2_backgroundLoadingPriority_140;
+   System.String logic_uScriptAct_ApplicationInfoV2_unityVersion_140;
+   bool logic_uScriptAct_ApplicationInfoV2_Out_140 = true;
    //pointer to script instanced logic node
    uScriptAct_GetDeviceInfo logic_uScriptAct_GetDeviceInfo_uScriptAct_GetDeviceInfo_141 = new uScriptAct_GetDeviceInfo( );
    System.String logic_uScriptAct_GetDeviceInfo_currentDeviceModel_141;
@@ -2621,7 +2620,6 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_SetGravity_Out_417 = true;
    //pointer to script instanced logic node
    uScriptAct_SetJointDrive logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_418 = new uScriptAct_SetJointDrive( );
-   UnityEngine.JointDriveMode logic_uScriptAct_SetJointDrive_mode_418 = UnityEngine.JointDriveMode.None;
    System.Single logic_uScriptAct_SetJointDrive_positionSpring_418 = (float) 0;
    System.Single logic_uScriptAct_SetJointDrive_positionDamper_418 = (float) 0;
    System.Single logic_uScriptAct_SetJointDrive_maximumForce_418 = (float) 0;
@@ -5800,7 +5798,7 @@ public class All_Action_Nodes : uScriptLogic
       logic_uScriptAct_Log_uScriptAct_Log_137.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_138.SetParent(g);
       logic_uScriptAct_Log_uScriptAct_Log_139.SetParent(g);
-      logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_140.SetParent(g);
+      logic_uScriptAct_ApplicationInfoV2_uScriptAct_ApplicationInfoV2_140.SetParent(g);
       logic_uScriptAct_GetDeviceInfo_uScriptAct_GetDeviceInfo_141.SetParent(g);
       logic_uScriptAct_OpenBrowser_uScriptAct_OpenBrowser_142.SetParent(g);
       logic_uScriptAct_Quit_uScriptAct_Quit_143.SetParent(g);
@@ -9203,6 +9201,8 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
          method_Detox_ScriptEditor_Plug_UnityEngine_GameObject_Return_60 = UnityEngine.GameObject.Find(method_Detox_ScriptEditor_Plug_UnityEngine_GameObject_name_60);
          local_61_UnityEngine_GameObject = method_Detox_ScriptEditor_Plug_UnityEngine_GameObject_Return_60;
@@ -11294,13 +11294,11 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
-            {
-            }
          }
-         logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_140.In(out logic_uScriptAct_ApplicationInfo_levelCount_140, out logic_uScriptAct_ApplicationInfo_loadedLevel_140, out logic_uScriptAct_ApplicationInfo_loadedLevelName_140, out logic_uScriptAct_ApplicationInfo_isEditor_140, out logic_uScriptAct_ApplicationInfo_isLoadingLevel_140, out logic_uScriptAct_ApplicationInfo_isPlaying_140, out logic_uScriptAct_ApplicationInfo_isWebPlayer_140, out logic_uScriptAct_ApplicationInfo_streamedBytes_140, out logic_uScriptAct_ApplicationInfo_platform_140, out logic_uScriptAct_ApplicationInfo_dataPath_140, out logic_uScriptAct_ApplicationInfo_persistentDataPath_140, out logic_uScriptAct_ApplicationInfo_temporaryCachePath_140, out logic_uScriptAct_ApplicationInfo_srcValue_140, out logic_uScriptAct_ApplicationInfo_absoluteURL_140, out logic_uScriptAct_ApplicationInfo_systemLanguage_140, out logic_uScriptAct_ApplicationInfo_internetReachability_140, out logic_uScriptAct_ApplicationInfo_webSecurityEnabled_140, out logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_140, out logic_uScriptAct_ApplicationInfo_runInBackground_140, out logic_uScriptAct_ApplicationInfo_targetFrameRate_140, out logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_140, out logic_uScriptAct_ApplicationInfo_unityVersion_140);
+         logic_uScriptAct_ApplicationInfoV2_uScriptAct_ApplicationInfoV2_140.In(out logic_uScriptAct_ApplicationInfoV2_levelCount_140, out logic_uScriptAct_ApplicationInfoV2_loadedLevels_140, out logic_uScriptAct_ApplicationInfoV2_loadedLevelNames_140, out logic_uScriptAct_ApplicationInfoV2_isEditor_140, out logic_uScriptAct_ApplicationInfoV2_isPlaying_140, out logic_uScriptAct_ApplicationInfoV2_isWebPlayer_140, out logic_uScriptAct_ApplicationInfoV2_streamedBytes_140, out logic_uScriptAct_ApplicationInfoV2_platform_140, out logic_uScriptAct_ApplicationInfoV2_dataPath_140, out logic_uScriptAct_ApplicationInfoV2_persistentDataPath_140, out logic_uScriptAct_ApplicationInfoV2_temporaryCachePath_140, out logic_uScriptAct_ApplicationInfoV2_srcValue_140, out logic_uScriptAct_ApplicationInfoV2_absoluteURL_140, out logic_uScriptAct_ApplicationInfoV2_systemLanguage_140, out logic_uScriptAct_ApplicationInfoV2_internetReachability_140, out logic_uScriptAct_ApplicationInfoV2_webSecurityEnabled_140, out logic_uScriptAct_ApplicationInfoV2_webSecurityHostUrl_140, out logic_uScriptAct_ApplicationInfoV2_runInBackground_140, out logic_uScriptAct_ApplicationInfoV2_targetFrameRate_140, out logic_uScriptAct_ApplicationInfoV2_backgroundLoadingPriority_140, out logic_uScriptAct_ApplicationInfoV2_unityVersion_140);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_140.Out;
+         bool test_0 = logic_uScriptAct_ApplicationInfoV2_uScriptAct_ApplicationInfoV2_140.Out;
          
          if ( test_0 == true )
          {
@@ -22856,10 +22854,8 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
-            {
-            }
          }
-         logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_418.In(logic_uScriptAct_SetJointDrive_mode_418, logic_uScriptAct_SetJointDrive_positionSpring_418, logic_uScriptAct_SetJointDrive_positionDamper_418, logic_uScriptAct_SetJointDrive_maximumForce_418, out logic_uScriptAct_SetJointDrive_jointDrive_418);
+         logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_418.In(logic_uScriptAct_SetJointDrive_positionSpring_418, logic_uScriptAct_SetJointDrive_positionDamper_418, logic_uScriptAct_SetJointDrive_maximumForce_418, out logic_uScriptAct_SetJointDrive_jointDrive_418);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_418.Out;

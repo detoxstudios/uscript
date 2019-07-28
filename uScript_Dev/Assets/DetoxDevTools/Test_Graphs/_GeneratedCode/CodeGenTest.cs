@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.3109
+//uScript Generated Code - Build 1.0.3118
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -832,30 +832,29 @@ public class CodeGenTest : uScriptLogic
    System.String logic_uScriptAct_StopAnimation_AnimationName_198 = "";
    bool logic_uScriptAct_StopAnimation_Out_198 = true;
    //pointer to script instanced logic node
-   uScriptAct_ApplicationInfo logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199 = new uScriptAct_ApplicationInfo( );
-   System.Int32 logic_uScriptAct_ApplicationInfo_levelCount_199;
-   System.Int32 logic_uScriptAct_ApplicationInfo_loadedLevel_199;
-   System.String logic_uScriptAct_ApplicationInfo_loadedLevelName_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isEditor_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isLoadingLevel_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isPlaying_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_isWebPlayer_199;
-   System.Int32 logic_uScriptAct_ApplicationInfo_streamedBytes_199;
-   UnityEngine.RuntimePlatform logic_uScriptAct_ApplicationInfo_platform_199;
-   System.String logic_uScriptAct_ApplicationInfo_dataPath_199;
-   System.String logic_uScriptAct_ApplicationInfo_persistentDataPath_199;
-   System.String logic_uScriptAct_ApplicationInfo_temporaryCachePath_199;
-   System.String logic_uScriptAct_ApplicationInfo_srcValue_199;
-   System.String logic_uScriptAct_ApplicationInfo_absoluteURL_199;
-   UnityEngine.SystemLanguage logic_uScriptAct_ApplicationInfo_systemLanguage_199;
-   UnityEngine.NetworkReachability logic_uScriptAct_ApplicationInfo_internetReachability_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_webSecurityEnabled_199;
-   System.String logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_199;
-   System.Boolean logic_uScriptAct_ApplicationInfo_runInBackground_199;
-   System.Int32 logic_uScriptAct_ApplicationInfo_targetFrameRate_199;
-   UnityEngine.ThreadPriority logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_199;
-   System.String logic_uScriptAct_ApplicationInfo_unityVersion_199;
-   bool logic_uScriptAct_ApplicationInfo_Out_199 = true;
+   uScriptAct_ApplicationInfoV2 logic_uScriptAct_ApplicationInfoV2_uScriptAct_ApplicationInfoV2_199 = new uScriptAct_ApplicationInfoV2( );
+   System.Int32 logic_uScriptAct_ApplicationInfoV2_levelCount_199;
+   System.Int32[] logic_uScriptAct_ApplicationInfoV2_loadedLevels_199;
+   System.String[] logic_uScriptAct_ApplicationInfoV2_loadedLevelNames_199;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_isEditor_199;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_isPlaying_199;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_isWebPlayer_199;
+   System.Int32 logic_uScriptAct_ApplicationInfoV2_streamedBytes_199;
+   UnityEngine.RuntimePlatform logic_uScriptAct_ApplicationInfoV2_platform_199;
+   System.String logic_uScriptAct_ApplicationInfoV2_dataPath_199;
+   System.String logic_uScriptAct_ApplicationInfoV2_persistentDataPath_199;
+   System.String logic_uScriptAct_ApplicationInfoV2_temporaryCachePath_199;
+   System.String logic_uScriptAct_ApplicationInfoV2_srcValue_199;
+   System.String logic_uScriptAct_ApplicationInfoV2_absoluteURL_199;
+   UnityEngine.SystemLanguage logic_uScriptAct_ApplicationInfoV2_systemLanguage_199;
+   UnityEngine.NetworkReachability logic_uScriptAct_ApplicationInfoV2_internetReachability_199;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_webSecurityEnabled_199;
+   System.String logic_uScriptAct_ApplicationInfoV2_webSecurityHostUrl_199;
+   System.Boolean logic_uScriptAct_ApplicationInfoV2_runInBackground_199;
+   System.Int32 logic_uScriptAct_ApplicationInfoV2_targetFrameRate_199;
+   UnityEngine.ThreadPriority logic_uScriptAct_ApplicationInfoV2_backgroundLoadingPriority_199;
+   System.String logic_uScriptAct_ApplicationInfoV2_unityVersion_199;
+   bool logic_uScriptAct_ApplicationInfoV2_Out_199 = true;
    //pointer to script instanced logic node
    uScriptAct_DeletePreferenceKey logic_uScriptAct_DeletePreferenceKey_uScriptAct_DeletePreferenceKey_200 = new uScriptAct_DeletePreferenceKey( );
    System.String logic_uScriptAct_DeletePreferenceKey_KeyName_200 = "";
@@ -1173,7 +1172,6 @@ public class CodeGenTest : uScriptLogic
    bool logic_uScriptAct_SetGravity_Out_251 = true;
    //pointer to script instanced logic node
    uScriptAct_SetJointDrive logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_252 = new uScriptAct_SetJointDrive( );
-   UnityEngine.JointDriveMode logic_uScriptAct_SetJointDrive_mode_252 = UnityEngine.JointDriveMode.None;
    System.Single logic_uScriptAct_SetJointDrive_positionSpring_252 = (float) 0;
    System.Single logic_uScriptAct_SetJointDrive_positionDamper_252 = (float) 0;
    System.Single logic_uScriptAct_SetJointDrive_maximumForce_252 = (float) 0;
@@ -4852,7 +4850,7 @@ public class CodeGenTest : uScriptLogic
       logic_uScriptAct_PlayAnimation_uScriptAct_PlayAnimation_195.SetParent(g);
       logic_uScriptAct_RewindAnimation_uScriptAct_RewindAnimation_197.SetParent(g);
       logic_uScriptAct_StopAnimation_uScriptAct_StopAnimation_198.SetParent(g);
-      logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.SetParent(g);
+      logic_uScriptAct_ApplicationInfoV2_uScriptAct_ApplicationInfoV2_199.SetParent(g);
       logic_uScriptAct_DeletePreferenceKey_uScriptAct_DeletePreferenceKey_200.SetParent(g);
       logic_uScriptAct_DoesPreferenceKeyExist_uScriptAct_DoesPreferenceKeyExist_201.SetParent(g);
       logic_uScriptAct_GetPreferenceKeyBool_uScriptAct_GetPreferenceKeyBool_202.SetParent(g);
@@ -5097,6 +5095,7 @@ public class CodeGenTest : uScriptLogic
    }
    public void Awake()
    {
+      logic_CodeGenTest_Nested_CodeGenTest_Nested_458.Awake( );
       
       logic_uScriptCon_Gate_uScriptCon_Gate_95.Out += uScriptCon_Gate_Out_95;
       logic_uScriptCon_TimedGate_uScriptCon_TimedGate_96.Out += uScriptCon_TimedGate_Out_96;
@@ -5141,10 +5140,12 @@ public class CodeGenTest : uScriptLogic
    {
       RegisterForUnityHooks( );
       m_RegisteredForEvents = true;
+      logic_CodeGenTest_Nested_CodeGenTest_Nested_458.OnEnable( );
    }
    
    public void OnDisable()
    {
+      logic_CodeGenTest_Nested_CodeGenTest_Nested_458.OnDisable( );
       UnregisterEventListeners( );
       m_RegisteredForEvents = false;
    }
@@ -5235,6 +5236,7 @@ public class CodeGenTest : uScriptLogic
    
    public void OnDestroy()
    {
+      logic_CodeGenTest_Nested_CodeGenTest_Nested_458.OnDestroy( );
       logic_uScriptCon_Gate_uScriptCon_Gate_95.Out -= uScriptCon_Gate_Out_95;
       logic_uScriptCon_TimedGate_uScriptCon_TimedGate_96.Out -= uScriptCon_TimedGate_Out_96;
       logic_uScriptCon_ManualSwitch_uScriptCon_ManualSwitch_98.Output1 -= uScriptCon_ManualSwitch_Output1_98;
@@ -12589,13 +12591,11 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
-            {
-            }
          }
-         logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.In(out logic_uScriptAct_ApplicationInfo_levelCount_199, out logic_uScriptAct_ApplicationInfo_loadedLevel_199, out logic_uScriptAct_ApplicationInfo_loadedLevelName_199, out logic_uScriptAct_ApplicationInfo_isEditor_199, out logic_uScriptAct_ApplicationInfo_isLoadingLevel_199, out logic_uScriptAct_ApplicationInfo_isPlaying_199, out logic_uScriptAct_ApplicationInfo_isWebPlayer_199, out logic_uScriptAct_ApplicationInfo_streamedBytes_199, out logic_uScriptAct_ApplicationInfo_platform_199, out logic_uScriptAct_ApplicationInfo_dataPath_199, out logic_uScriptAct_ApplicationInfo_persistentDataPath_199, out logic_uScriptAct_ApplicationInfo_temporaryCachePath_199, out logic_uScriptAct_ApplicationInfo_srcValue_199, out logic_uScriptAct_ApplicationInfo_absoluteURL_199, out logic_uScriptAct_ApplicationInfo_systemLanguage_199, out logic_uScriptAct_ApplicationInfo_internetReachability_199, out logic_uScriptAct_ApplicationInfo_webSecurityEnabled_199, out logic_uScriptAct_ApplicationInfo_webSecurityHostUrl_199, out logic_uScriptAct_ApplicationInfo_runInBackground_199, out logic_uScriptAct_ApplicationInfo_targetFrameRate_199, out logic_uScriptAct_ApplicationInfo_backgroundLoadingPriority_199, out logic_uScriptAct_ApplicationInfo_unityVersion_199);
+         logic_uScriptAct_ApplicationInfoV2_uScriptAct_ApplicationInfoV2_199.In(out logic_uScriptAct_ApplicationInfoV2_levelCount_199, out logic_uScriptAct_ApplicationInfoV2_loadedLevels_199, out logic_uScriptAct_ApplicationInfoV2_loadedLevelNames_199, out logic_uScriptAct_ApplicationInfoV2_isEditor_199, out logic_uScriptAct_ApplicationInfoV2_isPlaying_199, out logic_uScriptAct_ApplicationInfoV2_isWebPlayer_199, out logic_uScriptAct_ApplicationInfoV2_streamedBytes_199, out logic_uScriptAct_ApplicationInfoV2_platform_199, out logic_uScriptAct_ApplicationInfoV2_dataPath_199, out logic_uScriptAct_ApplicationInfoV2_persistentDataPath_199, out logic_uScriptAct_ApplicationInfoV2_temporaryCachePath_199, out logic_uScriptAct_ApplicationInfoV2_srcValue_199, out logic_uScriptAct_ApplicationInfoV2_absoluteURL_199, out logic_uScriptAct_ApplicationInfoV2_systemLanguage_199, out logic_uScriptAct_ApplicationInfoV2_internetReachability_199, out logic_uScriptAct_ApplicationInfoV2_webSecurityEnabled_199, out logic_uScriptAct_ApplicationInfoV2_webSecurityHostUrl_199, out logic_uScriptAct_ApplicationInfoV2_runInBackground_199, out logic_uScriptAct_ApplicationInfoV2_targetFrameRate_199, out logic_uScriptAct_ApplicationInfoV2_backgroundLoadingPriority_199, out logic_uScriptAct_ApplicationInfoV2_unityVersion_199);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_ApplicationInfo_uScriptAct_ApplicationInfo_199.Out;
+         bool test_0 = logic_uScriptAct_ApplicationInfoV2_uScriptAct_ApplicationInfoV2_199.Out;
          
          if ( test_0 == true )
          {
@@ -14229,10 +14229,8 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
-            {
-            }
          }
-         logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_252.In(logic_uScriptAct_SetJointDrive_mode_252, logic_uScriptAct_SetJointDrive_positionSpring_252, logic_uScriptAct_SetJointDrive_positionDamper_252, logic_uScriptAct_SetJointDrive_maximumForce_252, out logic_uScriptAct_SetJointDrive_jointDrive_252);
+         logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_252.In(logic_uScriptAct_SetJointDrive_positionSpring_252, logic_uScriptAct_SetJointDrive_positionDamper_252, logic_uScriptAct_SetJointDrive_maximumForce_252, out logic_uScriptAct_SetJointDrive_jointDrive_252);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetJointDrive_uScriptAct_SetJointDrive_252.Out;
@@ -23000,7 +22998,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f200bb10-03f3-4ba7-9bf9-82bd55d4b3f2", "", Relay_Node_Is_Done_458)) return; 
+         if (true == CheckDebugBreak("f200bb10-03f3-4ba7-9bf9-82bd55d4b3f2", "Nested_Node_Test", Relay_Node_Is_Done_458)) return; 
       }
       else
       {
@@ -23012,7 +23010,7 @@ public class CodeGenTest : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f200bb10-03f3-4ba7-9bf9-82bd55d4b3f2", "", Relay_In_458)) return; 
+         if (true == CheckDebugBreak("f200bb10-03f3-4ba7-9bf9-82bd55d4b3f2", "Nested_Node_Test", Relay_In_458)) return; 
          {
             {
             }
@@ -23029,6 +23027,9 @@ public class CodeGenTest : uScriptLogic
             }
          }
          logic_CodeGenTest_Nested_CodeGenTest_Nested_458.In(logic_CodeGenTest_Nested_Socket_1_458, logic_CodeGenTest_Nested_Int_Name_Test_458, logic_CodeGenTest_Nested_Socket_3_458);
+         
+         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
+         //and those values get set through an event which is called before the above method exited
       }
       else
       {
