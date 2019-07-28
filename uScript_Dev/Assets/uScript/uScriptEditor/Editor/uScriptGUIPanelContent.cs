@@ -567,7 +567,7 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
                if (window != null)
                {
                   var panel = uScriptGUIPanelToolbox.Instance;
-                  window.title = panel.Name;
+                  window.titleContent = new GUIContent(panel.Name);
                   window.Panel = panel;
                }
             }

@@ -105,27 +105,27 @@ public sealed partial class uScript : EditorWindow
       {
          foreach (uScriptGUIPanelWindow window in windows)
          {
-            if (window.title == uScriptGUIPanelContent.Instance.Name)
+            if (window.titleContent.text == uScriptGUIPanelContent.Instance.Name)
             {
                window.Panel = uScriptGUIPanelContent.Instance;
                uScript.Instance.PaletteVisible = false;
             }
-            else if (window.title == uScriptGUIPanelToolbox.Instance.Name)
+            else if (window.titleContent.text == uScriptGUIPanelToolbox.Instance.Name)
             {
                window.Panel = uScriptGUIPanelToolbox.Instance;
                uScript.Instance.PaletteVisible = false;
             }
-            else if (window.title == uScriptGUIPanelReference.Instance.Name)
+            else if (window.titleContent.text == uScriptGUIPanelReference.Instance.Name)
             {
                window.Panel = uScriptGUIPanelReference.Instance;
                uScript.Instance.ReferenceVisible = false;
             }
-            else if (window.title == PanelScript.Instance.Name)
+            else if (window.titleContent.text == PanelScript.Instance.Name)
             {
                window.Panel = PanelScript.Instance;
                uScript.Instance.ScriptsVisible = false;
             }
-            else if (window.title == uScriptGUIPanelProperty.Instance.Name)
+            else if (window.titleContent.text == uScriptGUIPanelProperty.Instance.Name)
             {
                window.Panel = uScriptGUIPanelProperty.Instance;
                uScript.Instance.PropertiesVisible = false;
@@ -485,7 +485,7 @@ public sealed partial class uScript : EditorWindow
    public static void OpenPopOutWindow(uScriptGUIPanel panel)
    {
       uScriptGUIPanelWindow window = CreateInstance<uScriptGUIPanelWindow>();
-      window.title = panel.Name;
+      window.titleContent = new GUIContent(panel.Name);
       window.Panel = panel;
       window.Panel.InUScriptPanel = false;
       window.Show();
