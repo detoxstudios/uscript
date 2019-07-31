@@ -32,9 +32,7 @@ using Detox.Windows.Forms;
 
 using UnityEditor;
 
-#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
 using UnityEditor.SceneManagement;
-#endif
 
 using UnityEngine;
 
@@ -559,11 +557,7 @@ public sealed partial class uScript : EditorWindow
       uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
       uScriptMaster.transform.position = Vector3.zero;
 
-#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
       EditorSceneManager.MarkSceneDirty(uScriptMaster.scene);
-#else
-      EditorApplication.MarkSceneDirty();
-#endif
 
       return uScriptMaster;
    }
@@ -3632,12 +3626,8 @@ public sealed partial class uScript : EditorWindow
  
       if (scriptEditor.Open(fullPath))
       {
-         #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
-            string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
-         #else
-            UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
-            string sceneName = scene.name;
-         #endif
+         UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
+         string sceneName = scene.name;
          
          if (Preferences.EnableSceneWarning && scriptEditor.SceneName != string.Empty && scriptEditor.SceneName != sceneName)
          {
@@ -4021,12 +4011,8 @@ public sealed partial class uScript : EditorWindow
       //the scene name before we save
       if (pleaseAttachMe || currentlyAttached)
       {
-         #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
-            string sceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
-         #else
-            UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
-            string sceneName = scene.name;
-         #endif
+         UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
+         string sceneName = scene.name;
 
          script.SceneName = sceneName;
       }

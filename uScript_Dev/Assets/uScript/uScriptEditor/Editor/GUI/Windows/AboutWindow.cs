@@ -18,9 +18,7 @@ namespace Detox.Editor.GUI.Windows
 
       private const int WindowHeight = 260;
 
-#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
-      private const string UnityVersion = "for Unity 5.0-5.2";
-#elif UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6
+#if UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6
       private const string UnityVersion = "for Unity 5.3-5.6";
 #else
       private const string UnityVersion = "for Unity 2017.1+";

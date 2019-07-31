@@ -33,7 +33,7 @@ public struct uScriptConfigBlock
 
 public static class uScriptConfig
 {
-#if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2017_1_OR_NEWER)
+#if (UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2017_1_OR_NEWER)
    public const float BezierPenWidth = 2.75f;
    public const float BezierPenWidthSelected = 3.0f;
 #else
@@ -123,7 +123,7 @@ public static class uScriptConfig
                          new Color(255.0f / 255.0f, 255.0f / 255.0f, 196.0f / 255.0f)
                       };
 
-#if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2017_1_OR_NEWER)
+#if (UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2017_1_OR_NEWER)
       LineWidths = new[] { 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.75f };
 #else
       LineWidths = new[] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.25f };

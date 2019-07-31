@@ -36,22 +36,14 @@ public class uScriptBuildScript : MonoBehaviour
       List<string> fixedScenes = new List<string>();
       foreach (string scene in sceneFiles)
       {
-         #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
-            if (EditorApplication.OpenScene(scene))
-         #else
-            UnityEngine.SceneManagement.Scene sceneObj = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scene);
-            if (sceneObj.isLoaded)
-         #endif
+         UnityEngine.SceneManagement.Scene sceneObj = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scene);
+         if (sceneObj.isLoaded)
          {
             Debug.Log(string.Format("Opening scene: {0}...", scene));
             if (AddUScriptComponentsToOpenScene(scene))
             {
                // Save scene
-               #if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
-                  EditorApplication.SaveScene();
-               #else
-                  UnityEditor.SceneManagement.EditorSceneManager.SaveScene(sceneObj);
-               #endif
+               UnityEditor.SceneManagement.EditorSceneManager.SaveScene(sceneObj);
 
                fixedScenes.Add(scene);
 
@@ -70,20 +62,12 @@ public class uScriptBuildScript : MonoBehaviour
       }
    }
 
-#if (UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
-   [MenuItem("uScript/Internal/Add uScript Components to Open Scene", false, 100)]
-   public static void AddUScriptComponentsToOpenScene_Menu()
-   {
-      AddUScriptComponentsToOpenScene(EditorApplication.currentScene);
-   }
-#else
    [MenuItem("uScript/Internal/Add uScript Components to Open Scene", false, 100)]
    public static void AddUScriptComponentsToOpenScene_Menu()
    {
       UnityEngine.SceneManagement.Scene scene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
       AddUScriptComponentsToOpenScene(scene.name);
    }
-#endif
 
    public static bool AddUScriptComponentsToOpenScene(string scene)
    {

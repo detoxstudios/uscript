@@ -115,12 +115,7 @@ namespace Detox.Editor.GUI.Windows
 
          if (string.IsNullOrEmpty(promotion.Title) == false)
          {
-#if UNITY_5_0
-         // This is deprecated in the Unity 5.2 API
-         this.title = promotion.Title;
-#else
             this.titleContent = new GUIContent(promotion.Title);
-#endif
          }
 
          //rect.y += rect.height;

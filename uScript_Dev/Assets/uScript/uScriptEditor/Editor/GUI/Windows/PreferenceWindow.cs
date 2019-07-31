@@ -48,12 +48,8 @@ namespace Detox.Editor.GUI.Windows
 
          scrollPos = EditorGUILayout.BeginScrollView(scrollPos, false, true);
          {
-#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.labelWidth = LabelWidth;
             EditorGUIUtility.fieldWidth = ValueWidth;
-#else
-            EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
-#endif
 
             EditorGUILayout.BeginVertical();//Style.Window);
             {
@@ -136,20 +132,12 @@ namespace Detox.Editor.GUI.Windows
 
 //            EditorGUI.indentLevel--;
 
-#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.fieldWidth = 30;
-#else
-            EditorGUIUtility.LookLikeControls(0, 30);
-#endif
 
             Preferences.GridColorMinor = EditorGUILayout.ColorField(Preferences.GridColorMinor);
 
-#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.labelWidth = LabelWidth;
             EditorGUIUtility.fieldWidth = ValueWidth;
-#else
-            EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
-#endif
 //            EditorGUI.indentLevel++;
          }
 
@@ -264,21 +252,13 @@ namespace Detox.Editor.GUI.Windows
 
             UnityEngine.GUI.enabled = Preferences.Profiling;
 
-#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.fieldWidth = 30;
-#else
-            EditorGUIUtility.LookLikeControls(0, 30);
-#endif
 
             var floatValue = EditorGUILayout.FloatField(Preferences.ProfileMin);
             Preferences.ProfileMin = Mathf.Min(MaxProfileTime, Mathf.Max(MinProfileTime, floatValue));
 
-#if !(UNITY_5_0 || UNITY_5_1 || UNITY_5_2)
             EditorGUIUtility.labelWidth = LabelWidth;
             EditorGUIUtility.fieldWidth = ValueWidth;
-#else
-            EditorGUIUtility.LookLikeControls(LabelWidth, ValueWidth);
-#endif
 
             UnityEngine.GUI.enabled = true;
 //            EditorGUI.indentLevel++;

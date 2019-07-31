@@ -20,10 +20,8 @@ using System.Collections;
 using JetBrains.Annotations;
 
 using UnityEngine;
-#if UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_2017 || UNITY_2017_1_OR_NEWER
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-#endif
 
 // The list of asset types supported by the AssetBrowserWindow class
 public enum AssetType
