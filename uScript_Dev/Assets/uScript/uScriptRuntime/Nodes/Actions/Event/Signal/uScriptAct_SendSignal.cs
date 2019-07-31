@@ -2,8 +2,6 @@
 // (C) 2011 Detox Studios LLC
 
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 [NodePath("Actions/Events/Signals")]
 
