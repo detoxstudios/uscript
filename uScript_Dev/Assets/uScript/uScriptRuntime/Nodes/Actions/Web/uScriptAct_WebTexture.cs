@@ -8,6 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using UnityEngine;
+#if UNITY_2019
+using UnityEngine.Networking;
+#endif
 
 [NodePath("Actions/Web/Download")]
 
@@ -20,7 +23,11 @@ using UnityEngine;
 public class uScriptAct_WebTexture : uScriptLogic
 {
    private bool finished;
+#if UNITY_2019
+   private UnityWebRequest www;
+#else
    private WWW www;
+#endif
 
    // ================================================================================
    //    Output Sockets
@@ -40,8 +47,10 @@ public class uScriptAct_WebTexture : uScriptLogic
    public void In(
       [FriendlyName("URL", "The URL to download")]
       string URL,
+#if !UNITY_2019
       [FriendlyName("Form Data", "A WWWForm instance containing the form data to post."), SocketState(false, false)]
       WWWForm Form,
+#endif
       [FriendlyName("Result", "The downloaded data.")]
       out Texture2D Result,
       [FriendlyName("Error", "Returns an error message if there was an error during the download."), SocketState(false, false)]
@@ -52,7 +61,11 @@ public class uScriptAct_WebTexture : uScriptLogic
       this.OutError = false;
 
       this.finished = false;
+#if UNITY_2019
+      this.www = UnityWebRequestTexture.GetTexture(URL);
+#else
       this.www = Form == null ? new WWW(URL) : new WWW(URL, Form);
+#endif
 
       Result = null;
       Error = string.Empty;
@@ -85,7 +98,11 @@ public class uScriptAct_WebTexture : uScriptLogic
          }
          else
          {
+#if UNITY_2019
+            result = DownloadHandlerTexture.GetContent(this.www);
+#else
             result = this.www.texture;
+#endif
             this.OutFinished = true;
          }
       }

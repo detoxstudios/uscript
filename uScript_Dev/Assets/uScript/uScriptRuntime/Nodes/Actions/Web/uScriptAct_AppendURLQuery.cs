@@ -1,8 +1,11 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
 
+#if UNITY_2019
+using UnityEngine.Networking;
+#else
 using UnityEngine;
-using System.Collections;
+#endif
 
 [NodePath("Actions/Web/String")]
 
@@ -96,7 +99,11 @@ public class uScriptAct_AppendURLQuery : uScriptLogic
       }
 
       // Does the value need to be escaped?
+#if UNITY_2019
+      string value = (EscapeValue ? UnityWebRequest.EscapeURL(Value.ToString()) : Value.ToString());
+#else
       string value = (EscapeValue ? WWW.EscapeURL(Value.ToString()) : Value.ToString());
+#endif
 
       // Should both the entire field/value pair be appended?
       URL += (value == string.Empty ? Field : Field + "=" + value);

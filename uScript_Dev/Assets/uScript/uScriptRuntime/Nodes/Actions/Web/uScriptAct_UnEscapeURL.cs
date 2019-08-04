@@ -1,8 +1,11 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
 
+#if UNITY_2019
+using UnityEngine.Networking;
+#else
 using UnityEngine;
-using System.Collections;
+#endif
 
 [NodePath("Actions/Web/String")]
 
@@ -41,7 +44,11 @@ public class uScriptAct_UnEscapeURL : uScriptLogic
       }
       else
       {
+#if UNITY_2019
+         Result = UnityWebRequest.UnEscapeURL(Target);
+#else
          Result = WWW.UnEscapeURL(Target);
+#endif
       }
    }
 

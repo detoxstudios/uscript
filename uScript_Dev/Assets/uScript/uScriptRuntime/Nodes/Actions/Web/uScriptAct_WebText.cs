@@ -8,6 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using UnityEngine;
+#if UNITY_2019
+using UnityEngine.Networking;
+#endif
 
 [NodePath("Actions/Web/Download")]
 
@@ -20,12 +23,16 @@ using UnityEngine;
 public class uScriptAct_WebText : uScriptLogic
 {
    private bool finished;
-   private WWW www;
+#if UNITY_2019
+    private UnityWebRequest www;
+#else
+    private WWW www;
+#endif
 
-   // ================================================================================
-   //    Output Sockets
-   // ================================================================================
-   [FriendlyName("Out")]
+    // ================================================================================
+    //    Output Sockets
+    // ================================================================================
+    [FriendlyName("Out")]
    public bool Out { get; private set; }
 
    [FriendlyName("Success")]
@@ -52,7 +59,11 @@ public class uScriptAct_WebText : uScriptLogic
       this.OutError = false;
 
       this.finished = false;
+#if UNITY_2019
+      this.www = Form == null ? UnityWebRequest.Get(URL) : UnityWebRequest.Post(URL, Form);
+#else
       this.www = Form == null ? new WWW(URL) : new WWW(URL, Form);
+#endif
 
       Result = string.Empty;
       Error = string.Empty;
@@ -85,7 +96,11 @@ public class uScriptAct_WebText : uScriptLogic
          }
          else
          {
+#if UNITY_2019
+            result = this.www.downloadHandler.text;
+#else
             result = this.www.text;
+#endif
             this.OutFinished = true;
          }
       }
