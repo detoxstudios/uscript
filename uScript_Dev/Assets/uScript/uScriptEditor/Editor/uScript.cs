@@ -483,7 +483,6 @@ public sealed partial class uScript : EditorWindow
    public static void OpenPopOutWindow(uScriptGUIPanel panel)
    {
       uScriptGUIPanelWindow window = CreateInstance<uScriptGUIPanelWindow>();
-      window.titleContent = new GUIContent(panel.Name);
       window.Panel = panel;
       window.Panel.InUScriptPanel = false;
       window.Show();
@@ -626,28 +625,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   public bool IsAttached
-   {
-      get
-      {
-         if (!String.IsNullOrEmpty(this.fullPath))
-         {
-            FileInfo fileInfo = new FileInfo(this.fullPath);
-            bool isSafe = false;
-            string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
-            string componentPath = safePath + uScriptConfig.Files.GeneratedComponentExtension;
-
-            foreach (GameObject go in GameObject.FindObjectsOfType(typeof(GameObject)))
-            {
-               if (go.GetComponent(componentPath) != null) return true;
-            }
-
-            return false;
-         }
-         return false;
-      }
-   }
-
    private static string GetFilePathWithLabel(string label, string fileName)
    {
       var guids = AssetDatabase.FindAssets("l:" + label, null);
@@ -767,10 +744,11 @@ public sealed partial class uScript : EditorWindow
 
    public static void Open()
    {
-      instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript");
+      instance = EditorWindow.GetWindow<uScript>(false, "uScript");
       instance.Launching();
 
       GuiState = new GuiState(GuiStateEnableCondition);
+      instance.titleContent = new GUIContent("uScript", uScriptGUI.GetTexture("iconScriptFile02"));
    }
 
    // Call to force release the mouse and stop a drag operation

@@ -24,7 +24,7 @@ namespace Detox.Editor.GUI.Windows
 
         public void Init()
         {
-            titleContent = new GUIContent("Node Gen");
+            titleContent = new GUIContent("Node Gen", uScriptGUI.GetTexture("iconScriptFile02"));
             position = new Rect(Screen.width / 2, Screen.height / 2, 300, 350);
             _reflectedTypes = GenerateNodes.GetAllLoadedTypes().OrderBy(t => t.Name).ToArray();
             _nodesToGenerate = new bool[Enum.GetNames(typeof(GenerateNodes.Nodes)).Length - 3];

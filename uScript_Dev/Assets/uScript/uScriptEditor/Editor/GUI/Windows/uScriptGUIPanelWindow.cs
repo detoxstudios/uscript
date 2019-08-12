@@ -26,6 +26,7 @@ namespace Detox.Editor.GUI.Windows
          {
             if (value != null) PanelType = value.GetType().ToString();
             _panel = value;
+            titleContent = new GUIContent(_panel.Name, uScriptGUI.GetTexture("iconScriptFile02"));
          }
       }
 

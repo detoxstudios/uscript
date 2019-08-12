@@ -97,6 +97,7 @@ namespace Detox.Editor.GUI.Windows
       {
          instance = GetWindow<HotkeyWindow>(false, "Hotkeys", false);
          instance.isFirstRun = true;
+         instance.titleContent = new GUIContent("Hotkeys", uScriptGUI.GetTexture("iconScriptFile02"));
       }
 
       internal void OnEnable()
