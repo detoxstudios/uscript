@@ -363,21 +363,29 @@ public class uScriptCustomEvent
       public GameObject Sender = null;
    }
 
+   public static void BroadcastCustomEvent(string eventName, object eventData, GameObject eventSender, GameObject[] receivers)
+   {
+      CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
+      for (int i = 0; i < receivers.Length; i++)
+      {
+         GameObject go = receivers[i];
+         if (go != null)
+         {
+            go.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
+         }
+      }
+   }
+
    public static void BroadcastCustomEvent(string eventName, object eventData, GameObject eventSender)
    {
       CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
-      List<GameObject> rootGOs = new List<GameObject>(50);
-      for (int i = 0; i < SceneManager.sceneCount; i++)
+      MonoBehaviour[] mbs = (MonoBehaviour[])UnityEngine.Object.FindObjectsOfType(typeof(MonoBehaviour));
+      for (int i = 0; i < mbs.Length; i++)
       {
-         Scene scene = SceneManager.GetSceneAt(i);
-         rootGOs.AddRange(scene.GetRootGameObjects());
-      }
-      GameObject[] gos = rootGOs.ToArray();
-      foreach (GameObject go in gos)
-      {
-         if (go && go.transform.parent == null)
+         MonoBehaviour mb = mbs[i];
+         if (mb != null && mb.transform.parent == null)
          {
-            go.gameObject.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
+            mb.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
          }
       }
    }
