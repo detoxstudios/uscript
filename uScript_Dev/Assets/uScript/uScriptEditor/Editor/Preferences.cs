@@ -87,6 +87,12 @@ namespace Detox.Editor
          set { EditorPrefs.SetBool("DetoxStudios.uScript.AutoUpdateReflection", value); }
       }
 
+      public static bool ReflectDisabledObjects
+      {
+         get { return EditorPrefs.GetBool("DetoxStudios.uScript.ReflectDisabledObjects"); }
+         set { EditorPrefs.SetBool("DetoxStudios.uScript.ReflectDisabledObjects", value); }
+      }
+
       public static bool DrawPanelsOnUpdate
       {
          get { return EditorPrefs.GetBool("DetoxStudios.uScript.DrawPanelsOnUpdate"); }
@@ -617,6 +623,7 @@ namespace Detox.Editor
       {
          SetDefault("AutoExpandToolbox", true, force);
          SetDefault("AutoUpdateReflection", false, force);
+         SetDefault("ReflectDisabledObjects", true, force);
          SetDefault("DrawPanelsOnUpdate", false, force);
          SetDefault("ShowGrid", uScriptConfig.Style.ShowGrid, force);
          SetDefault("GridSize", uScriptConfig.Style.GridSize, force);

@@ -16,7 +16,6 @@ public class uScriptAct_SendSignal_Vector2: uScriptLogic
 	[FriendlyName("Send Signal")]
 	public void SendCustomSignal(
 		[FriendlyName("GameObject", "The GameObject to signal (null for the current GameObject).")]
-		[SocketState(false, false)]
 		GameObject objectToSignal,
 		
 		[FriendlyName("Signal Sender", "The GameObject responsible for sending the signal. If not specified, the sender will be the owner of this uScript.")]

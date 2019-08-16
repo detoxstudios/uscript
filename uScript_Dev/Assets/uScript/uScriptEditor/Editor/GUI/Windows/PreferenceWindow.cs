@@ -274,6 +274,9 @@ namespace Detox.Editor.GUI.Windows
          boolValue = EditorGUILayout.Toggle("Refresh on Hierarchy/Scene Change", Preferences.RefreshOnHierarchyChange);
          Preferences.RefreshOnHierarchyChange = boolValue;
 
+         boolValue = EditorGUILayout.Toggle("Reflect Disabled Objects", Preferences.ReflectDisabledObjects);
+         Preferences.ReflectDisabledObjects = boolValue;
+
          EditorGUILayout.Separator();
       }
 

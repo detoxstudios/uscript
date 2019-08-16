@@ -4831,7 +4831,15 @@ public sealed partial class uScript : EditorWindow
       {
          uScriptDebug.Log("Reparsing Entity Types", uScriptDebug.Type.Debug);
 
-         List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(FindObjectsOfType(typeof(UnityEngine.Object)));
+         List<UnityEngine.Object> allObjects = null;
+         if (Preferences.ReflectDisabledObjects)
+         {
+            allObjects = new List<UnityEngine.Object>(Resources.FindObjectsOfTypeAll(typeof(UnityEngine.Object)));
+         }
+         else
+         {
+            allObjects = new List<UnityEngine.Object>(FindObjectsOfType(typeof(UnityEngine.Object)));
+         }
          Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>();
 
          Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
@@ -4843,7 +4851,8 @@ public sealed partial class uScript : EditorWindow
             //don't ignore uScriptCode because we want to reflect
             //any public inspector properties
 
-            //ignore our logic scripts, they are handled separately
+            //ignore our logic scripts, undo object, and editor types, they are handled separately
+            if (o.GetType().FullName.Contains("UnityEditor.")) continue;
             if (typeof(uScriptLogic).IsAssignableFrom(o.GetType())) continue;
             if (typeof(uScript_UndoObject).IsAssignableFrom(o.GetType())) continue;
 

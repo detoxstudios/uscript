@@ -22,7 +22,6 @@ public class uScriptAct_SendSignal : uScriptLogic
    [FriendlyName("Send Signal")]
    public void SendSignal(
       [FriendlyName("GameObject", "The GameObject to signal (null for the current GameObject).")]
-      [SocketState(false, false)]
       GameObject objectToSignal,
       [FriendlyName("Signal Name", "The string-based signal name.")]
       string signalName
