@@ -2648,8 +2648,8 @@ public sealed partial class uScript : EditorWindow
       var fileName = Path.GetFileNameWithoutExtension(this.fullPath);
       var relativePath = Preferences.GeneratedScripts.RelativeAssetPath();
 
-      var logicPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedCodeExtension);
-      var wrapperPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedComponentExtension);
+      var logicPath = GetNestedScriptPath(fullPath);
+      var wrapperPath = GetGeneratedScriptPath(fullPath);
 
       AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
 
@@ -2676,8 +2676,8 @@ public sealed partial class uScript : EditorWindow
                "Graph:".Bold(),
                this.fullPath.RelativeAssetPath(),
                "Generated source files:".Bold(),
-               logicPath,
-               wrapperPath));
+               logicPath.RelativeAssetPath(),
+               wrapperPath.RelativeAssetPath()));
 
          SetLabelsOnFile(logicPath, new string[] { "uScript", "uScriptCode" });
          SetLabelsOnFile(wrapperPath, new string[] { "uScript", "uScriptCode" });
@@ -3740,9 +3740,12 @@ public sealed partial class uScript : EditorWindow
          {
             if (!lbls.Contains(label)) return false;
          }
+
+         return true;
       }
 
-      return true;
+      // no object in the database, so definitely doesn't have labels
+      return false;
    }
 
    public static void RemoveLabelsFromFile(string fullPath, string[] labelsToRemove )
@@ -3794,6 +3797,10 @@ public sealed partial class uScript : EditorWindow
          if (file.Contains(filename)) return file;
       }
 
+      // second, see if there's an existing _GeneratedCode directory in the directory containing binaryPath, if so, use that one
+      string genDirectory = binaryPath.Substring(0, binaryPath.LastIndexOf("/") + 1) + "_GeneratedCode";
+      if (Directory.Exists(genDirectory)) return genDirectory + "/" + fileName;
+
       // not found, fall back to default
       return Preferences.GeneratedScripts + "/" + fileName;
    }
@@ -3812,6 +3819,10 @@ public sealed partial class uScript : EditorWindow
       {
          if (file.Contains(filename)) return file;
       }
+
+      // second, see if there's an existing _GeneratedCode directory in the directory containing binaryPath, if so, use that one
+      string genDirectory = binaryPath.Substring(0, binaryPath.LastIndexOf("/") + 1) + "_GeneratedCode";
+      if (Directory.Exists(genDirectory)) return genDirectory + "/" + fileName;
 
       // not found, fall back to default
       return Preferences.NestedScripts + "/" + fileName;
