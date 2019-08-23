@@ -38,21 +38,34 @@ public class uScriptAct_GetAudioClipInfo : uScriptLogic
       [SocketState(false, false)]
       out bool clipIsReady)
    {
-      clipLength = target.length;
-      clipSamples = target.samples;
-      clipChannels = target.channels;
-      clipFrequency = target.frequency;
+      if (target != null)
+      {
+         clipLength = target.length;
+         clipSamples = target.samples;
+         clipChannels = target.channels;
+         clipFrequency = target.frequency;
+
 #if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7)
-      clipIsReady = target.isReadyToPlay;
+         clipIsReady = target.isReadyToPlay;
 #else
-        if (target.loadState == AudioDataLoadState.Loaded)
-        {
-           clipIsReady = true;
-        }
-        else
-        {
-           clipIsReady = false;
-        }
+
+         if (target.loadState == AudioDataLoadState.Loaded)
+         {
+            clipIsReady = true;
+         }
+         else
+         {
+            clipIsReady = false;
+         }
+      }
+      else
+      {
+         clipLength = 0.0f;
+         clipSamples = 0.0f;
+         clipChannels = 0;
+         clipFrequency = 0.0f;
+         clipIsReady = false;
+      }
 #endif
    }
 }
