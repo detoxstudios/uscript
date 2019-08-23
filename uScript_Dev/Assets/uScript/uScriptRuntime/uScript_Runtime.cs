@@ -379,13 +379,13 @@ public class uScriptCustomEvent
    public static void BroadcastCustomEvent(string eventName, object eventData, GameObject eventSender)
    {
       CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
-      MonoBehaviour[] mbs = (MonoBehaviour[])UnityEngine.Object.FindObjectsOfType(typeof(MonoBehaviour));
-      for (int i = 0; i < mbs.Length; i++)
+      GameObject[] gos = (GameObject[])UnityEngine.Object.FindObjectsOfType(typeof(GameObject));
+      for (int i = 0; i < gos.Length; i++)
       {
-         MonoBehaviour mb = mbs[i];
-         if (mb != null && mb.transform.parent == null)
+         GameObject go = gos[i];
+         if (go != null && go.transform.parent == null)
          {
-            mb.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
+            go.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
          }
       }
    }
