@@ -2,7 +2,6 @@
 // (C) 2011 Detox Studios LLC
 
 using UnityEngine;
-using System.Collections;
 
 [NodePath("Actions/Toggle")]
 
@@ -29,14 +28,13 @@ public class uScriptAct_Toggle : uScriptLogic
 
    public bool Out { get { return true; } }
 
-
    // ================================================================================
    //    Input Sockets and Node Parameters
    // ================================================================================
    //
    // Parameter Attributes are applied below in Toggle()
    [FriendlyName("Turn On")]
-   public void TurnOn(GameObject[] Target, bool IgnoreChildren)
+   public void TurnOn(GameObject[] Target, bool IgnoreChildren, [DefaultValue(true)][SocketState(false, false)] bool checkState = true)
    {
       foreach (GameObject currentTarget in Target)
       {
@@ -44,14 +42,14 @@ public class uScriptAct_Toggle : uScriptLogic
          {
             if (IgnoreChildren)
             {
-               if (false == CheckIfActive(currentTarget))
+               if (!checkState || false == CheckIfActive(currentTarget))
                {
                   SetActiveState(currentTarget, true, IgnoreChildren);
                }
             }
             else
             {
-               if (false == CheckIfActive(currentTarget))
+               if (!checkState || false == CheckIfActive(currentTarget))
                {
                   SetActiveState(currentTarget, true, IgnoreChildren);
                }
@@ -64,7 +62,7 @@ public class uScriptAct_Toggle : uScriptLogic
 
    // Parameter Attributes are applied below in Toggle()
    [FriendlyName("Turn Off")]
-   public void TurnOff(GameObject[] Target, bool IgnoreChildren)
+   public void TurnOff(GameObject[] Target, bool IgnoreChildren, [DefaultValue(true)][SocketState(false, false)] bool checkState = true)
    {
       foreach (GameObject currentTarget in Target)
       {
@@ -72,14 +70,14 @@ public class uScriptAct_Toggle : uScriptLogic
          {
             if (IgnoreChildren)
             {
-               if (CheckIfActive(currentTarget))
+               if (!checkState || CheckIfActive(currentTarget))
                {
                   SetActiveState(currentTarget, false, IgnoreChildren);
                }
             }
             else
             {
-               if (CheckIfActive(currentTarget))
+               if (!checkState || CheckIfActive(currentTarget))
                {
                   SetActiveState(currentTarget, false, IgnoreChildren);
                }
@@ -96,7 +94,12 @@ public class uScriptAct_Toggle : uScriptLogic
       GameObject[] Target,
 
       [FriendlyName("Ignore Children", "If True, the state change will not affect the Target's children. However, the children will still not render if their parent has been disabled.")]
-      bool IgnoreChildren
+      bool IgnoreChildren,
+
+      [FriendlyName("Check State", "If True, the state change will only happen if the current state is the opposite of the desired state. Only applies for TurnOn or TurnOff, not Toggle.")]
+      [DefaultValue(true)]
+      [SocketState(false, false)]
+      bool checkState = true
       )
    {
       foreach (GameObject currentTarget in Target)
