@@ -2,7 +2,6 @@
 // (C) 2010 Detox Studios LLC
 
 using UnityEngine;
-using System.Collections;
 
 [NodePath("Conditions/Comparison")]
 
