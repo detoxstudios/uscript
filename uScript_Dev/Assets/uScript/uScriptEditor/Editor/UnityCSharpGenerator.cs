@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEditor;
 using Detox.Editor;
+using System.Globalization;
 
 namespace Detox.ScriptEditor
 {
@@ -1427,6 +1428,118 @@ namespace Detox.ScriptEditor
          p.End();
       }
 
+      private string GetIntString(string intValue)
+      {
+         try
+         {
+            int iValue = int.Parse(intValue, CultureInfo.InvariantCulture);
+            return iValue.ToString("d");
+         }
+         catch (Exception)
+         {
+            uScriptDebug.Log(string.Format("Failed outputting integer for string value {0} of parameter, using default of 0.", intValue), uScriptDebug.Type.Error);
+            return "0";
+         }
+      }
+
+      private string GetLongString(string longValue)
+      {
+         try
+         {
+            long lValue = long.Parse(longValue, CultureInfo.InvariantCulture);
+            return lValue.ToString("d");
+         }
+         catch (Exception)
+         {
+            uScriptDebug.Log(string.Format("Failed outputting long for string value {0} of parameter, using default of 0.", longValue), uScriptDebug.Type.Error);
+            return "0L";
+         }
+      }
+
+      private string GetShortString(string shortValue)
+      {
+         try
+         {
+            short sValue = short.Parse(shortValue, CultureInfo.InvariantCulture);
+            return sValue.ToString("d");
+         }
+         catch (Exception)
+         {
+            uScriptDebug.Log(string.Format("Failed outputting short for string value {0} of parameter, using default of 0.", shortValue), uScriptDebug.Type.Error);
+            return "0";
+         }
+      }
+
+      private string GetUIntString(string uintValue)
+      {
+         try
+         {
+            uint uiValue = uint.Parse(uintValue, CultureInfo.InvariantCulture);
+            return uiValue.ToString("d");
+         }
+         catch (Exception)
+         {
+            uScriptDebug.Log(string.Format("Failed outputting unsigned integer for string value {0} of parameter, using default of 0.", uintValue), uScriptDebug.Type.Error);
+            return "0";
+         }
+      }
+
+      private string GetULongString(string ulongValue)
+      {
+         try
+         {
+            ulong ulValue = ulong.Parse(ulongValue, CultureInfo.InvariantCulture);
+            return ulValue.ToString("d");
+         }
+         catch (Exception)
+         {
+            uScriptDebug.Log(string.Format("Failed outputting unsigned long for string value {0} of parameter, using default of 0.", ulongValue), uScriptDebug.Type.Error);
+            return "0L";
+         }
+      }
+
+      private string GetUShortString(string ushortValue)
+      {
+         try
+         {
+            ushort usValue = ushort.Parse(ushortValue, CultureInfo.InvariantCulture);
+            return usValue.ToString("d");
+         }
+         catch (Exception)
+         {
+            uScriptDebug.Log(string.Format("Failed outputting unsigned short for string value {0} of parameter, using default of 0.", ushortValue), uScriptDebug.Type.Error);
+            return "0";
+         }
+      }
+
+      private string GetFloatString(string floatValue)
+      {
+         try
+         {
+            float fValue = float.Parse(floatValue, CultureInfo.InvariantCulture);
+            return fValue.ToString("g9");
+         }
+         catch (Exception)
+         {
+            uScriptDebug.Log(string.Format("Failed outputting float for string value {0} of parameter, using default of 0.", floatValue), uScriptDebug.Type.Error);
+            return "0.0f";
+         }
+      }
+
+      private string GetDoubleString(string doubleValue)
+      {
+         try
+         {
+            double dValue = double.Parse(doubleValue, CultureInfo.InvariantCulture);
+            return dValue.ToString("g17");
+         }
+         catch (Exception)
+         {
+            uScriptDebug.Log(string.Format("Failed outputting double for string value {0} of parameter, using default of 0.", doubleValue), uScriptDebug.Type.Error);
+            return "0.0";
+         }
+      }
+
       private string FormatValue(string stringValue, string type)
       {
          if ("System.Object" == type)
@@ -1451,7 +1564,7 @@ namespace Detox.ScriptEditor
             try
             {
                string[] subString = stringValue.Split(',');
-               return "new Quaternion( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
+               return "new Quaternion( (float)" + GetFloatString(subString[0]) + ", (float)" + GetFloatString(subString[1]) + ", (float)" + GetFloatString(subString[2]) + ", (float)" + GetFloatString(subString[3]) + " )";
             }
             catch (Exception) { return "new Quaternion( )"; }
          }
@@ -1460,9 +1573,9 @@ namespace Detox.ScriptEditor
             try
             {
                string[] subString = stringValue.Split(',');
-               return "Matrix4x4.TRS( new Vector3((float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + "), " +
-                              "new Quaternion((float)" + subString[3] + ", (float)" + subString[4] + ", (float)" + subString[5] + ", (float)" + subString[6] + "), " +
-                              "new Vector3((float)" + subString[7] + ", (float)" + subString[8] + ", (float)" + subString[9] + "))";
+               return "Matrix4x4.TRS( new Vector3((float)" + GetFloatString(subString[0]) + ", (float)" + GetFloatString(subString[1]) + ", (float)" + GetFloatString(subString[2]) + "), " +
+                              "new Quaternion((float)" + GetFloatString(subString[3]) + ", (float)" + GetFloatString(subString[4]) + ", (float)" + GetFloatString(subString[5]) + ", (float)" + GetFloatString(subString[6]) + "), " +
+                              "new Vector3((float)" + GetFloatString(subString[7]) + ", (float)" + GetFloatString(subString[8]) + ", (float)" + GetFloatString(subString[9]) + "))";
             }
             catch (Exception) { return "new Matrix4x4( )"; }
          }
@@ -1471,7 +1584,7 @@ namespace Detox.ScriptEditor
             try
             {
                string[] subString = stringValue.Split(',');
-               return "new Vector2( (float)" + subString[0] + ", (float)" + subString[1] + " )";
+               return "new Vector2( (float)" + GetFloatString(subString[0]) + ", (float)" + GetFloatString(subString[1]) + " )";
             }
             catch (Exception) { return "new Vector2( )"; }
          }
@@ -1480,7 +1593,7 @@ namespace Detox.ScriptEditor
             try
             {
                string[] subString = stringValue.Split(',');
-               return "new Vector3( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + " )";
+               return "new Vector3( (float)" + GetFloatString(subString[0]) + ", (float)" + GetFloatString(subString[1]) + ", (float)" + GetFloatString(subString[2]) + " )";
             }
             catch (Exception) { return "new Vector3( )"; }
          }
@@ -1489,7 +1602,7 @@ namespace Detox.ScriptEditor
             try
             {
                string[] subString = stringValue.Split(',');
-               return "new Vector4( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
+               return "new Vector4( (float)" + GetFloatString(subString[0]) + ", (float)" + GetFloatString(subString[1]) + ", (float)" + GetFloatString(subString[2]) + ", (float)" + GetFloatString(subString[3]) + " )";
             }
             catch (Exception) { return "new Vector4( )"; }
          }
@@ -1498,7 +1611,7 @@ namespace Detox.ScriptEditor
             try
             {
                string[] subString = stringValue.Split(',');
-               return "new Rect( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
+               return "new Rect( (float)" + GetFloatString(subString[0]) + ", (float)" + GetFloatString(subString[1]) + ", (float)" + GetFloatString(subString[2]) + ", (float)" + GetFloatString(subString[3]) + " )";
             }
             catch (Exception) { return "new Rect( )"; }
          }
@@ -1509,7 +1622,7 @@ namespace Detox.ScriptEditor
                return "(float) 0";
             }
 
-            return "(float) " + stringValue;
+            return "(float) " + GetFloatString(stringValue);
          }
          else if ("System.Double" == type)
          {
@@ -1518,7 +1631,7 @@ namespace Detox.ScriptEditor
                return "(double) 0";
             }
 
-            return "(double) " + stringValue;
+            return "(double) " + GetDoubleString(stringValue);
          }
          else if ("System.Int16" == type)
          {
@@ -1527,7 +1640,7 @@ namespace Detox.ScriptEditor
                return "(short) 0";
             }
 
-            return "(int) " + stringValue;
+            return "(short) " + GetShortString(stringValue);
          }
          else if ("System.Int32" == type)
          {
@@ -1536,7 +1649,7 @@ namespace Detox.ScriptEditor
                return "(int) 0";
             }
 
-            return "(int) " + stringValue;
+            return "(int) " + GetIntString(stringValue);
          }
          else if ("System.Int64" == type)
          {
@@ -1545,7 +1658,7 @@ namespace Detox.ScriptEditor
                return "(long) 0";
             }
 
-            return "(long) " + stringValue;
+            return "(long) " + GetLongString(stringValue);
          }
          else if ("System.UInt16" == type)
          {
@@ -1554,7 +1667,7 @@ namespace Detox.ScriptEditor
                return "(ushort) 0";
             }
 
-            return "(ushort) " + stringValue;
+            return "(ushort) " + GetUShortString(stringValue);
          }
          else if ("System.UInt32" == type)
          {
@@ -1563,7 +1676,7 @@ namespace Detox.ScriptEditor
                return "(uint) 0";
             }
 
-            return "(uint) " + stringValue;
+            return "(uint) " + GetUIntString(stringValue);
          }
          else if ("System.UInt64" == type)
          {
@@ -1572,7 +1685,7 @@ namespace Detox.ScriptEditor
                return "(ulong) 0";
             }
 
-            return "(ulong) " + stringValue;
+            return "(ulong) " + GetULongString(stringValue);
          }
          else if ("System.Byte" == type)
          {
@@ -1615,7 +1728,7 @@ namespace Detox.ScriptEditor
             try
             {
                string[] subString = stringValue.Split(',');
-               return "new UnityEngine.Color( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
+               return "new UnityEngine.Color( (float)" + GetFloatString(subString[0]) + ", (float)" + GetFloatString(subString[1]) + ", (float)" + GetFloatString(subString[2]) + ", (float)" + GetFloatString(subString[3]) + " )";
             }
             catch (Exception) { return "UnityEngine.Color.black"; }
          }
