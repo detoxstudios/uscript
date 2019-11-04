@@ -61,6 +61,9 @@ namespace Detox.Editor.GUI
          Add(Keys.Alt, KeyCode.Q, Command.SaveGraphQuick);
          Add(Keys.Alt, KeyCode.R, Command.SaveGraphRelease);
          Add(Keys.Alt, KeyCode.S, Command.SaveGraph);
+         Add(Keys.Alt, KeyCode.T, Command.ShowToolbox);
+         Add(Keys.Alt, KeyCode.C, Command.ShowContents);
+         Add(Keys.Alt, KeyCode.M, Command.SearchPalette);
 
          Add(Keys.Shift, KeyCode.Period, Command.ExpandSelectedNodes);
          Add(Keys.Shift, KeyCode.Comma, Command.CollapseSelectedNodes);
@@ -429,6 +432,21 @@ namespace Detox.Editor.GUI
          public static void ZoomReset()
          {
             uScript.Instance.CommandCanvasZoomReset();
+         }
+
+         public static void ShowToolbox()
+         {
+            uScript.SetPaletteMode(0);
+         }
+
+         public static void ShowContents()
+         {
+            uScript.SetPaletteMode(1);
+         }
+
+         public static void SearchPalette()
+         {
+            uScript.SearchPalette();
          }
       }
    }

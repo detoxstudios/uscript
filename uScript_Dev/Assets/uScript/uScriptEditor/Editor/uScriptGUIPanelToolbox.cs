@@ -74,6 +74,8 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
 
    public EntityNode HotSelection { get; private set; }
 
+   public bool FocusSearchBox { get; set; }
+
    // Methods common to the panel classes
    public void Init()
    {
@@ -137,19 +139,7 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
                   var index = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.PanelTitleDropDown, GUILayout.Width(size.x));
                   if (uScript._paletteMode != index)
                   {
-                     uScript._paletteMode = index;
-                     if (!InUScriptPanel)
-                     {
-                        // if we're not in the uScript window, switch the uScriptGUIPanelWindow's Panel to the toolbox
-                        var window = uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelToolbox>();
-                        if (window != null)
-                        {
-                           var panel = uScriptGUIPanelContent.Instance;
-                           window.titleContent = new GUIContent(panel.Name);
-                           window.Panel = panel;
-                        }
-                     }
-                     uScript.RequestRepaint(2);
+                     uScript.SetPaletteMode(index);
                   }
 
                   ////if (uScript.IsDevelopmentBuild)
@@ -166,6 +156,12 @@ public sealed class uScriptGUIPanelToolbox : uScriptGUIPanel
                   {
                      this.paletteFoldoutToggle = toggle;
                      ExpandPaletteMenuItemFoldouts(this.paletteFoldoutToggle);
+                  }
+
+                  if (FocusSearchBox)
+                  {
+                     FocusSearchBox = false;
+                     EditorGUI.FocusTextInControl("PaletteFilterSearch");
                   }
 
                   GUI.SetNextControlName("PaletteFilterSearch");

@@ -168,6 +168,13 @@ public class ReferenceWindow : EditorWindow
          this.DrawCommand("Reset Zoom to 100%", ".Press_0");
          this.DrawCommand("Zoom Out by 10%", ".Press_-", ".Scroll_MouseWheel_.down");
          this.DrawCommand("Zoom In by 10%", ".Press_=", ".Scroll_MouseWheel_.up");
+
+         EditorGUILayout.Space();
+
+         this.DrawCommand("Switch node palette to Toolbox", ".Press_Alt+T");
+         this.DrawCommand("Switch node palette to Contents", ".Press_Alt+C");
+         this.DrawCommand("Search in Toolbox or Contents", ".Press_Alt+M");
+
       }
 
       EditorGUILayout.EndVertical();

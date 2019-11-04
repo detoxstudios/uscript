@@ -509,6 +509,12 @@ namespace Detox.Editor.GUI.Windows
             this.DrawCommand("Reset Zoom to 100%", "[Alpha0]");
             this.DrawCommand("Zoom Out by 10%", "[Minus]", "Scroll [Wheel] down");
             this.DrawCommand("Zoom In by 10%", "[Equals]", "Scroll [Wheel] up");
+
+            EditorGUILayout.Space();
+
+            this.DrawCommand("Switch node palette to Toolbox", "[alt]+[T]");
+            this.DrawCommand("Switch node palette to Contents", "[Alt]+[C]");
+            this.DrawCommand("Search in Toolbox or Contents", "[Alt]+[M]");
          }
 
          EditorGUILayout.EndVertical();

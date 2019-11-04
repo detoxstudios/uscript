@@ -39,6 +39,8 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
    private int listItemRowCount;
    private int listItemRowWidth;
 
+   public bool FocusSearchBox { get; set; }
+
    public override bool InUScriptPanel {
       set
       {
@@ -559,19 +561,7 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
             GUILayout.Width(size.x));
          if (uScript._paletteMode != index)
          {
-            uScript._paletteMode = index;
-            if (!InUScriptPanel)
-            {
-               // if we're not in the uScript window, switch the uScriptGUIPanelWindow's Panel to the toolbox
-               var window = uScript.GetUScriptGUIPanelWindow<uScriptGUIPanelContent>();
-               if (window != null)
-               {
-                  var panel = uScriptGUIPanelToolbox.Instance;
-                  window.titleContent = new GUIContent(panel.Name);
-                  window.Panel = panel;
-               }
-            }
-            uScript.RequestRepaint(2);
+            uScript.SetPaletteMode(index);
          }
 
          //if (uScript.IsDevelopmentBuild)
@@ -594,6 +584,12 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
          {
             this.foldoutExpanded = expanded;
             ExpandMenuFoldouts(this.foldoutExpanded);
+         }
+
+         if (FocusSearchBox)
+         {
+             FocusSearchBox = false;
+             EditorGUI.FocusTextInControl("ContentFilterSearch");
          }
 
          GUI.SetNextControlName("ContentFilterSearch");

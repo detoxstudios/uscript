@@ -2646,7 +2646,6 @@ public sealed partial class uScript : EditorWindow
       var indent = GUIStyle.none.GetTabIndent(string.Format("uScript: {0}", Label));
 
       var fileName = Path.GetFileNameWithoutExtension(this.fullPath);
-      var relativePath = Preferences.GeneratedScripts.RelativeAssetPath();
 
       var logicPath = GetNestedScriptPath(fullPath);
       var wrapperPath = GetGeneratedScriptPath(fullPath);
@@ -3276,6 +3275,58 @@ public sealed partial class uScript : EditorWindow
       {
          DrawSubItems(m_CurrentMenu as ToolStripMenuItem);
       }
+   }
+
+   public static void SearchPalette()
+   {
+      string controlName = "";
+
+      if (_paletteMode == 0) // in toolbox
+      {
+         uScriptGUIPanelToolbox.Instance.FocusSearchBox = true;
+      }
+      else                   // in contents
+      {
+         uScriptGUIPanelContent.Instance.FocusSearchBox = true;
+      }
+
+      if (!string.IsNullOrEmpty(controlName))
+      {
+         GUI.FocusControl(controlName);
+      }
+   }
+
+   public static void SetPaletteMode(int index)
+   {
+      uScriptGUIPanelWindow window = null;
+      uScriptGUIPanel currentPanel = null;
+      uScriptGUIPanel newPanel = null;
+
+      if (_paletteMode == 0) // in toolbox
+      {
+         currentPanel = uScriptGUIPanelToolbox.Instance;
+         window = GetUScriptGUIPanelWindow<uScriptGUIPanelToolbox>();
+         newPanel = uScriptGUIPanelContent.Instance;
+      }
+      else                   // in contents
+      {
+         currentPanel = uScriptGUIPanelContent.Instance;
+         window = GetUScriptGUIPanelWindow<uScriptGUIPanelContent>();
+         newPanel = uScriptGUIPanelToolbox.Instance;
+      }
+
+      if (!currentPanel.InUScriptPanel)
+      {
+         // if we're not in the uScript window, switch the uScriptGUIPanelWindow's Panel to the new panel
+         if (window != null)
+         {
+            window.titleContent = new GUIContent(newPanel.Name);
+            window.Panel = newPanel;
+         }
+      }
+
+      _paletteMode = index;
+      RequestRepaint(2);
    }
 
    public static string FindFile(string path, string fileName)
