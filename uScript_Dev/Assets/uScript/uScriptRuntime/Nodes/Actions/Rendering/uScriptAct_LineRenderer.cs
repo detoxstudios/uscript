@@ -42,7 +42,8 @@ public class uScriptAct_LineRenderer : uScriptLogic
       Color endColor,
       ShadowCastingMode shadowCastingMode,
       bool receiveShadows,
-      bool useWorldSpace)
+      bool useWorldSpace,
+      Material lineMaterial = null)
    {
       if (this.lineRenderer == null)
       {
@@ -62,7 +63,8 @@ public class uScriptAct_LineRenderer : uScriptLogic
       Color endColor,
       ShadowCastingMode shadowCastingMode,
       bool receiveShadows,
-      bool useWorldSpace)
+      bool useWorldSpace,
+      Material lineMaterial = null)
    {
       if (this.lineRenderer == null)
       {
@@ -74,11 +76,12 @@ public class uScriptAct_LineRenderer : uScriptLogic
          positions = new[] { new Vector3(0, 0, 0), new Vector3(0, 0, 1) };
       }
 
-      this.lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+      this.lineRenderer.material = lineMaterial == null ? new Material(Shader.Find("Particles/Additive")) : lineMaterial;
 
 #if UNITY_5_5_OR_NEWER || UNITY_2017 || UNITY_2017_1_OR_NEWER
       this.lineRenderer.SetPositions(positions);
 #else
+      lineRenderer.SetVertexCount(positions.Length);
       for (int i = 0; i < positions.Length; i++)
       {
          this.lineRenderer.SetPosition(i, positions[i]);
@@ -126,7 +129,10 @@ public class uScriptAct_LineRenderer : uScriptLogic
 
       [FriendlyName("Use World Space",
          "If enabled, the points are considered as world-space coordinates, instead of being subject to the transform of the GameObject to which this component is attached."
-         )] [DefaultValue(true), SocketState(false, false)] bool useWorldSpace
+         )] [DefaultValue(true), SocketState(false, false)] bool useWorldSpace,
+      [FriendlyName("Line Material",
+         "The material to use for drawing the lines. If null, Additive/Particle will be used."
+         )] [DefaultValue(null), SocketState(false, false)] Material lineMaterial = null
       )
    {
       if (this.lineRenderer == null)
